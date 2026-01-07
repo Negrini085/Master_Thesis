@@ -1,0 +1,36 @@
+# ---------------------------
+# File NetCDF
+# ---------------------------
+*.nc
+
+# ---------------------------
+# Directory dati IT-SNOW per annata
+# ---------------------------
+Studi_Preliminari/IT-snow/y2011/
+Studi_Preliminari/IT-snow/y2012/
+Studi_Preliminari/IT-snow/y2013/
+Studi_Preliminari/IT-snow/y2014/
+Studi_Preliminari/IT-snow/y2015/
+Studi_Preliminari/IT-snow/y2016/
+Studi_Preliminari/IT-snow/y2017/
+Studi_Preliminari/IT-snow/y2018/
+Studi_Preliminari/IT-snow/y2019/
+Studi_Preliminari/IT-snow/y2020/
+Studi_Preliminari/IT-snow/y2021/
+
+# ---------------------------
+# File .nc in ColDePorte
+# ---------------------------
+Studi_Preliminari/ColDePorte/*.nc
+
+# ---------------------------
+# File temporanei / cache
+# ---------------------------
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# ---------------------------
+# File di sistema
+# ---------------------------
+.DS_Store
