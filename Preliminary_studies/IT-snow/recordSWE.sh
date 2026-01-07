@@ -7,11 +7,10 @@ recordSWE=()
 datfile="appo.dat"
 outF="recordSWE.dat"
 
-#----------------------------------------------------------------------------#
-#       Ciclo sulle annate e sui mesi di cui sono disponibili dei dati       #
-#----------------------------------------------------------------------------#
+#------------------------------------------#
+#      Considering the whole dataset       #
+#------------------------------------------#
 
-# Ciclo che consente di creare l'intera serie
 for y in "${year[@]}"; do
     for m in "${month[@]}"; do
 
@@ -25,7 +24,7 @@ for y in "${year[@]}"; do
         python3 recordSWE.py "$appo"
 
 
-        # Leggo il file prodotto dall'eseguibile python precedente
+        # Reading file
         if [[ -f "$datfile" ]]; then
             mapfile -t tmp < "$datfile"
 
@@ -39,6 +38,6 @@ for y in "${year[@]}"; do
 done
 
 printf "%s\n" "${recordSWE[@]}" > "$outF"
-echo "Salvato in $outF"
+echo "Saved in $outF"
 
-echo "Studio dell'evoluzione dello SWE terminato."
+echo "SWE study ended."
