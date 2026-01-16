@@ -6,17 +6,7 @@
 # ---------------------------
 # Directory dati IT-SNOW per annata
 # ---------------------------
-Preliminary_studies/IT-snow/y2011/
-Preliminary_studies/IT-snow/y2012/
-Preliminary_studies/IT-snow/y2013/
-Preliminary_studies/IT-snow/y2014/
-Preliminary_studies/IT-snow/y2015/
-Preliminary_studies/IT-snow/y2016/
-Preliminary_studies/IT-snow/y2017/
-Preliminary_studies/IT-snow/y2018/
-Preliminary_studies/IT-snow/y2019/
-Preliminary_studies/IT-snow/y2020/
-Preliminary_studies/IT-snow/y2021/
+SnowCover_studies/IT-Snow/y20*
 
 # ---------------------------
 # File .nc in ColDePorte
