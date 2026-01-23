@@ -4,6 +4,7 @@
 library(ncdf4)
 library(ggplot2)
 
+start_time <- Sys.time()
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
 old_warn <- getOption("warn")  
 options(warn = -1)
@@ -62,3 +63,6 @@ ggplot(df, aes(x = df$day, y = df$swe)) +
   theme_minimal()
 
 options(warn = old_warn)
+end_time <- Sys.time()
+elapsed <- end_time - start_time
+elapsed
