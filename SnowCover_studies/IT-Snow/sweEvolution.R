@@ -4,13 +4,13 @@
 library(ncdf4)
 library(ggplot2)
 
-setwd("/home/filippo/Desktop/CODICINI/TESI_MAGISTRALE/SnowCover_studies/IT-Snow")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
 old_warn <- getOption("warn")  
 options(warn = -1)
 
 # Time window
-years <- 2011#:2025
-months <- c("09", "10")#, "11", "12", "01", "02", "03", "04", "05", "06", "07", "08")
+years <- 2011:2025
+months <- c("09", "10", "11", "12", "01", "02", "03", "04", "05", "06", "07", "08")
 
 swe_evolution <- numeric(0)
 for(y in years){
@@ -31,7 +31,14 @@ for(y in years){
       k <- j+1
       swe <- ncvar_get(nc, names(nc$var[2]), start = c(1, 1, k), count = c(-1, -1, 1))
       
-      print(paste("Calcolando lo SWE per il giorno ", toString(k), "/", months[i], "/", y, sep=""))
+      if(i > 4){
+        print(paste("Calcolando lo SWE per il giorno ", toString(k), "/", months[i], "/", y, sep=""))  
+      }
+      else{
+        print(paste("Calcolando lo SWE per il giorno ", toString(k), "/", months[i], "/", y-1, sep=""))
+      }
+      
+      # SWE evaluation and storing
       total_swe <- sum(swe, na.rm = TRUE)
       swe_evolution <- c(swe_evolution, total_swe)
     }
@@ -44,6 +51,8 @@ df <- data.frame(
   day = 1:length(swe_evolution),
   swe = swe_evolution*0.00000025
 )
+
+data0 <- as.Date("2010-09-01")
 
 # Plotting options (we will do a better job when it's all finished)
 save(swe_evolution, file = "swe_evolution.Rdata")
