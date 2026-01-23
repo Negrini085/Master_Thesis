@@ -10,7 +10,7 @@ library(ggplot2)
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
 
 year <- 2011
-months <- c("09")#,"10","11","12","01","02","03","04","05","06","07","08")
+months <- c("09","10","11","12","01","02","03","04","05","06","07","08")
 
 for(i in 1:length(months)){
   if(i<=4){
