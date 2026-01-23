@@ -4,7 +4,7 @@
 library(ncdf4)
 library(ggplot2)
 
-setwd("/home/filippo/Desktop/CODICINI/TESI_MAGISTRALE/SnowCover_studies/IT-Snow")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
 
 # Opening netCDF file (using nc_open function) and inspecting its properties
 # As we can see thanks to "class()" function here we are dealing with a netcdf4 object
@@ -32,7 +32,7 @@ lon_name <- names(nc$dim)[2]
 val_name <- names(nc$var)[2]
 lat = ncvar_get(nc, lat_name)
 lon = ncvar_get(nc, lon_name)
-swe = ncvar_get(nc, val_name, start = c(1, 1, 1), count = c(-1, -1, 1))
+swe = ncvar_get(nc, val_name, start = c(1, 1, 4), count = c(-1, -1, 1))
 
 # Here we try to print latitude values, to check if missing values are present
 # Moreover, we will also check coordinates and values dimensions.
@@ -53,7 +53,7 @@ ggplot(grid, aes(x = lon, y = lat, fill = swe)) +
   geom_raster() +                       
   scale_fill_viridis_c(option = "C") +   # Continuous color palette
   coord_fixed() +   
-  labs(title = "SWE 1 March 2011", x = "Latitude", y = "Longitude", fill = "SWE (mm w.e.)") +     # Titles
+  labs(title = "SWE 4 March 2011", x = "Latitude", y = "Longitude", fill = "SWE (mm w.e.)") +     # Titles
   theme_minimal()
 
 
