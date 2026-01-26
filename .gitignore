@@ -1,12 +1,8 @@
 # ---------------------------
-# File NetCDF
-# ---------------------------
-*.nc
-
-# ---------------------------
 # Directory dati IT-SNOW per annata
 # ---------------------------
 SnowCover_studies/IT-Snow/y20*
+SnowCover_studies/IT-Snow/*nc
 
 # ---------------------------
 # File .nc in ColDePorte
