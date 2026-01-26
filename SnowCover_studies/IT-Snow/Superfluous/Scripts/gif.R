@@ -1,16 +1,21 @@
 # The main goal of this script is to enable the user to plot SWE single-day snapshots
 # To do so, ncdf4 and ggplot2 packages will be used
-
 rm(list = ls())
 gc()
 
+library(sf)
 library(ncdf4)
 library(ggplot2)
+library(rnaturalearth)
 
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
 
 year <- 2011
 months <- c("09","10","11","12","01","02","03","04","05","06","07","08")
+
+# Selecting the geographical background, in order to really understand where the
+# snow coverage actually is
+europe <- ne_countries(continent = "Europe", scale = 10, returnclass = "sf")
 
 for(i in 1:length(months)){
   if(i<=4){
@@ -33,11 +38,12 @@ for(i in 1:length(months)){
     grid$swe <- as.vector(swe)
     
     # Plotting map
-    p <- ggplot(grid, aes(x = lon, y = lat, fill = grid$swe)) + 
-      geom_raster() + 
-      scale_fill_viridis_c(option = "C") + 
-      coord_fixed() + 
-      labs(title = "SWE coverage evolution", x = "Latitude", y = "Longitude", fill = "SWE (mm w.e.)") + 
+    p <- ggplot() +
+      geom_sf(data = europe, fill = "grey90", color = "black", inherit.aes = FALSE) +
+      coord_sf(xlim = c(6, 19), ylim = c(37, 46.8)) +
+      geom_raster(data = grid, aes(x = lon, y = lat, fill = swe)) +
+      scale_fill_viridis_c(option = "C", na.value = "transparent") +
+      labs(title = paste0("SWE", months[i], year), x = "Longitude", y = "Latitude", fill = "SWE (mm w.e.)") +
       theme_minimal()
     
     # Creating correct file name in order to use ggsave
@@ -48,6 +54,7 @@ for(i in 1:length(months)){
       fileout = paste0("Images/Gif/SWE_map_", sprintf("%02d", t), "-", months[i], "-", toString(year), ".png")
     }
     ggsave(fileout, plot = p, width = 8, height = 6, dpi = 300)
+    print(paste0("Salvata mappa ", sprintf("%02d", t), "-", months[i], "-", year))
   }
   nc_close(nc)
   

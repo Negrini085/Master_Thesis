@@ -27,7 +27,6 @@
   # snow coverage actually is
   europe <- ne_countries(continent = "Europe", scale = 10, returnclass = "sf")
   
-  
   # Plotting snapshot without Italian boundaries. We covered this topic in the
   # previous file, so we will skip documenting lines.
   grid <- expand.grid(lon = lon, lat = lat)
