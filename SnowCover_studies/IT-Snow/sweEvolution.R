@@ -56,7 +56,7 @@ df <- data.frame(
 data0 <- as.Date("2010-09-01")
 
 # Plotting options (we will do a better job when it's all finished)
-save(swe_evolution, file = "swe_evolution.Rdata")
+write.table(df$swe, file = "swe_evolution.dat", row.names = FALSE, col.names = FALSE)
 ggplot(df, aes(x = df$day, y = df$swe)) + 
   geom_line(color = "blue", size = 1.5) +
   labs(title = "SWE evolution: 2011 to 2025", x = "Days", y = "SWE Gm^3") +

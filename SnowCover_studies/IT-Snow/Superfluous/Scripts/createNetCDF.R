@@ -13,7 +13,7 @@ lat <- ncvar_get(nc, names(nc$dim)[1])
 lon <- ncvar_get(nc, names(nc$dim)[2])
 nlat <- length(lat)
 nlon <- length(lon)
-stackSWE <- array(0, dim = c(nlat, nlon, 12))
+stackSWE <- array(0, dim = c(nlon, nlat, 12))
 
 
 # Filling SWE stack
@@ -30,7 +30,7 @@ time_dim <- ncdim_def("time", "days since 2011-03-01", 1:12, unlim = TRUE)
 
 # Creating netCDF variable
 swe_var <- ncvar_def(
-  name = "SWE", units = "mm (w.e.)", dim = list(lat_dim, lon_dim, time_dim),
+  name = "SWE", units = "mm (w.e.)", dim = list(lon_dim, lat_dim, time_dim),
   missval = -9999, longname = "Snow Water Equivalent", prec = "float"
 )
 

@@ -9,11 +9,11 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
 
 # Loading swe monthly maps that I will compare
 e <- new.env()
-load("March2011_map_firstTry.RData", envir = e)
+load("March2011_map_t2.RData", envir = e)
 first <- e$appo
 
 e <- new.env()
-load("March2011_map_secondTry.RData", envir = e)
+load("March2011_map_t3.RData", envir = e)
 second <- e$appo
 
 # Opening a netCDF file in order to have a grid for plotting
@@ -31,5 +31,5 @@ ggplot(grid, aes(x = lon, y = lat, fill = diff)) +
   geom_raster() +
   scale_fill_viridis_c(option = "C") +   # Continuous color palette
   coord_fixed() +
-  labs(title = "Difference between methods", x = "Longitude", y = "Latitude", fill = "SWE (mm w.e.)") +     # Titles
+  labs(title = "Difference: try3 - try2", x = "Longitude", y = "Latitude", fill = "SWE (mm w.e.)") +     # Titles
   theme_minimal()
