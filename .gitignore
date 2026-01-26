@@ -1,4 +1,9 @@
 # ---------------------------
+# NetCDF files
+# ---------------------------
+*.nc
+
+# ---------------------------
 # Directory dati IT-SNOW per annata
 # ---------------------------
 SnowCover_studies/IT-Snow/y20*
