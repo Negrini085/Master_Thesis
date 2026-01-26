@@ -38,7 +38,7 @@
     coord_sf(xlim = c(6, 19), ylim = c(37, 46.8)) +
     geom_raster(data = grid, aes(x = lon, y = lat, fill = swe)) +
     scale_fill_viridis_c(option = "C", na.value = "transparent") +
-    labs(title = "SWE 1 March 2011", x = "Llongitude", y = "Latitude", fill = "SWE (mm w.e.)") +
+    labs(title = "SWE 1 March 2011", x = "Longitude", y = "Latitude", fill = "SWE (mm w.e.)") +
     theme_minimal()
   
   nc_close(nc)
