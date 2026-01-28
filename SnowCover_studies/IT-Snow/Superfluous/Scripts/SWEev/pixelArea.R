@@ -18,8 +18,21 @@ area <- array(rEarth^2 * sp^2, dim = c(length(lon), length(lat)))
 
 # Final pixel area computation
 for(i in 1:length(lat)){
-  area[i, ] <- sin(colat[i]) * area[i, 1]
+  area[, i] <- sin(colat[i]) * area[i, 1]
 }
+
+# Plotting in order to check what we are doing. I honestly expect to have higher 
+# area values at smaller latitude
+grid <- expand.grid(lon = lon, lat = lat)
+grid$area <- as.vector(area)
+
+ggplot(grid, aes(x = lon, y = lat, fill = area)) +
+  geom_raster() +                       
+  scale_fill_viridis_c(option = "C") +   # Continuous color palette
+  coord_fixed() +   
+  labs(title = "Area values", x = "Longitude", y = "Latitude", fill = "Area (m^2)") +     # Titles
+  theme_minimal()
+
 
 # We should now test how to multiply matrix together element-wise
 a <- matrix(1:4, nrow = 2)
