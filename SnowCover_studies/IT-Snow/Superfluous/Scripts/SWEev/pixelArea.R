@@ -18,7 +18,7 @@ area <- array(rEarth^2 * sp^2, dim = c(length(lon), length(lat)))
 
 # Final pixel area computation
 for(i in 1:length(lat)){
-  area[, i] <- sin(colat[i]) * area[i, 1]
+  area[, i] <- sin(colat[i]) * area[, i]
 }
 
 # Plotting in order to check what we are doing. I honestly expect to have higher 
