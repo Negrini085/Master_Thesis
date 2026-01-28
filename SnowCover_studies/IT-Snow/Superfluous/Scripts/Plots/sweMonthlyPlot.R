@@ -10,7 +10,7 @@ lon <- ncvar_get(nc, names(nc$dim)[2])
 nc_close(nc)
 
 
-load("March2011_map.RData")
+load("Superfluous/Datas/March2011_map_t3.RData")
 
 
 grid <- expand.grid(lon = lon, lat = lat)

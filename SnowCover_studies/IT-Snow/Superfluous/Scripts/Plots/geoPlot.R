@@ -13,14 +13,15 @@
   # Opening netCDF file and loading what we want to plot (this being the SWE snapshot
   # of the first day of March). We will not get into details, because we already covered
   # them in the previous couple of R files.
-  f_name <- "y2011/ITSNOW_SWE_201103.nc"
+  f_name <- "Datas/MonthlyMaps2011.nc"
   nc <- nc_open(f_name)
-  lat_name = names(nc$dim)[1]
-  lon_name = names(nc$dim)[2]
-  swe_name = names(nc$var)[2]
+  lat_name = "lat"
+  lon_name = "lon"
+  swe_name = "SWE"
   lat <- ncvar_get(nc, lat_name)
   lon <- ncvar_get(nc, lon_name)
-  swe <- ncvar_get(nc, swe_name, start = c(1, 1, 1), count = c(-1, -1, 1))
+  swe <- ncvar_get(nc, swe_name, start = c(1, 1, 4), count = c(-1, -1, 1))
+  swe[swe == 0] <- NA
   
   
   # Selecting the geographical background, in order to really understand where the
@@ -37,7 +38,7 @@
     coord_sf(xlim = c(6, 19), ylim = c(37, 46.8)) +
     geom_raster(data = grid, aes(x = lon, y = lat, fill = swe)) +
     scale_fill_viridis_c(option = "C", na.value = "transparent") +
-    labs(title = "SWE 1 March 2011", x = "Longitude", y = "Latitude", fill = "SWE (mm w.e.)") +
+    labs(title = "SWE December 2010", x = "Longitude", y = "Latitude", fill = "SWE (mm w.e.)") +
     theme_minimal()
   
   nc_close(nc)
