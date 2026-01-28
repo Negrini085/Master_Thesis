@@ -13,6 +13,31 @@ options(warn = -1)
 years <- 2011:2025
 months <- c("09", "10", "11", "12", "01", "02", "03", "04", "05", "06", "07", "08")
 
+
+#----------------------------------------------#
+#              Creating area map               #
+#----------------------------------------------#
+nc <- nc_open("y2011/ITSNOW_SWE_201103.nc")
+lat <- ncvar_get(nc, "Latitude")
+lon <- ncvar_get(nc, "Longitude")
+nc_close(nc)
+
+# Here we are going to assume that earth is a perfect sphere, in order to apply
+# basic geometric reasoning.
+rEarth <-  6371005.0
+colat <- (90 - lat)*2*pi/360          # Evaluating colatitude as radiant variable
+sp <- (lat[45] - lat[44])*2*pi/360    # We have to do degree -> radiant conversion
+area <- array(rEarth^2 * sp^2, dim = c(length(lon), length(lat)))
+
+# Final pixel area computation
+for(i in 1:length(lat)){
+  area[, i] <- sin(colat[i]) * area[, i]
+}
+
+
+#----------------------------------------------#
+#            Evaluating SWE evo                #
+#----------------------------------------------#
 swe_evolution <- numeric(0)
 for(y in years){
   for(i in 1:length(months)){
@@ -40,7 +65,7 @@ for(y in years){
       }
       
       # SWE evaluation and storing
-      total_swe <- sum(swe, na.rm = TRUE)
+      total_swe <- sum(swe * area, na.rm = TRUE)*10^-12
       swe_evolution <- c(swe_evolution, total_swe)
     }
     print(swe_evolution)
@@ -50,7 +75,7 @@ for(y in years){
 
 df <- data.frame(
   day = 1:length(swe_evolution),
-  swe = swe_evolution*0.00000025
+  swe = swe_evolution
 )
 
 data0 <- as.Date("2010-09-01")
