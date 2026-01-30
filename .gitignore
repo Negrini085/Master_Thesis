@@ -1,13 +1,18 @@
 # ---------------------------
-# NetCDF files
+# 	NetCDF files
 # ---------------------------
 *.nc
 
 # ---------------------------
-# Directory dati IT-SNOW per annata
+# 	IT-SNOW datas
 # ---------------------------
 SnowCover_studies/IT-Snow/y20*
 SnowCover_studies/IT-Snow/*nc
+
+# ---------------------------
+# 	DEM datas
+# ---------------------------
+SnowCover_studies/IT-Snow/DEM
 
 # ---------------------------
 # File .nc in ColDePorte
@@ -15,13 +20,13 @@ SnowCover_studies/IT-Snow/*nc
 Preliminary_studies/ColDePorte/*.nc
 
 # ---------------------------
-# File temporanei / cache
+# 	Temporary files
 # ---------------------------
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
 
 # ---------------------------
-# File di sistema
+#  	System files
 # ---------------------------
 .DS_Store
