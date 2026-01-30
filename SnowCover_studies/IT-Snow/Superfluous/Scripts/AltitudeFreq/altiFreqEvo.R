@@ -35,7 +35,7 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
 
 
 # Selecting bands and opening resized DEM
-bands <- c(500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500)
+bands <- c(500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 5000)
 demR <- rast("DEM_Italy_resized.tif")
 dem <- as.matrix(demR, wide = TRUE)
 dem <- dem[nrow(dem):1, ]
