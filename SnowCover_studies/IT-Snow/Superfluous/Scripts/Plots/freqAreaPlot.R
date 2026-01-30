@@ -7,7 +7,7 @@ library(tidyr)
 library(dplyr)
 
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
-df <- read.table("freqAltitude2011.dat", header = FALSE)
+df <- read.table("Datas/freqAltitude2011.dat", header = FALSE)
 
 
 colnames(df) <- paste0("s", 1:9)
