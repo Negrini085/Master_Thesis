@@ -18,5 +18,5 @@ compareGeom(demR, maskR, stopOnError = TRUE)
 appo <- demR
 appo[maskR == 1] <- -100
 dem <- demR
-dem[appo != -100] <- 0
+dem[appo != -100] <- -1000
 writeRaster(dem, "DEM_Italy.tif", overwrite = TRUE)
