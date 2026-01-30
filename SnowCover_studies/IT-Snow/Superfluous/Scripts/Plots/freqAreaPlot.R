@@ -12,10 +12,8 @@ df <- read.table("Datas/freqAltitude2011.dat", header = FALSE)
 
 colnames(df) <- paste0("s", 1:9)
 
-# Crea una variabile x (ad es. tempo/indice)
-df$x <- seq_len(nrow(df))
 
-# 2) Trasforma da wide a long (x, serie, y)
+df$x <- seq_len(nrow(df))
 long <- df %>%
   pivot_longer(
     cols = starts_with("s"),
@@ -24,7 +22,8 @@ long <- df %>%
   )
 long$serie <- factor(long$serie, 
                      levels = rev(paste0("s", 1:9)))
-# 3) Plot stacked area
+
+
 ggplot(long, aes(x = x, y = y, fill = serie)) +
   geom_area(position = "stack", alpha = 0.9) +
   scale_fill_discrete(
