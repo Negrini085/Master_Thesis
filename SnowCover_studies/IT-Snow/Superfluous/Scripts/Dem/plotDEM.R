@@ -1,5 +1,4 @@
-# The goal of this script is to perform altitude-based analysis of 
-# the duration of the snow season
+# The goal of this script is to plot resized DEM
 rm(list = ls())
 gc()
 
@@ -18,8 +17,8 @@ dem <- t(dem)
 # Opening netCDF file containing snow cover duration across the whole period
 f_name = "Datas/yearlySCD.nc"
 nc <- nc_open(f_name)
-lat = ncvar_get(nc, "lat")
-lon = ncvar_get(nc, "lon")
+lat <- ncvar_get(nc, "lat")
+lon <- ncvar_get(nc, "lon")
 nc_close(nc)
 
 grid <- expand.grid(lon = lon, lat = lat)
