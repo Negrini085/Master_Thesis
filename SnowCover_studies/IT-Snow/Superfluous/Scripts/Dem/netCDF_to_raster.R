@@ -10,10 +10,10 @@ library(terra)
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
 
 # Opening netCDF and getting variables
-nc <- nc_open("singleMap.nc")
-lon <- ncvar_get(nc, "lon")
-lat <- ncvar_get(nc, "lat")
-swe <- ncvar_get(nc, "SWE")
+nc <- nc_open("y2011/ITSNOW_SWE_201103.nc")
+lon <- ncvar_get(nc, "Longitude")
+lat <- ncvar_get(nc, "Latitude")
+swe <- ncvar_get(nc, "SWE", start = c(1, 1, 1), count = c(-1, -1, 1))
 nc_close(nc)
 
 # Raster requires latitude to be decreasing (i.e. from north to south), otherwise 

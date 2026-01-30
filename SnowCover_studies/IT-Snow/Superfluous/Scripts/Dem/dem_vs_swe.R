@@ -5,9 +5,9 @@ gc()
 
 library(terra)
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
-fname <- "DEM_Italy_resized.tif"
-fname1 <- "Datas/SWE_map.tif"
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow/DEM")
+fname <- "DEM_Italy.tif"
+fname1 <- "Mask.tif"
 
 dem <- rast(fname)
 swe <- rast(fname1)
