@@ -8,7 +8,7 @@ library(ggplot2)
 
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
 
-# Opening resized DEM
+# Opening resized DEM and adjusting it to match SCD maps
 demR <- rast("DEM_Italy_resized.tif")
 dem <- as.matrix(demR, wide = TRUE)
 dem <- dem[nrow(dem):1, ]
@@ -19,6 +19,7 @@ f_name = "Datas/yearlySCD.nc"
 nc <- nc_open(f_name)
 lat <- ncvar_get(nc, "lat")
 lon <- ncvar_get(nc, "lon")
+
 nc_close(nc)
 
 grid <- expand.grid(lon = lon, lat = lat)
@@ -32,3 +33,4 @@ ggplot(grid, aes(x = lon, y = lat, fill = dem)) +
   coord_fixed() +
   labs(title = "DEM Italy", x = "Latitude", y = "Longitude", fill = "SWE (mm w.e.)") +     # Titles
   theme_minimal()
+
