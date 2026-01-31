@@ -10,14 +10,14 @@ library(ggplot2)
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
 
 # Opening resized DEM and adjusting it to match SCD maps
-demR <- rast("DEM_Italy_resized.tif")
+demR <- rast("DEM/DEM_Italy.tif")
 dem <- as.matrix(demR, wide = TRUE)
 dem <- dem[nrow(dem):1, ]
 dem <- t(dem)
 
 # I want to plot only a certain altitude range
-dem[dem > 1000] <- NA
-dem[dem < 500] <- NA
+dem[dem > 100] <- NA
+dem[dem <= 0] <- NA
 
 # Opening netCDF file containing snow cover duration across the whole period
 f_name = "Datas/yearlySCD.nc"
