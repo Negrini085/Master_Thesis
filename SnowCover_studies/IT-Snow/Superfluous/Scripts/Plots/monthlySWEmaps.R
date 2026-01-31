@@ -19,7 +19,7 @@ get_legend <- function(p){
 
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
 
-year <- 2025
+year <- 2013
 fname <- paste0("Datas/Monthly/MonthlyMaps", year, ".nc")
 
 nc <- nc_open(fname)
