@@ -13,15 +13,15 @@
   # Opening netCDF file and loading what we want to plot (this being the SWE snapshot
   # of the first day of March). We will not get into details, because we already covered
   # them in the previous couple of R files.
-  f_name <- "y2011/ITSNOW_SWE_201108.nc"
+  f_name <- "Datas/yearlySCD.nc"
   nc <- nc_open(f_name)
   lat_name = "lat"
   lon_name = "lon"
-  swe_name = "SWE"
+  swe_name = "SCD"
   lat <- ncvar_get(nc, lat_name)
   lon <- ncvar_get(nc, lon_name)
-  swe <- ncvar_get(nc, swe_name, start = c(1, 1, 20), count = c(-1, -1, 1))
-  swe[swe == 0] <- NA
+  swe <- ncvar_get(nc, swe_name, start = c(1, 1, 1), count = c(-1, -1, 1))
+  # swe[swe == 0] <- NA
   
   
   # Selecting the geographical background, in order to really understand where the

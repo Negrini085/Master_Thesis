@@ -58,3 +58,4 @@ scd_var <- ncvar_def(
 nc_out <- nc_create("Datas/meanSCD_elevationMaps.nc", vars = list(scd_var))
 ncvar_put(nc_out, scd_var, scdStack)
 nc_close(nc_out)
+

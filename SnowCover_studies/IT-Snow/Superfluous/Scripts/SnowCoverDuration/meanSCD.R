@@ -32,7 +32,6 @@ meanBandSCD <- function(scd, dem, bands){
     appo[i] <- mean(scd[dem > liminf & dem <= limsup], na.rm = TRUE)
   }
   
-  # Making sure to just check pixels within Italy
   return(round(appo, 0))
 }
 
@@ -60,26 +59,27 @@ nc_close(nc)
 # Creating mean map (over hydrological years)
 scd[is.na(scd)] <- 0
 meanSCD <- rowMeans(scd, dims = 2)
+latM <- matrix(rep(lat, each = length(lon)), nrow = length(lon), ncol = length(lat))
 
 # Check to consider only italian territory
-meanSCD[dem < -100] <- NA
-meanSCD[meanSCD <= 0 & dem > 2000] <- NA
+meanSCD[dem < -15] <- NA
+meanSCD[meanSCD <= 0 & dem > 500 & latM > 44] <- NA
 
 # Evaluating mean SCD values for elevation band
 scd_appo <- meanBandSCD(scd = meanSCD, dem = dem, bands = bands)
-write.table(scd_appo, file = "scd_elevation_bands.dat", row.names = FALSE, col.names = FALSE)
+write.table(scd_appo, file = "Datas/scd_elevation_bands.dat", row.names = FALSE, col.names = FALSE)
 
 # Saving mean SCD map
 lat_dim <- ncdim_def("lat", "degrees_north", lat)
 lon_dim <- ncdim_def("lon", "degrees_east", lon)
 
-swe_var <- ncvar_def(
+scd_var <- ncvar_def(
   name = "SCD", units = "Days", dim = list(lon_dim, lat_dim),
   missval = NA, longname = "Snow Cover Duration", prec = "float"
 )
 
-nc_out <- nc_create("meanMapSCD.nc", vars = list(swe_var))
-ncvar_put(nc_out, swe_var, meanSCD)
+nc_out <- nc_create("Datas/meanMapSCD.nc", vars = list(scd_var))
+ncvar_put(nc_out, scd_var, meanSCD)
 nc_close(nc_out)
 
 # Plotting mean SCD map
