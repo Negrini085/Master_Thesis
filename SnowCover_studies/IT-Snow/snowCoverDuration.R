@@ -39,7 +39,6 @@ for(y in years){
     print(paste0("Dealing with ", months[i], "/", ypr," SWE maps"))
     
     nc <- nc_open(fname)
-    time <- ncvar_get(nc, names(nc$var)[1])
     swe <- ncvar_get(nc, names(nc$var)[2])
     swe[is.na(swe)] <- 0
     
@@ -48,7 +47,7 @@ for(y in years){
     swe[swe > 0] <- 1
     swe[swe <= 0] <- 0
     
-    monthMap <- apply(swe, c(1, 2), sum)
+    monthMap <- rowSums(swe, dims = 2L, na.rm = TRUE)
     appo <- appo + monthMap
     
     nc_close(nc)

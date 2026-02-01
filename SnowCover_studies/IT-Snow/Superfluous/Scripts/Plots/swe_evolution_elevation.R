@@ -25,7 +25,7 @@ df <- data.frame(
   swe9 = swe$V9
 )
 
-# total (somma delle 9 bande)
+# Total (summing nine bands)
 df$total <- rowSums(df %>% select(starts_with("swe")), na.rm = TRUE)
 
 long <- df %>%

@@ -20,7 +20,6 @@ sweElevation <- function(swe, dem, bands){
     
     if(i == 1){
       appo[dem > bands[i]] <- 0
-      appo[dem <= 0] <- 0
     }
     else{
       appo[dem > bands[i]] <- 0
@@ -45,7 +44,7 @@ evo_appo <- array(0, dim = c(5479, 9))
 bands <- c(500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 5000)
 months <- c("09", "10", "11", "12", "01", "02", "03", "04", "05", "06", "07", "08")
 
-demR <- rast("DEM_Italy_resized.tif")
+demR <- rast("DEM/DEM_Italy.tif")
 dem <- as.matrix(demR, wide = TRUE)
 dem <- dem[nrow(dem):1, ]
 dem <- t(dem)
@@ -93,6 +92,7 @@ for(y in years){
     for(j in time){
       k <- j+1
       swe <- ncvar_get(nc, names(nc$var[2]), start = c(1, 1, k), count = c(-1, -1, 1))
+      swe[is.na(swe)] <- 0
       
       if(i > 4){
         print(paste("Calcolando lo SWE per il giorno ", toString(k), "/", months[i], "/", y, sep=""))  
