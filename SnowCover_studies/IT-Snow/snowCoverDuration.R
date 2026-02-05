@@ -44,7 +44,7 @@ for(y in years){
     
     # Every pixel with a positive swe is treated as snow covered, otherwise as 
     # snow free
-    swe[swe > 0] <- 1
+    swe[swe > 1e-5] <- 1
     swe[swe <= 0] <- 0
     
     monthMap <- rowSums(swe, dims = 2L, na.rm = TRUE)

@@ -19,7 +19,7 @@ meanBandSCD <- function(scd, dem, bands){
   appo <- numeric(length(bands))
   for(i in 1:length(bands)){
     
-    # Selecting band limits (the higher one will be consideed as part of the band,
+    # Selecting band limits (the higher one will be considered as part of the band,
     # while the lower one will not be a part of it)
     if(i == 1){
       liminf <- 0
@@ -63,7 +63,7 @@ latM <- matrix(rep(lat, each = length(lon)), nrow = length(lon), ncol = length(l
 
 # Check to consider only italian territory
 meanSCD[dem < -15] <- NA
-meanSCD[meanSCD <= 0 & dem > 500 & latM > 44] <- NA
+meanSCD[meanSCD <= 0 & dem > 1000 & latM > 40] <- NA
 
 # Evaluating mean SCD values for elevation band
 scd_appo <- meanBandSCD(scd = meanSCD, dem = dem, bands = bands)

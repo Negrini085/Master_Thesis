@@ -11,6 +11,11 @@ SnowCover_studies/IT-Snow/y20*
 SnowCover_studies/IT-Snow/*nc
 
 # ---------------------------
+#       Po Basin datas
+# ---------------------------
+SnowCover_studies/Po-Basin/Dataset
+
+# ---------------------------
 # 	DEM datas
 # ---------------------------
 SnowCover_studies/IT-Snow/DEM
