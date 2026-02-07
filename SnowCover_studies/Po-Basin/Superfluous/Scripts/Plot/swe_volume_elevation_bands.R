@@ -1,6 +1,7 @@
 # The main goal of this script is to plot SWE evolution by elevation band. We want
 # to have just three plots per image, in order to create just 3 plots
-rm(list = ls()); gc()
+rm(list = ls())
+gc()
 
 library(grid)
 library(ggplot2)
@@ -8,29 +9,59 @@ library(gridExtra)
 
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/Po-Basin")
 
-swe <- read.table("Datas/swe_evolution_elevation.dat", header = FALSE)
+appo <- read.table("Datas/swe_evolution_elevation.dat", header = FALSE)
+appo <- as.matrix(appo)
+
+# We need to create NULL periods lasting for 93 days, because to plot SWE volume
+# series we aim for the whole year to be considered
+dur <- 272
+conta1 <- 0
+conta2 <- 0
+years <- 1992:2021
+swe <- array(0, dim = c(10958, 6))
+
+for(y in years){
+  
+  if(y%%4 == 0){
+    swe[(conta1+1):(conta1+dur+1), ] <- appo[(conta2+1):(conta2+dur+1), ]
+    swe[(conta1+dur+2):(conta1+dur+94), ] <- array(NA_real_, dim = c(93, 6))
+    
+    conta1 <- conta1 + dur + 94
+    conta2 <- conta2 + dur + 1
+  }
+  else{
+    swe[(conta1+1):(conta1+dur), ] <- appo[(conta2+1):(conta2+dur), ]
+    swe[(conta1+dur+1):(conta1+dur+93), ] <- array(NA_real_, dim = c(93, 6))
+    
+    conta1 <- conta1 + dur + 93
+    conta2 <- conta2 + dur
+  }
+}
+
 
 df <- data.frame(
-  day  = seq_len(nrow(swe)),
-  swe1 = swe$V1,
-  swe2 = swe$V2,
-  swe3 = swe$V3,
-  swe4 = swe$V4,
-  swe5 = swe$V5,
-  swe6 = swe$V6,
+  day  = seq_len(nrow(swe)+1),
+  swe1 = c(swe[, 1], NA),
+  swe2 = c(swe[, 2], NA),
+  swe3 = c(swe[, 3], NA),
+  swe4 = c(swe[, 4], NA),
+  swe5 = c(swe[, 5], NA),
+  swe6 = c(swe[, 6], NA)
 )
 
+
+
 # Selecting bands to keep
-keep_bands <- c("swe1", "swe2", "swe3")
+keep_bands <- c("swe4", "swe5", "swe6")
 
 data0 <- as.Date("1991-10-03")
 dates <- as.Date(paste0(seq(1991, 2021, by = 3), "-10-03"))
 dates_ind <- as.numeric(dates - data0) + 1
 
 band_labels <- c(
-  swe4 = "0 - 500 m",
-  swe5 = "500 - 1000 m",
-  swe6 = "1000 - 1500 m"
+  swe4 = "1500 - 2000 m",
+  swe5 = "2000 - 2500 m",
+  swe6 = "Over 2500 m"
 )
 
 make_plot <- function(band_name){
@@ -60,5 +91,5 @@ p3 <- make_plot(keep_bands[3])
 grid.arrange(
   grobs = list(p1, p2, p3),
   ncol = 1,
-  top = textGrob("SWE evolution: from 1500 to 3000 meters", gp = gpar(fontface = "bold", fontsize = 14))
+  top = textGrob("SWE evolution: above 1500 meters", gp = gpar(fontface = "bold", fontsize = 14))
 )
