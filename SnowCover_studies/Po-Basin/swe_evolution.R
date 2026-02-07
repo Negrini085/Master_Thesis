@@ -154,9 +154,9 @@ for(y in years){
   swe_year <- naCare(swe_year)
   swe_evolution <- c(swe_evolution, swe_year)
   
-  # Saving SWE volume in a .dat file
-  df <- data.frame(len = 1:length(swe_evolution), swe = swe_evolution)
-  write.table(df$swe, file = paste0("Datas/EvoSWE/swe_evolution", y, ".dat"), row.names = FALSE, col.names = FALSE)
+  # Saving seasonal SWE volume in a .dat file
+  df <- data.frame(len = 1:length(swe_year), swe = swe_year)
+  write.table(df$swe, file = paste0("Datas/Volume_SWE/Evo_SWE/swe_evolution", y, ".dat"), row.names = FALSE, col.names = FALSE)
 
   dayMax[5] <- 28
 }
