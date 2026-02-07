@@ -127,7 +127,7 @@ sweElevation <- function(swe, dem, bands){
 
 # Specifying years and altitude band limits
 years <- 1992:2021
-bands <- c(500, 1000, 1500, 2000, 2500, 4500)
+bands <- c(500, 1000, 1500, 2000, 2500, 5000)
 dayMax <- c(31, 30, 31, 31, 28, 31, 30, 31, 30, 31)
 months <- c("10", "11", "12", "01", "02", "03", "04", "05", "06", "07")
 
