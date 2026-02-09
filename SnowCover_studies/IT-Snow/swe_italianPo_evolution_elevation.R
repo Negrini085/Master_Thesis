@@ -1,17 +1,45 @@
-# The main goal of this script is to determine swe evolution of the snowpack. I will 
-# try to make use of functions, in order to make code easier to read.
+# The main goal of this script is to do an elevation-based SWE evolution analysis
+# across the italian po basin. In particular, I would like to divide the 
+# whole area across 6 elevation bands, each one about 500 meters thick.
 
 library(ncdf4)
 library(terra)
 library(ggplot2)
 
+# Function to make elevation-wise SWE analysis. The main point here is to use the 
+# digitalized elevation model as a tool to understand which pixels to discard and which not to
+sweElevation <- function(swe, dem, bands){
+  
+  # We will split the map across a number of band that is equal to lenght(bands)
+  swe_elevation <- numeric(length(bands))
+  
+  for(i in 1:length(bands)){
+    appo <- swe 
+    
+    if(i == 1){
+      appo[dem > bands[i]] <- NA
+    }
+    else{
+      appo[dem > bands[i]] <- NA
+      appo[dem <= bands[i-1]] <- NA
+    }
+    
+    swe_elevation[i] <- sum(appo, na.rm = TRUE)
+  }
+  
+  return(swe_elevation)
+}
+
+
+
+
 start_time <- Sys.time()
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
-old_warn <- getOption("warn")  
-options(warn = -1)
 
 # Time window
 years <- 2011:2025
+evo_appo <- array(0, dim = c(5479, 9))
+bands <- c(500, 1000, 1500, 2000, 2500, 5000)
 months <- c("09", "10", "11", "12", "01", "02", "03", "04", "05", "06", "07", "08")
 
 # Importing mask (to just consider po basin)
@@ -19,6 +47,12 @@ mask <- rast("Datas/Italian_Po_Mask.tif")
 mask <- as.matrix(mask, wide = TRUE)
 mask <- mask[nrow(mask):1, ]
 mask <- t(mask)
+
+# Importing DEM
+demR <- rast("DEM/DEM_Italy.tif")
+dem <- as.matrix(demR, wide = TRUE)
+dem <- dem[nrow(dem):1, ]
+dem <- t(dem)
 
 
 #----------------------------------------------#
@@ -45,10 +79,10 @@ for(i in 1:length(lat)){
 #----------------------------------------------#
 #            Evaluating SWE evo                #
 #----------------------------------------------#
-swe_evolution <- numeric(0)
+ind = 1
 for(y in years){
   for(i in 1:length(months)){
-
+    
     # Logic conditions in order to create the correct file path
     if(i > 4){
       fname <- paste("y", toString(y), "/ITSNOW_SWE_", toString(y), months[i], ".nc", sep="")
@@ -56,47 +90,53 @@ for(y in years){
     else{
       fname <- paste("y", toString(y), "/ITSNOW_SWE_", toString(y-1), months[i], ".nc", sep="")
     }
-
+    
     # The real deal, opening netCDF4 datas and evaluating total SWE
     nc <- nc_open(fname)
     time <- ncvar_get(nc, names(nc$var[1]))
     for(j in time){
       k <- j+1
       swe <- ncvar_get(nc, names(nc$var[2]), start = c(1, 1, k), count = c(-1, -1, 1))
-
+      swe[is.na(swe)] <- 0
+      
       if(i > 4){
-        print(paste("Calcolando lo SWE per il giorno ", toString(k), "/", months[i], "/", y, sep=""))
+        print(paste("Calcolando lo SWE per il giorno ", toString(k), "/", months[i], "/", y, sep=""))  
       }
       else{
         print(paste("Calcolando lo SWE per il giorno ", toString(k), "/", months[i], "/", y-1, sep=""))
       }
-
+      
       # SWE evaluation and storing
-      swe <- swe * area
+      swe <- swe * area*10^-12
       swe[is.na(mask)] <- 0
-      total_swe <- sum(swe, na.rm = TRUE)*10^-12
-      swe_evolution <- c(swe_evolution, total_swe)
+      
+      # Dealing with different altitude bands
+      appo <- sweElevation(swe = swe, dem = dem, bands = bands)
+      for(h in 1:length(appo)){
+        evo_appo[ind, h] <- appo[h]
+      }
+      ind = ind + 1
     }
-    print(swe_evolution)
     nc_close(nc)
   }
 }
 
 df <- data.frame(
-  day = 1:length(swe_evolution),
-  swe = swe_evolution
-)
+  b1 <- evo_appo[, 1],
+  b2 <- evo_appo[, 2],
+  b3 <- evo_appo[, 3],
+  b4 <- evo_appo[, 4],
+  b5 <- evo_appo[, 5],
+  b6 <- evo_appo[, 6]
+  )
 
-data0 <- as.Date("2010-09-01")
+write.table(
+  format(df, scientific = FALSE, digits = 9),
+  file = "swe_PoBasin_evolution_elevation.dat", 
+  row.names = FALSE, 
+  col.names = FALSE, 
+  quote = FALSE)
 
-# Plotting options (we will do a better job when it's all finished)
-write.table(df$swe, file = "Datas/swe_PoBasin_evolution.dat", row.names = FALSE, col.names = FALSE)
-ggplot(df, aes(x = df$day, y = df$swe)) +
-  geom_line(color = "blue", size = 1.5) +
-  labs(title = "SWE evolution: 2011 to 2025", x = "Days", y = "SWE Gm^3") +
-  theme_minimal()
-
-options(warn = old_warn)
 end_time <- Sys.time()
 elapsed <- end_time - start_time
 elapsed

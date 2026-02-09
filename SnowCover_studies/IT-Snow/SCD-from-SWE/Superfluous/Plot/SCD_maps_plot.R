@@ -1,6 +1,7 @@
 # The main goal of this script is to produce a plot containing all SCD maps 
 # for the period under investigation.
-rm(list = ls()); gc() 
+rm(list = ls())
+gc() 
 
 library(sf) 
 library(ncdf4)
@@ -16,10 +17,10 @@ get_legend <- function(p){
   gtable_filter(g, "guide-box") 
 }
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow/SCD-from-SWE")
 
 year <- 2025
-fname <- paste0("Datas/yearlySCD.nc")
+fname <- paste0("Datas/season_map_SCD.nc")
 
 nc <- nc_open(fname)
 lat <- ncvar_get(nc, "lat") 
@@ -35,7 +36,7 @@ titles <- c(
 )
 
 scd[scd == 0] <- NA 
-lims <- c(0, 365)
+lims <- c(1, 365)
 
 plots <- vector("list", length(titles)) 
 for (i in 1:length(titles)) {
