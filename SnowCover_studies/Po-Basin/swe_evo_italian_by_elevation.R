@@ -220,7 +220,7 @@ for(y in years){
   
   # Saving seasonal SWE volume in a .dat file
   df <- as.data.frame(swe_year)
-  write.table(df, file = paste0("Datas/Volume_SWE/Evo_Ele_SWE/swe_evolution", y, ".dat"), row.names = FALSE, col.names = FALSE)
+  write.table(df, file = paste0("Datas/Volume_SWE/Evo_Italian_Ele_SWE/swe_evolution", y, ".dat"), row.names = FALSE, col.names = FALSE)
   
   dayMax[5] <- 28
 }
