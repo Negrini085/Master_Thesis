@@ -3,7 +3,7 @@ library(ggplot2)
 
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
 
-swe <- read.table("Datas/swe_evolution.dat")
+swe <- read.table("Datas/swe_PoBasin_evolution.dat")
 swe <- swe$V1
 
 df <- data.frame(
@@ -25,6 +25,6 @@ ggplot(df, aes(x = df$day, y = df$swe)) +
     expand = c(5e-3, 5e-3)
   ) +
   geom_line(color = "blue", size = 1.5) +
-  labs(title = "SWE evolution: 2011 to 2025", x = "Days", y = "SWE Gm^3") +
+  labs(title = "Po Basin SWE evolution: 2011 to 2025", x = "Days", y = "SWE Gm^3") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
