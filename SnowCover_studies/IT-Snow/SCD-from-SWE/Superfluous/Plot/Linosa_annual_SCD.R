@@ -64,7 +64,7 @@ plots_noleg <- lapply(plots, \(p) p + theme(legend.position = "none"))
 panel_grid <- arrangeGrob(grobs = plots_noleg, nrow = 3, ncol = 5) 
 
 title_grob <- textGrob(
-  "Snow cover duration maps",
+  "Linosa: faulty pixels across years",
   gp = gpar(fontsize = 16, fontface = "bold")
 )
 
