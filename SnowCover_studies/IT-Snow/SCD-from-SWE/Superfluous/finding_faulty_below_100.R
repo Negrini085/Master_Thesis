@@ -34,7 +34,7 @@ dem <- t(dem)
 # this stage only on the ones which have a snow cover duration of almost 100 days and 
 # elevation close to sea level. We will also plot coordinates, so that we can identify 
 # where this bug is present
-mask <- scd > 35 & scd < 200 & dem < 50
+mask <- scd > 30 & scd < 200 & dem < 50
 if(length(scd[mask])){
   print("Numero di pixel difettosi pari a: ")
   print(length(scd[mask]))
@@ -54,7 +54,7 @@ lat_max <- max(appo[, 2])
 appo_lat <- lat[lat_min : lat_max]
 appo_lon <- lon[lon_min : lon_max]
 appo_scd <- scd[lon_min:lon_max, lat_min:lat_max]
-appo_scd[appo_scd < 40] <- NA
+appo_scd[appo_scd < 30] <- NA
 
 
 europe <- ne_countries(continent = "Europe", scale = 10, returnclass = "sf")
@@ -66,5 +66,5 @@ ggplot() +
   coord_sf(xlim = c(appo_lon[1], appo_lon[length(appo_lon)]), ylim = c(appo_lat[1], appo_lat[length(appo_lat)])) +
   geom_raster(data = grid, aes(x = lon, y = lat, fill = scd)) +
   scale_fill_viridis_c(option = "C", na.value = "transparent") +
-  labs(title = "Faulty pixels: SCD in (40, 100) and DEM < 40", x = "Longitude", y = "Latitude", fill = "Days") +
+  labs(title = "Faulty pixels: SCD in (30, 100) and DEM < 40", x = "Longitude", y = "Latitude", fill = "Days") +
   theme_minimal()
