@@ -50,6 +50,11 @@ for (i in 1:length(titles)) {
   p <- ggplot() +
     geom_sf(data = europe, fill = "grey90", color = "black", linewidth = 0.2) +
     coord_sf(xlim = c(lon[1], lon[length(lon)]), ylim = c(lat[1], lat[length(lat)])) +
+    scale_x_continuous(
+      breaks = scales::pretty_breaks(n = 3),
+      labels = function(x) paste0(sprintf("%.2f", x), "°E")
+    ) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
     geom_raster(data = grid_df, aes(x = lon, y = lat, fill = scd)) +
     scale_fill_viridis_c( option = "C", limits = lims, na.value = "transparent", oob = scales::squish) +
     labs(title = titles[i], x = NULL, y = NULL, fill = "SCD") +
