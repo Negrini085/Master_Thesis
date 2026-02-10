@@ -31,22 +31,31 @@ dem <- t(dem)
 
 
 # Checking how many of these pixel are part of our mean SCD map. I will be focusing at
-# this stage only on the ones which have a snow cover duration of above 300 days and 
-# elevation below 500 meters. We will also plot coordinates, so that we can identify 
+# this stage only on the ones which have a snow cover duration of almost 100 days and 
+# elevation close to sea level. We will also plot coordinates, so that we can identify 
 # where this bug is present
-appo <- scd
-if(length(appo[appo > 300 & dem < 500])){
+mask <- scd > 35 & scd < 200 & dem < 50
+if(length(scd[mask])){
   print("Numero di pixel difettosi pari a: ")
-  print(length(appo[appo > 300 & dem < 500]))
+  print(length(scd[mask]))
 }
-which(appo > 300 & dem < 500, arr.ind = TRUE)
+
+# Finding pixel latitude and longitude in order to plot the investigated region. I feel
+# like those could be a conseguence of a few faulty years, not such as Linosa whose bug 
+# is present across the whole dataset
+appo <- which(mask, arr.ind = TRUE)
+lon_min <- min(appo[, 1])
+lon_max <- max(appo[, 1])
+lat_min <- min(appo[, 2])
+lat_max <- max(appo[, 2])
 
 
-# Plotting faulty pixels.
-appo_lat <- lat[140 : 150]
-appo_lon <- lon[1260 : 1270]
-appo_scd <- scd[1260:1270, 140:150]
-appo_scd[appo_scd == 0] <- NA
+# From now on the main focus is plotting faulty pixels located applying the previous mask.
+appo_lat <- lat[lat_min : lat_max]
+appo_lon <- lon[lon_min : lon_max]
+appo_scd <- scd[lon_min:lon_max, lat_min:lat_max]
+appo_scd[appo_scd < 40] <- NA
+
 
 europe <- ne_countries(continent = "Europe", scale = 10, returnclass = "sf")
 grid <- expand.grid(lon = appo_lon, lat = appo_lat)
@@ -54,8 +63,8 @@ grid$scd <- as.vector(appo_scd)
 
 ggplot() +
   geom_sf(data = europe, fill = "grey90", color = "black", inherit.aes = FALSE) +
-  coord_sf(xlim = c(lon[1260], lon[1270]), ylim = c(lat[140], lat[150])) +
+  coord_sf(xlim = c(appo_lon[1], appo_lon[length(appo_lon)]), ylim = c(appo_lat[1], appo_lat[length(appo_lat)])) +
   geom_raster(data = grid, aes(x = lon, y = lat, fill = scd)) +
   scale_fill_viridis_c(option = "C", na.value = "transparent") +
-  labs(title = "Faulty pixels: SCD > 300 and DEM < 500 m", x = "Longitude", y = "Latitude", fill = "SWE (mm w.e.)") +
+  labs(title = "Faulty pixels: SCD in (40, 100) and DEM < 40", x = "Longitude", y = "Latitude", fill = "Days") +
   theme_minimal()
