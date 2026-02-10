@@ -20,7 +20,7 @@ get_legend <- function(p){
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow/SCD-from-SWE")
 
 year <- 2025
-fname <- paste0("Datas/season_map_SCD.nc")
+fname <- paste0("Datas/season_maps_SCD.nc")
 
 nc <- nc_open(fname)
 lat <- ncvar_get(nc, "lat") 

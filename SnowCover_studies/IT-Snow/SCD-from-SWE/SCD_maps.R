@@ -82,6 +82,6 @@ swe_var <- ncvar_def(
 )
 
 # Creating netCDF and filling SWE values
-nc_out <- nc_create("Datas/season_map_SCD.nc", vars = list(swe_var))
+nc_out <- nc_create("Datas/season_maps_SCD.nc", vars = list(swe_var))
 ncvar_put(nc_out, swe_var, stackSCD)
 nc_close(nc_out)
