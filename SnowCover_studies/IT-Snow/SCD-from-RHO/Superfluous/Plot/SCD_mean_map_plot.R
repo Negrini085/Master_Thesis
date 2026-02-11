@@ -7,7 +7,7 @@ library(ncdf4)
 library(ggplot2)
 library(rnaturalearth)
   
-  setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow/SCD-from-SWE")
+  setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow/SCD-from-RHO")
   
 # Opening netCDF file and loading what we want to plot (this being the SWE snapshot
 # of the first day of March). We will not get into details, because we already covered
