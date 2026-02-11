@@ -12,7 +12,7 @@ library(rnaturalearth)
 
 
 # Setting directory and specifying correct file
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow/SCD-from-SWE/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow/SCD-from-RHO/")
 fname <- "Datas/mean_SCD_map.nc"
 
 # Importing SCD map file
