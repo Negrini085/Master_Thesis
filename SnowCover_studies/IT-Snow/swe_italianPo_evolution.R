@@ -48,7 +48,7 @@ for(i in 1:length(lat)){
 swe_evolution <- numeric(0)
 for(y in years){
   for(i in 1:length(months)){
-
+    
     # Logic conditions in order to create the correct file path
     if(i > 4){
       fname <- paste("y", toString(y), "/ITSNOW_SWE_", toString(y), months[i], ".nc", sep="")
@@ -56,21 +56,21 @@ for(y in years){
     else{
       fname <- paste("y", toString(y), "/ITSNOW_SWE_", toString(y-1), months[i], ".nc", sep="")
     }
-
+    
     # The real deal, opening netCDF4 datas and evaluating total SWE
     nc <- nc_open(fname)
     time <- ncvar_get(nc, names(nc$var[1]))
     for(j in time){
       k <- j+1
       swe <- ncvar_get(nc, names(nc$var[2]), start = c(1, 1, k), count = c(-1, -1, 1))
-
+      
       if(i > 4){
         print(paste("Calcolando lo SWE per il giorno ", toString(k), "/", months[i], "/", y, sep=""))
       }
       else{
         print(paste("Calcolando lo SWE per il giorno ", toString(k), "/", months[i], "/", y-1, sep=""))
       }
-
+      
       # SWE evaluation and storing
       swe <- swe * area
       swe[is.na(mask)] <- 0
