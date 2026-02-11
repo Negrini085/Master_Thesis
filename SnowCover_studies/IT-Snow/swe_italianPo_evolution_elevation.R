@@ -14,17 +14,16 @@ sweElevation <- function(swe, dem, bands){
   swe_elevation <- numeric(length(bands))
   
   for(i in 1:length(bands)){
-    appo <- swe 
     
+    # Creating correct mask in order to consider different elevation bands
     if(i == 1){
-      appo[dem > bands[i]] <- NA
+      mask <- !is.na(dem) & dem <= bands[i]
     }
     else{
-      appo[dem > bands[i]] <- NA
-      appo[dem <= bands[i-1]] <- NA
+      mask <- !is.na(dem) & dem > bands[i-1] & dem <= bands[i]
     }
     
-    swe_elevation[i] <- sum(appo, na.rm = TRUE)
+    swe_elevation[i] <- sum(swe[mask], na.rm = TRUE)
   }
   
   return(swe_elevation)
@@ -38,15 +37,15 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
 
 # Time window
 years <- 2011:2025
-evo_appo <- array(0, dim = c(5479, 9))
+evo_appo <- array(0, dim = c(5479, 6))
 bands <- c(500, 1000, 1500, 2000, 2500, 5000)
 months <- c("09", "10", "11", "12", "01", "02", "03", "04", "05", "06", "07", "08")
 
 # Importing mask (to just consider po basin)
-mask <- rast("Datas/Italian_Po_Mask.tif")
-mask <- as.matrix(mask, wide = TRUE)
-mask <- mask[nrow(mask):1, ]
-mask <- t(mask)
+mask_po <- rast("Datas/Italian_Po_Mask.tif")
+mask_po <- as.matrix(mask_po, wide = TRUE)
+mask_po <- mask_po[nrow(mask_po):1, ]
+mask_po <- t(mask_po)
 
 # Importing DEM
 demR <- rast("DEM/DEM_Italy.tif")
@@ -108,13 +107,10 @@ for(y in years){
       
       # SWE evaluation and storing
       swe <- swe * area*10^-12
-      swe[is.na(mask)] <- 0
+      swe[is.na(mask_po)] <- NA
       
       # Dealing with different altitude bands
-      appo <- sweElevation(swe = swe, dem = dem, bands = bands)
-      for(h in 1:length(appo)){
-        evo_appo[ind, h] <- appo[h]
-      }
+      evo_appo[ind, ] <- sweElevation(swe = swe, dem = dem, bands = bands)
       ind = ind + 1
     }
     nc_close(nc)
@@ -132,7 +128,7 @@ df <- data.frame(
 
 write.table(
   format(df, scientific = FALSE, digits = 9),
-  file = "swe_PoBasin_evolution_elevation.dat", 
+  file = "Datas/swe_PoBasin_evolution_elevation.dat", 
   row.names = FALSE, 
   col.names = FALSE, 
   quote = FALSE)
