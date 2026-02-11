@@ -24,16 +24,16 @@ df <- data.frame(
 )
 
 # Selecting bands to keep
-keep_bands <- c("swe4", "swe5", "swe6")
+keep_bands <- c("swe7", "swe8", "swe9")
 
 data0 <- as.Date("2010-09-01")
 dates <- as.Date(paste0(2011:2024, "-09-01"))
 dates_ind <- as.numeric(dates - data0) + 1
 
 band_labels <- c(
-  swe4 = "1500 - 2000 m",
-  swe5 = "2000 - 2500 m",
-  swe6 = "2500 - 3000 m"
+  swe7 = "3000 - 3500 m",
+  swe8 = "3500 - 4000 m",
+  swe9 = "Over 4000 m"
 )
 
 make_plot <- function(band_name){
@@ -63,5 +63,5 @@ p3 <- make_plot(keep_bands[3])
 grid.arrange(
   grobs = list(p1, p2, p3),
   ncol = 1,
-  top = textGrob("SWE evolution: from 1500 to 3000 meters", gp = gpar(fontface = "bold", fontsize = 14))
+  top = textGrob("SWE evolution: over 4000 meters", gp = gpar(fontface = "bold", fontsize = 14))
 )

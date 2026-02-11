@@ -16,17 +16,16 @@ sweElevation <- function(swe, dem, bands){
   swe_elevation <- numeric(length(bands))
   
   for(i in 1:length(bands)){
-    appo <- swe 
     
+    # Creating correct mask in order to consider different elevation bands
     if(i == 1){
-      appo[dem > bands[i]] <- 0
+      mask <- !is.na(dem) & dem <= bands[i]
     }
     else{
-      appo[dem > bands[i]] <- 0
-      appo[dem <= bands[i-1]] <- 0
+      mask <- !is.na(dem) & dem > bands[i-1] & dem <= bands[i]
     }
     
-    swe_elevation[i] <- sum(appo, na.rm = TRUE)
+    swe_elevation[i] <- sum(swe[mask], na.rm = TRUE)
   }
   
   return(swe_elevation)
@@ -92,7 +91,6 @@ for(y in years){
     for(j in time){
       k <- j+1
       swe <- ncvar_get(nc, names(nc$var[2]), start = c(1, 1, k), count = c(-1, -1, 1))
-      swe[is.na(swe)] <- 0
       
       if(i > 4){
         print(paste("Calcolando lo SWE per il giorno ", toString(k), "/", months[i], "/", y, sep=""))  
@@ -102,7 +100,9 @@ for(y in years){
       }
       
       # SWE evaluation and storing
-      swe <- swe * area*10^-12
+      mask <- !is.na(dem)
+      swe[mask] <- swe[mask] * area[mask] * 10^-12
+      swe[!mask] <- NA
       
       # Dealing with different altitude bands
       appo <- sweElevation(swe = swe, dem = dem, bands = bands)
@@ -129,7 +129,7 @@ df <- data.frame(
 
 write.table(
   format(df, scientific = FALSE, digits = 6),
-  file = "sweEvoElevation.dat", 
+  file = "Datas/swe_evolution_elevation.dat", 
   row.names = FALSE, 
   col.names = FALSE, 
   quote = FALSE)
