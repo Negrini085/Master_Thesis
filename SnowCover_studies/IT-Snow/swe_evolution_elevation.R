@@ -3,6 +3,8 @@
 # whole area across 9 elevation bands, each one about 500 meters thick. Then, I 
 # would like to plot singularly every climatology in a 3x3 plot and also make a 
 # plot in which they all sum up to the total SWE known climatology
+rm(list = ls())
+gc()
 
 library(ncdf4)
 library(terra)
@@ -10,22 +12,25 @@ library(ggplot2)
 
 # Function to make elevation-wise SWE analysis. The main point here is to use the 
 # digitalized elevation model as a tool to understand which pixels to discard and which not to
-sweElevation <- function(swe, dem, bands){
+sweElevation <- function(swe, dem, area, bands){
+  
   
   # We will split the map across a number of band that is equal to lenght(bands)
-  swe_elevation <- numeric(length(bands))
-  
+  days <- dim(swe)[3]
+  swe_elevation <- matrix(NA, nrow = days, ncol = length(bands))
+
   for(i in 1:length(bands)){
-    
     # Creating correct mask in order to consider different elevation bands
-    if(i == 1){
-      mask <- !is.na(dem) & dem <= bands[i]
-    }
-    else{
-      mask <- !is.na(dem) & dem > bands[i-1] & dem <= bands[i]
-    }
+    if(i == 1) mask <- !is.na(dem) & dem <= bands[i]
+    else mask <- !is.na(dem) & dem > bands[i-1] & dem <= bands[i]
     
-    swe_elevation[i] <- sum(swe[mask], na.rm = TRUE)
+    # Masking every layer for the same elevation band (and evaluating total volume)
+    conj_mask <- mask * area
+    swe_filtered <- sweep(swe, c(1, 2), conj_mask, `*`)
+    swe_elevation[, i] <- colSums(swe_filtered, dims = 2, na.rm = TRUE)*10^-12
+      
+    rm(swe_filtered)
+    gc()
   }
   
   return(swe_elevation)
@@ -80,38 +85,24 @@ for(y in years){
     # Logic conditions in order to create the correct file path
     if(i > 4){
       fname <- paste("y", toString(y), "/ITSNOW_SWE_", toString(y), months[i], ".nc", sep="")
+      print(paste("Evaluating SWE total volume ", months[i], "/", y, sep=""))
     }
     else{
       fname <- paste("y", toString(y), "/ITSNOW_SWE_", toString(y-1), months[i], ".nc", sep="")
+      print(paste("Evaluating SWE total volume ", months[i], "/", y-1, sep=""))
     }
     
     # The real deal, opening netCDF4 datas and evaluating total SWE
     nc <- nc_open(fname)
-    time <- ncvar_get(nc, names(nc$var[1]))
-    for(j in time){
-      k <- j+1
-      swe <- ncvar_get(nc, names(nc$var[2]), start = c(1, 1, k), count = c(-1, -1, 1))
-      
-      if(i > 4){
-        print(paste("Calcolando lo SWE per il giorno ", toString(k), "/", months[i], "/", y, sep=""))  
-      }
-      else{
-        print(paste("Calcolando lo SWE per il giorno ", toString(k), "/", months[i], "/", y-1, sep=""))
-      }
-      
-      # SWE evaluation and storing
-      mask <- !is.na(dem)
-      swe[mask] <- swe[mask] * area[mask] * 10^-12
-      swe[!mask] <- NA
-      
-      # Dealing with different altitude bands
-      appo <- sweElevation(swe = swe, dem = dem, bands = bands)
-      for(h in 1:length(appo)){
-        evo_appo[ind, h] <- appo[h]
-      }
-      ind = ind + 1
-    }
+    swe_maps <- ncvar_get(nc, names(nc$var[2]))
     nc_close(nc)
+    
+    appo <- sweElevation(swe = swe_maps, dem = dem, area = area, bands = bands)
+    evo_appo[ind:(ind + dim(appo)[1] - 1), ] <- appo
+    
+    ind = ind + dim(appo)[1]
+    rm(swe_maps)
+    gc()
   }
 }
 
