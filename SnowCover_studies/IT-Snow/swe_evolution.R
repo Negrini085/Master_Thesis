@@ -1,13 +1,16 @@
-# The main goal of this script is to determine swe evolution of the snowpack. I will 
-# try to make use of functions, in order to make code easier to read.
+# The main goal of this script is to compute SWE series with a parallel coding 
+# approach. I would like to split SWE matrix in sub-matrices, in order to make 
+# total volume computation faster
+rm(list = ls())
+gc()
 
 library(ncdf4)
 library(ggplot2)
+library(parallel)
 
 start_time <- Sys.time()
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
-old_warn <- getOption("warn")  
-options(warn = -1)
+
 
 # Time window
 years <- 2011:2025
@@ -45,31 +48,22 @@ for(y in years){
     # Logic conditions in order to create the correct file path
     if(i > 4){
       fname <- paste("y", toString(y), "/ITSNOW_SWE_", toString(y), months[i], ".nc", sep="")
+      print(paste("Evaluating SWE total volume ", months[i], "/", y, sep=""))
     }
     else{
       fname <- paste("y", toString(y), "/ITSNOW_SWE_", toString(y-1), months[i], ".nc", sep="")
+      print(paste("Evaluating SWE total volume ", months[i], "/", y-1, sep=""))
     }
     
     # The real deal, opening netCDF4 datas and evaluating total SWE
     nc <- nc_open(fname)
-    time <- ncvar_get(nc, names(nc$var[1]))
-    for(j in time){
-      k <- j+1
-      swe <- ncvar_get(nc, names(nc$var[2]), start = c(1, 1, k), count = c(-1, -1, 1))
-      
-      if(i > 4){
-        print(paste("Calcolando lo SWE per il giorno ", toString(k), "/", months[i], "/", y, sep=""))  
-      }
-      else{
-        print(paste("Calcolando lo SWE per il giorno ", toString(k), "/", months[i], "/", y-1, sep=""))
-      }
-      
-      # SWE evaluation and storing
-      total_swe <- sum(swe * area, na.rm = TRUE)*10^-12
-      swe_evolution <- c(swe_evolution, total_swe)
-    }
-    print(swe_evolution)
+    swe_maps <- ncvar_get(nc, names(nc$var[2]))
     nc_close(nc)
+    
+    swe_maps <- sweep(swe_maps, c(1, 2), area, `*`)
+    swe_month <- colSums(swe_maps, dims = 2, na.rm = TRUE)*10^-12
+    
+    swe_evolution <- c(swe_evolution, swe_month)
   }
 }
 
@@ -87,7 +81,6 @@ ggplot(df, aes(x = df$day, y = df$swe)) +
   labs(title = "SWE evolution: 2011 to 2025", x = "Days", y = "SWE Gm^3") +
   theme_minimal()
 
-options(warn = old_warn)
 end_time <- Sys.time()
 elapsed <- end_time - start_time
 elapsed
