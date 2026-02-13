@@ -18,8 +18,8 @@ SnowCover_studies/Po-Basin/Dataset
 # ---------------------------
 #       Po Basin datas
 # ---------------------------
-SnowCover_studies/Degree_Day_factor/Dataset
-SnowCover_studies/Degree_Day_factor/CHECK_LOCATION
+Degree_Day_factor/Dataset
+Degree_Day_factor/CHECK_LOCATION
 
 # ---------------------------
 # 	DEM datas
