@@ -26,7 +26,7 @@ scd_per_band <- function(dem, scd, lim_inf, lim_sup){
   return(round(appo))
 }
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow/SCD-from-SWE")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow/SCD/SCD-from-SWE")
 fname <- "Datas/mean_SCD_map.nc"
 
 bands <- c(seq(from = 25, to = 3000, by = 25), seq(from = 3050, to = 3500, by = 50), seq(from = 3600, to = 4000, by = 100))
@@ -61,7 +61,7 @@ for(i in 1:length(bands)){
     mask_ele <- !is.na(dem) & dem > bands[i-1] & dem <= bands[i] & !appo
   }
   
-  # print(length(scd[mask_ele]))
+  print(length(scd[mask_ele]))
 }
 
 
