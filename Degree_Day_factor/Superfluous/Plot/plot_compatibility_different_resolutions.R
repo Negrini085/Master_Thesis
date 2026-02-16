@@ -1,9 +1,12 @@
 # The main goal of this script is to plot AWS stations across the whole alpine
 # arc. Every subplot refers to a specific DEM resolution
+rm(list = ls())
+gc()
 
 library(sf)
 library(ggplot2)
 library(rnaturalearth)
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor")
 
 # Function to load and clear datas
 load_and_clean <- function(file_path, label, diff_lim) {
