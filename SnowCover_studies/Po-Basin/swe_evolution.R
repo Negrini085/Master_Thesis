@@ -1,6 +1,8 @@
 # The main goal of this script is to determine swe evolution of the snowpack. I will 
 # try to make use of functions, in order to make code easier to read. We will make 
 # use of linear interpolation in order to overcame dataset gaps.
+rm(list = ls())
+gc()
 
 library(terra)
 library(ggplot2)
