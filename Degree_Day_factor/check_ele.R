@@ -43,9 +43,9 @@ for(station in 1:nrow(coord_ele)){
 diff <- coord_ele[, 3] - dem_ele
 
 # Checking for faulty elevations (here we will use a 15 meter tollerance window)
-mark <- array("", dim = c(length(diff)))
-mask <- diff > 15
-mark[mask] <- "***"
+mark <- array("ok", dim = c(length(diff)))
+mask <- diff > 15 | diff < -15
+mark[mask] <- "NO"
 
 
 
@@ -62,4 +62,4 @@ results <- data.frame(
   mark = mark
 )
 
-write.table(results, file = "Datas/check_ele.dat", row.names = FALSE, col.names = TRUE)
+write.table(results, file = "Datas/check_ele.dat", row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
