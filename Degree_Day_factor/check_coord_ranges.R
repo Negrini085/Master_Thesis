@@ -20,6 +20,6 @@ print(paste0("Maximum station latitude: ", max(stations[, 3])))
 
 
 # Evaluating dem longitude and latitude ranges
-dem <- rast("appo.tif")
+dem <- rast("DEM/DEM_stations.tif")
 coord_range <- ext(dem)
 print(coord_range)
