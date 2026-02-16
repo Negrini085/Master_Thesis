@@ -14,9 +14,9 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor")
 
 
 # Reading dataset with dem elevation and station one
-appo <- read.table("Datas/check_brunetti.dat", header = TRUE, fill = TRUE)
+appo <- read.table("Datas/faulty_vs_res/check_ele_30.dat", header = TRUE, fill = TRUE)
 diff <- as.numeric(appo[[4]]) - as.numeric(appo[[7]])
-df_plot <- data.frame(lon = as.numeric(appo[, 2]), lat = as.numeric(appo[, 3]), status = ifelse(abs(diff) < 100, "OK", "NO"))
+df_plot <- data.frame(lon = as.numeric(appo[, 2]), lat = as.numeric(appo[, 3]), status = ifelse(abs(diff) < 12, "OK", "NO"))
 df_plot <- na.omit(df_plot)
 df_plot$status <- factor(df_plot$status, levels = c("OK", "NO"))
 
@@ -31,5 +31,8 @@ ggplot() +
   scale_color_manual(values = c("OK" = "forestgreen", "NO" = "firebrick1"), name = "Compatibility") +
   coord_sf(xlim = c(3.5, 17), ylim = c(43, 49), expand = FALSE) +
   theme_minimal() +
-  labs(title = "AWS Station reliability analysis: Brunetti analysis", x = "Longitude", y = "Latitude") +
+  labs(
+    title = "AWS Station reliability analysis: DEM resolution of 30 m", 
+    subtitle = "Threshold: 2/5 of pixel size",
+    x = "Longitude", y = "Latitude") +
   theme(panel.background = element_rect(fill = "aliceblue"), legend.position = "bottom")

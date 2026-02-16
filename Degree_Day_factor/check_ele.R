@@ -15,7 +15,8 @@ station_names <- appo[, 1]
 rm(appo)
 gc()
 
-dem <- rast("DEM/DEM_stations.tif")
+diff_lim <- 192
+dem <- rast("DEM/DEM_stations_480.tif")
 
 
 
@@ -44,7 +45,7 @@ diff <- coord_ele[, 3] - dem_ele
 
 # Checking for faulty elevations (here we will use a 15 meter tollerance window)
 mark <- array("ok", dim = c(length(diff)))
-mask <- diff > 15 | diff < -15
+mask <- diff > diff_lim | diff < -diff_lim
 mark[mask] <- "NO"
 
 
@@ -62,4 +63,4 @@ results <- data.frame(
   mark = mark
 )
 
-write.table(results, file = "Datas/check_ele.dat", row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
+write.table(results, file = "Datas/check_ele_480.dat", row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
