@@ -40,12 +40,12 @@ df <- data.frame(
   pval = plot_pval
 )
 
-
-ggplot() +
-  geom_point(data = df, aes(x = elevation, y = pval), color = "blue", size = 1, alpha = 0.4) +
+ggplot(df, aes(x = elevation, y = pval)) +
+  stat_bin2d(binwidth = c(500, 0.25)) +
   labs(
-    title = "P-value vs Elevation",
     x = "Elevation (m)",
-    y = "P-value"
+    y = "P-value",
+    fill = "Number of points",
+    title = "Elevation vs P-value"
   ) +
   theme_minimal()
