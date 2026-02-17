@@ -46,6 +46,6 @@ ggplot(df, aes(x = elevation, y = pval)) +
     x = "Elevation (m)",
     y = "P-value",
     fill = "Number of points",
-    title = "Elevation vs P-value"
+    title = "P-value vs Elevation"
   ) +
   theme_minimal()
