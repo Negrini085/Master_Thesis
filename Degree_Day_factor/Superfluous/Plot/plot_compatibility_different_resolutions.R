@@ -11,12 +11,12 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor")
 # Function to load and clear datas
 load_and_clean <- function(file_path, label, diff_lim) {
   appo <- read.table(file_path, header = TRUE, fill = TRUE)
-  diff <- as.numeric(appo[[4]]) - as.numeric(appo[[7]])
+  mark <- appo[[9]]
   
   df <- data.frame(
     lon = as.numeric(appo[, 2]),
     lat = as.numeric(appo[, 3]),
-    status = ifelse(abs(diff) < diff_lim, "OK", "NO"),
+    status = ifelse(mark == "ok", "OK", "NO"),
     dataset = label
   )
   return(na.omit(df))

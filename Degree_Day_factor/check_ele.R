@@ -46,7 +46,7 @@ diff <- coord_ele[, 3] - dem_ele
 # Checking for faulty elevations (here we will use a 15 meter tollerance window)
 mark <- array("ok", dim = c(length(diff)))
 mask <- diff > diff_lim | diff < -diff_lim
-mark[mask] <- "NO"
+mark[mask]<- "NO"
 
 
 
@@ -56,7 +56,7 @@ results <- data.frame(
   lon = coord_ele[,1],
   lat = coord_ele[,2],
   ele = coord_ele[,3],
-  lon_DEM = dem_lon, 
+  lon_DEM = dem_lon,
   lat_DEM = dem_lat,
   ele_DEM = dem_ele,
   diff = diff,

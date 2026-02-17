@@ -12,11 +12,11 @@ num_discarded <- function(file_path, diff_lim){
   
   # Loading data and computing difference
   appo <- read.table(file_path, header = TRUE, fill = TRUE)
-  diff <- as.numeric(appo[[4]]) - as.numeric(appo[[7]])
+  mark <- appo[[9]]
   
   # Evaluating how many discarded there will be
-  mask <- diff > diff_lim | diff < -diff_lim
-  num <- length(diff[mask])
+  mask <- mark != "ok"
+  num <- length(mark[mask])
   
   return(num)
 }

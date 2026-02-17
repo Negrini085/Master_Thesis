@@ -7,6 +7,7 @@ rm(list = ls())
 gc()
 
 library(terra)
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor")
 
 dem30 <- rast("DEM/DEM_stations_30.tif")
 dem60 <- aggregate(dem30, fact = 2, fun = mean)
