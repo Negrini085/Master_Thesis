@@ -33,6 +33,47 @@ num_lines <- function(fname){
 }
 
 
+
+# Funciton to read the whole content of a station file. I think that it's not the
+# best procedure, could prove faulty under multiple circumstances, but that's what
+# I will use right now to just plot HS series and stuff like that.
+read_station <- function(fname, item_sep){
+  
+  # Opening file connection
+  appo <- character(0)
+  hs_series <- numeric(0)
+  con <- file(fname, open="r") 
+  
+  repeat{
+    
+    # Reading line and getting ready to close file connection if the first one
+    # is already a numeric(0), which is the value returned when no item is found
+    appo <- readLines(con, n = 1L)
+    if(length(appo) == 0) break
+    
+    # If we got here, it means that the line wasn't void. We now need to split it
+    # based on item separation. We also want to discard the first two items of 
+    # every line, because those are year and month
+    parts <- if (grepl(item_sep, appo, fixed = TRUE)) strsplit(appo, item_sep, fixed = TRUE)[[1]] else c(appo)
+    if(length(parts) < 30 || length(parts) > 33){
+      print(length(hs_series))
+      print(paste0("Monthly snow height not loaded correctly! Check please ", fname))
+      return(numeric(0))
+    }
+    to_keep <- as.numeric(parts[3:length(parts)])
+    to_keep[to_keep == -90] <- NA_real_
+    
+    # Coupling together string lines
+    hs_series <- c(hs_series, to_keep)
+  }
+  
+  # Closing file connection and returning num_lines content
+  close(con)
+  return(hs_series)
+}
+
+
+
 # Importing stations whose elevation is comparable to the one of a DEM with
 # resolution of 30 meters. We will select the name of one station and then we
 # will discard the rest.
@@ -53,3 +94,11 @@ appo <- num_lines(fname)
 
 print(paste0("The file we are dealing with has ", appo, " lines!"))
 print(paste0("This means that it contains datas for ", appo/12, " years!"))
+
+rm(appo)
+gc()
+
+
+# Trying to read whole file content
+item_sep <- "  "
+hs_piamprato <- read_station(fname = fname, item_sep = item_sep)
