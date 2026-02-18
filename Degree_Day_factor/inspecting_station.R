@@ -8,6 +8,30 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor")
 fname <- "Dataset/ok_stations_dem_30.dat"
 
 
+# Function to compute number of lines in a file.
+num_lines <- function(fname){
+  
+  # Opening file connection
+  num_lines <- 0
+  con <- file(fname, open="r") 
+
+  repeat{
+    
+    # Reading line and getting ready to close file connection if the first one
+    # is already a numeric(0), which is the value returned when no item is found
+    appo <- readLines(con, n = 1L)
+    if(length(appo) == 0) break
+    
+    # If we got here, it means that the line wasn't void. I will add one to number
+    # of lines
+    num_lines <- num_lines + 1
+  }
+  
+  # Closing file connection and returning num_lines content
+  close(con)
+  return(num_lines)
+}
+
 
 # Importing stations whose elevation is comparable to the one of a DEM with
 # resolution of 30 meters. We will select the name of one station and then we
@@ -25,21 +49,7 @@ gc()
 
 # Creating filename and evaluating number of lines in a single file
 fname <- paste0("Dataset/HSD_", station_name)
-con <- file(fname, open="r") 
+appo <- num_lines(fname)
 
-num_lines <- 0
-repeat{
-  
-  # Reading line and getting ready to close file connection if the first one
-  # is already a numeric(0), which is the value returned when no item is found
-  appo <- readLines(con, n = 1L)
-  if(length(appo) == 0) break
-  
-  # If we got here, it means that the line wasn't void. I will add one to number
-  # of lines
-  num_lines <- num_lines + 1
-}
-close(con)
-
-print(paste0("The file we are dealing with has ", num_lines, " lines!"))
-print(paste0("This means that it contains datas for ", num_lines/12, " years!"))
+print(paste0("The file we are dealing with has ", appo, " lines!"))
+print(paste0("This means that it contains datas for ", appo/12, " years!"))
