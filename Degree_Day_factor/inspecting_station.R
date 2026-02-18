@@ -4,6 +4,8 @@
 rm(list = ls())
 gc()
 
+library(ggplot2)
+
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor")
 fname <- "Dataset/ok_stations_dem_30.dat"
 
@@ -34,43 +36,31 @@ num_lines <- function(fname){
 
 
 
-# Funciton to read the whole content of a station file. I think that it's not the
-# best procedure, could prove faulty under multiple circumstances, but that's what
-# I will use right now to just plot HS series and stuff like that.
-read_station <- function(fname, item_sep){
+# Function to read the whole content of a station file.
+read_station <- function(fname) {
   
-  # Opening file connection
-  appo <- character(0)
-  hs_series <- numeric(0)
-  con <- file(fname, open="r") 
+  # Reading every line using as item separator every possible white space (one or
+  # more). Having "fill = TRUE" helps us to avoid problems related to different 
+  # number of days in different months!
+  df <- read.table(fname, header = FALSE, sep = "", fill = TRUE)
   
-  repeat{
-    
-    # Reading line and getting ready to close file connection if the first one
-    # is already a numeric(0), which is the value returned when no item is found
-    appo <- readLines(con, n = 1L)
-    if(length(appo) == 0) break
-    
-    # If we got here, it means that the line wasn't void. We now need to split it
-    # based on item separation. We also want to discard the first two items of 
-    # every line, because those are year and month
-    parts <- if (grepl(item_sep, appo, fixed = TRUE)) strsplit(appo, item_sep, fixed = TRUE)[[1]] else c(appo)
-    if(length(parts) < 30 || length(parts) > 33){
-      print(length(hs_series))
-      print(paste0("Monthly snow height not loaded correctly! Check please ", fname))
-      return(numeric(0))
-    }
-    to_keep <- as.numeric(parts[3:length(parts)])
-    to_keep[to_keep == -90] <- NA_real_
-    
-    # Coupling together string lines
-    hs_series <- c(hs_series, to_keep)
-  }
+  # Here we are converting dataframe into a matrix and then dropping the first two
+  # columns, namely being year and month
+  raw <- as.matrix(df[, -(1:2), drop = FALSE])
   
-  # Closing file connection and returning num_lines content
-  close(con)
-  return(hs_series)
+  # Creating hs_series using unlist to concatenate matrix lines. Here we have to 
+  # be careful, because we want to get rid of NAs added to make the dataframe 
+  # rectangular, while at the same time converting -90 in NAs 
+  hs_series <- unlist(lapply(seq_len(nrow(raw)), function(i) {
+    x <- raw[i, ]
+    x <- x[!is.na(x)]
+    x[x == -90] <- NA
+    x
+  }), use.names = FALSE)
+  
+  hs_series
 }
+
 
 
 
@@ -99,6 +89,20 @@ rm(appo)
 gc()
 
 
+
 # Trying to read whole file content
 item_sep <- "  "
-hs_piamprato <- read_station(fname = fname, item_sep = item_sep)
+hs_piamprato <- read_station(fname = fname)
+
+
+
+# Plotting procedure
+df <- data.frame(
+  day = 1:length(hs_piamprato),
+  hs = hs_piamprato
+)
+
+ggplot(df, aes(x = day, y = hs)) + 
+  geom_line(color = "blue", linewidth = 1.5) +
+  labs(title = "AWS Piamprato: 1993 to 2022", x = "Days", y = "HS [cm]") +
+  theme_minimal()
