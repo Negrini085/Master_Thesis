@@ -96,13 +96,36 @@ hs_piamprato <- read_station(fname = fname)
 
 
 
+# Looking for huge steps in snow height reduction. This file has some faulty
+# years or not?
+hs_diff_max <- 25
+for(i in 1:(length(hs_piamprato)-1)){
+  
+  # We want to check only when we actually have a data
+  if(!is.na(hs_piamprato[i])){
+    
+    # We want to take into account the possibility that the next data is NA
+    if(hs_piamprato[i] > hs_diff_max & is.na(hs_piamprato[i+1])){
+      print(paste0("Excessive HS reduction at day ", i))
+    }
+    # Now considering both numeric datas
+    else if(!is.na(hs_piamprato[i+1])) {
+      diff <- hs_piamprato[i+1] - hs_piamprato[i]
+      if(diff < -hs_diff_max){
+        print(paste0("Excessive HS reduction at day ", i))
+      }
+    }
+    
+  }
+}
+
 # Plotting procedure
-# df <- data.frame(
-#   day = 1:length(hs_piamprato),
-#   hs = hs_piamprato
-# )
-# 
-# ggplot(df, aes(x = day, y = hs)) + 
-#   geom_line(color = "blue", linewidth = 1.5) +
-#   labs(title = "AWS Piamprato: 1993 to 2022", x = "Days", y = "HS [cm]") +
-#   theme_minimal()
+df <- data.frame(
+  day = 1:length(hs_piamprato[2150:2400]),
+  hs = hs_piamprato[2150:2400]
+)
+
+ggplot(df, aes(x = day, y = hs)) +
+  geom_line(color = "blue", linewidth = 1.5) +
+  labs(title = "AWS Piamprato: excessive HS reduction examples", x = "Days", y = "HS [cm]") +
+  theme_minimal()
