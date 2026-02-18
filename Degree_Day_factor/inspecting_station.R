@@ -97,12 +97,12 @@ hs_piamprato <- read_station(fname = fname)
 
 
 # Plotting procedure
-df <- data.frame(
-  day = 1:length(hs_piamprato),
-  hs = hs_piamprato
-)
-
-ggplot(df, aes(x = day, y = hs)) + 
-  geom_line(color = "blue", linewidth = 1.5) +
-  labs(title = "AWS Piamprato: 1993 to 2022", x = "Days", y = "HS [cm]") +
-  theme_minimal()
+# df <- data.frame(
+#   day = 1:length(hs_piamprato),
+#   hs = hs_piamprato
+# )
+# 
+# ggplot(df, aes(x = day, y = hs)) + 
+#   geom_line(color = "blue", linewidth = 1.5) +
+#   labs(title = "AWS Piamprato: 1993 to 2022", x = "Days", y = "HS [cm]") +
+#   theme_minimal()
