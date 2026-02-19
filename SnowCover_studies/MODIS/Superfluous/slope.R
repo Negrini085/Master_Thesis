@@ -5,7 +5,7 @@ gc()
 library(trend)
 library(terra)
 
-years <- 2001:2022
+years <- 2001:2025
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/MODIS")
 
 # Function to get p-value
@@ -44,4 +44,4 @@ r <- mask(r, mask_faulty, maskvalues = 1)
 # Using Sen-Theil test in order to evaluate trend slope
 slope_map <- app(r, fun = getting_slope, cores = 8)
 names(slope_map) <- "slope"
-writeRaster(slope_map, "Datas/slope.tif", overwrite=TRUE)
+writeRaster(slope_map, "Datas/slope_2001_2025_los.tif", overwrite=TRUE)

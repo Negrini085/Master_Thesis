@@ -6,7 +6,7 @@ gc()
 library(trend)
 library(terra)
 
-years <- 2001:2022
+years <- 2001:2025
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/MODIS")
 
 # Function to get p-value
@@ -45,4 +45,4 @@ r <- mask(r, mask_faulty, maskvalues = 1)
 # Using Mann-Kendall test in order to evaluate trend significance
 pval_map <- app(r, fun = getting_pval, cores = 8)
 names(pval_map) <- "p-value"
-writeRaster(pval_map, "Datas/pval_los.tif", overwrite=TRUE)
+writeRaster(pval_map, "Datas/pval_2001_2025_los.tif", overwrite=TRUE)
