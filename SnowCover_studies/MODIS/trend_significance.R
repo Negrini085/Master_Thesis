@@ -27,7 +27,7 @@ getting_pval <- function(x, len_years=14) {
 
 
 # Importing files
-files <- paste0("Dataset/annual_maps/SOS/sos_", years, ".tif")
+files <- paste0("Dataset/annual_maps/LOS/los_", years, ".tif")
 r <- rast(files)
 
 
@@ -45,4 +45,4 @@ r <- mask(r, mask_faulty, maskvalues = 1)
 # Using Mann-Kendall test in order to evaluate trend significance
 pval_map <- app(r, fun = getting_pval, cores = 8)
 names(pval_map) <- "p-value"
-writeRaster(pval_map, "Datas/pval.tif", overwrite=TRUE)
+writeRaster(pval_map, "Datas/pval_los.tif", overwrite=TRUE)
