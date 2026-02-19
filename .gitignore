@@ -20,6 +20,7 @@ SnowCover_studies/Po-Basin/Dataset
 # ---------------------------
 SnowCover_studies/MODIS/Dataset
 SnowCover_studies/MODIS/Datas/mean_maps
+SnowCover_studies/MODIS/Datas/sd_maps
 
 # ---------------------------
 #       Degree day datas
