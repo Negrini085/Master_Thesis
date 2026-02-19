@@ -19,7 +19,7 @@ valid <- app(r, function(x) sum(!is.na(x)))
 mask_faulty <- valid < 15 & valid != 0
 
 n_faulty <- global(mask_faulty, "sum", na.rm = TRUE)$sum
-print(paste0("There are ", n_faulty, " with at least one value and at most 15."))
+print(paste0("There are ", n_faulty, " with at least one value and at most 14."))
 
 rm(mask_faulty)
 gc()
