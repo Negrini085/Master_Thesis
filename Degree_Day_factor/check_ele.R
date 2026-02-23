@@ -1,4 +1,4 @@
-# The main goal of this plot is to check if geo-data are indeed correct or not.
+# The main goal of this script is to check if geo-data are indeed correct or not.
 rm(list = ls())
 gc()
 
