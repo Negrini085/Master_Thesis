@@ -36,7 +36,7 @@ diff <- abs(coord_ele[, 3] - dem_ele)
 
 
 
-# Evaluating number of faulty stations as a funciton of elevation threshold
+# Evaluating number of faulty stations as a function of elevation threshold
 diff_lim <- seq(5, 200, 5)
 num_faulty <- numeric(0)
 for(lim in diff_lim){

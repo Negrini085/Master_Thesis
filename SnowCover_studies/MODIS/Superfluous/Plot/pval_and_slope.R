@@ -10,7 +10,7 @@ library(tidyterra)
 library(patchwork)
 
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/MODIS")
-fnames <- c("Datas/pval_los.tif", "Datas/slope_los.tif")
+fnames <- c("Datas/pval_2001_2025_los.tif", "Datas/slope_2001_2025_los.tif")
 
 # Function to create a clean environment for plot creation
 theme_paper_clean <- function() {
@@ -64,7 +64,7 @@ make_snow_plot <- function(raster_lyr, title, breaks, labels, palette, legend_na
   }
   
   ggplot() +
-    geom_spatraster(data = raster_disc) + 
+    geom_spatraster(data = raster_disc, maxcell = Inf) + 
     geom_spatvector(data = italy_border, fill = NA, color = "black", linewidth = 0.3) +
     scale_fill_manual(
       values = palette,
@@ -90,7 +90,9 @@ make_snow_plot <- function(raster_lyr, title, breaks, labels, palette, legend_na
 # Importing raster and creating a positive/negative pval map in order to distinguish
 # between positive and negative trend as it was done in Italian MODIS paper.
 los_metrics <- rast(fnames)
-los_metrics$`p-value` <- ifel(los_metrics$slope < 0, -1+los_metrics$`p-value`, los_metrics$`p-value`)
+print(global(los_metrics$`p-value`, "min", na.rm = TRUE)$min)
+print(global(los_metrics$`p-value`, "max", na.rm = TRUE)$max)
+los_metrics$`p-value` <- ifel(los_metrics$slope < 0, -1+los_metrics$`p-value`, 1 - los_metrics$`p-value`)
 
 
 
@@ -111,7 +113,7 @@ p1 <- make_snow_plot(
 p2 <- make_snow_plot(
   los_metrics[[1]], "Trend sign and significance",
   breaks = c(-0.95, -0.9, 0.9, 0.95),
-  labels = c("> 0 (95% confidence)", "> 0 (90% confidence)", "Not significant", "< 0 (90% confidence)", "> 0 (95% confidence)"),
+  labels = c("< 0 (95% confidence)", "< 0 (90% confidence)", "Not significant", "> 0 (90% confidence)", "> 0 (95% confidence)"),
   palette = pval_palette, "Confidence"
 )
 
