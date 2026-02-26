@@ -45,7 +45,7 @@ make_snow_plot <- function(raster_lyr, title, breaks, labels, palette, legend_na
   
   ggplot() +
     geom_spatraster(data = raster_disc) + 
-    geom_spatvector(data = italy_border, fill = NA, color = "black", linewidth = 0.3) +
+    geom_spatvector(data = italy_cropped, fill = NA, color = "black", linewidth = 0.3) +
     scale_fill_manual(
       values = palette,
       labels = labels,
@@ -73,47 +73,45 @@ make_snow_plot <- function(raster_lyr, title, breaks, labels, palette, legend_na
 scd_metrics <- rast(fnames)
 names(scd_metrics)[2] <- "mean"
 
-plot(scd_metrics[[2]])
-# mask_zeros <- scd_metrics$mean == 0
-# num_zeros <- global(mask_zeros, "sum", na.rm = TRUE)$sum
-# 
-# print(paste0("Pixels with los equal to zero are ", num_zeros))
-# 
-# 
-# 
-# # Evaluating noise over signal
-# appo <- scd_metrics$std
-# appo <- mask(appo, mask_zeros, maskvalues = 1)
-# 
-# appo <- appo/scd_metrics$mean
-# 
-# 
-# 
-# # Modifying raster layers and getting ready to plot
-# scd_metrics$mean <- appo
-# plot(scd_metrics[[2]])
+mask_zeros <- scd_metrics$mean == 0
+num_zeros <- global(mask_zeros, "sum", na.rm = TRUE)$sum
+
+print(paste0("Pixels with los equal to zero are ", num_zeros))
 
 
 
-# # Plotting procedure
-# italy_border <- gadm(country = "ITA", level = 0, path = tempdir())
-# italy_cropped <- crop(italy_border, ext(scd_metrics))
-# 
-# custom_palette <- c("#b34d33", "#e69240", "#f0db4d", "#72e61c", "#1d8c75", "#0d4d8a")
-# 
-# p1 <- make_snow_plot(
-#   scd_metrics[[1]], "Standard deviation LOS", 
-#   breaks = c(10, 15, 20, 25, 30),
-#   labels = c("0 - 10", "10 - 15", "15 - 20", "20 - 25", "25 - 30", " > 30"),
-#   palette = custom_palette, "Days"
-# )
-# 
-# p2 <- make_snow_plot(
-#   scd_metrics[[2]], "Noise over signal LOS",
-#   breaks = c(0.25, 0.5, 0.75, 1, 2),
-#   labels = c("0 - 0.25", "0.25 - 0.5", "0.5 - 0.75", "0.75 - 1.0", "1.0 - 2.0", " > 2.0"),
-#   palette = custom_palette, "No dim"
-# )
-# 
-# final_plot <- p1 + p2 + plot_layout(ncol = 2)
-# print(final_plot)
+# Evaluating noise over signal
+appo <- scd_metrics$std
+appo <- mask(appo, mask_zeros, maskvalues = 1)
+
+appo <- appo/scd_metrics$mean
+
+
+
+# Modifying raster layers and getting ready to plot
+scd_metrics$mean <- appo
+
+
+
+# Plotting procedure
+italy_border <- gadm(country = "ITA", level = 0, path = tempdir())
+italy_cropped <- crop(italy_border, ext(scd_metrics))
+
+custom_palette <- c("#b34d33", "#e69240", "#f0db4d", "#72e61c", "#1d8c75", "#0d4d8a")
+
+p1 <- make_snow_plot(
+  scd_metrics[[1]], "Standard deviation LOS",
+  breaks = c(10, 15, 20, 25, 30),
+  labels = c("0 - 10", "10 - 15", "15 - 20", "20 - 25", "25 - 30", " > 30"),
+  palette = custom_palette, "Days"
+)
+
+p2 <- make_snow_plot(
+  scd_metrics[[2]], "Noise over signal LOS",
+  breaks = c(0.25, 0.5, 0.75, 1, 2),
+  labels = c("0 - 0.25", "0.25 - 0.5", "0.5 - 0.75", "0.75 - 1.0", "1.0 - 2.0", " > 2.0"),
+  palette = custom_palette, "No dim"
+)
+
+final_plot <- p1 + p2 + plot_layout(ncol = 2)
+print(final_plot)
