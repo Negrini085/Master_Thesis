@@ -100,14 +100,14 @@ italy_cropped <- crop(italy_border, ext(scd_metrics))
 custom_palette <- c("#b34d33", "#e69240", "#f0db4d", "#72e61c", "#1d8c75", "#0d4d8a")
 
 p1 <- make_snow_plot(
-  scd_metrics[[1]], "Standard deviation LOS",
+  scd_metrics[[1]], "Standard deviation SCD",
   breaks = c(10, 15, 20, 25, 30),
   labels = c("0 - 10", "10 - 15", "15 - 20", "20 - 25", "25 - 30", " > 30"),
   palette = custom_palette, "Days"
 )
 
 p2 <- make_snow_plot(
-  scd_metrics[[2]], "Noise over signal LOS",
+  scd_metrics[[2]], "Noise over signal SCD",
   breaks = c(0.25, 0.5, 0.75, 1, 2),
   labels = c("0 - 0.25", "0.25 - 0.5", "0.5 - 0.75", "0.75 - 1.0", "1.0 - 2.0", " > 2.0"),
   palette = custom_palette, "No dim"
