@@ -100,8 +100,6 @@ years <- 1992:2021
 months <- c("10", "11", "12", "01", "02", "03", "04", "05", "06", "07")
 dayMax <- c(31, 30, 31, 31, 28, 31, 30, 31, 30, 31)
 
-print(length(months))
-print(length(dayMax))
 
 swe_evolution <- numeric(0)
 for(y in years){
