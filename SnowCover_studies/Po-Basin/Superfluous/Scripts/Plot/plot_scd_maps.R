@@ -13,7 +13,7 @@ library(patchwork)
 
 
 # Importing SCD maps
-years <- 2007:2021
+years <- 1992:2006
 fnames <- paste0("Datas/Seasonal_SCD/SCD_", years, ".tif")
 seasonal_scd <- rast(fnames)
 
