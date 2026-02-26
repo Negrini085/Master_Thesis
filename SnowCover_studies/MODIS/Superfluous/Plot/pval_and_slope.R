@@ -10,7 +10,15 @@ library(tidyterra)
 library(patchwork)
 
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/MODIS")
-fnames <- c("Datas/pval_2001_2025_los.tif", "Datas/slope_2001_2025_los.tif")
+fnames <- c("Datas/pval_2001_2022_los.tif", "Datas/slope_2001_2022_los.tif")
+
+
+# Needed to filter on trend significance
+years <- 2001:2022
+files <- paste0("Dataset/annual_maps/LOS/los_", years, ".tif")
+
+r <- rast(files)
+num_years <- app(r, function(x) sum(x == 0))
 
 # Function to create a clean environment for plot creation
 theme_paper_clean <- function() {
@@ -90,6 +98,7 @@ make_snow_plot <- function(raster_lyr, title, breaks, labels, palette, legend_na
 # Importing raster and creating a positive/negative pval map in order to distinguish
 # between positive and negative trend as it was done in Italian MODIS paper.
 los_metrics <- rast(fnames)
+los_metrics$`p-value` <- ifel(num_years < 5, los_metrics$`p-value`, 1)
 print(global(los_metrics$`p-value`, "min", na.rm = TRUE)$min)
 print(global(los_metrics$`p-value`, "max", na.rm = TRUE)$max)
 los_metrics$`p-value` <- ifel(los_metrics$slope < 0, -1+los_metrics$`p-value`, 1 - los_metrics$`p-value`)

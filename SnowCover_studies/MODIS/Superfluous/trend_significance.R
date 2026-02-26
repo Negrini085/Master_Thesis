@@ -44,5 +44,11 @@ r <- mask(r, mask_faulty, maskvalues = 1)
 
 # Using Mann-Kendall test in order to evaluate trend significance
 pval_map <- app(r, fun = getting_pval, cores = 8)
+
+
+# Filtering those pixels who don't meet our standards (at least 10 non zero values)
+num_years <- app(r, function(x) sum(x == 0))
+pval_map <- ifel(num_years < 10, pval_map, 1)
 names(pval_map) <- "p-value"
+
 writeRaster(pval_map, "Datas/pval_2001_2025_los.tif", overwrite=TRUE)
