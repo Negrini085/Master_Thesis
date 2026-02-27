@@ -8,8 +8,9 @@ library(future.apply)
 plan(multicore, workers = 8)
 options(future.globals.maxSize = 3500 * 1024^2)
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow/SCD/SCD-from-RHO")
-fname <- "Datas/season_maps_SCD.nc"
+repo <- "SCD-from-SWE"
+setwd(paste0("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow/SCD/", repo))
+fname <- "Datas/scd_annual_maps.nc"
 
 
 get_sen_slope <- function(x) {

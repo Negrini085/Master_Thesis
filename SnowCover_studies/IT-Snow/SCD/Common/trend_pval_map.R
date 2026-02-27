@@ -8,13 +8,17 @@ library(future.apply)
 plan(multicore, workers = 8)
 options(future.globals.maxSize = 3500 * 1024^2)
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow/SCD/SCD-from-RHO")
-fname <- "Datas/season_maps_SCD.nc"
-
+repo <- "SCD-from-SWE"
+setwd(paste0("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow/SCD/", repo))
+fname <- "Datas/scd_annual_maps.nc"
+  
 get_p_value <- function(x){
   
   # Quality check on NAs and data variability (maybe not the best for high elevation)
-  if (sum(!is.na(x)) < 3 || sd(x, na.rm = TRUE) == 0) {
+  if(sum(!is.na(x)) < 5) {
+    return(NA)
+  }
+  else if(sum(x == 0) > 5){
     return(NA)
   }
   
@@ -43,7 +47,7 @@ lat_dim <- ncdim_def("lat", "degrees_north", lat)
 lon_dim <- ncdim_def("lon", "degrees_east", lon)
 
 scd_var <- ncvar_def(
-  name = "Pval", units = "Probability", dim = list(lon_dim, lat_dim),
+  name = "pval", units = "Probability", dim = list(lon_dim, lat_dim),
   missval = NA, longname = "P-value MK test", prec = "float"
 )
 
