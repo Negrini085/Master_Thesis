@@ -18,7 +18,7 @@ get_legend <- function(p){
 }
 
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
-fname <- "Datas/SeasonMaps.nc"
+fname <- "Datas/swe_annual_maps.nc"
 
 nc <- nc_open(fname)
 lat <- ncvar_get(nc, "lat") 
@@ -34,7 +34,7 @@ titles <- c(
 )
 
 swe[swe == 0] <- NA 
-lims <- c(0, 3250)
+lims <- c(0, 2500)
 
 plots <- vector("list", 15) 
 for (i in 1:15) {
@@ -57,7 +57,7 @@ plots_noleg <- lapply(plots, \(p) p + theme(legend.position = "none"))
 panel_grid <- arrangeGrob(grobs = plots_noleg, nrow = 3, ncol = 5) 
 
 title_grob <- textGrob(
-  "Seasonal SWE maps",
+  "Annual SWE maps",
   gp = gpar(fontsize = 16, fontface = "bold")
 )
 
