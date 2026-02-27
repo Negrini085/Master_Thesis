@@ -40,4 +40,4 @@ for(i in 1:length(lon_stations)){
   }
 }
 
-print(paste0("Finished! ", length(lon_stations) - diff, " stations recovered!"))
+print(paste0("Finished! ", length(lon_stations) - n_faulty, " stations recovered!"))
