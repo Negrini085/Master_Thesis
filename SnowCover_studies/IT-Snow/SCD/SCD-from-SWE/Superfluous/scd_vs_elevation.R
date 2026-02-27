@@ -7,9 +7,9 @@ library(ncdf4)
 library(terra)
 library(ggplot2)
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow/SCD-from-SWE")
-fname <- "Datas/mean_SCD_map.nc"
-fname_dat <- "Datas/mean_SCD_per_band.dat"
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow/SCD/SCD-from-SWE")
+fname <- "Datas/scd_mean_map.nc"
+fname_dat <- "Datas/scd_mean_per_band.dat"
 
 
 
