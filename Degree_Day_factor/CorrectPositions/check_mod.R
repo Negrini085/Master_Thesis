@@ -20,6 +20,7 @@ ele_stations <- df[[4]][mask]
 
 
 # Looking for an almost perfect match 
+n_faulty <- 0
 ele_lim <- 10
 for(i in 1:length(lon_stations)){
   
@@ -30,8 +31,13 @@ for(i in 1:length(lon_stations)){
   
   diff <- dem_ele - as.numeric(ele_stations[i])
   if(diff > ele_lim){
+    print(diff)
+    print(dem_ele)
+    print(as.numeric(ele_stations[i]))
     print(paste0("Problems with ", names[i], " station"))
+    
+    n_faulty <- n_faulty + 1
   }
 }
 
-print("Finished!")
+print(paste0("Finished! ", length(lon_stations) - diff, " stations recovered!"))
