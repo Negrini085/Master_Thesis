@@ -7,15 +7,20 @@ library(ncdf4)
 library(matrixStats)
 
 years <- 2011:2025
-fname <- "Datas/swe_season_maps.nc"
+fname_mean <- "Datas/swe_mean_map.nc"
+fname_maps <- "Datas/swe_annual_maps.nc"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
 
 
 # Getting swe maps
-nc <- nc_open(fname)
+nc <- nc_open(fname_maps)
 lon <- ncvar_get(nc, names(nc$dim)[1])
 lat <- ncvar_get(nc, names(nc$dim)[2])
 swe <- ncvar_get(nc, names(nc$var)[1])
+nc_close(nc)
+
+nc <- nc_open(fname_mean)
+swe_mean <- ncvar_get(nc, names(nc$var)[1])
 nc_close(nc)
 
 
@@ -27,12 +32,18 @@ std_vec <- rowSds(swe_2d, na.rm = TRUE)
 std_map <- matrix(std_vec, nrow = dims[1], ncol = dims[2])
 
 
+# Discarding datas with mean SWE value not assigned
+mask <- is.na(swe_mean)
+std_map[mask] <- NA
+
+
+
 # Saving values on netCDF file
 lat_dim <- ncdim_def("lat", "degrees_north", lat)
 lon_dim <- ncdim_def("lon", "degrees_east", lon)
 
 swe_var <- ncvar_def(
-  name = "SWE", units = "mm (w.e.)", dim = list(lon_dim, lat_dim),
+  name = "std", units = "mm (w.e.)", dim = list(lon_dim, lat_dim),
   missval = -9999, longname = "Snow Water Equivalent", prec = "float"
 )
 

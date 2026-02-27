@@ -22,13 +22,15 @@ nc_close(nc)
 # Taking mean across third dimension
 mean_map <- rowMeans(swe, dims = 2)
 
+mask <- mean_map == 0
+mean_map[mask] <- NA
 
 # Saving values on netCDF file
 lat_dim <- ncdim_def("lat", "degrees_north", lat)
 lon_dim <- ncdim_def("lon", "degrees_east", lon)
 
 swe_var <- ncvar_def(
-  name = "SWE", units = "mm (w.e.)", dim = list(lon_dim, lat_dim),
+  name = "mean", units = "mm (w.e.)", dim = list(lon_dim, lat_dim),
   missval = -9999, longname = "Snow Water Equivalent", prec = "float"
 )
 
