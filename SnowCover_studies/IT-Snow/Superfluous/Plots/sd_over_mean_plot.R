@@ -100,9 +100,9 @@ custom_palette <- c("#b34d33", "#e69240", "#f0db4d", "#72e61c", "#1d8c75", "#0d4
 
 p1 <- make_snow_plot(
   los_metrics[[1]], "Standard deviation SWE", 
-  breaks = c(10, 15, 20, 25, 30),
-  labels = c("0 - 10", "10 - 15", "15 - 20", "20 - 25", "25 - 30", " > 30"),
-  palette = custom_palette, "Days"
+  breaks = c(5, 15, 30, 50, 75),
+  labels = c("0 - 5", "5 - 15", "15 - 30", "30 - 50", "50 - 75", " > 75"),
+  palette = custom_palette, "SWE [mm w.e.]"
 )
 
 p2 <- make_snow_plot(
