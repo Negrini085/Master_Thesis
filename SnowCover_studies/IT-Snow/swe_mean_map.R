@@ -27,13 +27,11 @@ mean_map <- rowMeans(swe, dims = 2)
 lat_dim <- ncdim_def("lat", "degrees_north", lat)
 lon_dim <- ncdim_def("lon", "degrees_east", lon)
 
-# Creating netCDF variable
 swe_var <- ncvar_def(
   name = "SWE", units = "mm (w.e.)", dim = list(lon_dim, lat_dim),
   missval = -9999, longname = "Snow Water Equivalent", prec = "float"
 )
 
-# Creating netCDF and filling SWE values
 nc_out <- nc_create("swe_mean_map.nc", vars = list(swe_var))
 ncvar_put(nc_out, swe_var, mean_map)
 nc_close(nc_out)
