@@ -14,7 +14,7 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor")
 
 
 # Reading dataset with dem elevation and station one
-appo <- read.table("Datas/faulty_vs_res/check_ele_30.dat", header = TRUE, fill = TRUE)
+appo <- read.table("CorrectPositions/now.dat", header = TRUE, fill = TRUE)
 diff <- as.numeric(appo[[4]]) - as.numeric(appo[[7]])
 df_plot <- data.frame(lon = as.numeric(appo[, 2]), lat = as.numeric(appo[, 3]), status = ifelse(abs(diff) < 12, "OK", "NO"))
 df_plot <- na.omit(df_plot)

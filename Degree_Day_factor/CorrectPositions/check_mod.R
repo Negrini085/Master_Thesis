@@ -30,7 +30,7 @@ for(i in 1:length(lon_stations)){
   dem_ele <- as.numeric(dem[ind])
   
   diff <- dem_ele - as.numeric(ele_stations[i])
-  if(diff > ele_lim){
+  if(abs(diff) > ele_lim){
     print(diff)
     print(dem_ele)
     print(as.numeric(ele_stations[i]))
