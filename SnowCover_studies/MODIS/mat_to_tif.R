@@ -7,14 +7,25 @@ library(terra)
 library(hdf5r)
 library(R.matlab)
 
-year <- 2025
+year <- 2015
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/MODIS/")
 
 
-# Reading snow cover datas from annual file
-f1 <- H5File$new(paste0("Dataset/mod_", year, ".mat"), mode = "r")
-sc_matrix <- f1[["MOD_nstep"]]$read()
-f1$close_all()
+# Function to read mat files that takes care of different saving procedures.
+read_mod_file <- function(fname) {
+  tryCatch({
+    f <- H5File$new(fname, mode = "r")
+    mat <- f[["MOD_nstep"]]$read()
+    f$close_all()
+    return(mat)
+  }, error = function(e) {
+    message("Non-HDF5 file, I try with R.matlab...")
+    mat <- readMat(fname)
+    return(mat$MOD.nstep)
+  })
+}
+
+sc_matrix <- read_mod_file(paste0("Dataset/mod_", year, ".mat"))
 
 
 # Reading coordinates
