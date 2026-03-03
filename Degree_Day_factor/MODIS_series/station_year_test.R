@@ -1,5 +1,5 @@
-# The main goal of this script is to evaluate when measures started and ended at 
-# a specific station.
+# The main goal of this script is to test station_year function. I will use some
+# faulty files in the dataset to check function performance.
 rm(list = ls())
 gc()
 
@@ -62,16 +62,21 @@ read_station <- function(fname, nmonths) {
 }
 
 
-
-# Reading station names and coordinates
-appo <- as.matrix(read.table("Datas/ITALIAN_STATIONS", header = FALSE))
-coord_ele <- matrix(as.numeric(appo[, 2:3]), ncol = 2)
-start_year <- array(NA, dim = c(length(coord_ele[, 1])))
-end_year <- array(NA, dim = c(length(coord_ele[, 1])))
-station_names <- appo[, 1]
-rm(appo)
-gc()
+# First test
+appo <- read_station("Superfluous/Files/test1.dat", 2)
+print(paste0("First test: ", appo[1], " to ", appo[2]))
 
 
+# Second test
+appo <- read_station("Superfluous/Files/test2.dat", 2)
+print(paste0("Second test: ", appo[1], " to ", appo[2]))
 
-# Opening files and evaluating start/end years
+
+# Third test
+appo <- read_station("Superfluous/Files/test3.dat", 2)
+print(paste0("Third test: ", appo[1], " to ", appo[2]))
+
+
+# Fourth test
+appo <- read_station("Superfluous/Files/test4.dat", 2)
+print(paste0("Fourth test: ", appo[1], " to ", appo[2]))

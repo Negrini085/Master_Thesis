@@ -4,13 +4,13 @@ rm(list = ls())
 gc()
 
 library(terra)
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/CorrectPositions/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/CHECK_stations/")
 
 
 # Importing DEM and corrected dataset in order to check if now stations are still
 # classified as faulty
 dem <- rast("../DEM/DEM_stations_30.tif")
-df <- read.table("correcting_dataset.dat")
+df <- read.table("Correcting/correcting_dataset.dat")
 
 mask <- df[[5]] == "MOD"
 names <- df[[1]][mask]
