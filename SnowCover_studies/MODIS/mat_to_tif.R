@@ -7,7 +7,7 @@ library(terra)
 library(hdf5r)
 library(R.matlab)
 
-year <- 2019
+year <- 2003
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/MODIS/")
 
 
