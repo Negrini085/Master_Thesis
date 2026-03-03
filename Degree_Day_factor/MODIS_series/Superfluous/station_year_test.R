@@ -44,19 +44,23 @@ read_station <- function(fname, nmonths) {
   ind <- 1
   repeat{
     if(ind > length(logic_years)) { start <- NA; break }
-    if(logic_years[ind] == TRUE){break}
+    if(logic_years[ind] == TRUE){
+      start <- as.numeric(names(years)[ind]) + 1
+      break
+    }
     ind <- ind + 1
   }
-  start <- as.numeric(names(years)[ind]) + 1
   
   # Looking for the end of data series
   ind <- length(years)
   repeat{
     if(ind < 1) { end <- NA; break }
-    if(logic_years[ind] == TRUE){break}
+    if(logic_years[ind] == TRUE){
+      end <- as.numeric(names(years)[ind])
+      break
+    }
     ind <- ind - 1
   }
-  end <- as.numeric(names(years)[ind])
   
   return(c(start, end))
 }

@@ -44,19 +44,23 @@ read_station <- function(fname, nmonths) {
   ind <- 1
   repeat{
     if(ind > length(logic_years)) { start <- NA; break }
-    if(logic_years[ind] == TRUE){break}
+    if(logic_years[ind] == TRUE){
+      start <- as.numeric(names(years)[ind])
+      break
+    }
     ind <- ind + 1
   }
-  start <- as.numeric(names(years)[ind]) + 1
   
   # Looking for the end of data series
   ind <- length(years)
   repeat{
     if(ind < 1) { end <- NA; break }
-    if(logic_years[ind] == TRUE){break}
+    if(logic_years[ind] == TRUE){
+      end <- as.numeric(names(years)[ind])
+      break
+    }
     ind <- ind - 1
   }
-  end <- as.numeric(names(years)[ind])
   
   return(c(start, end))
 }
@@ -64,7 +68,7 @@ read_station <- function(fname, nmonths) {
 
 
 # Reading station names and coordinates
-appo <- as.matrix(read.table("Datas/ITALIAN_STATIONS", header = FALSE))
+appo <- as.matrix(read.table("Datas/filtered.dat", header = FALSE))
 coord_ele <- matrix(as.numeric(appo[, 2:3]), ncol = 2)
 start_year <- array(NA, dim = c(length(coord_ele[, 1])))
 end_year <- array(NA, dim = c(length(coord_ele[, 1])))
@@ -75,3 +79,39 @@ gc()
 
 
 # Opening files and evaluating start/end years
+for(name_ind in seq_len(length(station_names))){
+  appo <- numeric(0)
+  fname <- paste0("../Dataset/", station_names[name_ind])
+  
+  tryCatch({
+    
+    appo <- read_station(fname, 12)
+    end_year[name_ind] <- appo[2]
+    start_year[name_ind] <- appo[1]
+    
+  }, error = function(e) {
+    
+    end_year[name_ind] <- NA
+    start_year[name_ind] <- NA
+    message("Error: ", e$message)
+    
+  }, warning = function(w) {
+    message("Warning: ", w$message)
+    
+  }, finally = {
+    message(paste0("Evaluated measurament period for ", station_names[name_ind]))
+  })
+}
+
+
+
+# Building final dataframe and creating a file
+df <- data.frame(
+  names = station_names, 
+  lon = coord_ele[, 1], 
+  lat = coord_ele[, 2], 
+  start = start_year, 
+  end = end_year
+)
+
+write.table(df, file = "Datas/start_end_years.dat", row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
