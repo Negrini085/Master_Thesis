@@ -112,7 +112,7 @@ for(i in seq_len(length(station_names))){
   
   # Saving single station series
   df <- data.frame(days = seq_len(length(appo)), sc_series = appo)
-  write.table(df, paste0("Datas/station_series/", station_names[i]))
+  write.table(df, paste0("Datas/station_series/", station_names[i]), row.names = FALSE, col.names = FALSE, quote = FALSE)
   
   # Saving into massive container
   station_series[start_pos:(start_pos + length(appo)-1), i] <- appo
