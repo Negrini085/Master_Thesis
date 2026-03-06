@@ -10,8 +10,8 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/MODIS_seri
 
 # Function to find the longest period of snow coverage across a hydrological year. 
 study_pixel <- function(station_name, year, hydro_sc, ele){
-  if(hydro_sc[1] == 1 & ele > 2500){
-    print(paste0("First day of ", year, " hydrological year is snow covered for station ", station_name))
+  if(hydro_sc[1] == 1){
+    print(paste0("First day of ", year, " for station ", station_name, " standing at ", ele))
   }
 }
 
