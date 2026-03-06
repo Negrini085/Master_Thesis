@@ -4,7 +4,7 @@ rm(list = ls())
 gc()
 
 library(terra)
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/CHECK_stations/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/STATION_check/")
 
 
 # Importing DEM and corrected dataset in order to check if now stations are still
