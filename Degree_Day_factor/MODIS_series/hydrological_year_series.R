@@ -12,7 +12,7 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/MODIS_seri
 normal_to_hydro <- function(station_name, start_year, end_year){
   
   # Importing MODIS series for a given station
-  fname <- paste0("Datas/station_series/", station_name)
+  fname <- paste0("Datas/modis_series/", station_name)
   sc_series <- read.table(fname, header = FALSE)$V2
   
   # Selecting the start of the sequence
@@ -55,7 +55,7 @@ normal_to_hydro <- function(station_name, start_year, end_year){
     sc = sc_series
   )
   
-  write.table(df, paste0("Datas/station_hydrological/", station_name) , row.names = FALSE, col.names = FALSE, quote = FALSE)
+  write.table(df, paste0("Datas/modis_hydrological/", station_name) , row.names = FALSE, col.names = FALSE, quote = FALSE)
 }
 
 
