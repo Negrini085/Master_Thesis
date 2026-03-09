@@ -29,6 +29,11 @@ SnowCover_studies/Alpine3D/Historical/Dataset
 SnowCover_studies/Alpine3D/Recent/Dataset
 
 # ---------------------------
+# 	Preliminary model
+#----------------------------
+SnowCover_studies/Preliminary_model/Dataset
+
+# ---------------------------
 #       Degree day datas
 # ---------------------------
 Degree_Day_factor/Dataset
