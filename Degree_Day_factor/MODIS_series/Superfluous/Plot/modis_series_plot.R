@@ -42,7 +42,7 @@ elev_sorted <- elevations[order_idx]
 
 # Creating dates
 n_days <- nrow(mat_sorted)
-dates  <- seq(as.Date("2000-09-01"), by = "day", length.out = n_days)
+dates  <- seq(as.Date("2000-02-24"), by = "day", length.out = n_days)
 
 
 # Plotting procedure
@@ -71,3 +71,11 @@ ggplot(df, aes(x = date, y = station, fill = factor(value))) +
     panel.grid     = element_blank(),
     legend.position = "bottom"
   )
+
+ggsave(
+  "plot_sc.png",
+  width  = 20,
+  height = 10,
+  dpi    = 600,
+  limitsize = FALSE
+)
