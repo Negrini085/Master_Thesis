@@ -9,7 +9,7 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor")
 
 # Reading coord.dat file, which is a file containing station names, coordinates 
 # and altitude. We will then load the DEM model covering the whole alpine arc.
-appo <- as.matrix(read.table("CHECK_stations/Correcting/correcting_dataset.dat", header = FALSE))
+appo <- as.matrix(read.table("STATION_check/Correcting/correcting_dataset.dat", header = FALSE))
 coord_ele <- matrix(as.numeric(appo[, 2:4]), ncol = 3)
 station_names <- appo[, 1]
 rm(appo)
@@ -62,4 +62,4 @@ results <- data.frame(
   mark = mark
 )
 
-write.table(results, file = "CHECK_stations/Correcting/now.dat", row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
+write.table(results, file = "STATION_check/Correcting/now.dat", row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
