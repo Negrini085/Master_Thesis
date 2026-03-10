@@ -8,7 +8,7 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/MODIS_seri
 
 
 # Loading Italian stations whose elevation is comparable with the 30-meter DEM
-fname <- "Datas/start_end_years.dat"
+fname <- "Datas/start_end_years_non_compatible.dat"
 appo <- as.matrix(read.table(fname, header = FALSE))
 
 station_names <- appo[, 1]
@@ -79,4 +79,4 @@ df <- data.frame(
   end = station_end
 )
 
-write.table(df, file = "Datas/start_end_years_filtered.dat", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = "\t")
+write.table(df, file = "Datas/start_end_years_filtered_non_compatible.dat", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = "\t")

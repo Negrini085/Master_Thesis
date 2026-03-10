@@ -88,7 +88,7 @@ start_res <- function(start_year){
 
 
 # Reading italian stations dataset
-appo <- as.matrix(read.table("Datas/start_end_years_filtered.dat", header = FALSE))
+appo <- as.matrix(read.table("Datas/start_end_years_filtered_non_compatible.dat", header = FALSE))
 coord_ele <- matrix(as.numeric(appo[, 2:3]), ncol = 2)
 start_year <- as.numeric(appo[, 4])
 end_year <- as.numeric(appo[, 5])
@@ -112,7 +112,7 @@ for(i in seq_len(length(station_names))){
   
   # Saving single station series
   df <- data.frame(days = seq_len(length(appo)), sc_series = appo)
-  write.table(df, paste0("Datas/station_series/", station_names[i]), row.names = FALSE, col.names = FALSE, quote = FALSE)
+  write.table(df, paste0("Datas/modis_series/non_compatible/", station_names[i]), row.names = FALSE, col.names = FALSE, quote = FALSE)
   
   # Saving into massive container
   station_series[start_pos:(start_pos + length(appo)-1), i] <- appo
@@ -124,4 +124,4 @@ for(i in seq_len(length(station_names))){
 # Saving station series
 df_out <- as.data.frame(station_series)
 colnames(df_out) <- station_names
-write.table(df_out, "Datas/station_series_all.dat", row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
+write.table(df_out, "Datas/station_series_all_non_compatible.dat", row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")

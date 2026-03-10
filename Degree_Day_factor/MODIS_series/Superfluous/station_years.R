@@ -68,7 +68,7 @@ read_station <- function(fname, nmonths) {
 
 
 # Reading station names and coordinates
-appo <- as.matrix(read.table("Datas/filtered.dat", header = FALSE))
+appo <- as.matrix(read.table("Datas/not_compatible.dat", header = FALSE))
 coord_ele <- matrix(as.numeric(appo[, 2:3]), ncol = 2)
 start_year <- array(NA, dim = c(length(coord_ele[, 1])))
 end_year <- array(NA, dim = c(length(coord_ele[, 1])))
@@ -114,4 +114,4 @@ df <- data.frame(
   end = end_year
 )
 
-write.table(df, file = "Datas/start_end_years.dat", row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
+write.table(df, file = "Datas/start_end_years_non_compatible.dat", row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
