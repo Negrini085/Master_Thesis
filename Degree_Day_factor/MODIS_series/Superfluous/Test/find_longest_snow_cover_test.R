@@ -90,6 +90,6 @@ find_longest_sc_period_station <- function(station_name){
 
 
 # First test
-appo <- find_longest_sc_period_station("Superfluous/Files/test_sc1.dat")
+appo <- find_longest_sc_period_station("Superfluous/Files/test_sc.dat")
 print("First test made!")
 print(appo)
