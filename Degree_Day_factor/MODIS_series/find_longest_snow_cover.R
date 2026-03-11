@@ -54,7 +54,7 @@ find_longest_sc_period_hydro <- function(hydro_sc, year, name){
 find_longest_sc_period_station <- function(station_name){
   
   # Importing snow cover series for a given station
-  fname <- paste0("Datas/modis_hydrological/", station_name)
+  fname <- paste0("Datas/modis_hydrological/non_compatible/", station_name)
   df <- read.table(fname, header = FALSE)
   appo_years <- df$V1
   sc_series <- df$V2
@@ -91,7 +91,7 @@ find_longest_sc_period_station <- function(station_name){
 
 
 # Importing station names
-appo <- as.matrix(read.table("Datas/start_end_years_filtered.dat", header = FALSE))
+appo <- as.matrix(read.table("Datas/non_compatible/start_end_years_filtered.dat", header = FALSE))
 station_names <- appo[, 1]
 rm(appo)
 gc()
@@ -104,4 +104,4 @@ for(name in station_names){
   results <- rbind(results, appo)
 }
 
-write.table(results, "Datas/longest_periods_sc.dat", row.names = FALSE, quote = FALSE)
+write.table(results, "Datas/non_compatible/longest_periods_sc.dat", row.names = FALSE, quote = FALSE)
