@@ -4,7 +4,7 @@
 rm(list = ls())
 gc()
 
-fname <- "../MODIS_series/Datas/start_end_years_filtered.dat"
+fname <- "../MODIS_series/Datas/compatible/start_end_years_filtered.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/STATION_series/")
 
 
@@ -14,9 +14,8 @@ find_los_hydro <- function(hydro_sc, year, name){
   # Omitting NAs because those datas make the check harder
   appo <- na.omit(hydro_sc)
   
-  # Snow height filter (above 2 cms is snow-covered, below no)
-  mask <- appo > 2.0
-  hydro_los <- length(appo[mask])
+  # Sum of annual datas (only ones and zeros)
+  hydro_los <- sum(appo)
   
   # Checking if there is at least a snow covered day
   if(hydro_los == 0){
@@ -31,7 +30,7 @@ find_los_hydro <- function(hydro_sc, year, name){
 find_los_station <- function(station_name){
   
   # Importing snow cover series for a given station
-  fname <- paste0("Datas/station_series/", station_name)
+  fname <- paste0("Datas/sc_series/", station_name)
   df <- read.table(fname, header = FALSE)
   appo_years <- df$V1
   sc_series <- df$V2
@@ -73,4 +72,4 @@ for(name in station_names){
   results <- rbind(results, appo)
 }
 
-write.table(results, "Datas/los.dat", row.names = FALSE, quote = FALSE)
+write.table(results, "Datas/los_compatible.dat", row.names = FALSE, quote = FALSE)
