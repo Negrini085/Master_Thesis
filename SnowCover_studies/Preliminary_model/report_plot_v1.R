@@ -20,8 +20,8 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/Preliminar
 
 
 # Limits to make the plot better
-XLIM <- c(9, 10.8)
-YLIM <- c(45.7, 46.7)
+XLIM <- c(6.6, 8.8)
+YLIM <- c(45.2, 46.5)
 SUN_ANGLE     <- 45
 SUN_DIRECTION <- 315
 SWE_MIN <- 0
