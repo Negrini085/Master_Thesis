@@ -12,7 +12,7 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/MODIS_seri
 normal_to_hydro <- function(station_name, start_year, end_year){
   
   # Importing MODIS series for a given station
-  fname <- paste0("Datas/modis_series/", station_name)
+  fname <- paste0("Datas/modis_series/non_compatible/", station_name)
   sc_series <- read.table(fname, header = FALSE)$V2
   
   # Selecting the start of the sequence
@@ -55,13 +55,13 @@ normal_to_hydro <- function(station_name, start_year, end_year){
     sc = sc_series
   )
   
-  write.table(df, paste0("Datas/modis_hydrological/", station_name) , row.names = FALSE, col.names = FALSE, quote = FALSE)
+  write.table(df, paste0("Datas/modis_hydrological/non_compatible/", station_name) , row.names = FALSE, col.names = FALSE, quote = FALSE)
 }
 
 
 # Importing Italian AWS names, coordinates, start and end year to correctly deal
 # with MODIS series (should be converted to hydrological years)
-appo <- as.matrix(read.table("Datas/start_end_years_filtered.dat", header = FALSE))
+appo <- as.matrix(read.table("Datas/non_compatible/start_end_years_filtered.dat", header = FALSE))
 start_year <- as.numeric(appo[, 4])
 end_year <- as.numeric(appo[, 5])
 station_names <- appo[, 1]
