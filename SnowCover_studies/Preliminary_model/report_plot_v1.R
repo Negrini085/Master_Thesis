@@ -78,14 +78,16 @@ plot_modis <- ggplot() +
   annotation_scale(location = "bl", width_hint = 0.25, style = "bar", unit_category = "metric") +
   coord_sf(xlim = XLIM, ylim = YLIM, expand = FALSE) +
   labs(x = NULL, y = NULL) +
-  theme_minimal(base_size = 12) +
+  theme_minimal(base_size = 14) +
   theme(
     legend.position   = "right",
     legend.key.height = unit(1, "cm"),
+    legend.title      = element_text(size = 14),
+    legend.text       = element_text(size = 13),
     panel.grid        = element_line(color = "grey80", linewidth = 0.2),
     axis.text.x       = element_blank(),
     axis.ticks.x      = element_blank(), 
-    plot.margin = margin(t = 15, b = 15)
+    plot.margin       = margin(t = 15, b = 15)
   )
 
 plot_swe <- ggplot() +
@@ -101,20 +103,22 @@ plot_swe <- ggplot() +
   annotation_scale(location = "bl", width_hint = 0.25, style = "bar", unit_category = "metric") +
   coord_sf(xlim = XLIM, ylim = YLIM, expand = FALSE) +
   labs(x = NULL, y = NULL) +
-  theme_minimal(base_size = 12) +
+  theme_minimal(base_size = 14) +
   theme(
     legend.position   = "right",
     legend.key.height = unit(2, "cm"),
-    panel.grid        = element_line(color = "grey80", linewidth = 0.2), 
-    plot.margin = margin(t = 15)
+    legend.title      = element_text(size = 14),
+    legend.text       = element_text(size = 13),
+    panel.grid        = element_line(color = "grey80", linewidth = 0.2),
+    axis.text         = element_text(size = 12),
+    plot.margin       = margin(t = 15)
   )
-
 final_plot <- plot_modis / plot_swe +
   plot_annotation(
     tag_levels = 'a', tag_prefix = '(', tag_suffix = ')',
     theme = theme(plot.title = element_text(face = "bold", size = 14))
   ) &
-  theme(plot.tag = element_text(margin = margin(r = 10))) 
+  theme(plot.tag = element_text(size = 15, face = "bold", margin = margin(r = 10))) 
 
 ggsave(
   filename = "comparison_plot.png",

@@ -14,16 +14,16 @@ library(patchwork)
 library(ggnewscale)
 library(rnaturalearth)
 
-SWE_FILE   <- "Dataset/GRID_2017-04-25"
+SWE_FILE   <- "Dataset/GRID_2017-04-26"
 italian_dem <- "Superfluous/bacini_final.tif"
-MODIS_FILE <- "../MODIS/Dataset/daily/2017/day_115.tif"
+MODIS_FILE <- "../MODIS/Dataset/daily/2017/day_116.tif"
 DEM_FILE   <- "../../Degree_Day_factor/DEM/DEM_stations_200.tif"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/Preliminary_model")
 
 
 # Limits to make the plot better
-XLIM <- c(6.6, 8.8)
-YLIM <- c(45.2, 46.5)
+XLIM <- c(9, 11)
+YLIM <- c(45.7, 46.7)
 SUN_ANGLE     <- 45
 SUN_DIRECTION <- 315
 SWE_MIN <- 0
@@ -125,17 +125,20 @@ plot_modis <- ggplot() +
     name     = "MODIS", labels   = "Snow cover"
   ) +
   geom_sf(data = countries, fill = NA, color = "black", linewidth = 0.4, inherit.aes = FALSE) +
-  annotation_scale(location = "bl", width_hint = 0.25, style = "bar", unit_category = "metric") +
+  annotation_scale(location = "br", width_hint = 0.25, style = "bar", unit_category = "metric", text_cex = 1.4) +
   coord_sf(xlim = XLIM, ylim = YLIM, expand = FALSE) +
   labs(x = NULL, y = NULL) +
-  theme_minimal(base_size = 12) +
+  theme_minimal(base_size = 14) +
   theme(
     legend.position   = "right",
     legend.key.height = unit(1, "cm"),
+    legend.title      = element_text(size = 18),
+    legend.text       = element_text(size = 16),
     panel.grid        = element_line(color = "grey80", linewidth = 0.2),
+    axis.text.y       = element_text(size = 16),
     axis.text.x       = element_blank(),
     axis.ticks.x      = element_blank(), 
-    plot.margin = margin(t = 15, b = 15)
+    plot.margin       = margin(t = 15, b = 15)
   )
 
 plot_swe <- ggplot() +
@@ -148,15 +151,18 @@ plot_swe <- ggplot() +
     name     = "SWE [mm w.e.]", na.value = NA
   ) +
   geom_sf(data = countries, fill = NA, color = "black", linewidth = 0.4, inherit.aes = FALSE) +
-  annotation_scale(location = "bl", width_hint = 0.25, style = "bar", unit_category = "metric") +
+  annotation_scale(location = "br", width_hint = 0.25, style = "bar", unit_category = "metric", text_cex = 1.4) +
   coord_sf(xlim = XLIM, ylim = YLIM, expand = FALSE) +
   labs(x = NULL, y = NULL) +
-  theme_minimal(base_size = 12) +
+  theme_minimal(base_size = 14) +
   theme(
     legend.position   = "right",
     legend.key.height = unit(2, "cm"),
-    panel.grid        = element_line(color = "grey80", linewidth = 0.2), 
-    plot.margin = margin(t = 15)
+    legend.title      = element_text(size = 18,  margin = margin(b = 12)),
+    legend.text       = element_text(size = 16),
+    panel.grid        = element_line(color = "grey80", linewidth = 0.2),
+    axis.text         = element_text(size = 16),
+    plot.margin       = margin(t = 15)
   )
 
 final_plot <- plot_modis / plot_swe +
@@ -164,7 +170,7 @@ final_plot <- plot_modis / plot_swe +
     tag_levels = 'a', tag_prefix = '(', tag_suffix = ')',
     theme = theme(plot.title = element_text(face = "bold", size = 14))
   ) &
-  theme(plot.tag = element_text(margin = margin(r = 10))) 
+  theme(plot.tag = element_text(size = 15, face = "bold", margin = margin(r = 10)))
 
 ggsave(
   filename = "comparison_plot.png",
