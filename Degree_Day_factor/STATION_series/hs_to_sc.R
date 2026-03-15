@@ -24,13 +24,13 @@ for(name in station_names){
   rm(df)
   gc()
   
-  # Filters to get actual snow coverage datas. Every day with more than two cm of
+  # Filters to get actual snow coverage datas. Every day with more than zero cm of
   # snow will be labeled as snow covered, NAs will be kept NAs and all the other 
   # days will be considered as snow free.
-  mask <- !is.na(hs_series) & hs_series < 2
+  mask <- !is.na(hs_series) & hs_series <= 0
   hs_series[mask] <- 0
   
-  mask <- !is.na(hs_series) & hs_series >= 2
+  mask <- !is.na(hs_series) & hs_series > 0
   hs_series[mask] <- 1 
   
   
@@ -42,6 +42,6 @@ for(name in station_names){
   
   
   # Saving to file
-  write.table(df, paste0("Datas/sc_series/", name), row.names = FALSE, col.names = FALSE, quote = FALSE)
+  write.table(df, paste0("Datas/sc_series/raw/", name), row.names = FALSE, col.names = FALSE, quote = FALSE)
   print(paste0("Made conversion for: ", name))
 }

@@ -4,7 +4,7 @@
 rm(list = ls())
 gc()
 
-fname <- "../MODIS_series/Datas/non_compatible/start_end_years_filtered.dat"
+fname <- "../MODIS_series/Datas/compatible/start_end_years_filtered.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/STATION_series/")
 
 
@@ -52,7 +52,7 @@ find_longest_sc_period_hydro <- function(hydro_sc, year, name){
 find_longest_sc_period_station <- function(station_name){
   
   # Importing snow cover series for a given station
-  fname <- paste0("Datas/sc_series/", station_name)
+  fname <- paste0("Datas/sc_series/raw/", station_name)
   df <- read.table(fname, header = FALSE)
   appo_years <- df$V1
   sc_series <- df$V2
@@ -102,4 +102,4 @@ for(name in station_names){
   results <- rbind(results, appo)
 }
 
-write.table(results, "Datas/longest_periods_sc_non_compatible.dat", row.names = FALSE, quote = FALSE)
+write.table(results, "Datas/longest_periods_sc_compatible.dat", row.names = FALSE, quote = FALSE)

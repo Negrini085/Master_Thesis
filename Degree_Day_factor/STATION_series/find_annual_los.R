@@ -15,7 +15,8 @@ find_los_hydro <- function(hydro_sc, year, name){
   appo <- na.omit(hydro_sc)
   
   # Sum of annual datas (only ones and zeros)
-  hydro_los <- sum(appo)
+  mask <- appo == 1
+  hydro_los <- length(appo[mask])
   
   # Checking if there is at least a snow covered day
   if(hydro_los == 0){
@@ -30,7 +31,7 @@ find_los_hydro <- function(hydro_sc, year, name){
 find_los_station <- function(station_name){
   
   # Importing snow cover series for a given station
-  fname <- paste0("Datas/sc_series/", station_name)
+  fname <- paste0("Datas/sc_series/raw/", station_name)
   df <- read.table(fname, header = FALSE)
   appo_years <- df$V1
   sc_series <- df$V2
