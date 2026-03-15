@@ -36,7 +36,7 @@ df_csc <- merge(
 
 
 # Importing bug list
-df <- read.table("Datas/huge_outliers.dat", header = FALSE)
+df <- read.table("Datas/MOD200_STA300.dat", header = FALSE)
 station_names <- unique(df$V1)
 
 for(name in station_names){
@@ -54,31 +54,24 @@ for(name in station_names){
   scatter_style <- list(
     geom_abline(slope = 1, intercept = 0, color = "red", linetype = "dashed", linewidth = 0.8),
     geom_point(alpha = 0.4, color = "steelblue", size = 2),
-    theme_minimal(base_size = 13),
-    coord_equal(),
-    xlim(0, NA),
-    ylim(0, NA)
+    theme_minimal(base_size = 13)
   )
-  
+
   p_csc <- ggplot(appo_csc, aes(x = csc_MOD, y = csc_STA)) +
     scatter_style +
-    labs(
-      title = NULL,
-      x     = "CSC MODIS [days]",
-      y     = "CSC Station [days]"
-    )
+    xlim(0, 380) +
+    ylim(0, 380) +
+    labs(x = "CSC MODIS [days]", y = "CSC Station [days]")
   
   p_los <- ggplot(appo_los, aes(x = los_MOD, y = los_STA)) +
     scatter_style +
-    labs(
-      title = NULL,
-      x     = "LOS MODIS [days]",
-      y     = "LOS Station [days]"
-    )
+    xlim(0, 380) +
+    ylim(0, 380) +
+    labs(x = "LOS MODIS [days]", y = "LOS Station [days]")
   
   combined <- p_csc + p_los +
     plot_annotation(title = name) 
   
-  fname_out <- paste0("Images/outliers/", name, ".png")
+  fname_out <- paste0("Images/MOD200_STA300/", name, "_MOD200_STA300.png")
   ggsave(fname_out, plot = combined, width = 15, height = 5, dpi = 150)
 }
