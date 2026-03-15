@@ -21,7 +21,6 @@ df_plot <- na.omit(df_plot)
 df_plot$status <- factor(df_plot$status, levels = c("OK", "NO"))
 
 
-
 # Plotting procedure
 europe <- ne_countries(continent = "Europe", scale = 10, returnclass = "sf")
 
