@@ -36,7 +36,7 @@ df_csc <- merge(
 
 
 # Importing bug list
-df <- read.table("Datas/MOD50_STA10.dat", header = FALSE)
+df <- read.table("Datas/MOD200_STA100.dat", header = FALSE)
 station_names <- unique(df$V1)
 
 for(name in station_names){
@@ -72,6 +72,6 @@ for(name in station_names){
   combined <- p_csc + p_los +
     plot_annotation(title = name) 
   
-  fname_out <- paste0("Images/MOD50_STA10/", name, "_MOD50_STA10.png")
+  fname_out <- paste0("Images/MOD200_STA100/", name, "_MOD200_STA100.png")
   ggsave(fname_out, plot = combined, width = 15, height = 5, dpi = 150)
 }
