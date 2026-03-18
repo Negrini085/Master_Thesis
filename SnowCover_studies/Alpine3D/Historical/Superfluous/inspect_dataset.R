@@ -33,7 +33,7 @@ gc()
 
 # Last thing I have to deal with are latitude and longitude coordinates, in order
 # to be able to compute SWE total volume and its evolution throughout the whole period.
-# It looks like those pixels are exactely a 1000 meter x 1000 meter
+# It looks like those pixels are exactly a 1000 meter x 1000 meter
 lat <- ncvar_get(nc, "N")
 lon <- ncvar_get(nc, "E")
 print(lat)
