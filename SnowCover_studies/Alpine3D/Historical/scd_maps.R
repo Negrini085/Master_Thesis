@@ -20,22 +20,23 @@ years <- 1962:2023
 annual_maps <- array(0, dim = c(370, 265, length(years)))
 for(year in years){
   
-  # Importing daily swe maps for a given year
+  # Importing daily swe maps for a given year (saving NA mask for later)
   if(year %% 4 == 0) len <- 366
   else len <- 365
   annual_swe <- ncvar_get(nc, "SWECLQMD", start = c(1, 1, conta), count = c(-1, -1, len))
+  na_mask <- is.na(annual_swe[, , 1])
   
   # Converting from swe to sc
-  mask <- annual_swe > 0 & !is.na(annual_swe)
+  mask <- annual_swe > 0.01 & !is.na(annual_swe)
   annual_swe[] <- as.integer(mask)
   rm(mask)
   gc()
   
   # Actual scd computation
-  annual_maps[, , year - years[1] + 1] <- apply(annual_swe, c(1, 2), function(x) {
-    if (all(is.na(x))) return(NA)
-    sum(x, na.rm = TRUE)
-  })
+  scd_layer <- apply(annual_swe, c(1, 2), sum)
+  scd_layer[na_mask] <- NA
+  
+  annual_maps[, , year - years[1] + 1] <- scd_layer
   
   conta <- conta + len
   rm(annual_swe)
