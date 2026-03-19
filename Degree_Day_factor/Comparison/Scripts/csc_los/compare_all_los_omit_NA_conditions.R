@@ -12,8 +12,8 @@ fname_MOD_comp     <- "../MODIS_series/Datas/compatible/los.dat"
 fname_MOD_non_comp <- "../MODIS_series/Datas/non_compatible/los.dat"
 to_omit_1 <- "../STATION_series/Datas/results/over_250_NAs_italian.dat"
 to_omit_2 <- "../STATION_series/Datas/results/over_half_winter_NA_italian.dat"
-fname_STA_comp     <- "../STATION_series/Datas/results/na_or_zero_filter/los_compatible.dat"
-fname_STA_non_comp <- "../STATION_series/Datas/results/na_or_zero_filter/los_non_compatible.dat"
+fname_STA_comp     <- "../STATION_series/Datas/results/correct_with_summer_average/los_compatible.dat"
+fname_STA_non_comp <- "../STATION_series/Datas/results/correct_with_summer_average/los_non_compatible.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Comparison/")
 
 

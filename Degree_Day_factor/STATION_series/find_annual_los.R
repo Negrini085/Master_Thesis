@@ -4,7 +4,7 @@
 rm(list = ls())
 gc()
 
-fname <- "../MODIS_series/Datas/non_compatible/start_end_years_filtered.dat"
+fname <- "../MODIS_series/Datas/compatible/start_end_years_filtered.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/STATION_series/")
 
 
@@ -31,7 +31,7 @@ find_los_hydro <- function(hydro_sc, year, name){
 find_los_station <- function(station_name){
   
   # Importing snow cover series for a given station
-  fname <- paste0("Datas/sc_series/na_or_zero_filter/", station_name)
+  fname <- paste0("Datas/sc_series/correct_with_summer_average/", station_name)
   df <- read.table(fname, header = FALSE)
   appo_years <- df$V1
   sc_series <- df$V2
@@ -73,4 +73,4 @@ for(name in station_names){
   results <- rbind(results, appo)
 }
 
-write.table(results, "Datas/results/na_or_zero_filter/los_non_compatible.dat", row.names = FALSE, col.names = FALSE, quote = FALSE)
+write.table(results, "Datas/results/correct_with_summer_average/los_compatible.dat", row.names = FALSE, col.names = FALSE, quote = FALSE)

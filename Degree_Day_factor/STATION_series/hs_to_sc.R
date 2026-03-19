@@ -15,7 +15,7 @@ station_names <- as.matrix(read.table(fname)$V1)
 for(name in station_names){
   
   # Importing station series (already on hydrological years)
-  fname <- paste0("Datas/station_series/na_or_zero_filter/", name)
+  fname <- paste0("Datas/station_series/correct_with_summer_average/", name)
   df <- read.table(fname, header = FALSE, sep = "")
   
   years <- as.numeric(df$V1)
@@ -42,6 +42,6 @@ for(name in station_names){
   
   
   # Saving to file
-  write.table(df, paste0("Datas/sc_series/na_or_zero_filter/", name), row.names = FALSE, col.names = FALSE, quote = FALSE)
+  write.table(df, paste0("Datas/sc_series/correct_with_summer_average/", name), row.names = FALSE, col.names = FALSE, quote = FALSE)
   print(paste0("Made conversion for: ", name))
 }
