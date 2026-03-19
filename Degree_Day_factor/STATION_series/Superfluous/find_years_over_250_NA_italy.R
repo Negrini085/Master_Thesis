@@ -3,8 +3,6 @@
 rm(list = ls())
 gc()
 
-library(ggplot2)
-
 fname_italian <- "../MODIS_series/Datas/ITALIAN_STATIONS"
 fname_usable <- "../STATION_series/Datas/station_series/na_or_zero_filter/usable_stations_na_or_zero.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/STATION_series/")
