@@ -4,7 +4,7 @@
 rm(list = ls())
 gc()
 
-fname <- "Datas/usable_stations.dat"
+fname <- "Datas/usable_stations_raw.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/STATION_series/")
 
 
@@ -17,7 +17,7 @@ station_names <- as.matrix(read.table(fname)$V1)
 # Cycle on station names in order to import snow height series already on 
 # hydrological year format
 for(name in station_names){
-  df <- read.table(paste0("Datas/station_series/", name))
+  df <- read.table(paste0("Datas/station_series/raw/", name))
   years <- unique(df$V1)
   
   # Cycle on hydrological years to check whether they pass or not
