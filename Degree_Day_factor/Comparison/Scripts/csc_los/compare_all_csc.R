@@ -5,9 +5,9 @@ gc()
 
 library(ggplot2)
 
-fname_STA_comp     <- "../STATION_series/Datas/longest_periods_sc_compatible.dat"
+fname_STA_comp     <- "../STATION_series/Datas/results/na_or_zero_filter/longest_periods_sc_compatible.dat"
 fname_MOD_non_comp <- "../MODIS_series/Datas/non_compatible/longest_periods_sc.dat"
-fname_STA_non_comp <- "../STATION_series/Datas/longest_periods_sc_non_compatible.dat"
+fname_STA_non_comp <- "../STATION_series/Datas/results/na_or_zero_filter/longest_periods_sc_non_compatible.dat"
 fname_MOD_comp     <- "../MODIS_series/Datas/compatible/longest_periods_sc_correct.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Comparison/")
 

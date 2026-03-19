@@ -6,9 +6,9 @@ gc()
 library(ggplot2)
 
 fname_MOD_comp     <- "../MODIS_series/Datas/compatible/los.dat"
-fname_STA_comp     <- "../STATION_series/Datas/los_compatible.dat"
+fname_STA_comp     <- "../STATION_series/Datas/results/na_or_zero_filter/los_compatible.dat"
 fname_MOD_non_comp <- "../MODIS_series/Datas/non_compatible/los.dat"
-fname_STA_non_comp <- "../STATION_series/Datas/los_non_compatible.dat"
+fname_STA_non_comp <- "../STATION_series/Datas/results/na_or_zero_filter/los_non_compatible.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Comparison/")
 
 
@@ -27,6 +27,8 @@ load_and_merge <- function(fname_MOD, fname_STA, label){
     year = as.numeric(df_STA$V2),
     los  = as.numeric(df_STA$V3)
   )
+  
+  print(sum(df_STA$los == 0, na.rm = TRUE))
   
   merged <- merge(df_MOD, df_STA, by = c("name", "year"), suffixes = c("_MOD", "_STA"))
   merged$group <- label
