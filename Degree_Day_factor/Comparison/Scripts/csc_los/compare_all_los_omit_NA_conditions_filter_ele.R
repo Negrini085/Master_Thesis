@@ -8,6 +8,7 @@ gc()
 library(dplyr)
 library(ggplot2)
 
+fname_ana <- "../Dataset/ANAGRAFICA"
 fname_MOD_comp     <- "../MODIS_series/Datas/compatible/los.dat"
 fname_MOD_non_comp <- "../MODIS_series/Datas/non_compatible/los.dat"
 to_omit_1 <- "../STATION_series/Datas/results/over_250_NAs_italian.dat"
@@ -53,25 +54,58 @@ df_to_omit_1 <- read.table(to_omit_1)
 df_to_omit_2 <- read.table(to_omit_2) 
 
 
+# Importing elevations in order to filter out datas
+df <- read.table(fname_ana, header = FALSE)
+name_ana <- df$V1
+elev_ana <- df$V4
+
 
 # Loading and merging both pairs
 merged_comp     <- load_and_merge(fname_MOD_comp,     fname_STA_comp,     "Compatible", df_to_omit_1, df_to_omit_2)
 merged_non_comp <- load_and_merge(fname_MOD_non_comp, fname_STA_non_comp, "Non-compatible", df_to_omit_1, df_to_omit_2)
 
-mask <- merged_non_comp$los_MOD < 100 & merged_non_comp$los_STA > 150
-print(merged_non_comp[mask, ])
 
-mask <- merged_comp$los_MOD < 100 & merged_comp$los_STA > 150
-print(merged_comp[mask, ])
+# Omitting those stations above 2500 meters (no correction) for compatible dataset
+names_above_2500 <- c()
+for(name in unique(merged_comp$name)){
+  
+  # Getting elevation
+  mask <- name_ana == name
+  elev <- elev_ana[mask]
+  
+  if(length(elev) > 0 && elev > 2500){
+    names_above_2500 <- c(names_above_2500, name)
+  }
+}
+
+merged_comp <- merged_comp %>%
+  filter(!name %in% names_above_2500)
 
 
+# Omitting those stations above 2500 meters (no correction) for non compatible dataset
+names_above_2500 <- c()
+for(name in unique(merged_non_comp$name)){
+  
+  # Getting elevation
+  mask <- name_ana == name
+  elev <- elev_ana[mask]
+  
+  if(length(elev) > 0 && elev > 2500){
+    names_above_2500 <- c(names_above_2500, name)
+  }
+}
+
+merged_non_comp <- merged_non_comp %>%
+  filter(!name %in% names_above_2500)
+
+# mask <- merged_non_comp$los_MOD > 80 & merged_non_comp$los_STA < 20
+# print(merged_non_comp[mask, ])
 
 # Plotting procedure
 df_plot <- rbind(merged_comp, merged_non_comp)
 
 ggplot(df_plot, aes(x = los_MOD, y = los_STA, color = group)) +
   geom_point(alpha = 0.4, size = 2) +
-  geom_smooth(aes(group = 1), method = "lm", se = TRUE, color = "green", linewidth = 0.8) +
   geom_abline(slope = 1, intercept = 0, color = "black", linetype = "dashed", linewidth = 0.8) +
   scale_color_manual(
     values = c("Compatible" = "steelblue", "Non-compatible" = "tomato"),
