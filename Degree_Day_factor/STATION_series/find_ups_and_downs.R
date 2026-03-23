@@ -20,6 +20,57 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/STATION_se
 df <- read.table(fname_usable, header = FALSE)
 station_names <- df$V1
 jump_max <- 100
+jump_min <- 20
+
+
+
+#------------------------------------------------------------------------------#
+#                                UP & DOWN JUMPS                               #
+#------------------------------------------------------------------------------#
+jump_pos   <- integer(0)
+jump_years <- numeric(0)
+jump_names <- character(0)
+for(name in station_names){
+  
+  # Importing HS series for a given station
+  fname <- paste0("Datas/station_series/na_or_zero_filter/", name)
+  df <- read.table(fname, header = FALSE)
+  hs_series <- as.numeric(df$V2)
+  hs_years <- as.numeric(df$V1)
+  
+  # Evaluating difference in hs series (and filter for huge jumps)
+  hs_diff <- diff(hs_series)
+  big_enough <- abs(hs_diff[-length(hs_diff)]) > jump_min
+  opposite_sign <- (hs_diff[-length(hs_diff)] * hs_diff[-1]) < 0
+  similar_amp <- abs(abs(hs_diff[-length(hs_diff)]) - abs(hs_diff[-1]))/abs(hs_diff[-length(hs_diff)]) < 0.20
+  mask_zigzag <- !is.na(opposite_sign) & !is.na(similar_amp) & opposite_sign & similar_amp & big_enough
+  
+  # Saving huge jump station and position
+  if(sum(mask_zigzag, na.rm = TRUE) != 0){
+    positions <- which(mask_zigzag)
+    jump_pos   <- c(jump_pos,   positions)
+    jump_years <- c(jump_years, hs_years[positions + 1])
+    jump_names <- c(jump_names, rep(name, sum(mask_zigzag)))
+  }
+}
+
+# Saving to file
+df_print <- data.frame(
+  names = jump_names, 
+  years = jump_years, 
+  positions = jump_pos
+)
+
+write.table(df_print, "Datas/results/na_or_zero_filter/up_down_jumps.dat", row.names = FALSE, col.names = FALSE, quote = FALSE)
+
+
+
+
+
+
+
+
+
 
 
 #------------------------------------------------------------------------------#
