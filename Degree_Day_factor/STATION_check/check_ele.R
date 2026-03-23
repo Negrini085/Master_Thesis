@@ -3,20 +3,20 @@ rm(list = ls())
 gc()
 
 library(terra)
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/STATION_check/")
 
 
 
 # Reading coord.dat file, which is a file containing station names, coordinates 
 # and altitude. We will then load the DEM model covering the whole alpine arc.
-appo <- as.matrix(read.table("STATION_check/Correcting/correcting_dataset.dat", header = FALSE))
+appo <- as.matrix(read.table("Correcting/correcting_dataset.dat", header = FALSE))
 coord_ele <- matrix(as.numeric(appo[, 2:4]), ncol = 3)
 station_names <- appo[, 1]
 rm(appo)
 gc()
 
 diff_lim <- 12
-dem <- rast("DEM/DEM_stations_30.tif")
+dem <- rast("../DEM/DEM_stations_30.tif")
 
 
 
@@ -43,7 +43,7 @@ for(station in 1:nrow(coord_ele)){
 
 diff <- coord_ele[, 3] - dem_ele
 
-# Checking for faulty elevations (here we will use a 15 meter tollerance window)
+# Checking for faulty elevations (here we will use a 12 meter tollerance window)
 mark <- array("ok", dim = c(length(diff)))
 mask <- diff > diff_lim | diff < -diff_lim
 mark[mask]<- "NO"
@@ -62,4 +62,4 @@ results <- data.frame(
   mark = mark
 )
 
-write.table(results, file = "STATION_check/Correcting/now.dat", row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
+write.table(results, file = "Correcting/now.dat", row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")

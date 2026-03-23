@@ -21,7 +21,7 @@ ele_stations <- df[[4]][mask]
 
 # Looking for an almost perfect match 
 n_faulty <- 0
-ele_lim <- 10
+ele_lim <- 12
 for(i in 1:length(lon_stations)){
   
   # Selecting correct raster pixel and evaluating elevation
