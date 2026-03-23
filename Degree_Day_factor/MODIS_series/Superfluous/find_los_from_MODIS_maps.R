@@ -1,8 +1,4 @@
-# The main goal of this script is to compare modis series los with modis actual 
-# values. To be fair, this isn't a perfectly fine comparison because MODIS uses 
-# 1st October --> 30th September as an hydrological year, whilst I worked with 
-# 1st September --> 31th August. Considering that, I don't expect a perfect match, 
-# but not even a big dispersion from the y = x diagonal if working with a scatter.
+# The main goal of this script is to extract los series directly from annual MODIS maps
 rm(list = ls())
 gc()
 
@@ -53,6 +49,7 @@ gc()
 
 # Cycle over stations
 all_los_series <- numeric(0)
+all_years_series <- numeric(0)
 all_name_series <- character(0)
 
 for(i in seq_len(length(station_names))){
@@ -62,13 +59,17 @@ for(i in seq_len(length(station_names))){
   
   # Saving single station series
   all_los_series <- c(all_los_series, appo)
+  all_years_series <- c(all_years_series, seq(start_year[i], end_year[i]))
   all_name_series <- c(all_name_series, rep(station_names[i], length(appo)))
 }
 
+mask <- all_years_series > 2000
+all_years_series <- all_years_series[mask]
 
 # Saving station series
 df_los <- data.frame(
   name_series = all_name_series, 
+  years = all_years_series, 
   los_series = all_los_series
 )
 write.table(df_los, "Datas/non_compatible/los_from_modis_maps.dat", row.names = FALSE, col.names = FALSE, quote = FALSE)
