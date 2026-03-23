@@ -3,7 +3,7 @@
 rm(list = ls())
 gc()
 
-st_fname <- "Datas/results/raw/usable_stations_raw.dat"
+st_fname <- "Datas/station_series/no_negative_hs/usable_stations_no_negative_hs.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/STATION_series/")
 
 
@@ -16,7 +16,7 @@ conta <- 0L
 for(name in station_names){
   
   # Importing snow heigth datas
-  df <- read.table(paste0("Datas/station_series/raw/", name))
+  df <- read.table(paste0("Datas/station_series/no_negative_hs/", name))
   filtered_years <- numeric(0)
   filtered_hs <- numeric(0)
   years <- unique(df$V1)
