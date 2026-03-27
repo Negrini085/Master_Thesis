@@ -9,7 +9,6 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Matiu/")
 
 # Importing meta-datas in csv format
 df_csv <- read.csv(fname_anag)
-print(df_csv)
 
 
 # Creating new dataframe
