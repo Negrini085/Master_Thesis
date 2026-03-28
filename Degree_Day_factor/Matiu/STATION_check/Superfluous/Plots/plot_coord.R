@@ -12,7 +12,7 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Matiu/")
 
 
 
-appo <- read.table("Dataset/data/ANAGRAFICA", header = FALSE)
+appo <- read.table("Dataset/data/ANAGRAFICA_ITA", header = FALSE)
 df_coord <- as.data.frame(lapply(appo[, 2:4], as.numeric))
 colnames(df_coord) <- c("lon", "lat", "elev")
 df_coord <- na.omit(df_coord)
@@ -24,7 +24,7 @@ ggplot() +
   geom_point(data = df_coord, aes(x = lon, y = lat, color = elev), 
              size = 1.2, alpha = 0.8) +
   scale_color_viridis_c(option = "turbo", name = "Declared elevation (m a.s.l.)") +
-  coord_sf(xlim = c(3.5, 18), ylim = c(42, 50), expand = FALSE) +
+  coord_sf(xlim = c(6.5, 14), ylim = c(43.8, 47.2), expand = FALSE) +
   theme_minimal() +
   labs(title = "Matiu station positions",
        x = "Longitude",
