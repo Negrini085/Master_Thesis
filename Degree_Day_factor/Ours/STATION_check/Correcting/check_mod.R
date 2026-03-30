@@ -4,7 +4,7 @@ rm(list = ls())
 gc()
 
 library(terra)
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/STATION_check/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/STATION_check/")
 
 
 # Importing DEM and corrected dataset in order to check if now stations are still
@@ -12,7 +12,7 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/STATION_ch
 dem <- rast("../DEM/DEM_stations_30.tif")
 df <- read.table("Correcting/correcting_dataset.dat")
 
-mask <- df[[5]] == "MOD"
+mask <- df[[5]] == "MEH"
 names <- df[[1]][mask]
 lon_stations <- df[[2]][mask]
 lat_stations <- df[[3]][mask]
