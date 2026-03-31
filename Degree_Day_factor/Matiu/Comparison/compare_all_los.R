@@ -6,7 +6,7 @@ gc()
 library(ggplot2)
 
 fname_MOD     <- "../MODIS_series/Results/los.dat"
-fname_STA     <- "../STATION_series/Result/los.dat"
+fname_STA     <- "../STATION_series/Result/los_filtered.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Matiu/Comparison/")
 
 
@@ -20,6 +20,8 @@ df_STA <- data.frame(name = df_STA$V1, year = as.numeric(df_STA$V2), los = as.nu
 
 # Plotting procedure
 df_plot <- merge(df_MOD, df_STA, by = c("name", "year", "mark"), suffixes = c("_MOD", "_STA"))
+mask <- !is.na(df_plot$los_STA)
+df_plot <- df_plot[mask, ]
 
 ggplot(df_plot, aes(x = los_MOD, y = los_STA, color = mark)) +
   geom_point(alpha = 0.4, size = 2) +
