@@ -32,8 +32,9 @@ for(i in seq_along(station_names)){
     # Selecting given hydrological year
     mask <- years == y
     appo_hs <- hs_series[mask]
+    summer <- tail(appo_hs, 60)
     
-    if(all(!is.na(appo_hs))){
+    if(all(!is.na(appo_hs)) & mean(summer) == 0){
       appo_year <- c(appo_year, y)
       appo_mark <- c(appo_mark, flags[i])
       appo_names <- c(appo_names, station_names[i])
@@ -52,7 +53,7 @@ for(i in seq_along(station_names)){
     
     # Saving what's left of the starting series
     df_print <- data.frame(years = years, hs_series = hs_series)
-    write.table(df_print, paste0("Dataset/hs_series/all_complete/", station_names[i]), row.names = FALSE, col.names = FALSE, quote = FALSE)
+    write.table(df_print, paste0("Dataset/hs_series/best_series/", station_names[i]), row.names = FALSE, col.names = FALSE, quote = FALSE)
   }
 }
 
@@ -64,4 +65,4 @@ df_print <- data.frame(
   flag = appo_mark
 )
 
-write.table(df_print, "Dataset/hs_series/all_complete/all_years.dat", row.names = FALSE, col.names = FALSE, quote = FALSE)
+write.table(df_print, "Dataset/hs_series/best_series/best_series.dat", row.names = FALSE, col.names = FALSE, quote = FALSE)
