@@ -44,6 +44,11 @@ Degree_Day_factor/Ours/DEM/
 Degree_Day_factor/Matiu/DEM/
 
 # ---------------------------
+#        Model series
+# ---------------------------
+Degree_Day_factor/SWE_series/Dataset
+
+# ---------------------------
 # 	DEM datas
 # ---------------------------
 SnowCover_studies/IT-Snow/DEM
