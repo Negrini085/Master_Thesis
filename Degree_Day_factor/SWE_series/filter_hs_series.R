@@ -45,7 +45,7 @@ for(i in seq_along(station_names)){
     }
   }
   
-  if(length(hs_series < 365)){
+  if(length(hs_series) < 365){
     print(paste0("No valid years for ", station_names[i]))
   }
   else{
