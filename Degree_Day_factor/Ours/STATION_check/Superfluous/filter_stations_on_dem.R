@@ -3,8 +3,8 @@
 rm(list = ls())
 gc()
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor")
-fname <- "Datas/faulty_vs_res/check_ele_30.dat"
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/STATION_check/")
+fname <- "Datas/check_ele.dat"
 
 
 # Importing file values

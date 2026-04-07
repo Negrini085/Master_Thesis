@@ -5,7 +5,7 @@ rm(list = ls())
 gc()
 
 library(ggplot2)
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/STATION_check/")
 
 # Function to load datas and compute the number of stations to be discarded.
 num_discarded <- function(file_path, diff_lim){
@@ -15,7 +15,7 @@ num_discarded <- function(file_path, diff_lim){
   mark <- appo[[9]]
   
   # Evaluating how many discarded there will be
-  mask <- mark != "ok"
+  mask <- mark != "OK"
   num <- length(mark[mask])
   
   return(num)

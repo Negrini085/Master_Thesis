@@ -5,7 +5,7 @@ gc()
 
 library(ggplot2)
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/STATION_check/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/STATION_check/")
 
 
 # Importing station properties, in order to later make a plot

@@ -6,7 +6,7 @@ gc()
 library(sf)
 library(ggplot2)
 library(rnaturalearth)
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/STATION_check/")
 
 # Function to load and clear datas
 load_and_clean <- function(file_path, label, diff_lim) {
@@ -16,7 +16,7 @@ load_and_clean <- function(file_path, label, diff_lim) {
   df <- data.frame(
     lon = as.numeric(appo[, 2]),
     lat = as.numeric(appo[, 3]),
-    status = ifelse(mark == "ok", "OK", "NO"),
+    status = appo[, 9],
     dataset = label
   )
   return(na.omit(df))

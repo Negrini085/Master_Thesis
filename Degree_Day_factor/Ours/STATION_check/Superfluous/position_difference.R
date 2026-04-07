@@ -8,7 +8,7 @@ library(geosphere)
 
 fname_ana <- "../Dataset/ANAGRAFICA"
 fname_correct <- "Correcting/correcting_dataset.dat"
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/STATION_check/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/STATION_check/")
 
 
 # Importing ANAGRAFICA and retrivied informations
@@ -17,14 +17,15 @@ df_correct <- read.table(fname_correct, header = FALSE)
 
 
 # Selecting only modified stations
-mask <- df_correct$V5 == "MOD"
+mask <- df_correct$V5 == "REV"
 df_correct <- df_correct[mask, ]
 df_correct$V1 <- paste0("HSD_", df_correct$V1)
 
 
 # Selecting original datas for modified stations
 df_ana <- df_ana[df_ana$V1 %in% df_correct$V1, ]
-
+print(df_correct$V1)
+print(df_ana$V1)
 
 # Extraction of useful datas
 lon_ana <- as.numeric(df_ana$V2)

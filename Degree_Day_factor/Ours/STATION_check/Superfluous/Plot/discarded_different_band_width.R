@@ -4,13 +4,13 @@ gc()
 
 library(terra)
 library(ggplot2)
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/STATION_check/")
 
 
 
 # Reading coord.dat file, which is a file containing station names, coordinates 
 # and altitude. We will then load the DEM model covering the whole alpine arc.
-appo <- as.matrix(read.table("Dataset/coord.dat", header = FALSE))
+appo <- as.matrix(read.table("../Dataset/ANAGRAFICA", header = FALSE))
 coord_ele <- matrix(as.numeric(appo[, 2:4]), ncol = 3)
 dem_ele <- numeric(length = nrow(coord_ele))
 rm(appo)
@@ -20,7 +20,7 @@ gc()
 
 # Cycle over stations to find dem elevation in order to compute the difference 
 # between the declared elevation and the real one
-dem <- rast("DEM/DEM_stations_200.tif")
+dem <- rast("../DEM/DEM_stations_200.tif")
 for(station in 1:nrow(coord_ele)){
   
   # Raster point closest to station point
