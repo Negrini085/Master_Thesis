@@ -4,8 +4,8 @@
 rm(list = ls())
 gc()
 
-fname <- "../MODIS_series/Datas/compatible/start_end_years_filtered.dat"
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/STATION_series/")
+fname <- "Dataset/station_series/usable_stations.dat"
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/STATION_series/")
 
 
 # Function to find the longest period of snow coverage across a hydrological year. 
@@ -13,12 +13,18 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/STATION_se
 # and when does it start
 find_longest_sc_period_hydro <- function(hydro_sc, year, name){
   
+  # First thing first I need to do some checks on data quality. I will try to 
+  # use the same filters I was using back with our series
+  if(sum(is.na(hydro_sc), na.rm = TRUE) > 250) return(NA)
+  else if(sum(is.na(hydro_sc[92:212]), na.rm = TRUE) > 60) return(NA)
+  else if(sum((is.na(hydro_sc) | hydro_sc == 0), na.rm = TRUE) == length(hydro_sc)) return(NA)
+  
   # Variables to store snow metrics
   max_sc <- numeric(0)
   start_sc <- numeric(0)
   
   # Checking if there is at least a snow covered day
-  mask <- hydro_sc == 1
+  mask <- hydro_sc == 1 & !is.na(hydro_sc)
   if(sum(mask, na.rm = TRUE) == 0){
     print(paste0("No snow cover days for ", year, "! Station: ", name))
     max_sc <- 0
@@ -49,10 +55,10 @@ find_longest_sc_period_hydro <- function(hydro_sc, year, name){
 
 # Function to find the longest period of snow coverage for a given station across
 # the whole investigated period. 
-find_longest_sc_period_station <- function(station_name){
+find_longest_sc_period_station <- function(station_name, mark){
   
   # Importing snow cover series for a given station
-  fname <- paste0("Datas/sc_series/correct_with_summer_average/", station_name)
+  fname <- paste0("Dataset/sc_series/", station_name)
   df <- read.table(fname, header = FALSE)
   appo_years <- df$V1
   sc_series <- df$V2
@@ -83,23 +89,25 @@ find_longest_sc_period_station <- function(station_name){
     station  = station_name,
     year     = hydro_years,
     duration = sc_duration,
-    start    = sc_start
+    start    = sc_start, 
+    appo_m = rep(mark, length(hydro_years))
   ))
 }
 
 
 # Importing station names
-appo <- as.matrix(read.table(fname, header = FALSE))
-station_names <- appo[, 1]
-rm(appo)
+df <- read.table(fname, header = FALSE)
+station_names <- df$V1
+mark <- df$V2
+rm(df)
 gc()
 
 
 # Actually evaluating longest sc period
 results <- data.frame()
-for(name in station_names){
-  appo <- find_longest_sc_period_station(station_name = name)
+for(i in seq_along(station_names)){
+  appo <- find_longest_sc_period_station(station_names[i], mark[i])
   results <- rbind(results, appo)
 }
 
-write.table(results, "Datas/results/correct_with_summer_average/longest_periods_sc_compatible.dat", row.names = FALSE,  col.names = FALSE, quote = FALSE)
+write.table(results, "Results/csc_filtered.dat", row.names = FALSE,  col.names = FALSE, quote = FALSE)

@@ -1,1 +1,0 @@
-This repository contains all the snow depth series from the stations that make up our dataset. The only operation performed that led to the production of these series was discarding those years consisting only of missing data.

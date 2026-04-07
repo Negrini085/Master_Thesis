@@ -4,8 +4,8 @@ rm(list = ls())
 gc()
 
 fname_italian <- "../MODIS_series/Datas/ITALIAN_STATIONS"
-fname_usable <- "../STATION_series/Datas/station_series/na_or_zero_filter/usable_stations_na_or_zero.dat"
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/STATION_series/")
+fname_usable <- "Dataset/station_series/usable_stations.dat"
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/STATION_series/")
 
 
 # Importing names of italian stations and names of usable stations
@@ -26,7 +26,7 @@ faulty_years <- numeric(0)
 for(name in common_names){
   
   # Importing series
-  fname <- paste0("../STATION_series/Datas/station_series/na_or_zero_filter/", name)
+  fname <- paste0("Dataset/station_series/", name)
   df <- read.table(fname, header = FALSE)
   hs_series <- as.numeric(df$V2)
   years <- as.numeric(df$V1)
@@ -54,4 +54,4 @@ df <- data.frame(
   years = faulty_years
 )
 
-write.table(df, "Datas/results/over_250_NAs.dat", , row.names = FALSE, col.names = FALSE, quote = FALSE)
+write.table(df, "Results/over_250_NAs.dat", , row.names = FALSE, col.names = FALSE, quote = FALSE)

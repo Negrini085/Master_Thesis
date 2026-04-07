@@ -4,12 +4,18 @@
 rm(list = ls())
 gc()
 
-fname <- "../MODIS_series/Datas/compatible/start_end_years_filtered.dat"
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/STATION_series/")
+fname <- "Dataset/station_series/usable_stations.dat"
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/STATION_series/")
 
 
 # Function to find LOS duration for a given hydrological year
 find_los_hydro <- function(hydro_sc, year, name){
+  
+  # First thing first I need to do some checks on data quality. I will try to 
+  # use the same filters I was using back with our series
+  # if(sum(is.na(hydro_sc), na.rm = TRUE) > 250) return(NA)
+  # else if(sum(is.na(hydro_sc[92:212]), na.rm = TRUE) > 60) return(NA)
+  # else if(sum((is.na(hydro_sc) | hydro_sc == 0), na.rm = TRUE) == length(hydro_sc)) return(NA)
   
   # Omitting NAs because those datas make the check harder
   appo <- na.omit(hydro_sc)
@@ -28,10 +34,10 @@ find_los_hydro <- function(hydro_sc, year, name){
 
 
 # Function to find LOS duration for a given station
-find_los_station <- function(station_name){
+find_los_station <- function(station_name, mark){
   
   # Importing snow cover series for a given station
-  fname <- paste0("Datas/sc_series/correct_with_summer_average/", station_name)
+  fname <- paste0("Dataset/sc_series/", station_name)
   df <- read.table(fname, header = FALSE)
   appo_years <- df$V1
   sc_series <- df$V2
@@ -55,22 +61,24 @@ find_los_station <- function(station_name){
   return(data.frame(
     station  = station_name,
     year     = hydro_years,
-    los = station_los
+    los = station_los, 
+    appo_m = rep(mark, length(hydro_years))
   ))
 }
 
 
 # Importing station names
-appo <- as.matrix(read.table(fname, header = FALSE))
-station_names <- appo[, 1]
-rm(appo)
+df <- read.table(fname, header = FALSE)
+station_names <- df$V1
+mark <- df$V2
+rm(df)
 gc()
 
 # Actually evaluating longest sc period
 results <- data.frame()
-for(name in station_names){
-  appo <- find_los_station(station_name = name)
+for(i in seq_along(station_names)){
+  appo <- find_los_station(station_names[i], mark[i])
   results <- rbind(results, appo)
 }
 
-write.table(results, "Datas/results/correct_with_summer_average/los_compatible.dat", row.names = FALSE, col.names = FALSE, quote = FALSE)
+write.table(results, "Results/los.dat", row.names = FALSE, col.names = FALSE, quote = FALSE)

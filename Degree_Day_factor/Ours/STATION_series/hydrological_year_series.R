@@ -7,8 +7,8 @@
 rm(list = ls())
 gc()
 
-fname <- "Datas/station_names.dat"
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/STATION_series/")
+fname <- "Dataset/station_names.dat"
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/STATION_series/")
 
 
 # Function to switch from years to hydrological years
@@ -93,7 +93,7 @@ normal_to_hydro <- function(station_name){
     )
     
     # Saving to file
-    write.table(df, paste0("Datas/station_series/", station_name), row.names = FALSE, col.names = FALSE, quote = FALSE)
+    write.table(df, paste0("Dataset/station_series/", station_name), row.names = FALSE, col.names = FALSE, quote = FALSE)
     return(1)
     
   } else {
@@ -103,13 +103,25 @@ normal_to_hydro <- function(station_name){
 }
 
 
+# Importing station names
+df <- read.table(fname)
+station_names <- df$V1
+flags <- df$V2
+
 # Cycle on stations
+station_flag <- character(0)
 usable_stations <- character(0)
-station_names <- as.matrix(read.table(fname)$V1)
-for(name in station_names){
-  appo <- normal_to_hydro(name)
+for(i in seq_along(station_names)){
+  appo <- normal_to_hydro(station_names[i])
   if(appo == 1){
-    usable_stations <- c(usable_stations, name)
+    usable_stations <- c(usable_stations, station_names[i])
+    station_flag <- c(station_flag, flags[i])
   }
 }
-write.table(usable_stations, "Datas/usable_stations.dat", row.names = FALSE, col.names = FALSE, quote = FALSE)
+
+df_print <- data.frame(
+  station_names = usable_stations, 
+  flags = station_flag
+)
+
+write.table(df_print, "Dataset/station_series/usable_stations.dat", row.names = FALSE, col.names = FALSE, quote = FALSE)
