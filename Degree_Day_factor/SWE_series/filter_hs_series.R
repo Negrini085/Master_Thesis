@@ -34,7 +34,7 @@ for(i in seq_along(station_names)){
     appo_hs <- hs_series[mask]
     summer <- tail(appo_hs, 60)
     
-    if(all(!is.na(appo_hs)) & mean(summer) == 0){
+    if(all(!is.na(appo_hs) & appo_hs >= 0) & mean(summer) == 0){
       appo_year <- c(appo_year, y)
       appo_mark <- c(appo_mark, flags[i])
       appo_names <- c(appo_names, station_names[i])

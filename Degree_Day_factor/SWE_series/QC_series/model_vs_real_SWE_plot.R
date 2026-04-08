@@ -10,7 +10,7 @@ library(ggplot2)
 library(nixmass)
 library(patchwork)
 
-fname_ana <- "../../Ours/STATION_check/Correcting/ANAGRAFICA_REV"
+fname_ana <- "../../Ours/STATION_check/Correcting/ANAGRAFICA_CORRECT"
 fname_hs_dataset <- "../Dataset/hs_series/all_complete/all_complete.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/SWE_series/QC_series/")
 
