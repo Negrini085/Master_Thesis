@@ -13,9 +13,9 @@ find_los_hydro <- function(hydro_sc, year, name){
   
   # First thing first I need to do some checks on data quality. I will try to 
   # use the same filters I was using back with our series
-  # if(sum(is.na(hydro_sc), na.rm = TRUE) > 250) return(NA)
-  # else if(sum(is.na(hydro_sc[92:212]), na.rm = TRUE) > 60) return(NA)
-  # else if(sum((is.na(hydro_sc) | hydro_sc == 0), na.rm = TRUE) == length(hydro_sc)) return(NA)
+  if(sum(is.na(hydro_sc), na.rm = TRUE) > 250) return(NA)
+  else if(sum(is.na(hydro_sc[92:212]), na.rm = TRUE) > 60) return(NA)
+  else if(sum((is.na(hydro_sc) | hydro_sc == 0), na.rm = TRUE) == length(hydro_sc)) return(NA)
   
   # Omitting NAs because those datas make the check harder
   appo <- na.omit(hydro_sc)
@@ -81,4 +81,4 @@ for(i in seq_along(station_names)){
   results <- rbind(results, appo)
 }
 
-write.table(results, "Results/los.dat", row.names = FALSE, col.names = FALSE, quote = FALSE)
+write.table(results, "Results/los_filtered.dat", row.names = FALSE, col.names = FALSE, quote = FALSE)
