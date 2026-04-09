@@ -104,6 +104,8 @@ names_ana <- df_ana$station_name
 elev_ana <- as.numeric(df_ana$ele_rev)
 
 # Cycle across stations
+appo_years <- numeric(0)
+appo_names <- character(0)
 for(name in station_names){
   
   # Selecting elevation for a given station
@@ -134,29 +136,29 @@ for(name in station_names){
     if(hs_hydro[1] != 0) next
     
     # Creating dataset as input to deltasnow model
-    dates <- seq(as.Date(paste0(y-1, "-09-01")), as.Date(paste0(y, "-08-31")), by = "day")
-    hsdata <- data.frame(date = dates, hs = hs_hydro)
-    
-    # SWE conversion
-    swe_from_hs <- swe.delta.snow(hsdata)
-    
-    # Selecting model SWE datas
-    mask <- swe_years == y
-    swe_from_model <- swe_series[mask]
-    
-    
-    # Plot creation
-    p <- plot_swe_comparison(
-      hsdata = hsdata,
-      swe_from_hs = swe_from_hs,
-      swe_from_model = swe_from_model,
-      station_name  = name,
-      year = y, 
-      ele = ele
-    )
-    
-    # Saving plot
-    ggsave(paste0("Images/start_with_zero/", name, "_", y, ".png"), plot = p, width = 12, height = 10, dpi = 150)
-    print(paste0("Made plot for ", name, "  -  ", y))
+    # dates <- seq(as.Date(paste0(y-1, "-09-01")), as.Date(paste0(y, "-08-31")), by = "day")
+    # hsdata <- data.frame(date = dates, hs = hs_hydro)
+    # 
+    # # SWE conversion
+    # swe_from_hs <- swe.delta.snow(hsdata)
+    # 
+    # # Selecting model SWE datas
+    # mask <- swe_years == y
+    # swe_from_model <- swe_series[mask]
+    # 
+    # 
+    # # Plot creation
+    # p <- plot_swe_comparison(
+    #   hsdata = hsdata,
+    #   swe_from_hs = swe_from_hs,
+    #   swe_from_model = swe_from_model,
+    #   station_name  = name,
+    #   year = y, 
+    #   ele = ele
+    # )
+    # 
+    # # Saving plot
+    # ggsave(paste0("Images/start_with_zero/", name, "_", y, ".png"), plot = p, width = 12, height = 10, dpi = 150)
+    # print(paste0("Made plot for ", name, "  -  ", y))
   }
 }
