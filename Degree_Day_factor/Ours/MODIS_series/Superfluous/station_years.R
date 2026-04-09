@@ -3,7 +3,9 @@
 rm(list = ls())
 gc()
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/MODIS_series/")
+fname_italian <- "Dataset/ITALIAN_STATIONS"
+fname_station_data <- "../STATION_check/Correcting/ANAGRAFICA_CORRECT"
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/MODIS_series/")
 
 # Function to evaluate operating years. I will check first row content, as well as 
 # whole year values to check whether aws station was actually active or not.
@@ -68,50 +70,57 @@ read_station <- function(fname, nmonths) {
 
 
 # Reading station names and coordinates
-appo <- as.matrix(read.table("Datas/not_compatible.dat", header = FALSE))
-coord_ele <- matrix(as.numeric(appo[, 2:3]), ncol = 2)
-start_year <- array(NA, dim = c(length(coord_ele[, 1])))
-end_year <- array(NA, dim = c(length(coord_ele[, 1])))
-station_names <- appo[, 1]
+df_ita <- read.table(fname_italian)
+ita_station_names <- df_ita$V1
+
+df_data <- read.table(fname_station_data, header = TRUE)
+df_data <- data.frame(station_names = df_data$station_name, lon = df_data$lon_rev, lat = df_data$lat_rev, flag = df_data$flag)
+
+
+# Selecting only stations we actually need to work with
+mask <- df_data$station_names %in% ita_station_names
+df_data <- df_data[mask, ]
+
+start_year <- array(NA, dim = c(length(ita_station_names)))
+end_year <- array(NA, dim = c(length(ita_station_names)))
+station_names <- df_data[, 1]
+flag <- df_data[, 4]
 rm(appo)
 gc()
 
 
 
 # Opening files and evaluating start/end years
-for(name_ind in seq_len(length(station_names))){
-  appo <- numeric(0)
+for (name_ind in seq_len(length(station_names))) {
+  
   fname <- paste0("../Dataset/", station_names[name_ind])
   
-  tryCatch({
-    
-    appo <- read_station(fname, 12)
-    end_year[name_ind] <- appo[2]
-    start_year[name_ind] <- appo[1]
-    
+  appo <- tryCatch({
+    read_station(fname, 12)
   }, error = function(e) {
-    
-    end_year[name_ind] <- NA
-    start_year[name_ind] <- NA
     message("Error: ", e$message)
-    
+    c(NA, NA)
   }, warning = function(w) {
     message("Warning: ", w$message)
-    
+    c(NA, NA)
   }, finally = {
-    message(paste0("Evaluated measurament period for ", station_names[name_ind]))
+    message("Evaluated measurement period for ", station_names[name_ind])
   })
+  
+  start_year[name_ind] <- appo[1]
+  end_year[name_ind]   <- appo[2]
 }
 
 
 
 # Building final dataframe and creating a file
 df <- data.frame(
-  names = station_names, 
-  lon = coord_ele[, 1], 
-  lat = coord_ele[, 2], 
+  names = ita_station_names, 
+  lon = df_data$lon, 
+  lat = df_data$lat, 
   start = start_year, 
-  end = end_year
+  end = end_year, 
+  flag = flag
 )
 
-write.table(df, file = "Datas/start_end_years_non_compatible.dat", row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
+write.table(df, file = "Dataset/start_end_years.dat", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = "\t")

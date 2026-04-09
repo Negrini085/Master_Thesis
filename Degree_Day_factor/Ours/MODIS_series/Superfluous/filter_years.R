@@ -4,11 +4,11 @@
 rm(list = ls())
 gc()
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/MODIS_series/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/MODIS_series/")
 
 
 # Loading Italian stations whose elevation is comparable with the 30-meter DEM
-fname <- "Datas/start_end_years_non_compatible.dat"
+fname <- "Dataset/start_end_years.dat"
 appo <- as.matrix(read.table(fname, header = FALSE))
 
 station_names <- appo[, 1]
@@ -16,6 +16,7 @@ station_lon <- as.numeric(appo[, 2])
 station_lat <- as.numeric(appo[, 3])
 station_end <- as.numeric(appo[, 5])
 station_start <- as.numeric(appo[, 4])
+station_flag <- appo[, 6]
 rm(appo)
 gc()
 
@@ -32,6 +33,7 @@ station_lat <- station_lat[!mask]
 station_end <- station_end[!mask]
 station_names <- station_names[!mask]
 station_start <- station_start[!mask]
+station_flag <- station_flag[!mask]
 
 
 # Second check -> one NA
@@ -50,6 +52,7 @@ station_lat <- station_lat[!mask]
 station_end <- station_end[!mask]
 station_names <- station_names[!mask]
 station_start <- station_start[!mask]
+station_flag <- station_flag[!mask]
 
 
 # Third check -> compatibility with MODIS time-window
@@ -68,7 +71,7 @@ station_lat <- station_lat[!mask]
 station_end <- station_end[!mask]
 station_names <- station_names[!mask]
 station_start <- station_start[!mask]
-
+station_flag <- station_flag[!mask]
 
 # Printing filtered dataset
 df <- data.frame(
@@ -76,7 +79,8 @@ df <- data.frame(
   lon = station_lon, 
   lat = station_lat, 
   start = station_start, 
-  end = station_end
+  end = station_end, 
+  station_flag = station_flag
 )
 
-write.table(df, file = "Datas/start_end_years_filtered_non_compatible.dat", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = "\t")
+write.table(df, file = "Dataset/start_end_years_filtered.dat", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = "\t")

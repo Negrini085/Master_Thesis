@@ -3,9 +3,9 @@
 rm(list = ls())
 gc()
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/MODIS_series/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/MODIS_series/")
 
-appo <- as.matrix(read.table("Datas/start_end_years_filtered.dat", header = FALSE))
+appo <- as.matrix(read.table("Dataset/start_end_years.dat", header = FALSE))
 station_names <- appo[, 1]
 rm(appo)
 gc()
@@ -14,7 +14,7 @@ gc()
 for(name in station_names[1]){
   
   # Creating filename and checking 
-  fname <- paste0("Datas/station_series/", name)
+  fname <- paste0("Dataset/modis_hydrological/", name)
   if(!file.exists(fname)) print(paste0("File does not exists: ", fname))
   
   # Importing dataset

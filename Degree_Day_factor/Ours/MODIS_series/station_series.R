@@ -6,7 +6,7 @@ gc()
 
 library(terra)
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/MODIS_series/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/MODIS_series/")
 
 # Function to extract station snow coverage series from MODIS dataset
 snow_series <- function(station_lon, station_lat, start_year, end_year){
@@ -18,11 +18,11 @@ snow_series <- function(station_lon, station_lat, start_year, end_year){
   for(y in years){
     
     # Evaluating number of files
-    ndays <- length(list.files(paste0("../../SnowCover_studies/MODIS/Dataset/daily/", y), pattern = "\\.tif$"))
+    ndays <- length(list.files(paste0("../../../SnowCover_studies/MODIS/Dataset/daily/", y), pattern = "\\.tif$"))
     for(i in seq_len(ndays)){
       
       # Importing daily map
-      fname <- paste0("../../SnowCover_studies/MODIS/Dataset/daily/", y, "/day_", sprintf("%03d", i), ".tif")
+      fname <- paste0("../../../SnowCover_studies/MODIS/Dataset/daily/", y, "/day_", sprintf("%03d", i), ".tif")
       print(paste0("Dealing with day ", sprintf("%03d", i), " of ", ndays, " for year ", y, "!"))
       daily_map <- rast(fname)
       
@@ -50,7 +50,7 @@ num_maps <- function(){
   for(y in years){
     
     # Evaluating number of files
-    ndays <- length(list.files(paste0("../../SnowCover_studies/MODIS/Dataset/daily/", y), pattern = "\\.tif$"))
+    ndays <- length(list.files(paste0("../../../SnowCover_studies/MODIS/Dataset/daily/", y), pattern = "\\.tif$"))
     ntot <- ntot + ndays
   }
   
@@ -88,7 +88,7 @@ start_res <- function(start_year){
 
 
 # Reading italian stations dataset
-appo <- as.matrix(read.table("Datas/start_end_years_filtered_non_compatible.dat", header = FALSE))
+appo <- as.matrix(read.table("Dataset/appo.dat", header = FALSE))
 coord_ele <- matrix(as.numeric(appo[, 2:3]), ncol = 2)
 start_year <- as.numeric(appo[, 4])
 end_year <- as.numeric(appo[, 5])
@@ -112,7 +112,7 @@ for(i in seq_len(length(station_names))){
   
   # Saving single station series
   df <- data.frame(days = seq_len(length(appo)), sc_series = appo)
-  write.table(df, paste0("Datas/modis_series/non_compatible/", station_names[i]), row.names = FALSE, col.names = FALSE, quote = FALSE)
+  write.table(df, paste0("Dataset/modis_series/", station_names[i]), row.names = FALSE, col.names = FALSE, quote = FALSE)
   
   # Saving into massive container
   station_series[start_pos:(start_pos + length(appo)-1), i] <- appo
@@ -124,4 +124,4 @@ for(i in seq_len(length(station_names))){
 # Saving station series
 df_out <- as.data.frame(station_series)
 colnames(df_out) <- station_names
-write.table(df_out, "Datas/station_series_all_non_compatible.dat", row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
+# write.table(df_out, "Dataset/new_stations.dat", row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
