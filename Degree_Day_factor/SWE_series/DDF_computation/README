@@ -1,0 +1,7 @@
+In order to correctly compute DDF, you need to do the following:
+
+  - run compute_solid_prec.R script
+  
+  - run compute_mean_temp.R script
+  
+  - run compute_csc.R script
