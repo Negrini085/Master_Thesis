@@ -1,0 +1,156 @@
+%=============================================================%
+%   Compile with: pdflatex -> biber -> pdflatex -> pdflatex   %
+%=============================================================%
+
+\documentclass[12pt, a4paper, twoside, openright]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian, english]{babel}
+
+\usepackage{lmodern}
+\usepackage[
+  a4paper,
+  top=3cm, bottom=3cm,
+  inner=3.5cm, outer=2.5cm,
+  headheight=15pt
+]{geometry}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\small\leftmark}
+\fancyhead[RO]{\small\rightmark}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\usepackage{emptypage}
+\usepackage{setspace}
+\onehalfspacing                            % interlinea 1.5
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{siunitx}
+\sisetup{
+  separate-uncertainty = true,
+  range-phrase = \text{--},
+  range-units = single
+}
+\usepackage{tensor}
+\usepackage{braket}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{float}
+\usepackage{caption}
+\captionsetup{font=small, labelfont=bf, width=0.9\linewidth}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{tabularx}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric, calc}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{codeblue}{rgb}{0.13,0.29,0.53}
+\definecolor{backcolour}{rgb}{0.97,0.97,0.97}
+
+\lstdefinestyle{physicscode}{
+  backgroundcolor=\color{backcolour},
+  commentstyle=\color{codegray}\itshape,
+  keywordstyle=\color{codeblue}\bfseries,
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  captionpos=b,
+  numbers=left,
+  numbersep=5pt,
+  showspaces=false,
+  tabsize=4,
+  frame=single,
+  rulecolor=\color{gray!30}
+}
+\lstset{style=physicscode}
+
+%---------------------------------------------------------------
+%  HYPERLINK E PDF
+%---------------------------------------------------------------
+\usepackage[
+  colorlinks = true,
+  linkcolor  = black,
+  citecolor  = blue!60!black,
+  urlcolor   = blue!70!black,
+  pdftitle   = {Master Thesis in Physics},
+  pdfauthor  = {Your Name},
+  pdfsubject = {Physics}
+]{hyperref}
+\usepackage{bookmark}
+
+
+\usepackage[
+  backend    = biber,
+  style      = phys,
+  sorting    = none,
+  maxnames   = 5,
+  doi        = true,
+  url        = false
+]{biblatex}
+\addbibresource{bibliography.bib}
+
+\usepackage{lipsum}
+\usepackage{microtype}
+\usepackage{xspace}
+\usepackage{csquotes}
+\usepackage[italian]{cleveref}
+
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\const}{\mathrm{const}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\Lagr}{\mathcal{L}}
+\newcommand{\Ham}{\mathcal{H}}
+\newcommand{\Order}[1]{\mathcal{O}\!\left(#1\right)}
+
+
+\begin{document}
+
+% \frontmatter
+%   \input{frontmatter/titlepage}
+%   \input{frontmatter/abstract}
+%   \tableofcontents
+
+\mainmatter
+  \input{chapters/snow_products}
+
+
+% \appendix
+%   \input{appendices/appendix_a}
+
+\backmatter
+  \printbibliography[heading=bibintoc, title={Bibliography}]
+
+\end{document}
