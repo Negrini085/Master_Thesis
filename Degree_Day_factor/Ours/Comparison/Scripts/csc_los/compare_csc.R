@@ -1,50 +1,39 @@
 # The main goal of this script is to produce a plot that enables the user to visually
-# compare LOS derived from MODIS series and from in-situ datas for compatible (or 
-# non-compatible stations, according to the user needs)
+# compare LOS derived from MODIS series and from in-situ datas for all stations
 rm(list = ls())
 gc()
 
 library(ggplot2)
 
-fname_STA <- "../STATION_series/Datas/longest_periods_sc_non_compatible.dat"
-fname_MOD <- "../MODIS_series/Datas/non_compatible/longest_periods_sc.dat"
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Comparison/")
+fname_MOD     <- "../MODIS_series/Results/csc.dat"
+fname_STA     <- "../STATION_series/Results/csc_filtered.dat"
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/Comparison/")
 
 
+# Importing both dataset
+df_MOD <- read.table(fname_MOD, header = FALSE)
+df_MOD <- data.frame(name = df_MOD$V1, year = as.numeric(df_MOD$V2), csc = as.numeric(df_MOD$V3), mark = df_MOD$V5)
 
-# Importing datas
-df <- read.table(fname_MOD, header = FALSE)
-year_MOD <- as.numeric(df$V2)
-csc_MOD <- as.numeric(df$V3)
-name_MOD <- df$V1
-
-df <- read.table(fname_STA, header = FALSE)
-year_STA <- as.numeric(df$V2)
-csc_STA <- as.numeric(df$V3)
-name_STA <- df$V1
-
-
-
-# Taking only datas which appear in both datasets
-df_MOD <- data.frame(name = name_MOD, year = year_MOD, csc = csc_MOD)
-df_STA <- data.frame(name = name_STA, year = year_STA, csc = csc_STA)
-
-merged <- merge(df_MOD, df_STA, by = c("name", "year"), suffixes = c("_MOD", "_STA"))
-
+df_STA <- read.table(fname_STA, header = FALSE)
+df_STA <- data.frame(name = df_STA$V1, year = as.numeric(df_STA$V2), csc = as.numeric(df_STA$V3), mark = df_STA$V5)
 
 
 # Plotting procedure
-data_MOD <- merged$csc_MOD
-data_STA <- merged$csc_STA
-df_plot <- data.frame(MOD = data_MOD, STA = data_STA)
+df_plot <- merge(df_MOD, df_STA, by = c("name", "year", "mark"), suffixes = c("_MOD", "_STA"))
+mask <- !is.na(df_plot$csc_STA)
+df_plot <- df_plot[mask, ]
 
-ggplot(df_plot, aes(x = MOD, y = STA)) +
-  geom_point(alpha = 0.4, color = "steelblue", size = 2) +
-  geom_abline(slope = 1, intercept = 0, color = "red", linetype = "dashed", linewidth = 0.8) +
+ggplot(df_plot, aes(x = csc_MOD, y = csc_STA, color = mark)) +
+  geom_point(alpha = 0.4, size = 2) +
+  geom_abline(slope = 1, intercept = 0, color = "black", linetype = "dashed", linewidth = 0.8) +
+  scale_color_manual(
+    values = c("OK" = "steelblue", "NO" = "tomato"),
+    name   = "Recovered"
+  ) +
   labs(
-    title    = "MODIS vs Station CSC comparison",
-    x        = "CSC MODIS [days]",
-    y        = "CSC Station [days]"
+    title = "MODIS vs Station CSC comparison",
+    x     = "CSC MODIS [days]",
+    y     = "CSC Station [days]"
   ) +
   theme_minimal(base_size = 13) +
   coord_equal()

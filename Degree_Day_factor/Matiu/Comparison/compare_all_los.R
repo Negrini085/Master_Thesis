@@ -8,7 +8,7 @@ library(ggplot2)
 
 fname_MOD     <- "../MODIS_series/Results/los.dat"
 fname_STA     <- "../STATION_series/Result/los_filtered.dat"
-fname_to_omit <- "../MODIS_series/Results/years_to_filter_out.dat"
+# fname_to_omit <- "../MODIS_series/Results/years_to_filter_out.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Matiu/Comparison/")
 
 
@@ -19,13 +19,13 @@ df_MOD <- data.frame(name = df_MOD$V1, year = as.numeric(df_MOD$V2), los = as.nu
 df_STA <- read.table(fname_STA, header = FALSE)
 df_STA <- data.frame(name = df_STA$V1, year = as.numeric(df_STA$V2), los = as.numeric(df_STA$V3), mark = df_STA$V4)
 
-df_to_omit <- read.table(fname_to_omit, header = FALSE)
-df_to_omit <- data.frame(name = df_to_omit$V1, year = as.numeric(df_to_omit$V2), mark = df_to_omit$V3)
+# df_to_omit <- read.table(fname_to_omit, header = FALSE)
+# df_to_omit <- data.frame(name = df_to_omit$V1, year = as.numeric(df_to_omit$V2), mark = df_to_omit$V3)
 
 
 # Plotting procedure
 df_plot <- merge(df_MOD, df_STA, by = c("name", "year", "mark"), suffixes = c("_MOD", "_STA"))
-df_plot <- anti_join(df_plot, df_to_omit, by = c("name", "year", "mark"))
+# df_plot <- anti_join(df_plot, df_to_omit, by = c("name", "year", "mark"))
 mask <- !is.na(df_plot$los_STA)
 df_plot <- df_plot[mask, ]
 

@@ -90,7 +90,8 @@ for(name in unique(station_names)){
     
     
     # Checking if on the day previous to the beginning of snow coverage there was a solid precipitation
-    if(snw_hydro[(start_hydro-1)] > 0){
+    if(is.na(start_hydro)) next
+    if(snw_hydro[(start_hydro-1)] > 0 & (start_hydro-1) > 0){
       start_hydro <- start_hydro - 1
       csc_hydro <- csc_hydro + 1
       
