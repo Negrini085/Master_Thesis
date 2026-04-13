@@ -73,6 +73,7 @@ station_names <- station_names[!mask]
 station_start <- station_start[!mask]
 station_flag <- station_flag[!mask]
 
+
 # Printing filtered dataset
 df <- data.frame(
   names = station_names, 

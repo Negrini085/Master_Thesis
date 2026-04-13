@@ -3,7 +3,7 @@
 rm(list = ls())
 gc()
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/MODIS_series/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/MODIS_series/")
 
 
 # Function to find LOS duration for a given hydrological year
@@ -23,10 +23,12 @@ find_los_hydro <- function(hydro_sc, year, name){
 
 
 # Function to find LOS duration for a given station
-find_los_station <- function(station_name){
+find_los_station <- function(station_name, mark){
   
   # Importing snow cover series for a given station
-  fname <- paste0("Datas/modis_hydrological/compatible/", station_name)
+  fname <- paste0("Dataset/modis_hydrological/", station_name)
+  if(!file.exists(fname)) return(NULL)
+  
   df <- read.table(fname, header = FALSE)
   appo_years <- df$V1
   sc_series <- df$V2
@@ -50,7 +52,8 @@ find_los_station <- function(station_name){
   return(data.frame(
     station  = station_name,
     year     = hydro_years,
-    los = station_los
+    los = station_los, 
+    flag = rep(mark, length(station_los))
   ))
 }
 
@@ -59,17 +62,30 @@ find_los_station <- function(station_name){
 
 
 # Importing station names
-appo <- as.matrix(read.table("Datas/compatible/start_end_years_filtered.dat", header = FALSE))
+appo <- as.matrix(read.table("Dataset/start_end_years_filtered.dat", header = FALSE))
 station_names <- appo[, 1]
 rm(appo)
 gc()
 
 
+# Importing stations metadatas
+df <- read.table("../STATION_check/Correcting/ANAGRAFICA_CORRECT", header = TRUE)
+name_ana <- df$station_name
+flag_ana <- df$flag
+
+mask <- name_ana %in% station_names
+mark <- flag_ana[mask]
+
+
 # Actually evaluating longest sc period
 results <- data.frame()
-for(name in station_names){
-  appo <- find_los_station(station_name = name)
+for(i in seq_along(station_names)){
+  appo <- find_los_station(station_name = station_names[i], mark = mark[i])
+  if(is.null(appo)){
+    print(paste0("Skipping snow cover series for ", station_names[i]))
+    next
+  }
   results <- rbind(results, appo)
 }
 
-write.table(results, "Datas/compatible/los.dat", row.names = FALSE, quote = FALSE)
+write.table(results, "Results/los.dat", row.names = FALSE, quote = FALSE)
