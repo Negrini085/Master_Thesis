@@ -17,7 +17,7 @@ repo_list <- c("PCPD", "TMND", "TMXD")
 for(repo in repo_list){
   
   # Cycle across stations
-  fname_appo <- paste0("../Dataset/model_runs/hydro/", repo, "/")
+  fname_appo <- paste0("../Dataset/model_runs/raw/", repo, "/")
   for(name in file_names){
     
     # Checkin if file is void or not
@@ -27,7 +27,7 @@ for(repo in repo_list){
     
     # Checking if there are some missing datas or no
     df_series <- read.table(fname)
-    mask <- is.na(as.numeric(df_series$V2)) | as.numeric(df_series$V2) == -90 | is.nan(as.numeric(df_series$V2))
+    mask <- is.na(as.numeric(df_series$V5)) | is.nan(as.numeric(df_series$V5))  # Check for -90 if hydrological years
     if(sum(mask, na.rm = TRUE) != 0) print(paste0("Some problems for ", name))
   }
 }

@@ -4,13 +4,13 @@ rm(list = ls())
 gc()
 
 repo_name <- "SNWD"
-fname <- paste0("Dataset/model_runs/raw/", repo_name, "/lista_sdh")
+fname <- paste0("Dataset/model_runs/raw/", repo_name, "/lista")
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/SWE_series/")
 
 
 # Importing list of stations that have been taken care of
 df_list <- read.table(fname)
-station_names <- sub("^D_", "V_", df_list$V1)
+station_names <- sub("^D_HSD", "DV_SDH", df_list$V1)
 
 
 # Cycle over stations
@@ -26,33 +26,29 @@ for(name in station_names){
   appo_year <- numeric(0)
   
   # Cycle over years
-  start <- 244
+  len <- 366
+  start <- 245
   for(y in years[2:length(years)]){
-    
-    if(y %% 4 == 0) len <- 366
-    else len <- 365
 
     # Selecting swe for a given year
+    if(y == 2024 | y == 2025) next
     hydro_swe <- swe_series[start:(start + len - 1)]
     start <- start + len
 
-    mask <- hydro_swe == -90 | is.nan(hydro_swe)
+    mask <- hydro_swe == -90
     hydro_swe[mask] <- NA
 
     # If the year isn't leap, I want to delete -90 value on the 29th
-    if(sum(is.na(hydro_swe), na.rm = TRUE) >= 2){
-      next
+    if(sum(is.na(hydro_swe), na.rm = TRUE) >= 2) stop(paste0("Too much NAs for ", name, " during ", y))
+    else if(y %% 4 != 0){
+      mask <- !is.na(hydro_swe)
+      hydro_swe <- hydro_swe[mask]
+
+      if(length(hydro_swe) != 365){
+        print(length(hydro_swe))
+        stop(paste0("Problems with missing datas in station ", name, " during ", y))
+      }
     }
-    # else if(y %% 4 != 0){
-    #   len <- 366
-    #   mask <- !is.na(hydro_swe)
-    #   hydro_swe <- hydro_swe[mask]
-    # 
-    #   if(length(hydro_swe) != 365){
-    #     print(length(hydro_swe))
-    #     stop(paste0("Problems with missing datas in station ", name, " during ", y))
-    #   }
-    # }
 
     appo_year <- c(appo_year, rep(y, length(hydro_swe)))
     appo_swe <- c(appo_swe, hydro_swe)
