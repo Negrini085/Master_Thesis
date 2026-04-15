@@ -14,6 +14,23 @@ fname_ana <- "../../Ours/STATION_check/Correcting/ANAGRAFICA_CORRECT"
 fname_hs_dataset <- "../Dataset/hs_series/all_complete/all_complete.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/SWE_series/QC_series/")
 
+# Find max HS value (I have to consider also year with gaps because we will be plotting both)
+compute_max_hs <- function(station_name){
+  
+  # Importing whole hs series
+  fname <- paste0("../../Ours/STATION_series/Dataset/station_series/", station_name)
+  df_for_max <- read.table(fname)
+  hs_for_max <- as.numeric(df_for_max$V2)
+  year_for_max <- as.numeric(df_for_max$V1)
+  
+  # Selecting only years which will be plotted (no 2024 or 2025)
+  mask <- year_for_max != 2024 & year_for_max != 2025
+  hs_for_max <- hs_for_max[mask]
+  
+  # Finding actual hs max
+  appo_max <- max(hs_for_max, na.rm = TRUE)
+  return(appo_max)
+}
 
 # Function to find maximum swe value
 compute_swe_series <- function(df_swe, df_hs, station_years){
@@ -25,19 +42,32 @@ compute_swe_series <- function(df_swe, df_hs, station_years){
   year_series <- numeric(0)
   
   for(j in station_years){
+    if(j %in% c(2024, 2025)) next
+    
     # Selecting swe from model series
+    mod_hs <- FALSE
     mask <- as.numeric(df_hs$V1) == j
     hs_hydro <- as.numeric(df_hs$V2)[mask]/100
-    if(hs_hydro[1] != 0) next
     
     # Creating dataset as input to delta-snow model
     dates <- seq(as.Date(paste0(j-1, "-09-01")), as.Date(paste0(j, "-08-31")), by = "day")
+    if(hs_hydro[1] != 0){
+      dates <- seq(as.Date(paste0(j-1, "-08-31")), as.Date(paste0(j, "-08-31")), by = "day")
+      hs_hydro <- c(0, hs_hydro)
+      mod_hs <- TRUE
+    }
     hsdata <- data.frame(date = dates, hs = hs_hydro)
     
     # HS to SWE
     mask <- as.numeric(df_swe$V1) == j
     swe_from_model <- as.numeric(df_swe$V2)[mask]
     swe_from_hs <- swe.delta.snow(hsdata, dyn_rho_max = FALSE)
+    if(mod_hs){
+      swe_from_hs <- swe_from_hs[-1]
+      hs_hydro <- hs_hydro[-1]
+    }
+    
+    if(length(swe_from_model) != length(swe_from_hs)) stop(paste0("Length mismatch for year ", j))
     
     hs_swe <- c(hs_swe, swe_from_hs)
     mod_swe <- c(mod_swe, swe_from_model)
@@ -69,7 +99,7 @@ split_series <- function(df, start_zero, end_zero, ele) {
   
   # Season (to keep)
   df$value_season <- NA
-  df$value_season[1:idx_start]  <- df$value[1:idx_end]
+  df$value_season[1:idx_start]  <- df$value[1:idx_start]
   df$value_season[idx_end:n]  <- df$value[idx_end:n]
   if(ele < 2500) df$value_season[n] <- NA
   
@@ -107,11 +137,8 @@ plot_swe_comparison <- function(hs_series, swe_from_hs, swe_from_model, station_
     geom_line(aes(y = value_season), color = "grey40", linewidth = 0.7) +
     geom_vline(xintercept = max_date, linetype = "dashed", color = "red") +
     coord_cartesian(ylim = c(0, max_hs*1.1)) +
-    labs(
-      title = paste0(station_name, " (", ele, " m a.s.l.) — ", year),
-      x = NULL,
-      y = "HS [cm]"
-    ) +
+    scale_x_date(date_breaks = "1 month", date_labels = "%b") +
+    labs(title = paste0(station_name, " (", ele, " m a.s.l.) — ", year - 1, " to ", year), x = NULL, y = "HS [cm]") +
     theme_minimal() +
     theme(
       plot.title   = element_text(face = "bold"),
@@ -129,6 +156,7 @@ plot_swe_comparison <- function(hs_series, swe_from_hs, swe_from_model, station_
     geom_line(aes(y = value_season), color = "#2171b5", linewidth = 0.7) +
     geom_vline(xintercept = max_date, linetype = "dashed", color = "red") +
     coord_cartesian(ylim = y_range) +
+    scale_x_date(date_breaks = "1 month", date_labels = "%b") +
     labs(
       x = NULL,
       y = "SWE ΔSnow [mm w.e.]"
@@ -149,6 +177,7 @@ plot_swe_comparison <- function(hs_series, swe_from_hs, swe_from_model, station_
     geom_line(aes(y = value_season), color = "#2171b5", linewidth = 0.7) +
     geom_vline(xintercept = max_date, linetype = "dashed", color = "red") +
     coord_cartesian(ylim = y_range) +
+    scale_x_date(date_breaks = "1 month", date_labels = "%b") +
     labs(
       x = "Date",
       y = "SWE model [mm w.e.]"
@@ -186,9 +215,13 @@ for(name in station_names){
   if(length(ele) > 1) stop(paste0("Problem with elevation of ", name))
   else if(ele < 2000) next
   
+  # Checking if SWE from model series exist or not
+  fname_swe_model <- paste0("../Dataset/model_runs/hydro/SNWD/DV_SDH_", sub("HSD_", "", name))
+  if(!file.exists(fname_swe_model)) next
+  
   # Importing hs dataset and model swe series for a given station
   df_hs <- read.table(paste0("../Dataset/hs_series/all_complete/", name))
-  df_swe <- read.table(paste0("../Dataset/model_runs/hydro/SNWD/V_SDH_", sub("HSD_", "", name)))
+  df_swe <- read.table(fname_swe_model)
   
   # Selecting hydrological years that can be a part of our comparison
   mask <- df$V1 == name
@@ -196,11 +229,15 @@ for(name in station_names){
   
   # SWE series from model and from deltasnow
   merged_df <- compute_swe_series(df_swe = df_swe, df_hs = df_hs, station_years = station_years)
+  if(nrow(merged_df) == 0) stop(paste0("No rows for ", name, " dataset!"))
   max_swe_station <- max(c(max(as.numeric(merged_df$mod), na.rm = TRUE), max(as.numeric(merged_df$del), na.rm = TRUE)), na.rm = TRUE)
-  max_hs_station <- max(as.numeric(merged_df$hs), na.rm = TRUE)
+  max_hs_station <- compute_max_hs(name)
   
   # Cycle across years
   for(y in unique(as.numeric(merged_df$year))){
+    
+    # Check over years that must not be plotted
+    if(y %in% c(2024, 2025)) next
     
     # Selecting period to be neglected
     start_zero <- as.Date(c(paste0(y, "-07-01"), paste0(y, "-07-15")))
@@ -228,9 +265,9 @@ for(name in station_names){
         max_hs         = max_hs_station
       )
       
-      ggsave(paste0("Images/start_with_zero/", name, "_", y, ".png"), plot = p, width = 12, height = 10, dpi = 150)
+      ggsave(paste0("Images/all_complete/", name, "_", y-1,"_to_", y, ".pdf"), plot = p, width = 12, height = 10, device = cairo_pdf)
     })
 
-    print(paste0("Made plot for ", name, " (", ele, " m) -  ", y))
+    print(paste0("Made plot for ", name, " (", ele, " m)  -  ", y-1," to ", y))
   }
 }
