@@ -85,6 +85,9 @@ normal_to_hydro <- function(station_name){
       rep(years[i], length(x))
     }), use.names = FALSE)
     
+    # Setting to zero negative values
+    mask <- hs_series < 0
+    hs_series[mask] <- 0
     
     # Creating data-frame to later plot
     df <- data.frame(
