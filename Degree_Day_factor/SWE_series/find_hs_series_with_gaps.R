@@ -35,6 +35,7 @@ for(i in seq_along(station_names)){
 
     if(any(is.na(appo_hs))){
       if(all(is.na(appo_hs))) stop(paste0("All datas are missing for ", name, " during ", y))
+      else if(all(is.na(appo_hs) | appo_hs == 0)) next
       appo_year <- c(appo_year, y)
       appo_mark <- c(appo_mark, flags[i])
       appo_names <- c(appo_names, station_names[i])
