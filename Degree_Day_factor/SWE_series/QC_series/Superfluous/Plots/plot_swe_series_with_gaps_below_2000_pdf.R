@@ -286,7 +286,7 @@ for(name in station_names){
         max_hs         = max_hs_station
       )
       
-      ggsave(paste0("Images/with_gaps/", name, "_", y-1,"_to_", y, ".png"), plot = p, width = 12, height = 10, dpi = 150)
+      ggsave(paste0("Pdf/with_gaps/", name, "_", y-1,"_to_", y, ".pdf"), plot = p, width = 12, height = 10, version = cairo_pdf)
     })
     
     print(paste0("Made plot for ", name, " (", ele, " m)  -  ", y-1," to ", y))

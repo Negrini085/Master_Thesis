@@ -34,7 +34,7 @@ compute_max_hs <- function(station_name){
 }
 
 # Function to create dataset to be plottes
-compute_swe_series <- function(df_swe, df_hs, station_years){
+compute_swe_series <- function(df_swe, df_hs, station_years, ele){
   
   # Appo variables
   mod_swe <- numeric(0)
@@ -69,7 +69,7 @@ compute_swe_series <- function(df_swe, df_hs, station_years){
 }
 
 # Function to split a dataframe into pre-season, season and post-season series
-split_series <- function(df, end_zero, start_zero, appo_gaps){
+split_series <- function(df, end_zero, start_zero, appo_gaps, ele){
   n <- nrow(df)
   dates <- df$date
   
@@ -77,60 +77,61 @@ split_series <- function(df, end_zero, start_zero, appo_gaps){
   idx_start <- min(which(dates >= start_zero))
   
   
-  # Pre-season
-  df$value_pre <- NA
-  df$value_pre[1:idx_end] <- df$value[1:idx_end]
+  # Values to be neglected
+  df$value_not <- NA
+  df$value_not[idx_start:idx_end]   <- df$value[idx_start:idx_end]
   
-  known_idx <- which(!is.na(df$value_pre[1:idx_end]))
+  known_idx <- which(!is.na(df$value_not[idx_start:idx_end]))
   if (length(known_idx) >= 2) {
-    df$value_pre[1:idx_end] <- approx(
+    df$value_not[idx_start:idx_end] <- approx(
       x    = known_idx,
-      y    = df$value_pre[known_idx],
-      xout = 1:idx_end,
+      y    = df$value_not[idx_start:idx_end][known_idx],
+      xout = 1:(idx_end - idx_start + 1),
       rule = 2
     )$y
   }
   else if(length(known_idx) == 1) {
-    only_val <- df$value_pre[1:idx_end][known_idx]
-    df$value_pre[1:idx_end] <- only_val
+    only_val <- df$value_not[idx_start:idx_end][known_idx]
+    df$value_not[idx_start:idx_end] <- only_val
   }
   
   
-  # Season
-  df$value_season <- NA
-  df$value_season[idx_end:idx_start] <- df$value[idx_end:idx_start]
+  # First part of the season
+  df$first_season <- NA
+  df$first_season[1:idx_start]  <- df$value[1:idx_start]
   
-  known_idx <- which(!is.na(df$value_season[idx_end:idx_start]))
-  if (length(known_idx) >= 2) {
-    df$value_season[idx_end:idx_start] <- approx(
-      x    = known_idx,
-      y    = df$value_season[idx_end:idx_start][known_idx],
-      xout = 1:(idx_start - idx_end + 1),
-      rule = 2
-    )$y
-  }
-  else if(length(known_idx) == 1) {
-    only_val <- df$value_season[idx_end:idx_start][known_idx]
-    df$value_season[idx_end:idx_start] <- only_val
-  }
-  
-  
-  # Post-season
-  df$value_post <- NA
-  df$value_post[idx_start:n] <- df$value[idx_start:n]
-  
-  known_idx <- which(!is.na(df$value_post[idx_start:n]))
+  known_idx <- which(!is.na(df$first_season[1:idx_start]))
   if(length(known_idx) >= 2) {
-    df$value_post[idx_start:n] <- approx(
+    df$first_season[1:idx_start] <- approx(
       x    = known_idx,
-      y    = df$value_post[idx_start:n][known_idx],
-      xout = 1:(n - idx_start + 1),
+      y    = df$first_season[1:idx_start][known_idx],
+      xout = 1:idx_start,
       rule = 2
     )$y
   }
   else if(length(known_idx) == 1) {
-    only_val <- df$value_post[idx_start:n][known_idx]
-    df$value_post[idx_start:n] <- only_val
+    only_val <- df$first_season[1:idx_start][known_idx]
+    df$first_season[1:idx_start] <- only_val
+  }
+  
+  
+  # Second part of the season
+  df$second_season <- NA
+  df$second_season[idx_end:n]  <- df$value[idx_end:n]
+  if(ele < 2500) df$second_season[n] <- NA
+  
+  known_idx <- which(!is.na(df$second_season[idx_end:n]))
+  if(length(known_idx) >= 2) {
+    df$second_season[idx_end:n] <- approx(
+      x    = known_idx,
+      y    = df$second_season[idx_end:n][known_idx],
+      xout = 1:(n - idx_end + 1),
+      rule = 2
+    )$y
+  }
+  else if(length(known_idx) == 1) {
+    only_val <- df$second_season[idx_end:n][known_idx]
+    df$second_season[idx_end:n] <- only_val
   }
   
   
@@ -163,17 +164,17 @@ plot_swe_comparison <- function(hs_series, swe_from_model, station_name, year, e
   max_date <- dates[max_idx]
   
   # Split each series into pre, season and post
-  df_hs <- split_series(df_hs, end_zero, start_zero, as.numeric(df_hs$value))
-  df_swe_model <- split_series(df_swe_model, end_zero, start_zero, as.numeric(df_swe_model$value))
+  df_hs <- split_series(df_hs, end_zero, start_zero, as.numeric(df_hs$value), ele)
+  df_swe_model <- split_series(df_swe_model, end_zero, start_zero, as.numeric(df_swe_model$value), ele)
   
   # Panel 1: HS
   p1 <- ggplot(df_hs, aes(x = date)) +
-    geom_area(aes(y = value_pre),    fill = "red",    alpha = 0.2) +
-    geom_area(aes(y = value_season), fill = "grey40", alpha = 0.2) +
-    geom_area(aes(y = value_post),   fill = "red",    alpha = 0.2) +
-    geom_line(aes(y = value_pre),    color = "red",    linewidth = 0.7) +
-    geom_line(aes(y = value_season), color = "grey40", linewidth = 0.7) +
-    geom_line(aes(y = value_post),   color = "red",    linewidth = 0.7) +
+    geom_area(aes(y = value_not),    fill = "red",    alpha = 0.2) +
+    geom_area(aes(y = first_season), fill = "grey40", alpha = 0.2) +
+    geom_area(aes(y = second_season), fill = "grey40", alpha = 0.2) +
+    geom_line(aes(y = value_not),    color = "red",    linewidth = 0.7) +
+    geom_line(aes(y = first_season), color = "grey40", linewidth = 0.7) +
+    geom_line(aes(y = second_season), color = "grey40", linewidth = 0.7) +
     geom_rect(
       data = df_hs[df_hs$gap_flag, ], aes(xmin = date, xmax = next_date, ymin = -Inf, ymax = Inf),
       fill = "#C1FFC1", alpha = 1, color = NA, linewidth = 0, inherit.aes = FALSE
@@ -192,12 +193,12 @@ plot_swe_comparison <- function(hs_series, swe_from_model, station_name, year, e
   
   # Panel 3: SWE from model
   p3 <- ggplot(df_swe_model, aes(x = date)) +
-    geom_area(aes(y = value_pre),    fill = "red",      alpha = 0.2) +
-    geom_area(aes(y = value_season), fill = "#2171b5",  alpha = 0.2) +
-    geom_area(aes(y = value_post),   fill = "red",      alpha = 0.2) +
-    geom_line(aes(y = value_pre),    color = "red",     linewidth = 0.7) +
-    geom_line(aes(y = value_season), color = "#2171b5", linewidth = 0.7) +
-    geom_line(aes(y = value_post),   color = "red",     linewidth = 0.7) +
+    geom_area(aes(y = value_not),    fill = "red",      alpha = 0.2) +
+    geom_area(aes(y = first_season), fill = "#2171b5",  alpha = 0.2) +
+    geom_area(aes(y = second_season), fill = "#2171b5",  alpha = 0.2) +
+    geom_line(aes(y = value_not),    color = "red",     linewidth = 0.7) +
+    geom_line(aes(y = first_season), color = "#2171b5", linewidth = 0.7) +
+    geom_line(aes(y = second_season), color = "#2171b5", linewidth = 0.7) +
     geom_vline(xintercept = max_date, linetype = "dashed", color = "red") +
     coord_cartesian(ylim = y_range) +
     scale_x_date(date_breaks = "1 month", date_labels = "%b") +
@@ -233,7 +234,7 @@ for(name in station_names){
   mask <- names_ana == name
   ele <- elev_ana[mask]
   if(length(ele) > 1) stop(paste0("Problem with elevation of ", name))
-  else if(ele >= 2000) next
+  else if(ele < 2000) next
   
   # Checking if SWE series exists or not
   fname_swe_model <- paste0("../Dataset/model_runs/hydro/SNWD/DV_SDH_", sub("HSD_", "", name))
@@ -263,10 +264,12 @@ for(name in station_names){
     if(y %in% c(2024, 2025)) next
     
     # Selecting period to be neglected
-    start_zero <- as.Date(c(paste0(y, "-05-01"), paste0(y, "-05-15"), paste0(y, "-06-01"), paste0(y, "-06-15")))
-    end_zero   <- as.Date(c(paste0(y-1, "-10-31"), paste0(y-1, "-10-15"), paste0(y-1, "-10-01"), paste0(y-1, "-09-15")))
+    start_zero <- as.Date(c(paste0(y, "-07-01"), paste0(y, "-07-15")))
+    end_zero   <- as.Date(c(paste0(y, "-08-31"), paste0(y, "-08-15")))
     
-    ind <- ele %/% 500 + 1
+    if(ele < 2500) ind <- 1
+    else ind <- 2
+    
     appo_start <- start_zero[ind]
     appo_end <- end_zero[ind]
     
@@ -286,7 +289,7 @@ for(name in station_names){
         max_hs         = max_hs_station
       )
       
-      ggsave(paste0("Images/with_gaps/", name, "_", y-1,"_to_", y, ".png"), plot = p, width = 12, height = 10, dpi = 150)
+      ggsave(paste0("Pdf/with_gaps/", name, "_", y-1,"_to_", y, ".pdf"), plot = p, width = 12, height = 10, version = cairo_pdf)
     })
     
     print(paste0("Made plot for ", name, " (", ele, " m)  -  ", y-1," to ", y))

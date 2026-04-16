@@ -97,11 +97,14 @@ split_series <- function(df, start_zero, end_zero, ele) {
   df$value_not <- NA
   df$value_not[idx_start:idx_end]   <- df$value[idx_start:idx_end]
   
-  # Season (to keep)
-  df$value_season <- NA
-  df$value_season[1:idx_start]  <- df$value[1:idx_start]
-  df$value_season[idx_end:n]  <- df$value[idx_end:n]
-  if(ele < 2500) df$value_season[n] <- NA
+  # First part of the season
+  df$first_season <- NA
+  df$first_season[1:idx_start]  <- df$value[1:idx_start]
+  
+  # Second part of the season
+  df$second_season <- NA
+  df$second_season[idx_end:n]  <- df$value[idx_end:n]
+  if(ele < 2500) df$second_season[n] <- NA
   
   df
 }
@@ -132,9 +135,11 @@ plot_swe_comparison <- function(hs_series, swe_from_hs, swe_from_model, station_
   # Panel 1: HS
   p1 <- ggplot(df_hs, aes(x = date)) +
     geom_area(aes(y = value_not),    fill = "red",    alpha = 0.2) +
-    geom_area(aes(y = value_season), fill = "grey40", alpha = 0.2) +
+    geom_area(aes(y = first_season), fill = "grey40", alpha = 0.2) +
+    geom_area(aes(y = second_season), fill = "grey40", alpha = 0.2) +
     geom_line(aes(y = value_not),    color = "red",    linewidth = 0.7) +
-    geom_line(aes(y = value_season), color = "grey40", linewidth = 0.7) +
+    geom_line(aes(y = first_season), color = "grey40", linewidth = 0.7) +
+    geom_line(aes(y = second_season), color = "grey40", linewidth = 0.7) +
     geom_vline(xintercept = max_date, linetype = "dashed", color = "red") +
     coord_cartesian(ylim = c(0, max_hs*1.1)) +
     scale_x_date(date_breaks = "1 month", date_labels = "%b") +
@@ -150,10 +155,12 @@ plot_swe_comparison <- function(hs_series, swe_from_hs, swe_from_model, station_
   
   # Panel 2: SWE from DeltaSnow
   p2 <- ggplot(df_swe_hs, aes(x = date)) +
-    geom_area(aes(y = value_not),    fill = "red",      alpha = 0.2) +
-    geom_area(aes(y = value_season), fill = "#2171b5",  alpha = 0.2) +
-    geom_line(aes(y = value_not),    color = "red",     linewidth = 0.7) +
-    geom_line(aes(y = value_season), color = "#2171b5", linewidth = 0.7) +
+    geom_area(aes(y = value_not), fill = "red",      alpha = 0.2) +
+    geom_area(aes(y = first_season), fill = "#2171b5",  alpha = 0.2) +
+    geom_area(aes(y = second_season), fill = "#2171b5",  alpha = 0.2) +
+    geom_line(aes(y = value_not), color = "red",     linewidth = 0.7) +
+    geom_line(aes(y = first_season), color = "#2171b5", linewidth = 0.7) +
+    geom_line(aes(y = second_season), color = "#2171b5", linewidth = 0.7) +
     geom_vline(xintercept = max_date, linetype = "dashed", color = "red") +
     coord_cartesian(ylim = y_range) +
     scale_x_date(date_breaks = "1 month", date_labels = "%b") +
@@ -172,9 +179,11 @@ plot_swe_comparison <- function(hs_series, swe_from_hs, swe_from_model, station_
   # Panel 3: SWE from model
   p3 <- ggplot(df_swe_model, aes(x = date)) +
     geom_area(aes(y = value_not),    fill = "red",      alpha = 0.2) +
-    geom_area(aes(y = value_season), fill = "#2171b5",  alpha = 0.2) +
+    geom_area(aes(y = first_season), fill = "#2171b5",  alpha = 0.2) +
+    geom_area(aes(y = second_season), fill = "#2171b5",  alpha = 0.2) +
     geom_line(aes(y = value_not),    color = "red",     linewidth = 0.7) +
-    geom_line(aes(y = value_season), color = "#2171b5", linewidth = 0.7) +
+    geom_line(aes(y = first_season), color = "#2171b5", linewidth = 0.7) +
+    geom_line(aes(y = second_season), color = "#2171b5", linewidth = 0.7) +
     geom_vline(xintercept = max_date, linetype = "dashed", color = "red") +
     coord_cartesian(ylim = y_range) +
     scale_x_date(date_breaks = "1 month", date_labels = "%b") +
@@ -265,7 +274,7 @@ for(name in station_names){
         max_hs         = max_hs_station
       )
       
-      ggsave(paste0("Images/all_complete/", name, "_", y-1,"_to_", y, ".pdf"), plot = p, width = 12, height = 10, device = cairo_pdf)
+      ggsave(paste0("Images/all_complete/", name, "_", y-1,"_to_", y, ".png"), plot = p, width = 12, height = 10, dpi = 150)
     })
 
     print(paste0("Made plot for ", name, " (", ele, " m)  -  ", y-1," to ", y))

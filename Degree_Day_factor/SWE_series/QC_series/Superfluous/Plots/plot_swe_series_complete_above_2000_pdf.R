@@ -14,7 +14,6 @@ fname_ana <- "../../Ours/STATION_check/Correcting/ANAGRAFICA_CORRECT"
 fname_hs_dataset <- "../Dataset/hs_series/all_complete/all_complete.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/SWE_series/QC_series/")
 
-
 # Find max HS value (I have to consider also year with gaps because we will be plotting both)
 compute_max_hs <- function(station_name){
   
@@ -32,7 +31,6 @@ compute_max_hs <- function(station_name){
   appo_max <- max(hs_for_max, na.rm = TRUE)
   return(appo_max)
 }
-
 
 # Function to find maximum swe value
 compute_swe_series <- function(df_swe, df_hs, station_years){
@@ -88,24 +86,25 @@ compute_swe_series <- function(df_swe, df_hs, station_years){
 }
 
 # Function to split a dataframe into pre-season, season and post-season series
-split_series <- function(df, end_zero, start_zero) {
+split_series <- function(df, start_zero, end_zero, ele) {
   n     <- nrow(df)
   dates <- df$date
   
   idx_end   <- max(which(dates <= end_zero))
   idx_start <- min(which(dates >= start_zero))
   
-  # Pre-season (to get rid of)
-  df$value_pre              <- NA
-  df$value_pre[1:idx_end]   <- df$value[1:idx_end]
+  # No-season (to get rid of)
+  df$value_not <- NA
+  df$value_not[idx_start:idx_end]   <- df$value[idx_start:idx_end]
   
-  # Season (to keep)
-  df$value_season                     <- NA
-  df$value_season[idx_end:idx_start]  <- df$value[idx_end:idx_start]
+  # First part of the season
+  df$first_season <- NA
+  df$first_season[1:idx_start]  <- df$value[1:idx_start]
   
-  # Post-season (to get rid of)
-  df$value_post              <- NA
-  df$value_post[idx_start:n] <- df$value[idx_start:n]
+  # Second part of the season
+  df$second_season <- NA
+  df$second_season[idx_end:n]  <- df$value[idx_end:n]
+  if(ele < 2500) df$second_season[n] <- NA
   
   df
 }
@@ -129,18 +128,18 @@ plot_swe_comparison <- function(hs_series, swe_from_hs, swe_from_model, station_
   max_date <- dates[max_idx]
   
   # Split each series into pre, season and post
-  df_hs        <- split_series(df_hs,        end_zero, start_zero)
-  df_swe_hs    <- split_series(df_swe_hs,    end_zero, start_zero)
-  df_swe_model <- split_series(df_swe_model, end_zero, start_zero)
+  df_hs        <- split_series(df_hs, start_zero, end_zero, ele)
+  df_swe_hs    <- split_series(df_swe_hs, start_zero, end_zero, ele)
+  df_swe_model <- split_series(df_swe_model, start_zero, end_zero, ele)
   
   # Panel 1: HS
   p1 <- ggplot(df_hs, aes(x = date)) +
-    geom_area(aes(y = value_pre),    fill = "red",    alpha = 0.2) +
-    geom_area(aes(y = value_season), fill = "grey40", alpha = 0.2) +
-    geom_area(aes(y = value_post),   fill = "red",    alpha = 0.2) +
-    geom_line(aes(y = value_pre),    color = "red",    linewidth = 0.7) +
-    geom_line(aes(y = value_season), color = "grey40", linewidth = 0.7) +
-    geom_line(aes(y = value_post),   color = "red",    linewidth = 0.7) +
+    geom_area(aes(y = value_not),    fill = "red",    alpha = 0.2) +
+    geom_area(aes(y = first_season), fill = "grey40", alpha = 0.2) +
+    geom_area(aes(y = second_season), fill = "grey40", alpha = 0.2) +
+    geom_line(aes(y = value_not),    color = "red",    linewidth = 0.7) +
+    geom_line(aes(y = first_season), color = "grey40", linewidth = 0.7) +
+    geom_line(aes(y = second_season), color = "grey40", linewidth = 0.7) +
     geom_vline(xintercept = max_date, linetype = "dashed", color = "red") +
     coord_cartesian(ylim = c(0, max_hs*1.1)) +
     scale_x_date(date_breaks = "1 month", date_labels = "%b") +
@@ -156,16 +155,19 @@ plot_swe_comparison <- function(hs_series, swe_from_hs, swe_from_model, station_
   
   # Panel 2: SWE from DeltaSnow
   p2 <- ggplot(df_swe_hs, aes(x = date)) +
-    geom_area(aes(y = value_pre),    fill = "red",      alpha = 0.2) +
-    geom_area(aes(y = value_season), fill = "#2171b5",  alpha = 0.2) +
-    geom_area(aes(y = value_post),   fill = "red",      alpha = 0.2) +
-    geom_line(aes(y = value_pre),    color = "red",     linewidth = 0.7) +
-    geom_line(aes(y = value_season), color = "#2171b5", linewidth = 0.7) +
-    geom_line(aes(y = value_post),   color = "red",     linewidth = 0.7) +
+    geom_area(aes(y = value_not), fill = "red",      alpha = 0.2) +
+    geom_area(aes(y = first_season), fill = "#2171b5",  alpha = 0.2) +
+    geom_area(aes(y = second_season), fill = "#2171b5",  alpha = 0.2) +
+    geom_line(aes(y = value_not), color = "red",     linewidth = 0.7) +
+    geom_line(aes(y = first_season), color = "#2171b5", linewidth = 0.7) +
+    geom_line(aes(y = second_season), color = "#2171b5", linewidth = 0.7) +
     geom_vline(xintercept = max_date, linetype = "dashed", color = "red") +
     coord_cartesian(ylim = y_range) +
     scale_x_date(date_breaks = "1 month", date_labels = "%b") +
-    labs(x = NULL, y = "SWE ΔSnow [mm w.e.]") +
+    labs(
+      x = NULL,
+      y = "SWE ΔSnow [mm w.e.]"
+    ) +
     theme_minimal() +
     theme(
       axis.title.y = element_text(size = 14),
@@ -176,16 +178,19 @@ plot_swe_comparison <- function(hs_series, swe_from_hs, swe_from_model, station_
   
   # Panel 3: SWE from model
   p3 <- ggplot(df_swe_model, aes(x = date)) +
-    geom_area(aes(y = value_pre),    fill = "red",      alpha = 0.2) +
-    geom_area(aes(y = value_season), fill = "#2171b5",  alpha = 0.2) +
-    geom_area(aes(y = value_post),   fill = "red",      alpha = 0.2) +
-    geom_line(aes(y = value_pre),    color = "red",     linewidth = 0.7) +
-    geom_line(aes(y = value_season), color = "#2171b5", linewidth = 0.7) +
-    geom_line(aes(y = value_post),   color = "red",     linewidth = 0.7) +
+    geom_area(aes(y = value_not),    fill = "red",      alpha = 0.2) +
+    geom_area(aes(y = first_season), fill = "#2171b5",  alpha = 0.2) +
+    geom_area(aes(y = second_season), fill = "#2171b5",  alpha = 0.2) +
+    geom_line(aes(y = value_not),    color = "red",     linewidth = 0.7) +
+    geom_line(aes(y = first_season), color = "#2171b5", linewidth = 0.7) +
+    geom_line(aes(y = second_season), color = "#2171b5", linewidth = 0.7) +
     geom_vline(xintercept = max_date, linetype = "dashed", color = "red") +
     coord_cartesian(ylim = y_range) +
     scale_x_date(date_breaks = "1 month", date_labels = "%b") +
-    labs(x = "Date", y = "SWE model [mm w.e.]") +
+    labs(
+      x = "Date",
+      y = "SWE model [mm w.e.]"
+    ) +
     theme_minimal() +
     theme(
       axis.title.x = element_text(size = 14),
@@ -217,7 +222,7 @@ for(name in station_names){
   mask <- names_ana == name
   ele <- elev_ana[mask]
   if(length(ele) > 1) stop(paste0("Problem with elevation of ", name))
-  else if(ele >= 2000) next
+  else if(ele < 2000) next
   
   # Checking if SWE from model series exist or not
   fname_swe_model <- paste0("../Dataset/model_runs/hydro/SNWD/DV_SDH_", sub("HSD_", "", name))
@@ -231,12 +236,9 @@ for(name in station_names){
   mask <- df$V1 == name
   station_years <- unique(all_years[mask])
   
-  # SWE series from model and from DeltaSnow
+  # SWE series from model and from deltasnow
   merged_df <- compute_swe_series(df_swe = df_swe, df_hs = df_hs, station_years = station_years)
-  if(nrow(merged_df) == 0){
-    warning(paste0("No rows for ", name, " dataset!"))
-    next
-  }
+  if(nrow(merged_df) == 0) stop(paste0("No rows for ", name, " dataset!"))
   max_swe_station <- max(c(max(as.numeric(merged_df$mod), na.rm = TRUE), max(as.numeric(merged_df$del), na.rm = TRUE)), na.rm = TRUE)
   max_hs_station <- compute_max_hs(name)
   
@@ -247,14 +249,15 @@ for(name in station_names){
     if(y %in% c(2024, 2025)) next
     
     # Selecting period to be neglected
-    start_zero <- as.Date(c(paste0(y, "-05-01"), paste0(y, "-05-15"), paste0(y, "-06-01"), paste0(y, "-06-15")))
-    end_zero   <- as.Date(c(paste0(y-1, "-10-31"), paste0(y-1, "-10-15"), paste0(y-1, "-10-01"), paste0(y-1, "-09-15")))
+    start_zero <- as.Date(c(paste0(y, "-07-01"), paste0(y, "-07-15")))
+    end_zero   <- as.Date(c(paste0(y, "-08-31"), paste0(y, "-08-15")))
     
-    ind <- ele %/% 500 + 1
+    if(ele < 2500) ind <- 1
+    else ind <- 2
+
     appo_start <- start_zero[ind]
     appo_end <- end_zero[ind]
 
-    
     # Plotting procedure
     mask <- as.numeric(merged_df$year) == y
     suppressWarnings({
@@ -271,7 +274,7 @@ for(name in station_names){
         max_hs         = max_hs_station
       )
       
-      ggsave(paste0("Images/all_complete/", name, "_", y-1,"_to_", y, ".png"), plot = p, width = 12, height = 10, dpi = 150)
+      ggsave(paste0("Pdf/all_complete/", name, "_", y-1,"_to_", y, ".pdf"), plot = p, width = 12, height = 10, version = cairo_pdf)
     })
 
     print(paste0("Made plot for ", name, " (", ele, " m)  -  ", y-1," to ", y))
