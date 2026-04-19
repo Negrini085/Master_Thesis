@@ -13,6 +13,7 @@ library(patchwork)
 
 fname_hs_dataset <- "../Dataset/hs_series/with_gaps/with_gaps.dat"
 fname_ana <- "../../Ours/STATION_check/Correcting/ANAGRAFICA_CORRECT"
+fname_complete <- "../Dataset/hs_series/all_complete/all_complete.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/SWE_series/QC_series/")
 
 # Find max HS value (I have to consider also year with gaps because we will be plotting both)
@@ -31,6 +32,48 @@ compute_max_hs <- function(station_name){
   # Finding actual hs max
   appo_max <- max(hs_for_max, na.rm = TRUE)
   return(appo_max)
+}
+
+# Function to compute max swe for model
+compute_max_swe_model <- function(df_swe, total_years){
+  
+  # Mask to be in total years
+  mask <- as.numeric(df_swe$V1) %in% total_years
+  appo_swe <- df_swe$V2[mask]
+  
+  return(max(appo_swe, na.rm = TRUE))
+}
+
+# Function to compute max swe from delta snow
+compute_max_swe_delta <- function(name, complete_years){
+  
+  # Importing whole hs series
+  fname <- paste0("../../Ours/STATION_series/Dataset/station_series/", name)
+  df_for_max <- read.table(fname)
+  
+  # Selecting only complete hydrological years
+  mask <- as.numeric(df_for_max$V1) %in% complete_years
+  df_appo <- df_for_max[mask, ]
+  
+  appo_swe <- numeric(0)
+  for(y in unique(as.numeric(df_appo$V1))){
+    
+    # Selecting hs datas for a given year
+    mask <- as.numeric(df_appo$V1) == y
+    hs_hydro <- as.numeric(df_appo$V2)[mask]/100
+    dates <- seq(as.Date(paste0(y-1, "-09-01")), as.Date(paste0(y, "-08-31")), by = "day")
+    if(hs_hydro[1] != 0){
+      hs_hydro <- c(0, hs_hydro)
+      dates <- seq(as.Date(paste0(y-1, "-08-31")), as.Date(paste0(y, "-08-31")), by = "day")
+    }
+    
+    # Creating dataframe to give as input to deltasnow model
+    hsdata <- data.frame(date = dates, hs = hs_hydro)
+    
+    appo_swe <- c(appo_swe, swe.delta.snow(hsdata, dyn_rho_max = FALSE))
+  }
+  
+  return(max(appo_swe, na.rm = TRUE))
 }
 
 # Function to create dataset to be plottes
@@ -141,7 +184,17 @@ split_series <- function(df, end_zero, start_zero, appo_gaps){
   df$next_date <- c(df$date[-1], df$date[n] + 1)
   # df$previous_date <- c(df$date[1] - 1, df$date[-n])
   
-  df$group_id <- cumsum(df$gap_flag)
+  df$group_id <- cumsum(df$gap_flag != lag(df$gap_flag, default = !df$gap_flag[1]))
+
+  gap_periods <- df %>%
+    filter(gap_flag) %>%
+    group_by(group_id) %>%
+    summarise(
+      start_date = min(date),
+      end_date = max(next_date)
+    )
+  
+  df$gap_periods <- list(gap_periods)
   df
 }
 
@@ -175,8 +228,9 @@ plot_swe_comparison <- function(hs_series, swe_from_model, station_name, year, e
     geom_line(aes(y = value_season), color = "grey40", linewidth = 0.7) +
     geom_line(aes(y = value_post),   color = "red",    linewidth = 0.7) +
     geom_rect(
-      data = df_hs[df_hs$gap_flag, ], aes(xmin = date, xmax = next_date, ymin = -Inf, ymax = Inf),
-      fill = "#C1FFC1", alpha = 1, color = NA, linewidth = 0, inherit.aes = FALSE
+      data = df_hs$gap_periods[[1]], 
+      aes(xmin = start_date, xmax = end_date, ymin = -Inf, ymax = Inf),
+      fill = "#C1FFC1", alpha = 1, color = NA, inherit.aes = FALSE
     ) +
     geom_vline(xintercept = max_date, linetype = "dashed", color = "red") +
     coord_cartesian(ylim = c(0, max_hs*1.1)) +
@@ -220,6 +274,9 @@ df <- read.table(fname_hs_dataset)
 station_names <- unique(df$V1)
 all_years <- as.numeric(df$V2)
 
+df_complete <- read.table(fname_complete)
+df_tot <- rbind(df, df_complete)
+
 
 # Importing station names and elevation from ANAGRAFICA
 df_ana <- read.table(fname_ana, header = TRUE)
@@ -239,6 +296,10 @@ for(name in station_names){
   fname_swe_model <- paste0("../Dataset/model_runs/hydro/SNWD/DV_SDH_", sub("HSD_", "", name))
   if(!file.exists(fname_swe_model)) next
   
+  # Selecting total years for a given station
+  mask <- df_tot$V1 == name
+  total_years <- as.numeric(df_tot$V2)[mask]
+  
   # Importing hs dataset and model swe series for a given station
   df_hs <- read.table(paste0("../Dataset/hs_series/with_gaps/", name))
   df_swe <- read.table(fname_swe_model)
@@ -253,8 +314,19 @@ for(name in station_names){
     warning(paste0("No rows for ", name, " dataset!"))
     next
   }
-  max_swe_station <- max(as.numeric(merged_df$mod), na.rm = TRUE)
-  max_hs_station <- max(as.numeric(merged_df$hs), na.rm = TRUE)
+  
+  # Computing maximum swe from DeltaSnow
+  max_swe_delta <- 0
+  if(any(df_complete$V1 == name)){
+    mask <- df_complete$V1 == name
+    complete_years <- as.numeric(df_complete$V2)[mask]
+    if(length(complete_years) == 0) stop(paste0("Not enough complete years for ", name))
+    
+    max_swe_delta <- compute_max_swe_delta(name = name, complete_years = complete_years)
+  }
+  
+  max_swe_station <- max(c(compute_max_swe_model(df_swe, total_years), max_swe_delta), na.rm = TRUE)
+  max_hs_station <- compute_max_hs(name)
   
   # Cycle across years
   for(y in unique(as.numeric(merged_df$year))){

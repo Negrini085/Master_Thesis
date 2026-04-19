@@ -10,8 +10,9 @@ library(ggplot2)
 library(nixmass)
 library(patchwork)
 
+fname_with_gaps <- "../Dataset/hs_series/with_gaps/with_gaps.dat"
 fname_ana <- "../../Ours/STATION_check/Correcting/ANAGRAFICA_CORRECT"
-fname_hs_dataset <- "../Dataset/hs_series/all_complete/all_complete.dat"
+fname_complete <- "../Dataset/hs_series/all_complete/all_complete.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/SWE_series/QC_series/")
 
 
@@ -31,6 +32,17 @@ compute_max_hs <- function(station_name){
   # Finding actual hs max
   appo_max <- max(hs_for_max, na.rm = TRUE)
   return(appo_max)
+}
+
+
+# Function to compute max swe for model
+compute_max_swe_model <- function(df_swe, total_years){
+  
+  # Mask to be in total years
+  mask <- as.numeric(df_swe$V1) %in% total_years
+  appo_swe <- as.numeric(df_swe$V2)[mask]
+  
+  return(max(appo_swe, na.rm = TRUE))
 }
 
 
@@ -199,10 +211,14 @@ plot_swe_comparison <- function(hs_series, swe_from_hs, swe_from_model, station_
 }
 
 
-# Importing station names and years to be taken care of
-df <- read.table(fname_hs_dataset)
+# Importing station names and years (both complete and with gaps series)
+df <- read.table(fname_complete)
 station_names <- unique(df$V1)
 all_years <- as.numeric(df$V2)
+
+df_with_gaps <- read.table(fname_with_gaps)
+df_tot <- rbind(df, df_with_gaps)
+
 
 
 # Importing station names and elevation from ANAGRAFICA
@@ -223,6 +239,10 @@ for(name in station_names){
   fname_swe_model <- paste0("../Dataset/model_runs/hydro/SNWD/DV_SDH_", sub("HSD_", "", name))
   if(!file.exists(fname_swe_model)) next
   
+  # Selecting total years for a given station
+  mask <- df_tot$V1 == name
+  total_years <- as.numeric(df_tot$V2)[mask]
+  
   # Importing hs dataset and model swe series for a given station
   df_hs <- read.table(paste0("../Dataset/hs_series/all_complete/", name))
   df_swe <- read.table(fname_swe_model)
@@ -237,7 +257,7 @@ for(name in station_names){
     warning(paste0("No rows for ", name, " dataset!"))
     next
   }
-  max_swe_station <- max(c(max(as.numeric(merged_df$mod), na.rm = TRUE), max(as.numeric(merged_df$del), na.rm = TRUE)), na.rm = TRUE)
+  max_swe_station <- max(c(compute_max_swe_model(df_swe, total_years), max(as.numeric(merged_df$del), na.rm = TRUE)), na.rm = TRUE)
   max_hs_station <- compute_max_hs(name)
   
   # Cycle across years

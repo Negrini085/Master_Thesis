@@ -28,6 +28,16 @@ print(paste0("Total number of stations taken care of: ", length(unique(df_total$
 
 
 
+# Selecting only stations which have model SWE
+appo_names <- df_total$name
+appo_names <- sub("HSD_", "DV_SDH_", appo_names)
+
+fname <- paste0("../Dataset/model_runs/hydro/SNWD/", appo_names)
+mask_model_swe <- file.exists(fname)
+df_total <- df_total[mask_model_swe, ]
+
+
+
 # Selecting stations for given regions. I will divide stations based on the nation they 
 # sit on: Italy, France, Swiss and Austria.
 mask_swiss <- grepl("HSD_CH_", df_total$name)
