@@ -37,6 +37,7 @@ SnowCover_studies/Preliminary_model/Dataset
 # ---------------------------
 #       Degree day datas
 # ---------------------------
+Degree_Day_factor/Ours/STATION_check/Manual/Images
 Degree_Day_factor/Ours/Dataset
 Degree_Day_factor/Matiu/Dataset
 Degree_Day_factor/Ours/CHECK_LOCATION
