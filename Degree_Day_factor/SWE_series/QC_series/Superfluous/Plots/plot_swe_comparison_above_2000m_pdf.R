@@ -319,7 +319,7 @@ ele_ana <- df_ana$ele_rev
 
 
 # Cycle over stations
-for(name in unique(df_tot$name)[1:100]){
+for(name in unique(df_tot$name)){
   
   # Selecting elevation for a given station
   mask <- name_ana == name
