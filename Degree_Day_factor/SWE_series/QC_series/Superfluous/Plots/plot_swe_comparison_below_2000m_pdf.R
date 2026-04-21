@@ -263,7 +263,8 @@ plot_swe_comparison_gap <- function(hs_series, swe_from_model, station_name, yea
       plot.title   = element_text(face = "bold"),
       axis.title.y = element_text(size = 14),
       axis.text.y  = element_text(size = 12),
-      axis.text.x  = element_text(size = 12),
+      axis.text.x  = element_blank(),
+      axis.ticks.x = element_blank()
     )
   
   # Panel 3: SWE from model
@@ -327,6 +328,7 @@ for(name in unique(df_tot$name)){
   df_hs <- read.table(fname)
   
   fname <- paste0("../Dataset/model_runs/hydro/SNWD/", sub("HSD_", "DV_SDH_", name))
+  if(!file.exists(fname)) next
   df_swe_model <- read.table(fname)
   
   if(min(as.numeric(df_hs$V1), na.rm = TRUE) > 2023) next
@@ -389,7 +391,7 @@ for(name in unique(df_tot$name)){
           max_hs         = max_hs
         )
         
-        ggsave(paste0("Appo/", name, "_", y-1,"_to_", y, ".png"), plot = p, width = 12, height = 10, dpi = 150)
+        ggsave(paste0("Pdf/", name, "_", y-1,"_to_", y, ".pdf"), plot = p, width = 12, height = 10, version = cairo_pdf)
       })
     }
     
@@ -409,7 +411,7 @@ for(name in unique(df_tot$name)){
       
       # Ready for HS to SWE conversion
       swe_from_hs <- numeric(0)
-      hs_hydro <- hs_series
+      hs_hydro <- hs_series/100
       
       if(hs_series[1] == 0){
         dates <- seq(as.Date(paste0(y-1, "-09-01")), as.Date(paste0(y, "-08-31")), by = "day")
@@ -443,11 +445,12 @@ for(name in unique(df_tot$name)){
           max_hs         = max_hs
         )
         
-        ggsave(paste0("Appo/", name, "_", y-1,"_to_", y, ".png"), plot = p, width = 12, height = 10, dpi = 150)
+        ggsave(paste0("Pdf/", name, "_", y-1,"_to_", y, ".pdf"), plot = p, width = 12, height = 10, version = cairo_pdf)
       })
       
     }
     
     else stop(paste0("No correct distintion between complete and incomplete series!"))
+    print(paste0("Made plot for ", name, " (", ele, " m)  -  ", y-1," to ", y))
   }
 }
