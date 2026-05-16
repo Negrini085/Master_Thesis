@@ -22,7 +22,7 @@ ggplot() +
   geom_sf(data = europe, fill = "antiquewhite1", color = "grey70") +
   geom_point(data = df_coord, aes(x = lon, y = lat, color = elev), 
              size = 1.2, alpha = 0.8) +
-  scale_color_viridis_c(option = "turbo", name = "Declared elevation (m a.s.l.)") +
+  scale_color_viridis_c(option = "turbo", name = "Declared elevation (m a.s.l.)", limits = c(0, 3500)) +
   coord_sf(xlim = c(3.5, 17), ylim = c(43, 49), expand = FALSE) +
   theme_minimal() +
   labs(title = "AWS Stations after QC",

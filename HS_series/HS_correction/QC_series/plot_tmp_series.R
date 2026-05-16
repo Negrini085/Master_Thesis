@@ -6,10 +6,10 @@ library(ggplot2)
 library(nixmass)
 library(patchwork)
 
-name <- "HSD_TAA_TN_MARMOLADA_SAS_DEL_MUL"
-fname <- paste0("Dataset/Tmp/", name)
+name <- "HSD_IT_PIE_CN_PIAN_GIASSET"
+fname <- paste0("Dataset/Final/", name)
 fname_max_vals <- "Results/max_hs_swe_values.dat"
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/SWE_series/QC_series/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/HS_correction/QC_series/")
 
 
 

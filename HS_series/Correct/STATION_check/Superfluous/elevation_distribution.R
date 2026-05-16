@@ -16,12 +16,13 @@ ggplot(df_hist, aes(y = ele, x = after_stat(count / sum(count) * 100))) +
   geom_histogram(breaks = breaks, fill = "#3a7abf", color = "white",
                  linewidth = 0.2, orientation = "y") +
   labs(
-    title = "Station elevation distribution",
+    title = "AWS elevation distribution: after QC",
     y = "Elevation (m a.s.l.)",
     x = "Frequency (%)"
   ) +
   scale_y_continuous(
     breaks = seq(0, max(ele) + 500, by = 500),
+    limits = c(0, 3500),
     expand = c(0.01, 0)
   ) +
   scale_x_continuous(expand = c(0, 0), limits = c(0, 8)) +
