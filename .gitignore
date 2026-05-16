@@ -35,13 +35,16 @@ SnowCover_studies/Alpine3D/Recent/Dataset
 SnowCover_studies/Preliminary_model/Dataset
 
 # ---------------------------
-#       Degree day datas
+#       HS series datas
 # ---------------------------
 HS_series/Original/STATION_check/Manual/Images
 HS_series/Original/Dataset
 HS_series/Original/DEM/
+
 HS_series/Matiu/Dataset
 HS_series/Matiu/DEM/
+
+HS_series/Correct/DEM
 
 # ---------------------------
 #        Model series
