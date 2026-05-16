@@ -37,19 +37,19 @@ SnowCover_studies/Preliminary_model/Dataset
 # ---------------------------
 #       Degree day datas
 # ---------------------------
-Degree_Day_factor/Original/STATION_check/Manual/Images
-Degree_Day_factor/Original/Dataset
-Degree_Day_factor/Original/DEM/
-Degree_Day_factor/Matiu/Dataset
-Degree_Day_factor/Matiu/DEM/
+HS_series/Original/STATION_check/Manual/Images
+HS_series/Original/Dataset
+HS_series/Original/DEM/
+HS_series/Matiu/Dataset
+HS_series/Matiu/DEM/
 
 # ---------------------------
 #        Model series
 # ---------------------------
-Degree_Day_factor/HS_correction/Dataset
-Degree_Day_factor/HS_correction/QC_series/Images
-Degree_Day_factor/HS_correction/QC_series/Pdf
-Degree_Day_factor/HS_correction/QC_series/Series_to_send
+HS_series/HS_correction/Dataset
+HS_series/HS_correction/QC_series/Images
+HS_series/HS_correction/QC_series/Pdf
+HS_series/HS_correction/QC_series/Series_to_send
 
 # ---------------------------
 # 	DEM datas
