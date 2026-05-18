@@ -14,9 +14,8 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Original/STATION_c
 
 
 # Reading dataset with dem elevation and station one
-appo <- read.table("Datas/check_ele.dat", header = TRUE, fill = TRUE)
-diff <- as.numeric(appo[[4]]) - as.numeric(appo[[7]])
-df_plot <- data.frame(lon = as.numeric(appo[, 2]), lat = as.numeric(appo[, 3]), status = appo[, 9])
+appo <- read.table("ANAGRAFICA", header = TRUE, fill = TRUE)
+df_plot <- data.frame(lon = as.numeric(appo$lon), lat = as.numeric(appo$lat), status = appo$flag)
 df_plot <- na.omit(df_plot)
 
 

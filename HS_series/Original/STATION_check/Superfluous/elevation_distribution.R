@@ -9,9 +9,9 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Original/STATION_c
 
 
 # Importing station properties, in order to later make a plot
-fname <- "Correcting/ANAGRAFICA_CORRECT"
+fname <- "ANAGRAFICA"
 df <- read.table(fname, header = TRUE)
-ele <- as.numeric(df$ele_rev)
+ele <- as.numeric(df$ele)
 
 
 # Plotting procedure

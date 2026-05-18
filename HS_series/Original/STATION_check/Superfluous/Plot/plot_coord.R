@@ -12,8 +12,8 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Original/STATION_c
 
 
 
-appo <- read.table("Correcting/ANAGRAFICA_CORRECT", header = TRUE)
-df_coord <- data.frame(lon = as.numeric(appo$lon_rev), lat = as.numeric(appo$lat_rev), elev = as.numeric(appo$ele_rev))
+appo <- read.table("ANAGRAFICA", header = TRUE)
+df_coord <- data.frame(lon = as.numeric(appo$lon), lat = as.numeric(appo$lat), elev = as.numeric(appo$ele))
 df_coord <- na.omit(df_coord)
 
 europe <- ne_countries(continent = "Europe", scale = 10, returnclass = "sf")
