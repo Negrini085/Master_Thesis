@@ -30,7 +30,7 @@ ggplot() +
   coord_sf(xlim = c(3.5, 17), ylim = c(43, 49), expand = FALSE) +
   theme_minimal() +
   labs(
-    title = "AWS Station reliability analysis: DEM resolution of 30 m", 
-    subtitle = "Threshold: 2/5 of pixel size",
+    title = "AWS Station compatibility: after QC", 
+    subtitle = "Threshold: 12m on a 30m DEM",
     x = "Longitude", y = "Latitude") +
   theme(panel.background = element_rect(fill = "aliceblue"), legend.position = "bottom")
