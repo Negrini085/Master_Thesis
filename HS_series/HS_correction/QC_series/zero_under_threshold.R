@@ -4,9 +4,9 @@ rm(list = ls())
 gc()
 
 thresh <- 5
-name <- "HSD_TAA_TN_MARMOLADA_SAS_DEL_MUL"
+name <- "HSD_CH_SLFAL1"
 fname <- paste0("Dataset/Tmp/", name)
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/SWE_series/QC_series/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/HS_correction/QC_series/")
 
 
 # Importing HS series

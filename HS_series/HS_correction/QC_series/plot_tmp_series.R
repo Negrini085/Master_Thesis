@@ -6,8 +6,8 @@ library(ggplot2)
 library(nixmass)
 library(patchwork)
 
-name <- "HSD_IT_PIE_CN_PIAN_GIASSET"
-fname <- paste0("Dataset/Final/", name)
+name <- "HSD_CH_SLFAL1"
+fname <- paste0("Dataset/Tmp/", name)
 fname_max_vals <- "Results/max_hs_swe_values.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/HS_correction/QC_series/")
 

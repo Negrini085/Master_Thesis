@@ -31,7 +31,7 @@ for(name in files){
       pre <- appo[i-1] - appo[i]
       post <- appo[i+1] - appo[i]
       
-      if((pre > 20) & (post > 20) & (appo[i] == 0)) cat("Drop present for", name, "during", y, "\n")
+      if((pre > 15) & (post > 15) & (appo[i] == 0)) cat("Drop present for", name, "during", y, "\n")
     }
   }
   
