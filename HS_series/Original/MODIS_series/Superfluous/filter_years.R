@@ -4,7 +4,7 @@
 rm(list = ls())
 gc()
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/MODIS_series/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Original/MODIS_series/")
 
 
 # Loading Italian stations whose elevation is comparable with the 30-meter DEM

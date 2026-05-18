@@ -3,7 +3,7 @@
 rm(list = ls())
 gc()
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/MODIS_series/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Original/MODIS_series/")
 
 
 # Function to find LOS duration for a given hydrological year
@@ -69,8 +69,8 @@ gc()
 
 
 # Importing stations metadatas
-df <- read.table("../STATION_check/Correcting/ANAGRAFICA_CORRECT", header = TRUE)
-name_ana <- df$station_name
+df <- read.table("../STATION_check/ANAGRAFICA", header = TRUE)
+name_ana <- df$name
 flag_ana <- df$flag
 
 mask <- name_ana %in% station_names
