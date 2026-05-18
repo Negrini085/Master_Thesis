@@ -7,7 +7,7 @@ library(ggplot2)
 
 fname_MOD     <- "../MODIS_series/Results/csc.dat"
 fname_STA     <- "../STATION_series/Results/csc.dat"
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/Comparison/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Original/Comparison/")
 
 
 # Importing both dataset

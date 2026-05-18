@@ -6,7 +6,7 @@ gc()
 library(ggplot2)
 
 fname <- "../MODIS_series/Dataset/modis_hydrological/usable_modis.dat"
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/Comparison/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Original/Comparison/")
 
 
 # Importing station names to asses which ones have the longest recording streak
