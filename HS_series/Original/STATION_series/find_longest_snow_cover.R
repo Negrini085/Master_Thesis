@@ -5,19 +5,13 @@ rm(list = ls())
 gc()
 
 fname <- "Dataset/station_series/usable_stations.dat"
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/STATION_series/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Original/STATION_series/")
 
 
 # Function to find the longest period of snow coverage across a hydrological year. 
 # The output is a vector of size 2, to store the duration of continuous snow cover
 # and when does it start
 find_longest_sc_period_hydro <- function(hydro_sc, year, name){
-  
-  # First thing first I need to do some checks on data quality. I will try to 
-  # use the same filters I was using back with our series
-  # if(sum(is.na(hydro_sc), na.rm = TRUE) > 250) return(NA)
-  # else if(sum(is.na(hydro_sc[92:212]), na.rm = TRUE) > 60) return(NA)
-  # else if(sum((is.na(hydro_sc) | hydro_sc == 0), na.rm = TRUE) == length(hydro_sc)) return(NA)
   
   # Variables to store snow metrics
   max_sc <- numeric(0)

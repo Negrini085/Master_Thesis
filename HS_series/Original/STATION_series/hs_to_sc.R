@@ -6,7 +6,7 @@ rm(list = ls())
 gc()
 
 fname <- "Dataset/station_series/usable_stations.dat"
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/STATION_series/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Original/STATION_series/")
 
 # Importing station names
 station_names <- as.matrix(read.table(fname)$V1)

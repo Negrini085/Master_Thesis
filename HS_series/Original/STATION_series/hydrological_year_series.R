@@ -7,8 +7,8 @@
 rm(list = ls())
 gc()
 
-fname <- "Dataset/station_names.dat"
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/STATION_series/")
+fname <- "../STATION_check/ANAGRAFICA"
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Original/STATION_series/")
 
 
 # Function to switch from years to hydrological years
@@ -107,9 +107,9 @@ normal_to_hydro <- function(station_name){
 
 
 # Importing station names
-df <- read.table(fname)
-station_names <- df$V1
-flags <- df$V2
+df <- read.table(fname, header = TRUE)
+station_names <- df$name
+flags <- df$flag
 
 # Cycle on stations
 station_flag <- character(0)
