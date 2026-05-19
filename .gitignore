@@ -53,6 +53,7 @@ HS_series/HS_correction/Dataset
 HS_series/HS_correction/QC_series/Images
 HS_series/HS_correction/QC_series/Pdf
 HS_series/HS_correction/QC_series/Series_to_send
+HS_series/Correct/QC_series/Pdf/
 
 # ---------------------------
 # 	DEM datas
