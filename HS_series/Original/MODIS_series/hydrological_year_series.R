@@ -6,7 +6,7 @@
 rm(list = ls())
 gc()
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/MODIS_series/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Original/MODIS_series/")
 
 # Function to switch from years to hydrological years
 normal_to_hydro <- function(station_name, start_year, end_year){

@@ -6,7 +6,7 @@ gc()
 
 library(terra)
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/Ours/MODIS_series/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Original/MODIS_series/")
 
 # Function to extract station snow coverage series from MODIS dataset
 snow_series <- function(station_lon, station_lat, start_year, end_year){
@@ -88,7 +88,7 @@ start_res <- function(start_year){
 
 
 # Reading italian stations dataset
-appo <- as.matrix(read.table("Dataset/to_find.dat", header = FALSE))
+appo <- as.matrix(read.table("Dataset/start_end_years_filtered.dat", header = FALSE))
 coord_ele <- matrix(as.numeric(appo[, 2:3]), ncol = 2)
 start_year <- as.numeric(appo[, 4])
 end_year <- as.numeric(appo[, 5])
@@ -122,6 +122,6 @@ for(i in seq_len(length(station_names))){
 
 
 # Saving station series
-df_out <- as.data.frame(station_series)
-colnames(df_out) <- station_names
+# df_out <- as.data.frame(station_series)
+# colnames(df_out) <- station_names
 # write.table(df_out, "Dataset/new_stations.dat", row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
