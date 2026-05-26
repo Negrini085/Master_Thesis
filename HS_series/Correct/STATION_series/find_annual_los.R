@@ -63,10 +63,13 @@ find_los_station <- function(station_name, mark){
 
 # Importing station names
 df <- read.table(fname, header = TRUE)
-station_names <- df$station_name
+df <- df[order(df$name), ]
+station_names <- df$name
 mark <- df$flag
 rm(df)
 gc()
+
+
 
 # Actually evaluating longest sc period
 results <- data.frame()

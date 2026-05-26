@@ -12,7 +12,7 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Correct/STATION_ch
 
 
 
-appo <- read.table("Dataset/coord.dat", header = TRUE)
+appo <- read.table("Dataset/ANAGRAFICA", header = TRUE)
 df_coord <- data.frame(lon = as.numeric(appo$lon), lat = as.numeric(appo$lat), elev = as.numeric(appo$ele))
 df_coord <- na.omit(df_coord)
 

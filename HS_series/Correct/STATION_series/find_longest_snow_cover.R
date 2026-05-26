@@ -91,7 +91,7 @@ find_longest_sc_period_station <- function(station_name, mark){
 
 # Importing station names
 df <- read.table(fname, header = TRUE)
-station_names <- df$station_name
+station_names <- df$name
 mark <- df$flag
 rm(df)
 gc()

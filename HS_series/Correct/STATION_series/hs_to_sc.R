@@ -5,12 +5,12 @@
 rm(list = ls())
 gc()
 
-fname <- "../STATION_check/Dataset/ANAGRAFICA"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Correct/STATION_series/")
 
 # Importing station names
-df_ana <- read.table(fname, header = TRUE)
-station_names <- df_ana$station_name
+files <- list.files(path = "../Dataset", full.names = TRUE)
+station_names <- sub("../Dataset/", "", files)
+
 
 # Cycle on usable stations
 for(name in station_names){

@@ -15,7 +15,7 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Correct/STATION_ch
 
 # Reading dataset with dem elevation and station one
 appo <- read.table("Dataset/ANAGRAFICA", header = TRUE)
-df_plot <- data.frame(lon = as.numeric(appo$lon_rev), lat = as.numeric(appo$lat_rev), status = appo$flag)
+df_plot <- data.frame(lon = as.numeric(appo$lon), lat = as.numeric(appo$lat), status = appo$flag)
 df_plot$status[df_plot$status == "REV"] <- "OK"
 df_plot <- na.omit(df_plot)
 

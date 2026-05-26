@@ -7,7 +7,7 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Correct/STATION_ch
 
 fname <- "Dataset/ANAGRAFICA"
 df <- read.table(fname, header = TRUE)
-ele <- as.numeric(df$ele_rev)
+ele <- as.numeric(df$ele)
 
 breaks <- seq(0, max(ele) + 100, by = 100)
 df_hist <- data.frame(ele = ele)
