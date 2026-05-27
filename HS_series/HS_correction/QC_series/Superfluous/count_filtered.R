@@ -3,13 +3,13 @@
 rm(list = ls())
 gc()
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/SWE_series/QC_series/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/HS_correction/QC_series/")
 
 
 
 # Cycle over files
 conta <- 0
-files <- list.files(path = "Dataset/Final", full.names = TRUE)
+files <- list.files(path = "../../Correct/Dataset/", full.names = TRUE)
 
 for(file in files) {
   df <- read.table(file) 

@@ -4,13 +4,13 @@ rm(list = ls())
 gc()
 
 library(terra)
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Original/STATION_check/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/HS_correction/QC_stations/")
 
 
 # Importing DEM and corrected dataset in order to check if now stations are still
 # classified as faulty
-dem <- rast("../DEM/DEM_stations_30.tif")
-df <- read.table("Correcting/appo.dat", header = TRUE)
+dem <- rast("../../Original/DEM/DEM_stations_30.tif")
+df <- read.table("check_locations.dat", header = TRUE)
 
 mask <- df$flag != "NO"
 names <- df$station_name[mask]
