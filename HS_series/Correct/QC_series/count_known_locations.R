@@ -4,7 +4,7 @@ rm(list = ls())
 gc()
 
 fname_new <- "STATION_check/Dataset/ANAGRAFICA"
-fname_old <- "../Original/STATION_check/Correcting/ANAGRAFICA_CORRECT"
+fname_old <- "../Original/STATION_check/ANAGRAFICA"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Correct/")
 
 

@@ -17,5 +17,5 @@ for(name in files){
   
   # Finding out if some NAs are present
   hs_series <- as.numeric(df$V2)
-  if(any(is.na(hs_series))) print(paste0("Some NAs for: ", name))
+  if(any(is.na(hs_series))) print(paste0("Some NAs for: ", name, " in ", which(is.na(hs_series)), " during ", df$V1[which(is.na(hs_series))]))
 }

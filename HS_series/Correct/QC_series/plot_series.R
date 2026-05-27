@@ -100,9 +100,8 @@ plot_hs_comparison <- function(new_hs, swe_from_model, station_name, year, max_s
 df <- read.table(fname_ana, header = TRUE)
 station_names <- df$station_name
 station_names <- station_names[!grepl("^HSD_AT", station_names)]
-station_names <- station_names[!grepl("^HSD_IT", station_names)]
-station_names <- station_names[!grepl("^HSD_LOM", station_names)]
-station_names <- station_names[!grepl("^HSD_TAA", station_names)]
+station_names <- station_names[!grepl("^HSD_FR", station_names)]
+station_names <- station_names[!grepl("^HSD_CH", station_names)]
 station_names <- sort(station_names)
 
 

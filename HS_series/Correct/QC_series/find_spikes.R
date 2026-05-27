@@ -32,7 +32,7 @@ for(name in files){
       pre <- appo[i] - appo[i-1]
       post <- appo[i] - appo[i+1]
       
-      if((pre > 100) & (post > 100)) cat("Spike present for", name, "during", y, "\n")
+      if((pre > 80) & (post > 80)) cat("Spike present for", name, "during", y, "\n")
     }
   }
   
