@@ -25,7 +25,7 @@ df_ita <- read.table(fname_italian)
 ita_station_names <- df_ita$V1
 
 df_data <- read.table(fname_station_data, header = TRUE)
-df_data <- data.frame(station_names = df_data$station_name, lon = df_data$lon_rev, lat = df_data$lat_rev, flag = df_data$flag)
+df_data <- data.frame(station_names = df_data$name, lon = df_data$lon, lat = df_data$lat, flag = df_data$flag)
 
 
 # Selecting only stations we actually need to work with
