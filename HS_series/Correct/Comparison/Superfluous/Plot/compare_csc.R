@@ -23,6 +23,9 @@ df_plot <- merge(df_MOD, df_STA, by = c("name", "year", "mark"), suffixes = c("_
 mask <- !is.na(df_plot$csc_STA)
 df_plot <- df_plot[mask, ]
 
+mask <- df_plot$mark == "REV"
+df_plot$mark[mask] <- "OK"
+
 ggplot(df_plot, aes(x = csc_MOD, y = csc_STA, color = mark)) +
   geom_point(alpha = 0.4, size = 2) +
   geom_abline(slope = 1, intercept = 0, color = "black", linetype = "dashed", linewidth = 0.8) +
@@ -36,4 +39,4 @@ ggplot(df_plot, aes(x = csc_MOD, y = csc_STA, color = mark)) +
     y     = "CSC Station [days]"
   ) +
   theme_minimal(base_size = 13) +
-  coord_equal()
+  coord_equal(xlim = c(0, 370), ylim = c(0, 370))

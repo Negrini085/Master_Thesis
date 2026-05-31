@@ -5,13 +5,12 @@ gc()
 
 library(ggplot2)
 
-fname <- "../MODIS_series/Dataset/modis_hydrological/usable_modis.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Correct/Comparison/")
 
 
 # Importing station names to asses which ones have the longest recording streak
-df <- read.table(fname, header = FALSE)
-station_names <- df$V1
+files <- list.files(path = "../MODIS_series/Dataset/modis_hydrological", full.names = TRUE)
+station_names <- sub("../MODIS_series/Dataset/modis_hydrological/", "", files)
 
 
 # Cycle on station names

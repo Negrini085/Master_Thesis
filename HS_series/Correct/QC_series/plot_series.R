@@ -8,6 +8,7 @@ library(dplyr)
 library(ggplot2)
 library(patchwork)
 
+fname_old <- "../../HS_correction/OLD"
 fname_ana <- "../STATION_check/Dataset/ANAGRAFICA"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Correct/QC_series/")
 
@@ -97,12 +98,14 @@ plot_hs_comparison <- function(new_hs, swe_from_model, station_name, year, max_s
 
 
 # Importing station names. I don't want to deal with austrian aws because of data quality
+df <- read.table(fname_old, header = FALSE)
+old_names <- c(df$V1, paste0(df$V1, "_MAN"))
+
 df <- read.table(fname_ana, header = TRUE)
-station_names <- df$station_name
-station_names <- station_names[!grepl("^HSD_AT", station_names)]
-station_names <- station_names[!grepl("^HSD_FR", station_names)]
-station_names <- station_names[!grepl("^HSD_CH", station_names)]
-station_names <- sort(station_names)
+station_names <- df$name
+
+mask <- station_names %in% old_names
+station_names <- station_names[mask]
 
 
 

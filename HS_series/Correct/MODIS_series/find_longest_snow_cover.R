@@ -102,7 +102,7 @@ gc()
 
 # Importing stations metadatas
 df <- read.table("../STATION_check/Dataset/ANAGRAFICA", header = TRUE)
-name_ana <- df$station_name
+name_ana <- df$name
 flag_ana <- df$flag
 
 mask <- name_ana %in% station_names
