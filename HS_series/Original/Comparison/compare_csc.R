@@ -36,4 +36,4 @@ ggplot(df_plot, aes(x = csc_MOD, y = csc_STA, color = mark)) +
     y     = "CSC Station [days]"
   ) +
   theme_minimal(base_size = 13) +
-  coord_equal()
+  coord_equal(xlim = c(0, 370), ylim = c(0, 370))

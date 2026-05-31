@@ -38,4 +38,4 @@ ggplot(df_plot, aes(x = los_MOD, y = los_STA, color = mark)) +
     y     = "LOS Station [days]"
   ) +
   theme_minimal(base_size = 13) +
-  coord_equal()
+  coord_equal(xlim = c(0, 370), ylim = c(0, 370))
