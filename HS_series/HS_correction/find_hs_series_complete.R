@@ -4,8 +4,8 @@
 rm(list = ls())
 gc()
 
-fname <- "../Ours/STATION_series/Dataset/station_series/usable_stations.dat"
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/SWE_series/")
+fname <- "../Original/STATION_series/Dataset/station_series/usable_stations.dat"
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/HS_correction/")
 
 
 # Importing station names
@@ -22,7 +22,7 @@ appo_names <- character(0)
 for(i in seq_along(station_names)){
   
   # Reading hs series (already in hydrological year form)
-  df <- read.table(paste0("../Ours/STATION_series/Dataset/station_series/", station_names[i]))
+  df <- read.table(paste0("../Original/STATION_series/Dataset/station_series/", station_names[i]))
   hs_series <- as.numeric(df$V2)
   years <- as.numeric(df$V1)
   single_y <- unique(years)
