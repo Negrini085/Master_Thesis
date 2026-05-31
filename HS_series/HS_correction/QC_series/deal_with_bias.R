@@ -3,11 +3,11 @@
 rm(list = ls())
 gc()
 
-name <- "HSD_TAA_TN_MARMOLADA_SAS_DEL_MUL"
-end_idx <- 350
-start_idx <- 318
+name <- "HSD_TAA_TN_VERMIGLIO_CAPANNA_PRESENA"
+end_idx <- 45
+start_idx <- 1
 fname <- paste0("Dataset/Filtered/", name)
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/SWE_series/QC_series/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/HS_correction/QC_series/")
 
 
 

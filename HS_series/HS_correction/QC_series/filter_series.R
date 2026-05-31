@@ -4,11 +4,11 @@ rm(list = ls())
 gc()
 
 
-sta <- "HSD_AT_104174"
-appo_omit_years <- c(1993, 2004)
+sta <- "HSD_TAA_TN_VERMIGLIO_CAPANNA_PRESENA"
+appo_omit_years <- c(2014, 2015, 2017, 2020, 2021, 2023)
 fname_gap <- paste0("../Dataset/hs_series/with_gaps/", sta)
 fname_com <- paste0("../Dataset/hs_series/all_complete/", sta)
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/SWE_series/QC_series/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/HS_correction/QC_series/")
 
 # Function to import series
 import_series <- function(fname_gap, fname_com, sta){

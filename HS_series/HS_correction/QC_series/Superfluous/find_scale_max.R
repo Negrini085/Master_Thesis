@@ -7,7 +7,7 @@ library(nixmass)
 
 fname_with_gaps <- "../Dataset/hs_series/with_gaps/with_gaps.dat"
 fname_complete <- "../Dataset/hs_series/all_complete/all_complete.dat"
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/SWE_series/QC_series/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/HS_correction/QC_series/")
 
 
 # Function to find maximum HS
@@ -113,7 +113,7 @@ for(name in unique(df_tot$name)){
   
   
   # Importing hs dataset for a given station and finding the maximum HS
-  fname <- paste0("../../Ours/STATION_series/Dataset/station_series/", name)
+  fname <- paste0("../../Original/STATION_series/Dataset/station_series/", name)
   df_hs <- read.table(fname)
   hs_years <- unique(as.numeric(df_hs$V1))
   if(min(hs_years, na.rm = TRUE) > 2023) next

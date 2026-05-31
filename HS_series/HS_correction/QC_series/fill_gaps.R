@@ -3,7 +3,7 @@
 rm(list = ls())
 gc()
 
-name <- "HSD_CH_SLFAL1"
+name <- "HSD_TAA_TN_VERMIGLIO_CAPANNA_PRESENA"
 fname <- paste0("Dataset/ToFix/", name)
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/HS_correction/QC_series/")
 

@@ -12,9 +12,9 @@ library(patchwork)
 
 fname_max_vals <- "Results/max_hs_swe_values.dat"
 fname_with_gaps <- "../Dataset/hs_series/with_gaps/with_gaps.dat"
-fname_ana <- "../../Ours/STATION_check/Correcting/ANAGRAFICA_CORRECT"
+fname_ana <- "../../Original/STATION_check/APPO"
 fname_complete <- "../Dataset/hs_series/all_complete/all_complete.dat"
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Degree_Day_factor/SWE_series/QC_series/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/HS_correction/QC_series/")
 
 
 
@@ -306,15 +306,15 @@ df_max_vals <- read.table(fname_max_vals, header = TRUE)
 
 # Importing ANAGRAFICA to be able to assess station elevation
 df_ana <- read.table(fname_ana, header = TRUE)
-name_ana <- df_ana$station_name
-ele_ana <- df_ana$ele_rev
+name_ana <- df_ana$name
+ele_ana <- df_ana$ele
 
 
 
 
 
 # Cycle over stations
-for(name in unique(df_tot$name)){
+for(name in name_ana){
   
   # Selecting elevation for a given station
   mask <- name_ana == name
@@ -324,7 +324,8 @@ for(name in unique(df_tot$name)){
   
   
   # Importing HS and SWE series for a given station
-  fname <- paste0("../../Ours/STATION_series/Dataset/station_series/", name)
+  fname <- paste0("../../Original/STATION_series/Dataset/station_series/", name)
+  if(!file.exists(fname)) next
   df_hs <- read.table(fname)
   
   fname <- paste0("../Dataset/model_runs/hydro/SNWD/", sub("HSD_", "DV_SDH_", name))
@@ -391,7 +392,7 @@ for(name in unique(df_tot$name)){
           max_hs         = max_hs
         )
         
-        ggsave(paste0("Pdf/", name, "_", y-1,"_to_", y, ".pdf"), plot = p, width = 12, height = 10, version = cairo_pdf)
+        ggsave(paste0("Appo/", name, "_", y-1,"_to_", y, ".pdf"), plot = p, width = 12, height = 10, version = cairo_pdf)
       })
     }
     
@@ -445,7 +446,7 @@ for(name in unique(df_tot$name)){
           max_hs         = max_hs
         )
         
-        ggsave(paste0("Pdf/", name, "_", y-1,"_to_", y, ".pdf"), plot = p, width = 12, height = 10, version = cairo_pdf)
+        ggsave(paste0("Appo/", name, "_", y-1,"_to_", y, ".pdf"), plot = p, width = 12, height = 10, version = cairo_pdf)
       })
       
     }

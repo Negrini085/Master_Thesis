@@ -6,7 +6,7 @@ library(ggplot2)
 library(nixmass)
 library(patchwork)
 
-name <- "HSD_CH_SLFAL1"
+name <- "HSD_TAA_TN_VERMIGLIO_CAPANNA_PRESENA"
 fname <- paste0("Dataset/Tmp/", name)
 fname_max_vals <- "Results/max_hs_swe_values.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/HS_correction/QC_series/")
@@ -54,7 +54,7 @@ plot_swe_comparison_com <- function(hs_series, swe_from_hs, swe_from_model,
   y_range <- c(0, max_swe * 1.1)
   max_idx <- which.max(hs_series)
   max_date <- dates[max_idx]
-  # max_hs <- 350
+  max_hs <- 250
   
   # Panel 1: HS
   p1 <- ggplot(df_hs, aes(x = date)) +
