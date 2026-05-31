@@ -1,0 +1,51 @@
+# The main goal of this script is to be able to make a SWE map starting from 
+# preliminary model datas
+rm(list = ls())
+gc()
+
+library(sf)
+library(ncdf4)
+library(ggplot2)
+library(rnaturalearth)
+
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/Preliminary_model")
+
+
+# First thing first I want to import latitude, longitude and SWE datas. I feel like 
+# that I can use old routines to plot those datas, because there should be no changes
+# to what I was doing with netCDF files
+df <- read.table("Dataset/GRID_2017-04-26", header = FALSE)
+lon <- df$V1
+lat <- df$V2
+swe <- df$V3
+rm(df)
+gc()
+
+
+# Converting from -90 to missing data. I will make an even wider check, setting as
+# missing data every pixel whose SWE is smaller than zero
+mask <- swe <= 0
+swe[mask] <- NA
+
+
+# Plotting procedure
+europe <- ne_countries(continent = "Europe", scale = 10, returnclass = "sf")
+grid <- data.frame(lon = lon, lat = lat, swe = swe)
+
+ggplot() +
+  geom_sf(data = europe, fill = "grey90", color = "black", inherit.aes = FALSE) +
+  coord_sf(xlim = c(6.6, 14), ylim = c(43, 47.2)) +
+  geom_tile(data = grid, aes(x = lon, y = lat, fill = swe)) +
+  # scale_fill_gradient(low = "lightblue", high = "blue", name = "SWE (mm)",  limits = c(0, 500), na.value = NA) +
+  scale_fill_viridis_c(lim = c(0, 500), option = "C", na.value = "transparent") +
+  labs(title = "SWE map: April 26th, 2017", x = "Longitude", y = "Latitude", fill = "SWE (mm w.e.)") +
+  theme_minimal()
+
+
+ggsave(
+  "Images/map_26-04-2017.png",
+  width  = 20,
+  height = 10,
+  dpi    = 300,
+  limitsize = FALSE
+)
