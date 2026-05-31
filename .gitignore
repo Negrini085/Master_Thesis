@@ -7,32 +7,32 @@
 # ---------------------------
 # 	IT-SNOW datas
 # ---------------------------
-SnowCover_studies/IT-Snow/y20*
-SnowCover_studies/IT-Snow/*nc
+SC_studies/IT-Snow/y20*
+SC_studies/IT-Snow/*nc
 
 # ---------------------------
 #       Po Basin datas
 # ---------------------------
-SnowCover_studies/Po-Basin/Dataset
+SC_studies/Po-Basin/Dataset
 
 # ---------------------------
 #        MODIS datas
 # ---------------------------
-SnowCover_studies/MODIS/Dataset
-SnowCover_studies/MODIS/NDSI_maps
-SnowCover_studies/MODIS/Datas/mean_maps
-SnowCover_studies/MODIS/Datas/sd_maps
+SC_studies/MODIS/Dataset
+SC_studies/MODIS/NDSI_maps
+SC_studies/MODIS/Datas/mean_maps
+SC_studies/MODIS/Datas/sd_maps
 
 # ---------------------------
 #       Alpine3D datas
 # ---------------------------
-SnowCover_studies/Alpine3D/Historical/Dataset
-SnowCover_studies/Alpine3D/Recent/Dataset
+SC_studies/Alpine3D/Historical/Dataset
+SC_studies/Alpine3D/Recent/Dataset
 
 # ---------------------------
 # 	Preliminary model
 #----------------------------
-SnowCover_studies/Preliminary_model/Dataset
+SC_studies/Preliminary_model/Dataset
 
 # ---------------------------
 #       HS series datas
@@ -58,7 +58,7 @@ HS_series/Correct/QC_series/Pdf/
 # ---------------------------
 # 	DEM datas
 # ---------------------------
-SnowCover_studies/IT-Snow/DEM
+SC_studies/IT-Snow/DEM
 
 # ---------------------------
 # File .nc in ColDePorte
