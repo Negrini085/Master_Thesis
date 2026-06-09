@@ -47,7 +47,7 @@ class SimAnnealing{
 
     public:
     SimAnnealing()
-        : T_in(1e-4), T_fin(1e-6), m_beta(0.0), m_new(0.0), m_old(0.0), m_delta(0.4),
+        : T_in(10), T_fin(1e-5), m_beta(0.0), m_new(0.0), m_old(0.0), m_delta(0.4),
           gen(41), dis_prob(0.0, 1.0), dis_move(-0.5, 0.5), m_th(1.6), m_ddfm(1.0), m_ddfM(3.8)
     {}
     SimAnnealing(double tin, double tfin, double delta, unsigned int seed = 0) 
@@ -70,7 +70,7 @@ class SimAnnealing{
         int acce = 0;   //Numero di mosse accettato
         int totali = 0;   //Numero di mosse totali
         double T = T_in;    //Temperatura di partenza SA
-        double appo_th, appo_ddfm, appo_ddfM, acc_rate, factor; //Variabili di appoggio per le mosse
+        double appo_th, appo_ddfm, appo_ddfM, acc_rate, factor, peso; //Variabili di appoggio per le mosse
     
 
         ofstream fileout;   //Canale di output
@@ -89,7 +89,7 @@ class SimAnnealing{
         m_old = findCost("appo_loss.dat");
         system("rm Results/hydro/*");
 
-        fileout << m_old << endl;
+        fileout << m_old << "   " << T << endl;
         file_out << m_th << "   " << m_ddfm << "   " << m_ddfM << endl;
 
         while(T >= T_fin){
@@ -98,7 +98,7 @@ class SimAnnealing{
             totali = 0;
             m_beta = 1/T;   //Calcolo parametro beta
             
-            //Voglio accettare almeno 5 mosse
+            //Voglio accettare almeno 10 mosse
             while(acce < 10){
 
                 //Propongo una nuova mossa
@@ -123,19 +123,20 @@ class SimAnnealing{
                 // First performance evaluation
                 m_new = findCost("appo_loss.dat");
                 system("rm Results/hydro/*");
-                p = exp(-m_beta * (m_new - m_old)); //Probabilità accettazione mossa
+                peso = -m_beta * (m_new - m_old);
+                p = exp(peso); //Probabilità accettazione mossa
 
                 if(dis_prob(gen) < p) { //Cambio effettivamente oppure no?
                     acce++;
                     m_old = m_new;
-                    fileout << m_old << endl;
+                    fileout << m_old << "   " <<  << endl;
 
                     m_th = appo_th;
                     m_ddfm = appo_ddfm;
                     m_ddfM = appo_ddfM;
                     
                     file_out << m_th << "   " << m_ddfm << "   " << m_ddfM << endl;
-                    cout << "T_th = " << m_th << "     ddf_min = " << m_ddfm << "     ddf_max = " << m_ddfM << endl;
+                    cout << "T_th = " << m_th << "     ddf_min = " << m_ddfm << "     ddf_max = " << m_ddfM << "     loss = " << m_new << "     weight = " << peso << endl;
                 }
 
                 if(totali == 500) break;
@@ -146,6 +147,7 @@ class SimAnnealing{
             cout << "                T = " << T << "                  " << endl;
             cout << "               AR = " << acc_rate << " %         " << endl;
             cout << "            Delta = " << m_delta  << "           " << endl;
+            if(totali == 500)   cout << "            Exceeded 500 attempts" << endl;
             cout << "-------------------------------------------------" << endl;
 
             T = 0.95 * T;
