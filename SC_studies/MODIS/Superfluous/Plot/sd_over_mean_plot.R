@@ -9,7 +9,7 @@ library(ggplot2)
 library(tidyterra)
 library(patchwork)
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/MODIS")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SC_studies/MODIS")
 fnames <- c("Datas/sd_maps/sd_los.tif", "Datas/mean_maps/mean_los.tif")
 
 # Function to create a clean environment for plot creation
@@ -19,7 +19,7 @@ theme_paper_clean <- function() {
       legend.position = "bottom",
       legend.direction = "horizontal", 
       legend.title = element_text(face = "bold", size = 9, vjust = 1),
-      legend.text = element_text(size = 7),
+      legend.text = element_text(size = 11),
       legend.spacing.x = unit(0.3, 'cm'), 
       legend.spacing.y = unit(0.2, 'cm'),
       plot.subtitle = element_text(face = "bold", hjust = 0.5, size = 11, margin = margin(b = 5)),
@@ -44,7 +44,7 @@ make_snow_plot <- function(raster_lyr, title, breaks, labels, palette, legend_na
   levels(raster_disc) <- data.frame(ID = 1:6, label = labels)
   
   ggplot() +
-    geom_spatraster(data = raster_disc) + 
+    geom_spatraster(data = raster_disc, maxcell = Inf) + 
     geom_spatvector(data = italy_border, fill = NA, color = "black", linewidth = 0.3) +
     scale_fill_manual(
       values = palette,
@@ -52,6 +52,7 @@ make_snow_plot <- function(raster_lyr, title, breaks, labels, palette, legend_na
       name = legend_name,
       na.value = "transparent",
       guide = guide_legend(
+        title.position = "top",
         ncol = 2,           
         byrow = FALSE,
         label.position = "right",
@@ -99,18 +100,24 @@ italy_cropped <- crop(italy_border, ext(los_metrics))
 custom_palette <- c("#b34d33", "#e69240", "#f0db4d", "#72e61c", "#1d8c75", "#0d4d8a")
 
 p1 <- make_snow_plot(
-  los_metrics[[1]], "Standard deviation LOS", 
+  los_metrics[[1]], "", 
   breaks = c(10, 15, 20, 25, 30),
   labels = c("0 - 10", "10 - 15", "15 - 20", "20 - 25", "25 - 30", " > 30"),
-  palette = custom_palette, "Days"
+  palette = custom_palette, "SCD standard deviation (days)"
 )
 
 p2 <- make_snow_plot(
-  los_metrics[[2]], "Noise over signal LOS",
+  los_metrics[[2]], "",
   breaks = c(0.25, 0.5, 0.75, 1, 2),
   labels = c("0 - 0.25", "0.25 - 0.5", "0.5 - 0.75", "0.75 - 1.0", "1.0 - 2.0", " > 2.0"),
-  palette = custom_palette, "No dim"
+  palette = custom_palette, "Std / Average SCD"
 )
 
-final_plot <- p1 + p2 + plot_layout(ncol = 2)
+final_plot <- p1 + p2 + 
+  plot_layout(ncol = 2) +
+  plot_annotation(tag_levels = 'A') &
+  theme(
+    plot.tag = element_text(size = 12, face = "bold"),
+    plot.tag.position = c(0.05, 0.95)
+  )
 print(final_plot)

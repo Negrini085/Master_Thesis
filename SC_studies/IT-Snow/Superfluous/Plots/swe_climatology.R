@@ -5,7 +5,7 @@ rm(list = ls())
 gc()
 
 library(ggplot2)
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SC_studies/IT-Snow/")
 
 
 # Importing SWE series
@@ -13,7 +13,7 @@ dat <- read.table("Datas/swe_evolution.dat")
 dat <- dat$V1
 
 dur <- 365
-years <- 2011:2021#2025
+years <- 2011:2025
 
 
 # Taking care of the 29th value. We will replace the 28th value with a mean across
@@ -55,11 +55,19 @@ clim <- data.frame(
   day = 1:dur,
   q1  = apply(swe_mat, 1, quantile, probs = 0.25, na.rm = TRUE),
   med = apply(swe_mat, 1, quantile, probs = 0.50, na.rm = TRUE),
-  q3  = apply(swe_mat, 1, quantile, probs = 0.75, na.rm = TRUE)
+  q3  = apply(swe_mat, 1, quantile, probs = 0.75, na.rm = TRUE),
+  date = seq(as.Date("2025-09-01"), by = "day", length.out = dur)
 )
 
-ggplot(clim, aes(x = day)) +
+ggplot(clim, aes(x = date)) +
   geom_ribbon(aes(ymin = q1, ymax = q3), alpha = 0.4, color = "orange", fill = "orange") +
   geom_line(aes(y = med), linewidth = 1, color = "blue") +
-  labs(title = "SWE Volume evolution", x = "Days (from 1st of September)", y = "SWE [Gm^3]") +
-  theme_minimal()
+  scale_x_date(date_breaks = "1 month", date_labels = "%b") + 
+  labs(title = "", x = "Day", y = "SWE [Gm^3]") +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 11),
+    axis.text.y = element_text(size = 11),
+    axis.title.x = element_text(margin = margin(t = 10), size = 11, face = "bold"),
+    axis.title.y = element_text(size = 11, face = "bold")
+  )

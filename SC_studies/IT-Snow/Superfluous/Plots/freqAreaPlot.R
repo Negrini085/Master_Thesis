@@ -6,7 +6,7 @@ library(ggplot2)
 library(tidyr)
 library(dplyr)
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SC_studies/IT-Snow/")
 df <- read.table("Datas/freqAltitude2011.dat", header = FALSE)
 
 

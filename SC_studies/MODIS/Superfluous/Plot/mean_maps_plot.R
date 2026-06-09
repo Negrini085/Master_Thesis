@@ -6,10 +6,11 @@ gc()
 library(terra)
 library(geodata)
 library(ggplot2)
+library(ggspatial)
 library(tidyterra)
 library(patchwork)
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/MODIS")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SC_studies/MODIS/")
 fnames <- c("Datas/mean_maps/mean_los.tif", "Datas/mean_maps/mean_sos.tif", "Datas/mean_maps/mean_eos.tif")
 
 # Function to create a clean environment for plot creation
@@ -18,8 +19,8 @@ theme_paper_clean <- function() {
     theme(
       legend.position = "bottom",
       legend.direction = "horizontal", 
-      legend.title = element_text(face = "bold", size = 9, vjust = 1),
-      legend.text = element_text(size = 7),
+      legend.title = element_text(face = "bold", size = 11, vjust = 0.5),
+      legend.text = element_text(size = 11),
       legend.spacing.x = unit(0.3, 'cm'), 
       legend.spacing.y = unit(0.2, 'cm'),
       plot.subtitle = element_text(face = "bold", hjust = 0.5, size = 11, margin = margin(b = 5)),
@@ -46,7 +47,7 @@ make_snow_plot <- function(raster_lyr, title, breaks, labels, palette, legend_na
   levels(raster_disc) <- data.frame(ID = 1:8, label = labels)
   
   ggplot() +
-    geom_spatraster(data = raster_disc) + 
+    geom_spatraster(data = raster_disc, maxcell = Inf) + 
     geom_spatvector(data = italy_border, fill = NA, color = "black", linewidth = 0.3) +
     scale_fill_manual(
       values = palette,
@@ -54,6 +55,7 @@ make_snow_plot <- function(raster_lyr, title, breaks, labels, palette, legend_na
       name = legend_name,
       na.value = "transparent",
       guide = guide_legend(
+        title.position = "top",
         ncol = 2,           
         byrow = FALSE,
         label.position = "right",
@@ -76,25 +78,31 @@ italy_cropped <- crop(italy_border, ext(snow_metrics))
 custom_palette <- c("#b34d33", "#d66d23", "#e69125", "#f0db4d", "#72e61c", "#2ea354", "#1d8c75", "#0d4d8a")
 
 p1 <- make_snow_plot(
-  snow_metrics[[1]], "Average LOS", 
+  snow_metrics[[1]], "", 
   breaks = c(11, 39, 78, 123, 167, 211, 278),
   labels = c("0 - 11", "12 - 39", "40 - 78", "79 - 123", "124 - 167", "168 - 211", "212 - 278", "279 - 365"),
-  palette = custom_palette, "Days"
+  palette = custom_palette, "Average SCD (days)"
 )
 
 p2 <- make_snow_plot(
-  snow_metrics[[2]], "Average SOS",
+  snow_metrics[[2]], "",
   breaks = c(23, 40, 56, 73, 89, 102, 111),
   labels = c("0 - 23 (24 Oct)", "24 - 40 (10 Nov)", "41 - 56 (26 Nov)", "57 - 73 (13 Dec)", "74 - 89 (29 Dec)", "90 - 102 (11 Jan)", "103 - 111 (20 Jan)", "112 - 116 (25 Jan)"),
-  palette = rev(custom_palette), "Date"
+  palette = rev(custom_palette), "Average SOD (day)"
 )
 
 p3 <- make_snow_plot(
-  snow_metrics[[3]], "Average EOS",
+  snow_metrics[[3]], "",
   breaks = c(123, 139, 165, 193, 221, 250, 300),
   labels = c("116 - 123 (1 Feb)", "124 - 139 (17 Feb)", "140 - 165 (15 March)", "166 - 193 (12 Apr)", "194 - 221 (10 May)", "222 - 250 (8 Jun)", "251 - 300 (28 Jul)", "301 - 365 (1 Oct)"),
-  palette = custom_palette, "Date"
+  palette = custom_palette, "Average SED (day)"
 )
 
-final_plot <- p1 + p2 + p3 + plot_layout(ncol = 3)
+final_plot <- p1 + p2 + p3 +
+  plot_layout(ncol = 3) +
+  plot_annotation(tag_levels = 'A') &
+  theme(
+    plot.tag = element_text(size = 12, face = "bold"),
+    plot.tag.position = c(0.05, 0.95)
+  )
 print(final_plot)

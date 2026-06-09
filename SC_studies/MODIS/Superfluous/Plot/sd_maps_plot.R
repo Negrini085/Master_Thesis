@@ -9,7 +9,7 @@ library(ggplot2)
 library(tidyterra)
 library(patchwork)
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/MODIS")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SC_studies/MODIS")
 fnames <- c("Datas/sd_maps/sd_los.tif", "Datas/sd_maps/sd_sos.tif", "Datas/sd_maps/sd_eos.tif")
 
 # Function to create a clean environment for plot creation
@@ -44,7 +44,7 @@ make_snow_plot <- function(raster_lyr, title, breaks, labels, palette, legend_na
   levels(raster_disc) <- data.frame(ID = 1:6, label = labels)
   
   ggplot() +
-    geom_spatraster(data = raster_disc) + 
+    geom_spatraster(data = raster_disc, maxcell = Inf) + 
     geom_spatvector(data = italy_border, fill = NA, color = "black", linewidth = 0.3) +
     scale_fill_manual(
       values = palette,
@@ -74,25 +74,31 @@ italy_cropped <- crop(italy_border, ext(snow_metrics))
 custom_palette <- c("#b34d33", "#e69290", "#f0db4d", "#72e61c", "#1d8c75", "#0d4d8a")
 
 p1 <- make_snow_plot(
-  snow_metrics[[1]], "Standard deviation LOS", 
+  snow_metrics[[1]], "", 
   breaks = c(10, 15, 20, 25, 30),
   labels = c("0 - 10", "10 - 15", "15 - 20", "20 - 25", "25 - 30", " > 30"),
   palette = custom_palette, "Days"
 )
 
 p2 <- make_snow_plot(
-  snow_metrics[[2]], "Standard deviation SOS",
+  snow_metrics[[2]], "",
   breaks = c(10, 15, 20, 25, 30),
   labels = c("0 - 10", "10 - 15", "15 - 20", "20 - 25", "25 - 30", " > 30"),
   palette = custom_palette, "Days"
 )
 
 p3 <- make_snow_plot(
-  snow_metrics[[3]], "Standard deviation EOS",
+  snow_metrics[[3]], "",
   breaks = c(10, 15, 20, 25, 30),
   labels = c("0 - 10", "10 - 15", "15 - 20", "20 - 25", "25 - 30", " > 30"),
   palette = custom_palette, "Days"
 )
 
-final_plot <- p1 + p2 + p3 + plot_layout(ncol = 3)
+final_plot <- p1 + p2 + p3 + 
+  plot_layout(ncol = 3) +
+  plot_annotation(tag_levels = 'A') &
+  theme(
+    plot.tag = element_text(size = 12, face = "bold"),
+    plot.tag.position = c(0.05, 0.95)
+  )
 print(final_plot)

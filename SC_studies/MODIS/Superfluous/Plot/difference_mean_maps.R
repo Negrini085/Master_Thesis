@@ -7,7 +7,7 @@ library(sf)
 library(terra)
 library(rnaturalearth)
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/MODIS")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SC_studies/MODIS/")
 fname_mod <- "Dataset/annual_maps/LOS/los_avg.tif"
 fname_me <- "Datas/mean_maps/mean_los.tif"
 

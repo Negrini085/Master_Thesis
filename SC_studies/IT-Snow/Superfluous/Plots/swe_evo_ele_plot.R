@@ -8,7 +8,7 @@ library(tidyr)
 library(dplyr)
 library(ggplot2)
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SC_studies/IT-Snow/")
 
 swe <- read.table("Datas/swe_evolution_elevation.dat", header = FALSE)
 
