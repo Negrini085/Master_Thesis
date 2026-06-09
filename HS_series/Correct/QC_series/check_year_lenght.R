@@ -4,8 +4,8 @@ rm(list = ls())
 gc()
 
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Correct/")
-files <- list.files(path = "Dataset", full.names = TRUE)
-files <- sub("Dataset/", "", files)
+files <- list.files(path = "../../HS_3_6_2026/Dataset", full.names = TRUE)
+files <- sub("../../HS_3_6_2026/Dataset/", "", files)
 
 
 
