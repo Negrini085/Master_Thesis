@@ -7,7 +7,7 @@ library(dplyr)
 library(ggplot2)
 library(patchwork)
 
-fname <- "Dataset/appo.dat"
+fname <- "Dataset/under_0.8.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Correct/Comparison/")
 
 
@@ -108,7 +108,7 @@ station_names <- df$name
 
 
 # Cycle across stations
-for(name in unique(station_names)[1:10]){
+for(name in unique(station_names)){
   
   # Importing HS, SWE and MODIS series
   fname_hs <- paste0("../Dataset/", name)
