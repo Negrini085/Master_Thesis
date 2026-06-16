@@ -62,4 +62,4 @@ df_print <- data.frame(
   los_MOD = los_mod
 )
 
-write.table(df_print, "Results/compare_los.dat", row.names = FALSE, col.names = FALSE, quote = FALSE)
+write.table(df_print, "Results/compare_los.dat", row.names = FALSE, col.names = TRUE, quote = FALSE)
