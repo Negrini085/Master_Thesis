@@ -64,11 +64,7 @@ Calibration/sim_annealing
 # 	DEM datas
 # ---------------------------
 SC_studies/IT-Snow/DEM
-
-# ---------------------------
-# File .nc in ColDePorte
-# ---------------------------
-Preliminary_studies/ColDePorte/*.nc
+MODIS_vs_HS/DEM
 
 # ---------------------------
 # 	Temporary files
