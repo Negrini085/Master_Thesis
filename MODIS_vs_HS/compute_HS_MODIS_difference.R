@@ -8,6 +8,7 @@ files <- list.files(path = "../HS_series/Correct/MODIS_series/Dataset/modis_hydr
 names <- sub("../HS_series/Correct/MODIS_series/Dataset/modis_hydrological/", "", files)
 
 diff <- numeric(0)
+appo_name <- character(0)
 for(name in names){
    
   # Importing HS and MODIS series
@@ -30,17 +31,20 @@ for(name in names){
   mask <- as.numeric(df_hs$V2) > 0
   df_hs$V2[mask] <- 1
   
+  if(length(unique(as.numeric(df_hs$V1))) < 5) next
+  
   if(nrow(df_mod) != nrow(df_hs)) stop(paste0("Mismatch in data-frame lenght for ", name, "! ", nrow(df_mod), " & ", nrow(df_hs)))
   if(sum(as.numeric(df_hs$V2), na.rm = TRUE) == 0) stop("No HS datas for ", name)
   
   appo <- (sum(as.numeric(df_hs$V2), na.rm = TRUE) - sum(as.numeric(df_mod$V2), na.rm = TRUE))/sum(as.numeric(df_hs$V2), na.rm = TRUE)
+  appo_name <- c(appo_name, name)
   diff <- c(diff, appo)
 }
 
 
 # Saving to file
 df_print <- data.frame(
-  name = names, 
+  name = appo_name, 
   diff = diff
 )
 write.table(df_print, "Results/HS_MODIS_diff.dat", row.names = FALSE, col.names = TRUE, quote = FALSE)
