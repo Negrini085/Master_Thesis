@@ -74,6 +74,25 @@ station_start <- station_start[!mask]
 station_flag <- station_flag[!mask]
 
 
+# Fourth check -> inverted time window
+mask <- station_end < station_start
+print("Stations with inverted time-window: ")
+if(sum(mask) == 0){
+  print("None")
+} else{
+  for(name in station_names[mask]){
+    print(name)
+  }
+}
+
+station_lon <- station_lon[!mask]
+station_lat <- station_lat[!mask]
+station_end <- station_end[!mask]
+station_names <- station_names[!mask]
+station_start <- station_start[!mask]
+station_flag <- station_flag[!mask]
+
+
 # Printing filtered dataset
 df <- data.frame(
   names = station_names, 

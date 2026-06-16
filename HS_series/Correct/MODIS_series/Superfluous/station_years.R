@@ -9,7 +9,7 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/Correct/MODIS_seri
 
 # Function to evaluate operating years. I will check first row content, as well as 
 # whole year values to check whether aws station was actually active or not.
-read_station <- function(fname, nmonths) {
+read_station <- function(fname) {
   
   # Opening data-frame and selecting values and years
   df <- read.table(fname, header = FALSE)
@@ -36,9 +36,6 @@ start_year <- array(NA, dim = c(length(ita_station_names)))
 end_year <- array(NA, dim = c(length(ita_station_names)))
 station_names <- df_data[, 1]
 flag <- df_data[, 4]
-rm(appo)
-gc()
-
 
 
 # Opening files and evaluating start/end years
@@ -47,7 +44,7 @@ for (name_ind in seq_len(length(station_names))) {
   fname <- paste0("../Dataset/", station_names[name_ind])
   
   appo <- tryCatch({
-    read_station(fname, 12)
+    read_station(fname)
   }, error = function(e) {
     message("Error: ", e$message)
     c(NA, NA)
@@ -58,7 +55,7 @@ for (name_ind in seq_len(length(station_names))) {
     message("Evaluated measurement period for ", station_names[name_ind])
   })
   
-  start_year[name_ind] <- appo[1]
+  start_year[name_ind] <- appo[1] - 1
   end_year[name_ind]   <- appo[2]
 }
 
