@@ -8,7 +8,7 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/MODIS_vs_HS/")
 
 
 # Importing MODIS series
-df <- read.table(fname_mat, header = TRUE)
+df <- read.table(fname_mat, header = TRUE, check.names = FALSE)
 df <- df[191:(nrow(df)-122), ]
 
 
