@@ -26,7 +26,7 @@
 
 \usepackage{emptypage}
 \usepackage{setspace}
-\onehalfspacing                            % interlinea 1.5
+\onehalfspacing
 
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage{mathtools}
@@ -96,9 +96,6 @@
 }
 \lstset{style=physicscode}
 
-%---------------------------------------------------------------
-%  HYPERLINK E PDF
-%---------------------------------------------------------------
 \usepackage[
   colorlinks = true,
   linkcolor  = black,
@@ -113,9 +110,10 @@
 
 \usepackage[
   backend    = biber,
-  style      = phys,
-  sorting    = none,
-  maxnames   = 5,
+  style      = authoryear,
+% sorting    = none,
+  maxnames   = 2,
+  minnames   = 1,
   doi        = true,
   url        = false
 ]{biblatex}

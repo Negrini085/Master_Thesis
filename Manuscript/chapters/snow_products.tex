@@ -29,9 +29,34 @@ drivers via precipitation-phase partitioning and a hybrid temperature and radiat
 \section{MODIS}
 \label{sec:MODIS}
 
-MODIS is an acronym for Moderate Resolution Imaging Spectroradiometer, which is a 36-bands sensor equipped on 
-two satellite, Terra and Aqua, launched by NASA respectively in December 1999 and May 2002 as a part of the Earth 
-Observing System (EOS).
+The role of Satellite Remote Sensing (SRS) in global climate monitoring has become increasingly critical, providing 
+spatio-temporal observations across remote regions where conventional ground-based methods are lacking. In particular, 
+those kinds of measurements are highly effective for mapping snow cover extent and duration. NASA's Moderate Resolution 
+Imaging Spectroradiometer (MODIS) is a major tool in this field: this 36-band sensor operates aboard two Earth Observing 
+System (EOS) satellites, namely Terra (launched in December 1999) and Aqua (launched in May 2002). This tool has been 
+used in order to assess snow cover duration (SCD) trends across the Greater Alpine Region \parencite{MODIS_GAR} and to 
+establish SCD climatologies across Europe. One of the latest studies on snow cover metric characteristics and trends 
+focuses on the Italian territory \parencite{MODIS_ITA}, and therefore on the Italian Alps, which are the primary focus of 
+this thesis.
+
+\subsection{Dataset Generation and Gap-Filling Strategy}
+\label{subsec:dataset_MODIS}
+In its latest version, this Italian snow cover dataset spans from 2000 to 2025 and consists of binary maps, where a value
+of zero represents to bare ground, whereas one is associated only to snow covered pixels. Available on a daily basis, these
+maps feature a spatial resolution of roughly 500 meters. 
+
+The starting point of the workline that led the authors to those maps are the raw modis datas. To correctly identify snow 
+covered pixels advantage is taken on a property of snow, which is that it has very high reflectance in the visible part of 
+the electromagnetic spectrum, whereas it absorbs most of the shortwave radiation. This characteristics is highlighted by 
+the normalized difference snow index (NDSI), which is defined as
+
+\begin{equation}
+    \mathrm{NDSI}\,=\,\frac{\mathrm{band}4\,-\,\mathrm{band}6(7)}{\mathrm{band}4\,+\,\mathrm{band}6(7)}
+    \label{eq:NDSI}
+\end{equation}
+
+where band 4 is in the visible range (in particular $0.545\,-\,0.565\,\mu \mathrm{m}$) and band 6 (or 7) is in the shortwave infrared 
+(namely $1.628\,-\,1.672\,\mu \mathrm{m}$ for Terra and $2.105\,-\,2.155\,\mu \mathrm{m}$ for Aqua).
 
 
 
