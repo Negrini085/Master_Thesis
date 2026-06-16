@@ -48,7 +48,7 @@ class SimAnnealing{
     public:
     SimAnnealing()
         : T_in(10), T_fin(1e-5), m_beta(0.0), m_new(0.0), m_old(0.0), m_delta(0.4),
-          gen(41), dis_prob(0.0, 1.0), dis_move(-0.5, 0.5), m_th(1.6), m_ddfm(1.0), m_ddfM(3.8)
+          gen(41), dis_prob(0.0, 1.0), dis_move(-0.5, 0.5), m_th(2.0), m_ddfm(0.5), m_ddfM(4.0)
     {}
     SimAnnealing(double tin, double tfin, double delta, unsigned int seed = 0) 
         : T_in(tin), T_fin(tfin), m_beta(0.0), m_new(0.0), m_old(0.0), m_delta(delta),
@@ -129,7 +129,7 @@ class SimAnnealing{
                 if(dis_prob(gen) < p) { //Cambio effettivamente oppure no?
                     acce++;
                     m_old = m_new;
-                    fileout << m_old << "   " <<  << endl;
+                    fileout << m_old << "   " << T << endl;
 
                     m_th = appo_th;
                     m_ddfm = appo_ddfm;
