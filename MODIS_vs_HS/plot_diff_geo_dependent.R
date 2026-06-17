@@ -40,6 +40,8 @@ df_final$elevation <- extract(dem,   pts)[, 2]
 df_final$slope     <- extract(slope, pts)[, 2]
 df_final$aspect    <- extract(aspect, pts)[, 2]
 
+write.table(df_final, "Results/diff_geo_dependent.dat", row.names = FALSE, col.names = TRUE, quote = FALSE)
+
 
 
 # Plotting procedure
@@ -97,3 +99,7 @@ ggsave("Images/bias_vs_terrain.png",
        width  = 14, height = 5,
        dpi    = 300,
        bg     = "white")
+
+
+# geom_smooth(method = "lm", color = "#b2182b", fill = "#ef8a62", 
+#             alpha = 0.2, linewidth = 1, se = TRUE) +

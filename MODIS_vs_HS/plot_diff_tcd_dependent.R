@@ -36,6 +36,8 @@ df_final$tcd <- extract(tcd,   pts)[, 2]
 mask <- df_final$tcd <= 100
 df_final <- df_final[mask, ]
 
+write.table(df_final, "Results/diff_tcd_dependent.dat", row.names = FALSE, col.names = TRUE, quote = FALSE)
+
 mask <- df_final$tcd < 25 & df_final$diff > 0.6
 print(df_final[mask, ])
   
