@@ -19,7 +19,7 @@ n_cores <- 8
 # day temperature are below a certain threshold than all precipitation is treated 
 # as solid. On the other hand if both are above that threshold according to the model
 # is raining. At last, the in-between situations leads to a mixture of solid and 
-# liquid precipitation.
+# liquid precipitations.
 solid_prec <- function(prec, tmax, tmin, t_th, name){
   
   # Checking container length
@@ -50,13 +50,13 @@ solid_prec <- function(prec, tmax, tmin, t_th, name){
 
 
 # Function to compute DDF as a day-dependent value, with a period of one year
-compute_ddf <- function(year, ddf_min, ddf_max){
+compute_ddf <- function(year, ddf_ave, ddf_ampl){
   
   len <- 365
   if((year %% 4 == 0 & year %% 100 != 0) | year %% 400 == 0) len <- 366
   idx <- 1:len
   
-  ddf <- (ddf_max + ddf_min)/2 + (ddf_max - ddf_min)/2 * sin(2 * pi * (idx - 81)/len)
+  ddf <- ddf_ave + ddf_ampl * sin(2 * pi * (idx - 81)/len)
   return(ddf)
 }
 
@@ -82,7 +82,7 @@ compute_degree_days <- function(tmax, tmin, name){
 
 # Function to compute actual swe series for a given station. We will start to 
 # accumulate on the 1st of January in 1950.
-swe_series <- function(name, t_th, ddf_min, ddf_max){
+swe_series <- function(name, t_th, ddf_ave, ddf_ampl){
   
   # Importing temperature and precipitation series
   df_prec <- read.table(paste0("Dataset/PCPD/DV_", name), header = FALSE)
@@ -142,7 +142,7 @@ swe_series <- function(name, t_th, ddf_min, ddf_max){
     
     
     # DDF computation
-    ddf <- compute_ddf(year = y, ddf_min = ddf_min, ddf_max = ddf_max)
+    ddf <- compute_ddf(year = y, ddf_ave = ddf_ave, ddf_ampl = ddf_ampl)
     if(length(precs_year) != length(dd_year)) stop("Non compatible length for solid precipitation and dd at ", name, " during ", y)
     if(length(ddf) != length(dd_year)) stop("Non compatible length for dd and ddf at ", name, " during ", y)
     
@@ -187,8 +187,8 @@ swe_series <- function(name, t_th, ddf_min, ddf_max){
 
 # Importing input values and station names
 df_in <- read.table(fname_in, header = TRUE)
-ddf_min <- df_in$ddf_min
-ddf_max <- df_in$ddf_max
+ddf_ave <- df_in$ddf_ave
+ddf_ampl <- df_in$ddf_ampl
 t_th <- df_in$tlim
 
 files <- list.files(path = "Dataset/PCPD", full.names = TRUE)
@@ -197,7 +197,7 @@ files <- sub("Dataset/PCPD/DV_", "", files)
 
 # Actual swe computation
 results <- mclapply(files, function(name) {
-  appo <- swe_series(name  = name, t_th  = t_th, ddf_min = ddf_min, ddf_max = ddf_max)
+  appo <- swe_series(name  = name, t_th  = t_th, ddf_ave = ddf_ave, ddf_ampl = ddf_ampl)
   if (appo == 1) message("Made swe computations for ", name)
   return(appo)
 }, mc.cores = n_cores)

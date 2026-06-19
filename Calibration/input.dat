@@ -1,2 +1,2 @@
-tlim	ddf_min	ddf_max
-2.0	0.5	4.0
+tlim	ddf_ave	ddf_ampl
+2.0	2.25	1.75

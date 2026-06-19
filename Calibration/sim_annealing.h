@@ -28,7 +28,7 @@ double findCost(string fname){
 }
 
 
-void saveInput(double appo_th, double appo_ddfm, double appo_ddfM, string fname) {
+void saveInput(double appo_th, double appo_ddfav, double appo_ddfam, string fname) {
 
     ofstream appo_out(fname);
     if (!appo_out.is_open()) {
@@ -36,8 +36,8 @@ void saveInput(double appo_th, double appo_ddfm, double appo_ddfM, string fname)
         exit(1);
     }
 
-    appo_out << "tlim\tddf_min\tddf_max\n";
-    appo_out << appo_th << "\t" << appo_ddfm << "\t" << appo_ddfM << "\n";
+    appo_out << "tlim\tddf_ave\tddf_ampl\n";
+    appo_out << appo_th << "\t" << appo_ddfav << "\t" << appo_ddfam << "\n";
     appo_out.close();
 }
 
@@ -48,11 +48,11 @@ class SimAnnealing{
     public:
     SimAnnealing()
         : T_in(10), T_fin(1e-5), m_beta(0.0), m_new(0.0), m_old(0.0), m_delta(0.4),
-          gen(41), dis_prob(0.0, 1.0), dis_move(-0.5, 0.5), m_th(2.0), m_ddfm(0.5), m_ddfM(4.0)
+          gen(41), dis_prob(0.0, 1.0), dis_move(-0.5, 0.5), m_th(2.0), m_ddfav(2.25), m_ddfam(1.75)
     {}
     SimAnnealing(double tin, double tfin, double delta, unsigned int seed = 0) 
         : T_in(tin), T_fin(tfin), m_beta(0.0), m_new(0.0), m_old(0.0), m_delta(delta),
-          gen(seed == 0 ? rd() : seed), dis_prob(0.0, 1.0), dis_move(-0.5, 0.5), m_th(2.0), m_ddfm(0.5), m_ddfM(4.0)
+          gen(seed == 0 ? rd() : seed), dis_prob(0.0, 1.0), dis_move(-0.5, 0.5), m_th(2.0), m_ddfav(2.25), m_ddfam(1.75)
     {}
     ~SimAnnealing() = default;
 
@@ -70,7 +70,7 @@ class SimAnnealing{
         int acce = 0;   //Numero di mosse accettato
         int totali = 0;   //Numero di mosse totali
         double T = T_in;    //Temperatura di partenza SA
-        double appo_th, appo_ddfm, appo_ddfM, acc_rate, factor, peso; //Variabili di appoggio per le mosse
+        double appo_th, appo_ddfav, appo_ddfam, acc_rate, factor, peso; //Variabili di appoggio per le mosse
     
 
         ofstream fileout;   //Canale di output
@@ -79,7 +79,7 @@ class SimAnnealing{
         file_out.open("moves.dat");
 
         // First simulation
-        saveInput(m_th, m_ddfm, m_ddfM, fname);
+        saveInput(m_th, m_ddfav, m_ddfam, fname);
         system("Rscript model.R");
         system("Rscript convert_swe_to_hydro.R");
         system("rm Results/raw/*");
@@ -90,7 +90,7 @@ class SimAnnealing{
         system("rm Results/hydro/*");
 
         fileout << m_old << "   " << T << endl;
-        file_out << m_th << "   " << m_ddfm << "   " << m_ddfM << endl;
+        file_out << m_th << "   " << m_ddfav << "   " << m_ddfam << endl;
 
         while(T >= T_fin){
 
@@ -107,12 +107,10 @@ class SimAnnealing{
                     appo_th = m_th + m_delta * dis_move(gen);
                 }while(appo_th < 1.5 || appo_th > 2.5);
                 do{
-                    appo_ddfm = m_ddfm + m_delta * dis_move(gen);
-                }while(appo_ddfm < 0.3 || appo_ddfm > 1.3);
-                do{
-                    appo_ddfM = m_ddfM + m_delta * dis_move(gen);
-                }while(appo_ddfM > 4.5 || appo_ddfM < 3.5);
-                saveInput(appo_th, appo_ddfm, appo_ddfM, fname);
+                    appo_ddfam = m_ddfam + m_delta * dis_move(gen);
+                    appo_ddfav = m_ddfav + m_delta * dis_move(gen);
+                }while(appo_ddfam < 0 || appo_ddfav < 0 || (appo_ddfav - appo_ddfam) <= 0);
+                saveInput(appo_th, appo_ddfav, appo_ddfam, fname);
 
                 // Making calculations
                 system("Rscript model.R");
@@ -132,11 +130,11 @@ class SimAnnealing{
                     fileout << m_old << "   " << T << endl;
 
                     m_th = appo_th;
-                    m_ddfm = appo_ddfm;
-                    m_ddfM = appo_ddfM;
+                    m_ddfav = appo_ddfav;
+                    m_ddfam = appo_ddfam;
                     
-                    file_out << m_th << "   " << m_ddfm << "   " << m_ddfM << endl;
-                    cout << "T_th = " << m_th << "     ddf_min = " << m_ddfm << "     ddf_max = " << m_ddfM << "     loss = " << m_new << "     weight = " << peso << endl;
+                    file_out << m_th << "   " << m_ddfav << "   " << m_ddfam << endl;
+                    cout << "T_th = " << m_th << "     ddf_ave = " << m_ddfav << "     ddf_amp = " << m_ddfam << "     loss = " << m_new << "     weight = " << peso << endl;
                 }
 
                 if(totali == 500) break;
@@ -169,7 +167,7 @@ class SimAnnealing{
     double T_in, T_fin, m_beta; //Data membri per temperatura
     double m_old, m_new, m_delta;   //Data membri per gestione gap
 
-    double m_th, m_ddfm, m_ddfM;
+    double m_th, m_ddfav, m_ddfam;
 
     random_device rd; mt19937 gen;
     uniform_real_distribution<double> dis_prob;
