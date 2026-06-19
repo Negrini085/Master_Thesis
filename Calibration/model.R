@@ -198,6 +198,6 @@ files <- sub("Dataset/PCPD/DV_", "", files)
 # Actual swe computation
 results <- mclapply(files, function(name) {
   appo <- swe_series(name  = name, t_th  = t_th, ddf_min = ddf_min, ddf_max = ddf_max)
-  # if (appo == 1) message("Made swe computations for ", name)
+  if (appo == 1) message("Made swe computations for ", name)
   return(appo)
 }, mc.cores = n_cores)
