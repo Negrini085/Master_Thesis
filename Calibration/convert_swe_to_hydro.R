@@ -10,24 +10,28 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Calibration/")
 solar_to_hydro <- function(name){
   # Importing temporal series
   df <- read.table(paste0("Results/raw/", name), header = FALSE)
-  years <- unique(as.numeric(df$V1))
+  years <- sort(unique(as.numeric(df$V1)))
   swe_series <- as.numeric(df$V4)
   
-  # Arrays to contain datas
+  # Creating dates array
+  dates <- seq.Date(from = as.Date(paste0(years[1], "-01-01")), to = as.Date(paste0(years[length(years)], "-12-31")), by = "day")
+  if(length(swe_series) != length(dates)) stop(paste0("No compatible length for SWE and dates series at ", name))
+  if(any(years > 2023)) stop(paste0("SWE values outside precipitation period at ", name))
+  
+  # Support variables
   appo_swe <- numeric(0)
   appo_year <- numeric(0)
   
   # Cycle over years
-  start <- 244
   for(y in years[2:length(years)]){
     
-    # Selecting swe for a given year
-    if(y > 2023) next
+    # Selecting SWE for a given year
+    mask <- dates >= as.Date(paste0((y-1), "-09-01")) & dates <= as.Date(paste0(y, "-08-31"))
+    hydro_swe <- swe_series[mask]
     
     len <- 365
-    if(y %% 4 == 0) len <- 366
-    hydro_swe <- swe_series[start:(start + len - 1)]
-    start <- start + len
+    if((y %% 4 == 0 & y %% 100 != 0) | (y %% 400 == 0)) len <- 366
+    if(length(hydro_swe) != len) stop(paste0("Some days are missing on SWE series at ", name, " during ", y))
     
     appo_year <- c(appo_year, rep(y, length(hydro_swe)))
     appo_swe <- c(appo_swe, hydro_swe)
