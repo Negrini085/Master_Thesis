@@ -15,8 +15,7 @@ While remote sensing provides spatially distributed data across entire regions, 
 which are chosen according to strict criteria. To ensure the reliability of these in situ observations, the monitoring site must match the 
 features of the surrounding terrain. In alpine regions, monitoring sites must be clear of large boulders and protected from excessive sun 
 exposure, which can cause premature snowmelt and yield unrepresentative data. It is also important to avoid locations prone to preferential 
-snow accumulation driven by local wind patterns. In forested areas, instruments should be placed within openings to ensure that snowfall reaches 
-the ground and accumulation can take place unbiased.
+snow accumulation driven by local wind patterns.
 
 These guidelines represent only the baseline requirements for reliable snow measures. A more comprehensive analysis of the operational details 
 is provided in the following sections.
@@ -87,10 +86,36 @@ which would result in data loss. In addition, minimizing interference with the s
 and can induce measurement artifacts. Consequently, HS sensors are typically installed on a horizontal arm that stretches outward, ensuring that 
 the target area remains at a sufficient distance from the mounting pole.
 
-One limitation of HS series is that, from a hydrological perspective, they do not directly quantify the amount of water stored within the snowpack. 
-Several techniques have been developed for automated SWE monitoring, the most common of which based on snow pillows. This instrument consists of a 
-rubber bladder filled with an antifreeze liquid mixture  and coupled with a pressure transducer, which provides the SWE estimate. The snow pillow is 
-installed flush with the ground surface, thereby supporting the weight of the entire snowpack. As snow accumulates on top of the pillow, the 
-hydrostatic pressure increases and this variation is transduced into snow water equivalent values. Snow pillows were first introduced in the late 
-1960s, and have proved to be a useful tool for SWE measurements \parencite{SnowPillow_Hood}. However, they are currently being replaced by snow 
-scales due to the toxicity of the antifreeze fluid, which poses an environmental hazard to the installation site.
+SWE monitoring can also be automated; to this end, several techniques have been developed, the most common of which relies on snow pillows. This 
+instrument consists of a rubber bladder filled with an antifreeze liquid mixture  and coupled with a pressure transducer, which provides the SWE 
+estimate. The snow pillow is installed flush with the ground surface, thereby supporting the weight of the entire snowpack. As snow accumulates on 
+top of the pillow, the hydrostatic pressure increases and this variation is transduced into snow water equivalent values. Snow pillows were first 
+introduced in the late 1960s, and have proved to be a useful tool for SWE measurements \parencite{SnowPillow_Hood}. However, they are currently 
+being replaced by snow scales due to the toxicity of the antifreeze fluid, which poses an environmental hazard to the installation site.
+
+
+
+\subsubsection{Remote sensing}
+
+Satellite remote sensing (SRS) serves as a useful tool to fill critical gaps in current knowledge regarding climatic variables, enabling researchers 
+to monitor, usually on a daily basis, even remote locations which could not be accessible by a human operator. Furthermore, SRS data substantially 
+improve meteorological reanalysis products, which constitute a cornerstone of contemporary climate change research. Earth observing satellites can be 
+classified into two distinct categories based on their orbital characteristics:
+
+\begin{itemize}[label=$\blacktriangleright$]    
+    \item Polar orbit satellites, which travel roughly from north to south over the poles, targeting a specific longitudinal strip per pass. The 
+    entire globe is thus mapped over consecutive orbits. Usually, these satellites operate at an altitude of approximately 700 km, completing a full 
+    revolution in under two hours.
+    \item Geostationary satellites, which occupy a geosynchronous orbit, thereby allowing for real-time meteorological monitoring on a specific target 
+    area. Their altitude of approximately 36000 km above Earth's equator results in a significantly lower spatial resolution compared to that of 
+    polar orbit satellites.
+\end{itemize}
+
+The choice of orbit is strictly driven by observational priorities. Consequently, satellites dedicated to cryospheric research favor polar orbit, as
+maximizing spatial resolution is essential to capture the highly variable distribution of snow coverage across complex terrains. 
+
+Satellite-based observations of Snow Cover Extent (SCE) began in 1967, through the efforts of National Oceanic and Atmospheric Administration (NOAA). 
+This monitoring program focused on the Northern Hemisphere, where most of the world's terrestrial snow cover is found, with observations conducted 
+on a weekly basis. Despite the preliminary nature of this work, it highlighted the strong latitudinal dependence of snow cover duration and paved 
+the way for more comprehensive analyses. One of the main limitations of these early observations was their coarse spatial resolution of 
+$\sim \SI{200}{\km}$, which was insufficient to adequately characterize snow cover in many mountainous regions \parencite{NOAA_first_SRS}. 
