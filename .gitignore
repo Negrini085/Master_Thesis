@@ -56,8 +56,8 @@ HS_series/HS_correction/QC_series/Pdf
 HS_series/HS_correction/QC_series/Series_to_send
 HS_series/Correct/QC_series/Pdf/
 
-Calibration/Dataset
-Calibration/sim_annealing
+SWE_calibration/Dataset
+SWE_calibration/sim_annealing
 
 # ---------------------------
 # 	DEM datas
