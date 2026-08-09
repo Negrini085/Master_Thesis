@@ -1,6 +1,27 @@
 \chapter{Snow basics}
 
-\subsection{Direct and indirect methods for snow measurement}
+Snow 
+
+
+\section{Basic properties of snow}
+
+For the atmosphere to release its water content, whether in liquid or solid form, the air must first reach a state of supersaturation with 
+respect to water or ice. This condition is typically achieved through upward motion of air masses which causes adiabatic cooling of air parcels.
+This temperature drop strongly reduces air's capacity to hold water vapor, driving the parcel toward, and eventually beyond, saturation. 
+
+
+% Snow is a major form of solid precipitation, occurring when snowflakes grow sufficiently large to overcome updraft forces and fall to the ground. 
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\linewidth]{snow_flakes.png}
+    \caption{First try}
+    \label{fig:snow_flakes}
+\end{figure}
+
+
+
+\section{Snow measurement methods}
 Knowledge of snow cover properties is essential for assessing solid water storage in the snowpack, a critical factor influencing 
 agriculture and hydroelectric power generation, as well as for avalanche risk evaluation. 
 
@@ -21,7 +42,7 @@ These guidelines represent only the baseline requirements for reliable snow meas
 is provided in the following sections.
 
 
-\subsubsection{Manual measures}
+\subsection{Manual measures}
 
 Manual snow depth (HS) records are an effective tool for assessing long-term trends, as they can span over several decades. Their longevity is 
 due to a straightforward measuring procedure, requiring only a stake or an extendible graduated rod. 
@@ -63,7 +84,7 @@ equivalent is less spatially homogeneous, such as locations with heterogeneous e
 
 
 
-\subsubsection{Automatic measures}
+\subsection{Automatic measures}
 
 Automatic weather station (AWS) networks do not require manual intervention, except for routine maintenance and instrument calibration. An AWS 
 provides continuous observations even in remote locations where human operation would be unfeasible. Typically, an alpine automatic weather station 
@@ -95,7 +116,7 @@ being replaced by snow scales due to the toxicity of the antifreeze fluid, which
 
 
 
-\subsubsection{Remote sensing}
+\subsection{Remote sensing}
 
 Satellite remote sensing (SRS) serves as a useful tool to fill critical gaps in current knowledge regarding climatic variables, enabling researchers 
 to monitor, usually on a daily basis, even remote locations which could not be accessible by a human operator. Furthermore, SRS data substantially 
@@ -120,7 +141,6 @@ on a weekly basis. Despite the preliminary nature of this work, it highlighted t
 the way for more comprehensive analyses. One of the main limitations of these early observations was their coarse spatial resolution of 
 $\sim \SI{200}{\km}$, which was insufficient to adequately characterize snow cover in many mountainous regions \parencite{NOAA_first_SRS}. 
 
-
 The next big leap in sensor technology came with the introduction of the Advanced Very High Resolution Radiometer (AVHRR), which measures Earth radiance  
 in five spectral bands to obtain information on temperature, albedo and cloud coverage distribution. The first tests on a spaceborne sensor took place
 in 1978, but reliable snow cover data are available only from 1981 onward. This snow product has been used to estimate snow cover duration and trends 
@@ -128,3 +148,46 @@ since the middle eighties in different mountainous regions such as the Alps, whe
 the 1990s, followed by a partial recovery at the beginning of the new millennium \parencite{AVHRR_example}. Although AVHRR offers a significant 
 improvement in spatial resolution with its pixels of $\sim \SI{1}{km}$, data reliability is limited by the presence of only one thermal channel for 
 snow-cloud discrimination \parencite{MODIS_GAR}.
+
+To overcome these limitations, the Moderate Resolution Imaging Spectroradiometer (MODIS) was launched in 1999 aboard the Terra satellite, followed by 
+a second unit on Aqua in 2002. Both operate in polar orbit, jointly covering the whole globe every one to two days. MODIS is a 36-band spectral sensor 
+spanning from the visible ($\SI{0.41}{\micro m}$) to the long-wave infrared ($\SI{14.4}{\micro m}$), with a spatial resolution of $\SI{500}{m}$. To 
+detect the presence of snow on the ground, the Normalized Difference Snow Index (NDSI) is used, defined as
+
+\begin{equation}
+    \mathrm{NDSI}\,=\,\frac{\mathrm{G}\,-\,\mathrm{SWIR}}{\mathrm{G}\,+\,\mathrm{SWIR}},
+    \label{eq:NDSI}
+\end{equation}
+
+where G and SWIR stand for the green and shortwave infrared spectral bands. This normalized difference is close to one for a snow-covered pixel, since
+snow exhibits very high reflectance in the visible part of the electromagnetic spectrum, whereas it strongly absorbs radiation in the SWIR. An NDSI 
+value greater than zero indicates the presence of snow in the pixel; in practice, a threshold of 0.4, corresponding to roughly 50 \% snow coverage,
+is commonly adopted to classify a pixel as snow covered \parencite{NDSI_threshold}.
+\newline
+\newline
+Although MODIS has proven to be a robust and well-validated tool for snow cover characterization, the snowpack information it provides remains partial, 
+as it is limited to detecting the presence or absence of snow. In order to assess how much water is stored in solid form on the ground, three main 
+spaceborne techniques have been developed: passive microwave radiometry, gravimetric data and Synthetic Aperture Radar (SAR). 
+
+Passive microwave radiometry (PMW) is by far the most common method to remotely evaluate SWE. Given that the snowpack causes attenuation to the microwaves 
+emitted by the Earth, comparing signal intensities between two frequencies ($\sim \SI{18}{\giga\hertz}$, and $\sim \SI{37}{\giga\hertz}$) makes 
+it possible to estimate snow water equivalent. This is the only spaceborne technique that offers the possibility of long-term studies because global 
+daily maps have been available since the launch, in 1978, of the Scanning Multichannel Microwave Radiometer (SMMR) by NASA \parencite{remote_SWE}. Even though 
+the temporal coverage of these series is significantly better than that of other available sources, several factors have been shown to influence 
+data reliability, such as signal saturation caused by a deep snowpack.
+
+As an alternative to radiation based measurements, gravimetric methods offer a different approach that avoids signal saturation by focusing on mass changes.
+The accumulation of snow on the Earth's surface causes variations in the Earth's gravitational field, which can be converted into SWE estimates. This 
+procedure is mainly employed by the Gravity Recovery and Climate Experiment (GRACE) mission. Due to its global coverage, this SWE dataset features a 
+coarse spatial resolution of roughly $\SI{300}{\kilo\meter}$, which remains useful for continental-scale hydrological studies \parencite{remote_SWE}.
+
+While passive microwaves (PMW) and gravimetric techniques are passive remote sensing methods, Synthetic Aperture Radar is an active remote sensing 
+technology that transmits electromagnetic waves and records their backscattered echoes from the Earth's surface. Due to its active nature, SAR does 
+not rely on solar illumination and can penetrate cloud cover, enabling data acquisition under every meteorological condition. Snowpack properties, 
+such as SWE and snow grain size can be estimated remotely, as longer SAR wavelengths are even capable to penetrate into the snowpack. Furthermore, 
+the phase information recorded by SAR can be exploited to monitor ground deformation and assess the stability of ground features. Although SAAR 
+provides spatial resolution on the order of tens of metres, its temporal resolution is significantly lower than that of PMW and gravimetric methods, 
+as the revisit time of a specific location is typically five days \parencite{remote_SAR}.
+
+
+\section{Study area}

@@ -2,7 +2,7 @@
 %   Compile with: pdflatex -> biber -> pdflatex -> pdflatex   %
 %=============================================================%
 
-\documentclass[12pt, a4paper, twoside, openright]{book}
+\documentclass[12pt, a4paper, twoside, openany]{book}%, openright]{book}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -145,8 +145,9 @@
 %   \tableofcontents
 
 \mainmatter
-  \input{chapters/snow_introduction}
-  \input{chapters/snow_products}
+  \input{chapters/introduction}
+  \input{chapters/snow_basics}
+  %\input{chapters/snow_products}
 
 
 % \appendix
