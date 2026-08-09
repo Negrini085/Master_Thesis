@@ -59,6 +59,8 @@ HS_series/Correct/QC_series/Pdf/
 SWE_calibration/Dataset
 SWE_calibration/sim_annealing
 
+SWE_model/Input
+
 # ---------------------------
 # 	DEM datas
 # ---------------------------
