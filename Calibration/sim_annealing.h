@@ -47,7 +47,7 @@ class SimAnnealing{
 
     public:
     SimAnnealing()
-        : T_in(10), T_fin(1e-5), m_beta(0.0), m_new(0.0), m_old(0.0), m_delta(0.4),
+        : T_in(10), T_fin(1e-6), m_beta(0.0), m_new(0.0), m_old(0.0), m_delta(0.4),
           gen(41), dis_prob(0.0, 1.0), dis_move(-0.5, 0.5), m_th(2.0), m_ddfav(2.25), m_ddfam(1.75)
     {}
     SimAnnealing(double tin, double tfin, double delta, unsigned int seed = 0) 
@@ -99,17 +99,15 @@ class SimAnnealing{
             m_beta = 1/T;   //Calcolo parametro beta
             
             //Voglio accettare almeno 10 mosse
-            while(acce < 10){
+            while(acce < 20){
 
                 //Propongo una nuova mossa
                 totali++;
-                do{
-                    appo_th = m_th + m_delta * dis_move(gen);
-                }while(appo_th < 1.5 || appo_th > 2.5);
+                appo_th = m_th + m_delta * dis_move(gen);
                 do{
                     appo_ddfam = m_ddfam + m_delta * dis_move(gen);
                     appo_ddfav = m_ddfav + m_delta * dis_move(gen);
-                }while(appo_ddfam < 0 || appo_ddfav < 0 || (appo_ddfav - appo_ddfam) <= 0);
+                }while(appo_ddfav < 0 || appo_ddfam < 0 || (appo_ddfav - appo_ddfam) < 0);
                 saveInput(appo_th, appo_ddfav, appo_ddfam, fname);
 
                 // Making calculations
@@ -137,7 +135,7 @@ class SimAnnealing{
                     cout << "T_th = " << m_th << "     ddf_ave = " << m_ddfav << "     ddf_amp = " << m_ddfam << "     loss = " << m_new << "     weight = " << peso << endl;
                 }
 
-                if(totali == 500) break;
+                if(totali == 1000) break;
             }
 
             acc_rate = static_cast<double>(acce)/static_cast<double>(totali) * 100;
@@ -145,7 +143,7 @@ class SimAnnealing{
             cout << "                T = " << T << "                  " << endl;
             cout << "               AR = " << acc_rate << " %         " << endl;
             cout << "            Delta = " << m_delta  << "           " << endl;
-            if(totali == 500)   cout << "            Exceeded 500 attempts" << endl;
+            if(totali == 1000)   cout << "            Exceeded 1000 attempts" << endl;
             cout << "-------------------------------------------------" << endl;
 
             T = 0.95 * T;

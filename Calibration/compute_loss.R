@@ -10,7 +10,7 @@ process_station <- function(name) {
   TP <- 0L; TN <- 0L; FP <- 0L; FN <- 0L
   
   # Importing series
-  fname_MINE <- paste0("Results/hydro/", sub("HSD", "DV_SDH", name))
+  fname_MINE <- paste0("Results/hydro/", sub("HSD", "V_SDH", name))
   df_MINE    <- read.table(fname_MINE, header = FALSE)
   
   fname_HS   <- paste0("../HS_series/Correct/Dataset/", name)
@@ -38,7 +38,7 @@ process_station <- function(name) {
 
 # Importing station names
 files      <- list.files(path = "Results/hydro", full.names = TRUE)
-names_swe  <- sub("Results/hydro/DV_SDH", "HSD", files)
+names_swe  <- sub("Results/hydro/V_SDH", "HSD", files)
 
 fname      <- "../HS_series/Correct/STATION_check/Dataset/ANAGRAFICA"
 df         <- read.table(fname, header = TRUE)

@@ -10,9 +10,11 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Calibration/")
 # Importing station names
 files <- list.files(path = "Results/raw", full.names = TRUE)
 station_names <- sub("Results/raw/", "", files)
+station_names <- station_names[startsWith(station_names, "V_SDH")]
 
 
 # Cycle over stations
+appo_year <- numeric(0)
 truth_mat <- array(0, dim = c(4))
 for(name in station_names){
   
@@ -20,13 +22,14 @@ for(name in station_names){
   fname_MINE <- paste0("Results/raw/", name)
   df_MINE <- read.table(fname_MINE, header = FALSE)
   
-  fname_MICH <- paste0("../HS_series/HS_correction/Dataset/model_runs/raw/SNWD/", name)
+  mask <- as.numeric(df_MINE$V1) > 1951
+  df_MINE <- df_MINE[mask, ]
+  
+  fname_MICH <- paste0("../What/Dataset/SNW/", name)
   df_MICH <- read.table(fname_MICH, header = FALSE)
   
-  
-  # No more -90 in michele dataset
-  mask <- df_MICH$V5 == -90
-  df_MICH <- df_MICH[!mask, ]
+  mask <- as.numeric(df_MICH$V1) > 1951
+  df_MICH <- df_MICH[mask, ]
   
   if(nrow(df_MICH) != nrow(df_MINE)) stop(paste0("No compatible length for SWE series at ", sub("DV_SDH", "HSD", name)))
   
@@ -34,22 +37,22 @@ for(name in station_names){
   # Ready to compare series
   appo_MINE <- as.numeric(df_MINE$V4)
   appo_MICH <- as.numeric(df_MICH$V5)
-  
-  
+
+
   # Making checks on values
   mask <- appo_MINE > 0 & appo_MICH > 0
   truth_mat[1] <- truth_mat[1] + sum(mask, na.rm = TRUE)
-  
+
   mask <- appo_MINE >0 & appo_MICH == 0
   truth_mat[2] <- truth_mat[2] + sum(mask, na.rm = TRUE)
-  
+
   mask <- appo_MINE == 0 & appo_MICH > 0
   truth_mat[3] <- truth_mat[3] + sum(mask, na.rm = TRUE)
-  
+
   mask <- appo_MINE == 0 & appo_MICH == 0
   truth_mat[4] <- truth_mat[4] + sum(mask, na.rm = TRUE)
-  
-  
+
+
   # Message
   print(paste0("Taken care of ", name, " series."))
 }
