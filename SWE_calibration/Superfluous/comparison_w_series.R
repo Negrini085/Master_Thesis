@@ -5,11 +5,11 @@ gc()
 
 library(ggplot2)
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Calibration/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_calibration/")
 
 # Importing station names
 files <- list.files(path = "Results/raw", full.names = TRUE)
-names_swe <- sub("Results/raw/DV_SDH", "HSD", files)
+names_swe <- sub("Results/raw/V_SDH", "HSD", files)
 
 fname <- "../HS_series/Correct/STATION_check/Dataset/ANAGRAFICA"
 df <- read.table(fname, header = TRUE)
@@ -24,7 +24,7 @@ truth_mat <- array(0, dim = c(4))
 for(name in station_names){
   
   # Importing mine and Michele series
-  fname_MINE <- paste0("Results/hydro/", sub("HSD", "DV_SDH", name))
+  fname_MINE <- paste0("Results/hydro/", sub("HSD", "V_SDH", name))
   df_MINE <- read.table(fname_MINE, header = FALSE)
   
   fname_HS <- paste0("../HS_series/Correct/Dataset/", name)

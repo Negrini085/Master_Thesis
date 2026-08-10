@@ -8,7 +8,7 @@ invisible(gc())
 library(parallel)
 
 fname_in <- "input.dat"
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Calibration/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_calibration/")
 
 n_cores <- 8
 # cat("Using", n_cores, "cores\n\n")
@@ -208,6 +208,6 @@ files <- sub("Dataset/PCPD/DV_", "", files)
 # Actual swe computation
 results <- mclapply(files, function(name) {
   appo <- swe_series(name  = name, t_th  = t_th, ddf_ave = ddf_ave, ddf_ampl = ddf_ampl)
-  # if (appo == 1) message("Made swe computations for ", name)
+  if (appo == 1) message("Made swe computations for ", name)
   return(appo)
 }, mc.cores = n_cores)

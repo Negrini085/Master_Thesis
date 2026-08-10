@@ -5,7 +5,7 @@ invisible(gc())
 
 library(parallel)
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Calibration/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_calibration/")
 
 solar_to_hydro <- function(name){
   # Importing temporal series
