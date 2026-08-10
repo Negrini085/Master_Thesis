@@ -6,8 +6,8 @@ gc()
 library(ggplot2)
 library(tidyr)
 
-fname <- "Runs/First/explored_params.dat"
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Calibration/")
+fname <- "Runs/moves.dat"
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_calibration/")
 
 df <- read.table(fname, header = FALSE)
 

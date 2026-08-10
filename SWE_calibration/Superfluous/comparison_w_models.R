@@ -8,9 +8,9 @@ library(ggplot2)
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_calibration")
 
 # Importing station names
-files <- list.files(path = "Results/raw", full.names = TRUE)
-station_names <- sub("Results/raw/", "", files)
-station_names <- station_names[startsWith(station_names, "V_SDH")]
+df <- read.table("Results/LIST_TO_COMPARE", header = FALSE)
+files <- df$V1
+station_names <- sub("HSD", "V_SDH", files)
 
 
 # Cycle over stations
