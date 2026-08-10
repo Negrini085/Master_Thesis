@@ -57,6 +57,7 @@ HS_series/HS_correction/QC_series/Series_to_send
 HS_series/Correct/QC_series/Pdf/
 
 SWE_calibration/Dataset
+SWE_calibration/Results
 SWE_calibration/sim_annealing
 
 SWE_model/Input
