@@ -64,14 +64,14 @@ compute_ddf <- function(year, ddf_ave, ddf_ampl){
 
 
 # Function to compute degree day in order to model melt.
-compute_degree_days <- function(tmax, tmin, name){
+compute_degree_days <- function(tmax, tmin, expfact, name){
   
   # # Checking dataset quality
   # if(length(tmin) != length(tmax)) stop(paste0("Non compatible length for min and max temperature at ", name))
   # if(!all(tmin <= tmax, na.rm = TRUE)) stop(paste0("Some Tmax are smaller than Tmin at ", name))
   
   # Degree day computation
-  m_m <- 0.5
+  m_m <- expfact
   tmean <- (tmin + tmax)/2
   
   deg_day <- tmean + m_m * log(1 + exp(-(tmean)/m_m))
@@ -81,7 +81,7 @@ compute_degree_days <- function(tmax, tmin, name){
 
 # Function to compute actual swe series for a given station. We will start to 
 # accumulate on the 1st of January in 1950.
-swe_series <- function(name, t_th, ddf_ave, ddf_ampl){
+swe_series <- function(name, t_th, ddf_ave, ddf_ampl, expfact){
   
   # Importing temperature and precipitation series
   df_prec <- read.table(paste0("Dataset/PCPD/DV_", name), header = FALSE)
@@ -123,7 +123,7 @@ swe_series <- function(name, t_th, ddf_ave, ddf_ampl){
   df_precs <- data.frame(year = year, month = month, day = day, value = prec_s)
   # write.table(df_precs, paste0("Results/raw/", sub("HSD", "V_SNW", name)), row.names = FALSE, col.names = FALSE, quote = FALSE)
   
-  degree_day <- compute_degree_days(tmax = tmax, tmin = tmin, name = name)
+  degree_day <- compute_degree_days(tmax = tmax, tmin = tmin, expfact = expfact, name = name)
   df_dd <- data.frame(year = year, value = degree_day)
   
   
@@ -195,9 +195,13 @@ swe_series <- function(name, t_th, ddf_ave, ddf_ampl){
 
 # Importing input values and station names
 df_in <- read.table(fname_in, header = TRUE)
-ddf_ave <- df_in$ddf_ave
-ddf_ampl <- df_in$ddf_ampl
-t_th <- df_in$tlim
+ddf_ave <- as.numeric(df_in$ddf_ave)
+ddf_ampl <- as.numeric(df_in$ddf_ampl)
+expfact <- as.numeric(df_in$expfact)
+t_th <- as.numeric(df_in$tlim)
+
+if(expfact <= 0) stop(paste0("Expfact parameter should be bigger than zero!"))
+if((ddf_ave - ddf_ampl) < 0) stop(paste0("It's not physically possible to have a negative degree day factor!"))
 
 files <- list.files(path = "Dataset/PCPD", full.names = TRUE)
 files <- sub("Dataset/PCPD/DV_", "", files)
@@ -205,7 +209,7 @@ files <- sub("Dataset/PCPD/DV_", "", files)
 
 # Actual swe computation
 results <- mclapply(files, function(name) {
-  appo <- swe_series(name  = name, t_th  = t_th, ddf_ave = ddf_ave, ddf_ampl = ddf_ampl)
+  appo <- swe_series(name  = name, t_th  = t_th, ddf_ave = ddf_ave, ddf_ampl = ddf_ampl, expfact = expfact)
   if (appo == 1) message("Made swe computations for ", name)
   return(appo)
 }, mc.cores = n_cores)
