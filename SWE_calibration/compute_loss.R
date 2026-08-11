@@ -4,7 +4,7 @@ invisible(gc())
 
 library(parallel)
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/Calibration/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_calibration/")
 
 process_station <- function(name) {
   TP <- 0L; TN <- 0L; FP <- 0L; FN <- 0L

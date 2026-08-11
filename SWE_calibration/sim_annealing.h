@@ -50,8 +50,8 @@ class SimAnnealing{
         : T_in(10), T_fin(1e-6), m_beta(0.0), m_new(0.0), m_old(0.0), m_delta(0.4),
           gen(41), dis_prob(0.0, 1.0), dis_move(-0.5, 0.5), m_th(2.0), m_ddfav(2.2), m_ddfam(1.7), m_expfact(0.5)
     {}
-    SimAnnealing(double tin, double tfin, double delta, unsigned int seed = 0) 
-        : T_in(tin), T_fin(tfin), m_beta(0.0), m_new(0.0), m_old(0.0), m_delta(delta),
+    SimAnnealing(double tmax, double tmin, double delta, unsigned int seed = 0)
+        : T_in(tmax), T_fin(tmin), m_beta(0.0), m_new(0.0), m_old(0.0), m_delta(delta),
           gen(seed == 0 ? rd() : seed), dis_prob(0.0, 1.0), dis_move(-0.5, 0.5), m_th(2.0), m_ddfav(2.2), m_ddfam(1.7), m_expfact(0.5)
     {}
     ~SimAnnealing() = default;
@@ -64,19 +64,24 @@ class SimAnnealing{
     void SetTin(double tin) { T_in = tin; }
     void SetTfin(double tfin) { T_fin = tfin; }
 
-    void SA(string fname) {
+    void SA(string fname, int num_run, double th_prec, double ddf_ave, double ddf_amp, double exp_fact) {
 
         double p = 0;   //Probabilità di accettare la mossa
         int acce = 0;   //Numero di mosse accettato
         int totali = 0;   //Numero di mosse totali
         double T = T_in;    //Temperatura di partenza SA
         double appo_th, appo_ddfav, appo_ddfam, appo_expfact, acc_rate, factor, peso; //Variabili di appoggio per le mosse
+
+        m_th = th_prec;
+        m_ddfav = ddf_ave;
+        m_ddfam = ddf_amp;
+        m_expfact = exp_fact;
     
 
         ofstream fileout;   //Canale di output
         ofstream file_out;   //Canale di output
-        fileout.open("SimAnnealing.dat");
-        file_out.open("moves.dat");
+        fileout.open("loss_evo_" + to_string(num_run) + ".dat");
+        file_out.open("param_evo_" + to_string(num_run) + ".dat");
 
         // First simulation
         saveInput(m_th, m_ddfav, m_ddfam, m_expfact, fname);
@@ -105,7 +110,7 @@ class SimAnnealing{
                 totali++;
                 appo_th = m_th + m_delta * dis_move(gen);
                 do{
-                   appo_expfact = m_expfact + 0.25*dis_move(gen);
+                   appo_expfact = m_expfact + 0.25 * m_delta *dis_move(gen);
                 }while(appo_expfact <= 0);
                 do{
                     appo_ddfam = m_ddfam + m_delta * dis_move(gen);
@@ -123,9 +128,8 @@ class SimAnnealing{
                 m_new = findCost("appo_loss.dat");
                 system("rm Results/hydro/*");
                 peso = -m_beta * (m_new - m_old);
-                p = exp(peso); //Probabilità accettazione mossa
 
-                if(dis_prob(gen) < p) { //Cambio effettivamente oppure no?
+                if (peso >= 0 || dis_prob(gen) < exp(peso)) { //Cambio effettivamente oppure no?
                     acce++;
                     m_old = m_new;
                     fileout << m_old << "   " << T << endl;

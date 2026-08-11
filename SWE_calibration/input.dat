@@ -1,2 +1,2 @@
-tlim	ddf_ave	ddf_ampl
-2.5 2.2 1.7
+tlim	ddf_ave	ddf_ampl expfact
+2.5 2.2 1.7 0.5
