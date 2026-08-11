@@ -59,6 +59,7 @@ HS_series/Correct/QC_series/Pdf/
 SWE_calibration/Dataset
 SWE_calibration/Results
 SWE_calibration/sim_annealing
+SWE_calibration/appo_loss.dat
 
 SWE_model/Input
 
