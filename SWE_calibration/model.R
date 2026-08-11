@@ -51,16 +51,14 @@ solid_prec <- function(prec, tmax, tmin, t_th, name){
 
 # Function to compute DDF as a day-dependent value, with a period of one year
 compute_ddf <- function(year, ddf_ave, ddf_ampl){
-  
-  len <- 365
-  offset <- 80
-  if((year %% 4 == 0 & year %% 100 != 0) | year %% 400 == 0){
-    len <- 366
-    offset <- 81
-  }
+
+  len <- 366
+  offset <- 81
   idx <- 1:len
   
   ddf <- ddf_ave + ddf_ampl * sin(2 * pi * (idx - offset)/len)
+  
+  if(year %% 4 != 0) ddf <- ddf[-60]
   return(ddf)
 }
 
