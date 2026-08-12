@@ -12,7 +12,6 @@ This temperature drop strongly reduces air's capacity to hold water vapor, drivi
 Snowfall can only be produced by clouds that extend above the $\SI{0}{\degreeCelsius}$ level. Although temperatures within these cold clouds can 
 drop well below freezing point, supercooled water droplets can still coexist with ice particles. The freezing process, known as ice nucleation, 
 occurs through two different mechanisms:
-
 \begin{itemize}[label=$\blacktriangleright$]
     \item \textit{homogeneous nucleation}, which occurs in pure water droplets without foreign particles. The first step in the freezing process 
     is the formation of an ice embryo, which must exceed a critical size to produce a decrease in the free energy of the system. Under these conditions, 
@@ -23,8 +22,32 @@ occurs through two different mechanisms:
     \item \textit{heterogeneous nucleation}, which relies on the presence of a foreign particle. Cloud droplets typically contain such impurities 
     acting as freezing nuclei. Their presence promotes the formation of an ice-like structure, thereby enabling freezing at temperatures considerably 
     higher than those required for homogeneous nucleation. It is also possible for foreign particles not to be part of the water droplet itself, 
-    but instead to trigger freezing through contact or deposition. In all of these mechanisms, the most effective ice nuclei are insoluble in water.  
+    but instead to trigger freezing through contact or deposition. Regardless of the specific mechanism involved, the most effective ice nuclei are 
+    insoluble in water and have a crystallographic structure similar to ice.  
 \end{itemize}
+
+Once formed, an ice particle undergoes a series of microphysical processes such as the following growth mechanisms:
+\begin{itemize}[label=$\blacktriangleright$]
+    \item \textit{vapor deposition}, which occurs whenever the air is supersaturated with respect to ice. For example, in mixed-phase clouds dominated by 
+    supercooled droplets, vapor molecules are deposited onto the ice crystal, causing it to grow significantly faster than the surrounding water 
+    droplets. The growth rate reaches a maximum around $\SI{-14}{\degreeCelsius}$, since at that temperature the difference between the saturated 
+    vapor pressure over water and over ice is largest, thus driving vapor molecules towards ice crystals. Studies on the growth of ice crystals by 
+    deposition have shown a strong relationship between crystal shape and the temperature at which the growth process takes place. This strong 
+    temperature dependence produces an alternating pattern between plate-like and column-like ice particles, as shown in Figure \ref{fig:snow_flakes}.
+    \item \textit{riming}, which occurs exclusively in mixed-phase clouds. Whenever an ice crystal collides with a supercooled droplet, the latter may 
+    freeze onto the former, resulting in an increase in ice mass. The collision frequency depends on cloud density and composition, but typically 
+    numerous riming events take place, sometimes producing a graupel, an ice particle in which the original ice crystal can no longer be identified. 
+    Riming can also lead to the formation of hailstones, which typically range from a few millimeters to several centimetres in diameter.
+    \item \textit{aggregation}, caused by collisions between ice particles. The probability of adhesion is strongly linked to crystal shapes and increases 
+    with increasing temperature, reaching a maximum at around $\SI{-5}{\degreeCelsius}$, where ice surfaces become particularly "sticky".
+\end{itemize}
+
+The relative dominance of these three mechanisms, which depends on temperature, humidity and cloud microphysical conditions, contribute to determine 
+the physical properties of the falling ice particles, such as size, shape and density. The temperature conditions encountered during their descend 
+ultimately determine the type of precipitation reaching the surface. For snowfall to occur, the ice particle must remain predominantly below freesing 
+and avoid complete melt before reaching the ground. 
+
+
 
 
 % Snow is a major form of solid precipitation, occurring when snowflakes grow sufficiently large to overcome updraft forces and fall to the ground. 
@@ -205,6 +228,3 @@ such as SWE and snow grain size can be estimated remotely, as longer SAR wavelen
 the phase information recorded by SAR can be exploited to monitor ground deformation and assess the stability of ground features. Although SAAR 
 provides spatial resolution on the order of tens of metres, its temporal resolution is significantly lower than that of PMW and gravimetric methods, 
 as the revisit time of a specific location is typically five days \parencite{remote_SAR}.
-
-
-\section{Study area}
