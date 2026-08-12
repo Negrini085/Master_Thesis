@@ -18,10 +18,10 @@ cp "$INPUT_FILE" "${INPUT_FILE}.backup"
 echo -e "temperature\tloss" > "$OUTPUT_FILE"
 
 # Cycle over temperatures
-for i in $(seq 0 3000); do
+for i in $(seq 0 1500); do
 
     # Temperature computation
-    temperature=$(awk -v i="$i" 'BEGIN {printf "%.3f", i/1000}')
+    temperature=$(awk -v i="$i" 'BEGIN {printf "%.3f", i/500}')
 
 
     # Changing input.dat accordingly
