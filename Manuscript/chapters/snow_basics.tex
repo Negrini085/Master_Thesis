@@ -53,13 +53,47 @@ main crystal growth mechanisms are:
 Once an ice particle grows large enough to overcome updraft forces and turbulent motion within the cloud, it begins to fall toward the ground. The 
 temperature profile encountered by the descending particle ultimately determines the type of precipitation that reaches the surface. For 
 snowfall to occur, the snowflake, composed of up to hundreds of ice crystals, must remain predominantly below freezing and avoid melting completely
-before reaching the ground. Typically, snowflakes have fall rates of approximately $\SI{1.5}{\meter\per\second}$.
+before reaching the ground. Typically, snowflakes have fall rates of approximately $\SI{1.5}{\meter\per\second}$. Snowfall amounts are measured either 
+by depth or by snow water equivalent (SWE), defined as the height of the water column resulting from a complete melting of the snow. Snow depth typically 
+increases of approximately $\SI{1}{\centi\meter\per\hour}$ during snowfall events. Newly fallen snow density ranges from $\SI{20}{\kilo\gram\per\meter\cubed}$ 
+to $\SI{300}{\kilo\gram\per\meter\cubed}$ depending on wind patterns and weather conditions, with higher temperatures generally leading to higher 
+density values.
 
-During a snowfall event, snow crystals accumulate on the ground or on pre-existing snow, contributing to the formation of a new snowpack layer. The 
-thickness of this layer typically increases at a rate of approximately $\SI{1}{\centi\meter\per\hour}$. New snow density ranges from 
-$\SI{20}{\kilo\gram\per\meter\cubed}$ all the way up to $\SI{300}{\kilo\gram\per\meter\cubed}$ depending on weather conditions, with higher temperatures 
-leading to higher density values. Wind also plays a significant role, leading to ice crystal fragmentation and increasing snow density by about 
-$\SI{20}{\kilo\gram\per\meter\cubed}$ for each $\SI{}{\meter\per\second}$ of wind speed \parencite{libro_SNOW}. 
+Accumulation of snowflakes on bare ground or atop older snow results in the formation of a new snow layer. Snow crystals from a solid matrix 
+delimiting pores filled with humid air or liquid water or both, depending on layer temperature. This structure can be clearly appreciated in Figure 
+\ref{fig:snow_porous}, where the coexistence of the solid, liquid and gaseous phases of water is visible. Snow is thus a porous medium, whose 
+properties are closely linked to its texture.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\linewidth]{snow_porous.png}
+    \caption{Image from \cite{snow_slice}}
+    \label{fig:snow_porous}
+\end{figure}
+The arrangement of snow crystals changes over time primarily as a result of the thermodynamic relationships among the constituents of the snow layer. 
+This process, known as \textit{snow metamorphism}, depends strongly on thermal and meteorological conditions. A key factor governing ice particles 
+evolution is the presence or absence of liquid water, which motivates the distinction between dry and wet snow metamorphism. The former occurs when 
+pores are filled only by air, typically saturated with water vapor. In this case, the main driving factor are the variations in crystal surface 
+curvature and temperature, which induces local differences in equilibrium vapor pressure. The main mechanisms underlying dry snow metamorphism are:
+\begin{itemize}[label=$\blacktriangleright$]
+    \item \textit{equilibrium growth}, driven by crystal shape. Local variations in surface curvature generate corresponding variations in 
+    equilibrium vapor pressure, inducing local pressure gradients that drive vapor from convex toward concave (or less convex) regions. Over time this 
+    transfer, sustained by sublimation on convex areas and deposition on concave ones, rounds ice grains, driving show crystals toward a spherical shape.
+    \item \textit{kinetic growth}, related to the presence of a temperature gradient. Because saturation vapor pressure depends strongly on 
+    temperature, such a gradient causes vapor to diffuse from the warmest crystals toward the coldest ones. Here too, sublimation on warm crystal and 
+    deposition on cold ones sustain the process, which, when the temperature gradient is strong enough, leads to the formation on facets.
+\end{itemize}
+
+In practice, these two mechanisms are rarely mutually exclusive: they act simultaneously within the snowpack, with their relative strengths determined 
+mainly by the magnitude of the local temperature gradient compared to the grain's curvature effect. In particular, the kinetic growth of snow 
+particles is a matter of considerable concern in avalanche forecasting, since faceted crystals, if the temperature gradient persists over time, can 
+evolve in depth hoar. This type of layer is notoriously weak and prone to failure, often resulting in large-scale avalanches.
+When liquid water is present within the snowpack, the dynamics change substantially: mass exchanges between the three water phases become essential to 
+understand wet snow metamorphism. The main driver of ice particles evolution is, once again, crystal surface curvature, with convex areas associated with 
+lower melting point temperatures. This topological property leads to the melting of the most convex surfaces and to refreezing on the more concave ones, 
+driving ice particles towards the equilibrium spherical shape. The efficiency of this metamorphism channel is linked to the freedom water has to move 
+within the snowpack: at very low water content, capillary effects are negligible, and mass exhanges between the solid and gaseous phases may still dominate.
+
+% Wind also plays a significant role, leading to ice crystal fragmentation and increasing snow density by about $\SI{20}{\kilo\gram\per\meter\cubed}$ for each $\SI{}{\meter\per\second}$ of wind speed \parencite{libro_SNOW}. 
 
 
 
