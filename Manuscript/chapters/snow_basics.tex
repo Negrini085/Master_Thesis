@@ -73,7 +73,7 @@ properties are closely linked to its texture.
 The arrangement of snow crystals changes over time primarily as a result of the thermodynamic relationships among the constituents of the snow layer. 
 This process, known as \textit{snow metamorphism}, depends strongly on thermal and meteorological conditions. A key factor governing ice particles 
 evolution is the presence or absence of liquid water, which motivates the distinction between dry and wet snow metamorphism. The former occurs when 
-pores are filled only by air, typically saturated with water vapor. In this case, the main driving factor are the variations in crystal surface 
+pores are filled only by air, typically saturated with water vapor. In this case, the main driving factor are variations in crystal surface 
 curvature and temperature, which induces local differences in equilibrium vapor pressure. The main mechanisms underlying dry snow metamorphism are:
 \begin{itemize}[label=$\blacktriangleright$]
     \item \textit{equilibrium growth}, driven by crystal shape. Local variations in surface curvature generate corresponding variations in 
@@ -97,13 +97,45 @@ within the snowpack: at very low water content, capillary effects are negligible
 Regardless of the specific metamorphic process involved, the evolution of ice crystals ultimately results in the compaction of the snow layer. Wind also 
 plays a crucial role in increasing snow density, primarily through the fragmentation of snowflakes upon collision, which allows for a tighter packing of 
 ice particles. Finally, gravity contributes to snow compaction as well, since buried snow layers must withstand an increasing load exerted by the weight 
-of the overlying layers, resulting in a higher deformation layer. The combined effects of metamorphism and deformation strain are typically described 
+of the overlying layers, resulting in higher deformation. The combined effects of metamorphism and deformation strain are typically described 
 through a Newtonian viscosity approach. Snow viscosity depends on several parameters, including temperature, liquid water content and porosity and its
 values are generally retrieved by means of empirical relations. Overall, the density of older snow can easily exceed values of $\SI{400}{\kilo\gram\per\meter\cubed}$, 
 sometimes even reaching $\SI{500}{\kilo\gram\per\meter\cubed}$ in specific locations, depending on water content and time of the year \parencite{rho_max}.
 
 
 \subsection{Snowpack energy balance}
+
+The evolution of a snowpack throughout the season is governed not only by the microphysical processes described above, but also by the exchange of 
+energy between the snow cover, the atmosphere and the underlying ground. The energy balance controls the thermal state of the snowpack and ultimately 
+determines whether mass is lost through melting or sublimation. Neglecting horizontal energy transfers, the internal energy of the snowpack evolves 
+in time as:
+\begin{equation}
+    -\frac{d\mathcal{H}}{dt}\,=\,R_N\,+\,H_S\,+\,H_L\,+\,H_P\,+\,G,
+    \label{eq:energy_balance}
+\end{equation}
+where $\mathcal{H}$ is the internal energy per unit area and $R_N$ is the net radiative flux at the surface. The last four terms represent, respectively, 
+the turbulent fluxes of sensible and latent heat, the energy exchange associated with precipitation, and the ground heat flux. Each term in \eqref{eq:energy_balance} 
+is expressed in $\SI{}{\watt\per\meter\squared}$. 
+
+To fully understand the term $R_N$, it is essential to consider the dual nature of radiation in the atmosphere. Two distinct sources of radiation can in 
+fact be identified: the Sun, with a surface temperature of around $\SI{5800}{\kelvin}$, and the Earth-atmosphere system, whose temperature 
+ranges from $\SI{200}{\kelvin}$ up to $\SI{500}{\kelvin}$. According to the Wien's law, the two blackbody spectra peak respectively at roughly 
+$\SI{0.5}{\micro\meter}$ and $\SI{5}{\micro\meter}$, and their overlap is negligible, thereby justifying a decoupled treatment of the two spectral 
+domains. Solar radiation is commonly referred to as \textit{shortwave} (SW), while the latter is known as \textit{longwave} (LW). Therefore, the term 
+$R_N$ can be explicitly written as
+\begin{equation}
+    R_N\,=\,SW\downarrow\,+\,SW\uparrow\,+\,LW\downarrow\,+\,LW\uparrow,
+    \label{eq:net_radiation}
+\end{equation}
+where a distinction is made between incoming and outgoing fluxes, as denoted by the direction of the arrows. 
+
+Incoming shortwave radiation is subject to absorption and scattering by atmospheric constituents. Consequently, the total SW radiation that reaches 
+the Earth's surface is the sum of a direct beam transmitted through the atmosphere and a diffuse component, resulting from multiple reflection and 
+refraction events. The relative strengths of these two components is strongly dependent on meteorological and seasonal conditions. For example, at 
+the lower solar altitudes typical of winter, the diffuse fraction is larger, since the solar beam must travel through a thicker atmospheric layer, 
+increasing scattering probability. The same occurs at dawn or sunset, when the Sun is close to the horizon. Cloud cover also plays a significant 
+role: under overcast conditions, up to $80 \%$ of $SW\downarrow$ can occur as diffuse radiation \parencite{snow_hydrology}.
+
 
 
 
