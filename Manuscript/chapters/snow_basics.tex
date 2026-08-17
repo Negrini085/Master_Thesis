@@ -1,6 +1,17 @@
 \chapter{Snow basics}
 
-Snow 
+Snow is a fundamental component of the cryosphere, which collectively includes the portions of the Earth system where water exists in solid form. 
+Together with sea ice, glaciers, ice caps and ice sheets, snow cover plays an essential role in regulating Earth's climate. One of its most 
+notable physical properties is its high reflectivity to solar radiation, which reduces the amount of energy absorbed by the ground. Snow cover also 
+acts as a thermal insulator, owing to its low thermal conductivity, protecting the soil and the ecosystem from the abrupt temperature variations 
+typical of winter. Snow is also a key factor in the hydrological cycle: water stored in solid form during winter is gradually released into streamflow 
+through spring and summer, ensuring a continuous water supply and mitigating the severity of certain droughts. At the same time, snow has considerable 
+implications for human activities. For instance, it plays a vital role in the economy of the Alpine region by supporting winter tourism through skiing 
+and other winter sports. Its contribution to runoff is equally important, as it supports irrigation and provides a source of drinking water. Meltwater 
+also accounts for a substantial share of the runoff used for hydropower generation. As climate change threatens to alter these dynamics, understanding 
+and modelling snow-related processes is becoming increasingly important: rising temperature could lead to earlier snowmelt and reduced solid water 
+storage, with potential repercussions for multiple aspects of human civilization. The aim of this chapter is therefore to provide a broad overview of 
+snow dynamics, before focusing on snow measurement techniques, which are essential to assessing the state of the snowpack.
 
 
 \section{Basic properties of snow}
@@ -80,7 +91,7 @@ curvature and temperature, which induces local differences in equilibrium vapor 
     equilibrium vapor pressure, inducing local pressure gradients that drive vapor from convex toward concave (or less convex) regions. Over time this 
     transfer, sustained by sublimation on convex areas and deposition on concave ones, rounds ice grains, driving snow crystals toward a spherical shape.
     \item \textit{kinetic growth}, related to the presence of a temperature gradient. Because saturation vapor pressure depends strongly on 
-    temperature, such a gradient causes vapor to diffuse from the warmest crystals toward the coldest ones. Here too, sublimation on warm crystal and 
+    temperature, such a gradient causes vapor to diffuse from the warmest crystals toward the coldest ones. Here too, sublimation on warm crystals and 
     deposition on cold ones sustain the process, which, when the temperature gradient is strong enough, leads to the formation on facets.
 \end{itemize}
 
@@ -102,20 +113,20 @@ through a Newtonian viscosity approach. Snow viscosity depends on several parame
 values are generally retrieved by means of empirical relations. Overall, the density of older snow can easily exceed values of $\SI{400}{\kilo\gram\per\meter\cubed}$, 
 sometimes even reaching $\SI{500}{\kilo\gram\per\meter\cubed}$ in specific locations, depending on water content and time of the year \parencite{rho_max}.
 
-
 \subsection{Snowpack energy balance}
 
 The evolution of a snowpack throughout the season is governed not only by the microphysical processes described above, but also by the exchange of 
-energy between the snow cover, the atmosphere and the underlying ground. The energy balance controls the thermal state of the snowpack and ultimately 
-determines whether mass is lost through melting or sublimation. Neglecting horizontal energy transfers, the internal energy of the snowpack evolves 
-in time as:
+energy between the snow cover, the atmosphere and the underlying ground. Neglecting horizontal energy transfers, the internal energy of the snowpack 
+evolves in time as:
 \begin{equation}
     -\frac{d\mathcal{H}}{dt}\,=\,R_N\,+\,H_S\,+\,H_L\,+\,H_P\,+\,G,
     \label{eq:energy_balance}
 \end{equation}
-where $\mathcal{H}$ is the internal energy per unit area and $R_N$ is the net radiative flux at the surface. The last four terms represent, respectively, 
-the turbulent fluxes of sensible and latent heat, the energy exchange associated with precipitation, and the ground heat flux. Each term in \eqref{eq:energy_balance} 
-is expressed in $\SI{}{\watt\per\meter\squared}$. 
+where $\mathcal{H}$ is the internal energy per unit area and $R_N$ is the net radiative flux at the surface. $H_S$ and $H_L$ denote, respectively, 
+the turbulent fluxes of sensible and latent heat, governed by the action of turbulent eddies within the boundary layer. $H_P$ accounts for the 
+energy exchange associated with precipitation, since rainfall carries additional heat that must be distributed within the snowpack. Finally, $G$ 
+accounts for the energy exchanges with the ground, which is especially important during the deposition of the first snow layer. Each term in 
+\eqref{eq:energy_balance} is expressed in $\SI{}{\watt\per\meter\squared}$. 
 
 To fully understand the term $R_N$, it is essential to consider the dual nature of radiation in the atmosphere. Two distinct sources of radiation can in 
 fact be identified: the Sun, with a surface temperature of around $\SI{5800}{\kelvin}$, and the Earth-atmosphere system, whose temperature 
@@ -139,11 +150,47 @@ range, snow features an exceptionally high reflectance, thanks to the combinatio
 between $SW\uparrow$ and $SW\downarrow$, commonly referred to as albedo $\alpha$, typically exceeds $0.9$ for freshly fallen snow, and decreases as 
 impurities are deposited on the snow surface. This parameter is rather important, as it controls the amount of shortwave radiation absorbed, which 
 generally represents the main source of energy for snowmelt. Even at advanced stages of the melt season, snow albedo remains considerably higher than 
-that of the sorrounding snow-free surface. As the snowpack retreats, this bright surface is replaced by darker ground, causing a significant $\alpha$ 
-drop. This results in increased SW absorbtion, which causes further warming and, in turn, accelerates snowmelt itself in a self-reinforcing loop 
+that of the surrounding snow-free surface. As the snowpack retreats, this bright surface is replaced by darker ground, causing a significant $\alpha$ 
+drop. This results in increased SW absorption, which causes further warming and, in turn, accelerates snowmelt itself in a self-reinforcing loop 
 process known as snow-albedo feedback.
 
+Snow behaviour in the thermal infrared range, however, differs significantly from that in the shortwave domain: it absorbs nearly all incoming longwave 
+radiation, emitted by atmospheric gases, clouds, and surrounding terrain, while radiating according to the Stefan-Boltzmann law and thus behaving as 
+an almost perfect blackbody, with emissivities ranging from $0.97$ to $0.99$. Thanks to its relatively low thermal conductivity, the snowpack shields 
+the ground from rapid atmospheric temperature changes. This property is closely tied to snow microstructure and therefore evolves with metamorphism, 
+as higher snow densities are associated with increased conductivity. Longwave radiation exchanges take place both during the day and at night, and 
+they are strongly influenced by meteorological conditions. Water vapor has a high probability of absorbing infrared light and, according to 
+Kirchhoff's law, is therefore also a strong emitter. As a result, clouds typically enhance the downward longwave flux reaching the snow surface, 
+reducing the snowpack's radiative cooling capacity particularly at night, when the absence of the shortwave component usually favors strong longwave 
+losses.
 
+\subsection{Snow melt and water runoff}
+
+The variations in internal energy $\mathcal{H}$, driven by the heat fluxes listed above, ultimately modify the thermal state of the 
+snowpack and determine whether mass is lost through melting or sublimation. Snowpack temperature varies on both seasonal and daily scales, 
+typically showing large gradients near the snow surface as a consequence of the low thermal conductivity of snow. These temperature oscillations are 
+dumped rather quickly with depth, as the thermal state of the deeper layers remains relatively stable. During winter, snowpacks typically exhibit 
+subfreezing conditions, which poses a significant limitation to runoff generation. In fact, even when the surface temperature rises to $\SI{0}{\degreeCelsius}$ 
+and the energy balance is positive, the water produced by surface melting refreezes in deeper layers after some percolation. Although this process 
+does not involve any mass loss, it effectively transports latent heat, warming the snowpack and reducing its cold content, which is the energy required 
+to bring the whole snowpack to $\SI{0}{\degreeCelsius}$, untill this isothermal profile is eventually reached. If a positive energy balance still 
+persists, further melting contributes to filling the pores between ice crystals. This liquid water-holding capacity ranges from $3\%$ up to $5\%$ of 
+the snowpack mass and must be satisfied before runoff can be produced. Once the water-holding capacity is exceeded, the excess water percolates 
+through the snowpack in a process that is mainly gravity-driven, with capillarity effects often completely neglected owing to the relatively uniform 
+and coarse-grained nature of snow. Meltwater percolates vertically at speeds ranging from $\SI{1}{\centi\meter\per\hour}$ up to $\SI{20}{\centi\meter\per\hour}$, 
+moving mainly through preferential channels known as flow fingers, which are typically triggered by inhomogeneities in permeability. Flow properties 
+are closely related to pore structure, with higher porosities generally associated with more efficient water transport. Ground conditions represent 
+another critical factor in runoff evaluations, since meltwater can in principle infiltrate the soil. If the underlying surface is impermeable, 
+such as frozen ground or bedrock, the excess water instead accumulates and flows downward along the base of the snow cover. If the snowpack is not 
+isothermal throughout, part of this water may still refreeze, further warming the surroundings. The interplay between thermal conditioning, liquid water 
+retention, and preferential flow pathways ultimately governs the timing, volume and rate of snowmelt runoff entering local stream networks. 
+
+In high elevation alpine catchments, or at high latitudes, some snow may survive summer ablation. If accumulation persists over multiple years, 
+continued densification ultimately leads to the formation of firn, an intermediate stage between snow and ice characterized by densities ranging 
+from $\SI{400}{\kilo\gram\per\meter\cubed}$ to $\SI{830}{\kilo\gram\per\meter\cubed}$ and by a porous structure that still permits water percolation. 
+As compaction proceeds further, most pores become sealed, marking the transition to glacier ice proper. The rate of this transformation depends on 
+both accumulation amounts and temperature, since colder climates results in slower crystal evolution. This process directly links seasonal snow cover 
+to the longer lived components of the cryosphere, such as glaciers and ice sheets \parencite{snow_to_ice}. 
 
 
 
@@ -182,14 +229,11 @@ For a non-fixed observation, the snow depth value should be evaluated at the sam
 manually inserted in the snowpack, reaches the base surface without penetrating any soil thus overestimating the actual HS. The rod has to be 
 vertical, and an estimate of the slope angle should be paired to every measure.
 % Immagine per snow stake e snow rod
-\newline
-\newline
 Closely linked to snow depth is snowfall depth (HN), which can only be obtained manually. To avoid wind-induced bias this measurement should 
 be carried out in a sheltered location, so that snow accumulates undisturbed on an artificial surface for the prescribed interval (usually 24 hours). 
 Just before clearing the surface, thereby starting the next observation period, a ruler is inserted vertically into the freshly formed layer to 
 obtain a depth measurement.
-\newline
-\newline
+
 Although HS and HN define the vertical extension of the snowpack, hydrological applications rely primarily on the snow water equivalent (SWE). 
 As shown in (cite equation), SWE is directly linked to snow depth through the bulk density of the snowpack. Although various manual measurement 
 techniques exist, this section focuses on the two primary methods, snow pits and snow tubes.

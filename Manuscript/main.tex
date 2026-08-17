@@ -27,6 +27,7 @@
 \usepackage{emptypage}
 \usepackage{setspace}
 \onehalfspacing
+\raggedbottom
 
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage{mathtools}
@@ -42,6 +43,12 @@
 
 \usepackage{enumitem}
 \usepackage{amssymb}
+
+
+% Now making titles as I want to
+\usepackage{titlesec}
+\titleformat{\chapter}[display]{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{15pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{0pt}{20pt}
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[chapter]
