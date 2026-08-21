@@ -2,6 +2,17 @@
 \label{ch:snow_products}
 
 
+\section{Study area}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{snow_products/study_area.png}
+    \caption{Topography and elevation distribution of the study area. The frequency histogram is based on 100 
+    meters wide elevation bins. Elevation data were obtained from ALOS AW3D30 global digital elevation model (DEM).}
+    \label{fig:study_area}
+\end{figure}
+
+
 \section{IT-Snow}
 \label{sec:it_snow}
 
@@ -24,6 +35,22 @@ output variables are distributed.
 S3M is specifically designed for large-scale, real-time application in order to be an useful tool in 
 flood forecasting frameworks. This model achieves a high level of performance by focusing on key snow evolution 
 drivers via precipitation-phase partitioning and a hybrid temperature and radiation-driven melt parametrization.
+
+\subsection{Results}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{snow_products/evo_swe_tot_ITSNOW.png}
+    \caption{Total SWE evolution}
+    \label{fig:evo_swe_tot_ITSNOW}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{snow_products/clima_swe_tot_ITSNOW.png}
+    \caption{Total SWE climatologies.}
+    \label{fig:clima_swe_tot_ITSNOW}
+\end{figure}
 
 
 
@@ -54,6 +81,35 @@ the normalized difference snow index (NDSI), which is defined as
 where band 4 is in the visible range (in particular $0.545\,-\,0.565\,\mu \mathrm{m}$) and band 6 (or 7) is in the shortwave infrared 
 (namely $1.628\,-\,1.672\,\mu \mathrm{m}$ for Terra and $2.105\,-\,2.155\,\mu \mathrm{m}$ for Aqua).
 
+\subsection{Results}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{snow_products/ave_los_MODIS.png}
+    \caption{MODIS}
+    \label{fig:ave_metrics_MODIS}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{snow_products/std_over_mean_MODIS.png}
+    \caption{MODIS}
+    \label{fig:std_over_mean_MODIS}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{snow_products/los_difference_by_ele_MODIS.png}
+    \caption{MODIS}
+    \label{fig:los_difference_by_ele_MODIS}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{snow_products/scd_percentiles_by_ele_MODIS.png}
+    \caption{MODIS}
+    \label{fig:scd_percentiles_by_ele_MODIS}
+\end{figure}
 
 
 \section{Po Basin}
@@ -69,5 +125,10 @@ of the Po River District are given on a daily basis during the period spanning f
 corresponds to the period where snow coverage extends beside glacerized area. These SWE maps have a spatial resolution of 
 $500\,\cross\,500\,m^2$ and are created using a hybrid modeling approach "J-snow".
 
-
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{snow_products/evo_swe_tot_PO.png}
+    \caption{MODIS}
+    \label{fig:evo_swe_tot_PO}
+\end{figure}
 
