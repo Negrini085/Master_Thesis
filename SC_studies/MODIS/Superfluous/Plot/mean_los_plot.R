@@ -1,5 +1,5 @@
-# The main goal of this script is to plot mean maps for snow metrics. I would like
-# to reproduce actual paper plots
+# The main goal of this script is to create a plot of the average lenght of season 
+# according to MODIS binary fields.
 rm(list = ls())
 gc()
 
@@ -11,16 +11,16 @@ library(tidyterra)
 library(patchwork)
 
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SC_studies/MODIS/")
-fnames <- c("Datas/mean_maps/mean_los.tif", "Datas/mean_maps/mean_sos.tif", "Datas/mean_maps/mean_eos.tif")
+fnames <- "Datas/mean_maps/mean_los.tif"
 
 # Function to create a clean environment for plot creation
 theme_paper_clean <- function() {
   theme_void() + 
     theme(
-      legend.position = "bottom",
+      legend.position = "right",
       legend.direction = "horizontal", 
-      legend.title = element_text(face = "bold", size = 20, vjust = 0.5),
-      legend.text = element_text(size = 15),
+      legend.title = element_text(face = "bold", size = 25, vjust = 0.5),
+      legend.text = element_text(size = 20),
       legend.spacing.x = unit(0.3, 'cm'), 
       legend.spacing.y = unit(0.2, 'cm'),
       plot.margin = margin(5, 5, 5, 5)
@@ -55,7 +55,7 @@ make_snow_plot <- function(raster_lyr, breaks, labels, palette, legend_name) {
       na.value = "transparent",
       guide = guide_legend(
         title.position = "top",
-        ncol = 2,           
+        ncol = 1,           
         byrow = FALSE,
         label.position = "right",
         keywidth = unit(0.4, "cm"),
@@ -76,31 +76,10 @@ italy_cropped <- crop(italy_border, ext(snow_metrics))
 custom_palette <- c("#b34d33", "#d66d23", "#e69125", "#f0db4d", "#72e61c", "#2ea354", "#1d8c75", "#0d4d8a")
 
 p1 <- make_snow_plot(
-  snow_metrics[[1]],
+  snow_metrics,
   breaks = c(11, 39, 78, 123, 167, 211, 278),
   labels = c("0 - 11", "12 - 39", "40 - 78", "79 - 123", "124 - 167", "168 - 211", "212 - 278", "279 - 365"),
   palette = custom_palette, "Average SCD (days)"
 )
 
-p2 <- make_snow_plot(
-  snow_metrics[[2]],
-  breaks = c(23, 40, 56, 73, 89, 102, 111),
-  labels = c("0 - 23 (24 Oct)", "24 - 40 (10 Nov)", "41 - 56 (26 Nov)", "57 - 73 (13 Dec)", "74 - 89 (29 Dec)", "90 - 102 (11 Jan)", "103 - 111 (20 Jan)", "112 - 116 (25 Jan)"),
-  palette = rev(custom_palette), "Average SOD (day)"
-)
-
-p3 <- make_snow_plot(
-  snow_metrics[[3]],
-  breaks = c(123, 139, 165, 193, 221, 250, 300),
-  labels = c("116 - 123 (1 Feb)", "124 - 139 (17 Feb)", "140 - 165 (15 March)", "166 - 193 (12 Apr)", "194 - 221 (10 May)", "222 - 250 (8 Jun)", "251 - 300 (28 Jul)", "301 - 365 (1 Oct)"),
-  palette = custom_palette, "Average SED (day)"
-)
-
-final_plot <- p1 + p2 + p3 +
-  plot_layout(ncol = 3) +
-  plot_annotation(tag_levels = 'A') &
-  theme(
-    plot.tag = element_text(size = 12, face = "bold"),
-    plot.tag.position = c(0.05, 0.95)
-  )
-print(final_plot)
+print(p1)

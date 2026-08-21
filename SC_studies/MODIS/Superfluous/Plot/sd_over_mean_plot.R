@@ -18,11 +18,11 @@ theme_paper_clean <- function() {
     theme(
       legend.position = "bottom",
       legend.direction = "horizontal", 
-      legend.title = element_text(face = "bold", size = 9, vjust = 1),
-      legend.text = element_text(size = 11),
+      legend.title = element_text(face = "bold", size = 20, vjust = 1),
+      legend.text = element_text(size = 15),
       legend.spacing.x = unit(0.3, 'cm'), 
       legend.spacing.y = unit(0.2, 'cm'),
-      plot.subtitle = element_text(face = "bold", hjust = 0.5, size = 11, margin = margin(b = 5)),
+      plot.subtitle = element_text(face = "bold", hjust = 0.5, size = 25, margin = margin(b = 5)),
       plot.margin = margin(5, 5, 5, 5)
     )
 }
