@@ -8,10 +8,10 @@ is also a key factor in the hydrological cycle: water stored in solid form durin
 ensuring a continuous water supply and mitigating the severity of certain droughts. At the same time, snow has considerable implications for human 
 activities. For instance, it plays a vital role in the economy of the Alpine region by supporting winter tourism through skiing and other winter sports. 
 Its contribution to runoff is equally important, as it supports irrigation and provides a source of drinking water. Meltwater also provides a 
-substantial contribution to hydropower generation. As climate change threatens to alter these dynamics, understanding and modelling 
-snow related processes is becoming increasingly important: rising temperatures could lead to earlier snowmelt and reduced solid water storage, with 
-potential repercussions for multiple aspects of human civilization. The aim of this chapter is therefore to provide a broad overview of snow dynamics, 
-before focusing on snow measurement techniques, which are essential to assess the state of the snowpack.
+substantial contribution to hydropower generation. With the ongoing climate change, these dynamics are expected to shift, making the 
+understanding and modelling of snow related processes increasingly important. Earlier snowmelt and reduced solid water storage are among the most direct 
+consequences of a temperature rise, with potential repercussions for multiple aspects of human civilization. The aim of this chapter is therefore to 
+provide a broad overview of snow dynamics, before focusing on snow measurement techniques, which are essential to assess the state of the snowpack.
 
 
 \section{Snow physics and dynamics}
@@ -107,7 +107,7 @@ snow metamorphism are:
     \label{fig:snow_porous}
 \end{figure}
 
-In practice, these two mechanisms are rarely mutually exclusive: they act simultaneously within the snowpack, with their relative strengths determined 
+These two mechanisms are rarely mutually exclusive: they act simultaneously within the snowpack, with their relative strengths determined 
 mainly by the magnitude of the local temperature gradient compared to the grain's curvature effect. In particular, the kinetic growth of snow 
 particles is a matter of considerable concern in avalanche forecasting, since faceted crystals, if the temperature gradient persists over time, can 
 evolve in depth hoar. This type of layer is notoriously weak and prone to failure, often resulting in large-scale avalanches.
@@ -172,13 +172,13 @@ Even at advanced stages of the melt season, snow albedo remains considerably hig
 retreats, this bright surface is replaced by darker ground, causing a significant $\alpha$ drop. This results in increased SW absorption, which 
 causes further warming and, in turn, accelerates snowmelt itself in a self-reinforcing loop known as snow-albedo feedback.
 
-Snow behaviour in the thermal infrared range, however, differs significantly from that in the shortwave domain. The snowpack absorbs nearly all incoming longwave 
+Snow behaviour in the thermal infrared range, however, differs substantially from that in the shortwave domain. The snowpack absorbs nearly all incoming longwave 
 radiation, emitted by atmospheric gases, clouds and the surrounding terrain, while radiating according to the Stefan-Boltzmann law and thus behaving as 
-an almost perfect blackbody, with emissivities ranging from $0.97$ to $0.99$. Longwave radiation exchanges take place both during the day and at 
-night, and are strongly influenced by meteorological conditions since water vapor has a high probability of absorbing infrared light and, according 
-to Kirchhoff's law, is therefore also a strong emitter. As a result, clouds typically enhance the downward longwave flux reaching the snow surface, 
-reducing the snowpack's radiative cooling capacity particularly at night, when the absence of the shortwave component usually favors strong longwave 
-losses.
+an almost perfect blackbody, with emissivities ranging from $0.97$ to $0.99$. Longwave radiation exchanges occur both during the day and at 
+night, and are strongly influenced by meteorological conditions. In fact, water vapor significantly absorbs infrared light and, by  
+Kirchhoff's law, is therefore also a strong emitter. As a result, clouds typically increase the downward longwave flux reaching the snow surface, thereby 
+reducing the snowpack's radiative cooling capacity. This effect is especially pronounced at night, when the absence of the shortwave component would 
+otherwise favor significant longwave losses.
 
 Thanks to its relatively low thermal conductivity, the snowpack also shields the ground from rapid atmospheric temperature changes. This property is 
 closely tied to snow microstructure and therefore evolves with metamorphism, as higher snow densities are associated with increased conductivity. 
@@ -195,7 +195,7 @@ to $\SI{0}{\degreeCelsius}$ and the energy balance is positive, the water produc
 Although this process does not involve any mass loss, it effectively transports latent heat, warming the snowpack and reducing its cold content, which is 
 the energy required to bring the whole snowpack to $\SI{0}{\degreeCelsius}$. This isothermal profile is eventually reached and, if a positive energy 
 balance still persists, further melting contributes to filling the pores between ice crystals. This liquid water holding capacity is commonly reported 
-to range between $3\%$ and $5\%$ of the snowpack mass, although the exact value depends on the snow's porosity and microstructure. 
+ranging between $3\%$ and $5\%$ of the snowpack mass, although the exact value depends on the snow's porosity and microstructure. 
 Once the water holding capacity is exceeded, the excess water percolates through the snowpack in a process that is 
 mainly gravity driven. Because a typical snowpack is stratified into layers of contrasting grain size and permeability, water flow is rarely uniform 
 as it tends to concentrate along preferential pathways known as flow finger, which are usually triggered by inhomogeneities in microstructure. 
@@ -272,7 +272,7 @@ obtain a depth measurement.
 Although HS and HN define the vertical extension of the snowpack, hydrological applications rely mainly on the snow water equivalent (SWE): the 
 two most common methods for manual measurement are snow pits and snow tubes. A snow pit consists of a hole manually dug into the snowpack down to a 
 reference surface, usually the ground. Initially, the observer performs a stratigraphic analysis to gain deeper insight into the internal structure 
-of the snowpack. The actual SWE measurement is conducted by inserting a sampler of known volume perpendicularly into the exposed snow face; the sample 
+of the snowpack. The actual SWE measurement is conducted by inserting a sampler of known volume into the exposed snow face; the sample 
 is then weighed to assess snow density. This procedure is usually repeated at multiple depths, either for each identified layer or at fixed spatial 
 intervals, such as every 20 centimetres. This method enables the observer to reconstruct the snow density profile which, when combined with depth 
 information, yields both the layer-by-layer and total snow water equivalent at that specific location. Clearly, the snow pit technique is disruptive 
@@ -300,8 +300,9 @@ of sensors, such as:
     pyranometer, in order to quantity incoming and outgoing SW radiation, thus enabling albedo estimates.
     \item \textit{pyrgeometer}, which measures the longwave (infrared) radiation. Pyrgeometers likewise come in oppositely facing pairs, so that, 
     combined with a pair of pyranometers, an evaluation of the net radiation balance of the surface is possible.
-    \item \textit{platinum resistance thermometer, humidity sensor and barometer}, used to evaluate the thermodynamic state of the air at a given 
-    height above the ground (typically two meters).
+    \item \textit{barometer}, used to evaluate the atmospheric pressure, a fundamental quantity for characterizing the dynamical state of the atmosphere.
+    \item \textit{thermo-hygrometer}, designed to simultaneously measure both air temperature and relative humidity at a given height above 
+    the ground (typically two meters).
     \item \textit{rain gauge}, consisting of a circular collector and a funnel that channels the collected precipitation into a measuring device. In 
     regions where solid precipitation is possible, the rain gauge may be heated in order to also evaluate the water equivalent of snowfall.
 \end{itemize}
@@ -393,9 +394,9 @@ spaceborne techniques have been developed:
 \begin{itemize}[label=$\blacktriangleright$]
     \item \textit{passive microwave radiometry (PMW)}, which is by far the most common method to remotely evaluate SWE. Since the snowpack attenuates 
     the microwaves emitted by the Earth, comparing signal intensities between two frequencies ($\sim \SI{18}{\giga\hertz}$, and $\sim \SI{37}{\giga\hertz}$) 
-    makes it possible to estimate snow water equivalent. This is the only spaceborne technique that allows for lont term studies, as global daily 
+    makes it possible to estimate snow water equivalent. This is the only spaceborne technique that allows for long term studies, as global daily 
     maps have been available since the launch, in 1978, of NASA's Scanning Multichannel Microwave Radiometer (SMMR) \parencite{remote_SWE}. Altough  
-    the temporal coverage of these series is considerably better than that of other available sources, several factors affects data reliability, 
+    the temporal coverage of these series is considerably better than that of other available sources, several factors affect data reliability, 
     such as signal saturation caused by a deep snowpack.
     \item \textit{gravimetric methods}, which offer a different approach focusing on mass changes. The accumulation of snow on the Earth's surface 
     causes variations in its gravitational field, which can be converted into SWE estimates. This approach is mainly employed by the Gravity Recovery 
