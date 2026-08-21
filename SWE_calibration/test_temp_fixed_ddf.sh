@@ -21,7 +21,7 @@ echo -e "temperature\tloss" > "$OUTPUT_FILE"
 for i in $(seq 0 1500); do
 
     # Temperature computation
-    temperature=$(awk -v i="$i" 'BEGIN {printf "%.3f", i/500}')
+    temperature=$(awk -v i="$i" 'BEGIN {printf "%.3f", 0.001 + i/500}')
 
 
     # Changing input.dat accordingly

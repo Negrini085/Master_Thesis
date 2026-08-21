@@ -104,14 +104,14 @@ class SimAnnealing{
             m_beta = 1/T;   //Calcolo parametro beta
             
             //Voglio accettare almeno 10 mosse
-            while(acce < 20){
+            while(acce < 1){
 
                 //Propongo una nuova mossa
                 totali++;
                 appo_th = m_th + m_delta * dis_move(gen);
                 do{
                    appo_expfact = m_expfact + 0.25 * m_delta *dis_move(gen);
-                }while(appo_expfact <= 0);
+                }while(appo_expfact < 0.2 || appo_expfact > 0.8);
                 do{
                     appo_ddfam = m_ddfam + m_delta * dis_move(gen);
                     appo_ddfav = m_ddfav + m_delta * dis_move(gen);
