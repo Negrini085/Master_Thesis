@@ -51,7 +51,7 @@ rm(elev_vals); gc()
 p_hist <- ggplot(elev_df, aes(x = elevation, fill = after_stat(x))) +
   geom_histogram(
     aes(y = after_stat(count / sum(count))),
-    binwidth = 50,
+    binwidth = 100,
     color = "white",
     linewidth = 0.1
   ) +
