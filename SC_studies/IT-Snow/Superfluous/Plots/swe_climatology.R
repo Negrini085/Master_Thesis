@@ -5,69 +5,195 @@ rm(list = ls())
 gc()
 
 library(ggplot2)
+
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SC_studies/IT-Snow/")
 
+swe <- read.table("Datas/swe_evolution.dat")
+swe <- swe$V1
 
-# Importing SWE series
-dat <- read.table("Datas/swe_evolution.dat")
-dat <- dat$V1
-
-dur <- 365
 years <- 2011:2025
+hydro_days <- 365
 
+swe_hydro <- numeric(0)
+index <- 0
 
-# Taking care of the 29th value. We will replace the 28th value with a mean across
-# the 28th -> 29th period!
-conta <- 0
-swe_evolution <- numeric(0)
-for(y in years){
+for (year in years) {
   
-  # Leap year
-  if(y%%4 == 0){
+  if (year %% 4 == 0) {
+    swe_year <- swe[(index + 1):(index + hydro_days + 1)]
     
-    appo <- dat[(conta+1):(conta+dur+1)]
+    swe_hydro <- c(
+      swe_hydro,
+      swe_year[1:180],
+      mean(swe_year[181:182]),
+      swe_year[183:(hydro_days + 1)]
+    )
     
-    # Taking care of 29th value
-    swe_evolution <- c(swe_evolution, appo[1:180])
-    swe_evolution <- c(swe_evolution, mean(appo[181:182]))
-    swe_evolution <- c(swe_evolution, appo[183:(dur+1)])
+    index <- index + hydro_days + 1
     
-    conta <- conta + dur + 1
-  }
-  
-  # Normal year
-  else{
-    swe_evolution <- c(swe_evolution, dat[(conta+1):(conta+dur)])
-    conta <- conta + dur
+  } else {
+    swe_hydro <- c(
+      swe_hydro,
+      swe[(index + 1):(index + hydro_days)]
+    )
+    
+    index <- index + hydro_days
   }
 }
 
+if (length(swe_hydro) != hydro_days * length(years)) {
+  stop("The SWE time series does not match the expected number of hydrological days.")
+}
 
-# Creating dataframe as a first step of plotting procedure. Here I actually split years.
-swe_mat <- matrix(swe_evolution, nrow = dur, ncol = length(years), byrow = FALSE)
-colnames(swe_mat) <- years
-swe_df <- data.frame(day = 1:dur, swe_mat, check.names = FALSE)
-
-
-# Computing median and quantiles using apply function, so that we are all set to 
-# create the desired plot
-clim <- data.frame(
-  day = 1:dur,
-  q1  = apply(swe_mat, 1, quantile, probs = 0.25, na.rm = TRUE),
-  med = apply(swe_mat, 1, quantile, probs = 0.50, na.rm = TRUE),
-  q3  = apply(swe_mat, 1, quantile, probs = 0.75, na.rm = TRUE),
-  date = seq(as.Date("2025-09-01"), by = "day", length.out = dur)
+swe_mat <- matrix(
+  swe_hydro,
+  nrow = hydro_days,
+  ncol = length(years),
+  byrow = FALSE
 )
 
-ggplot(clim, aes(x = date)) +
-  geom_ribbon(aes(ymin = q1, ymax = q3), alpha = 0.4, color = "orange", fill = "orange") +
-  geom_line(aes(y = med), linewidth = 1, color = "blue") +
-  scale_x_date(date_breaks = "1 month", date_labels = "%b") + 
-  labs(title = "", x = "Day", y = "SWE [Gm^3]") +
-  theme_minimal() +
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, size = 11),
-    axis.text.y = element_text(size = 11),
-    axis.title.x = element_text(margin = margin(t = 10), size = 11, face = "bold"),
-    axis.title.y = element_text(size = 11, face = "bold")
+colnames(swe_mat) <- years
+
+clim <- data.frame(
+  day = seq_len(hydro_days),
+  q25 = apply(
+    swe_mat,
+    1,
+    quantile,
+    probs = 0.25,
+    na.rm = TRUE
+  ),
+  median = apply(
+    swe_mat,
+    1,
+    quantile,
+    probs = 0.50,
+    na.rm = TRUE
+  ),
+  q75 = apply(
+    swe_mat,
+    1,
+    quantile,
+    probs = 0.75,
+    na.rm = TRUE
+  ),
+  date = seq(
+    as.Date("2025-09-01"),
+    by = "day",
+    length.out = hydro_days
   )
+)
+
+p <- ggplot(clim, aes(x = date)) +
+  geom_ribbon(
+    aes(ymin = q25, ymax = q75),
+    fill = "#E6A66A",
+    alpha = 0.45
+  ) +
+  
+  geom_line(
+    aes(y = q25),
+    linewidth = 0.8,
+    colour = "#D17A22",
+    lineend = "round"
+  ) +
+  
+  geom_line(
+    aes(y = median),
+    linewidth = 1.2,
+    colour = "#1F4E79",
+    lineend = "round"
+  ) +
+  
+  geom_line(
+    aes(y = q75),
+    linewidth = 0.8,
+    colour = "#D17A22",
+    lineend = "round"
+  ) +
+  
+  scale_x_date(
+    breaks = seq(
+      as.Date("2025-10-01"),
+      as.Date("2026-08-01"),
+      by = "2 months"
+    ),
+    labels = format(
+      seq(
+        as.Date("2025-10-01"),
+        as.Date("2026-08-01"),
+        by = "2 months"
+      ),
+      "%b"
+    ),
+    expand = expansion(mult = c(0.005, 0.005))
+  ) +
+  
+  scale_y_continuous(
+    expand = expansion(mult = c(0, 0.04))
+  ) +
+  
+  labs(
+    x = "Hydrological day",
+    y = expression(bold("SWE [Gm"^3*"]"))
+  ) +
+  
+  theme_classic(base_size = 12) +
+  theme(
+    text = element_text(
+      family = "sans",
+      colour = "black"
+    ),
+    axis.title = element_text(
+      size = 22,
+      face = "bold"
+    ),
+    axis.title.x = element_text(
+      margin = margin(t = 15)
+    ),
+    axis.title.y = element_text(
+      margin = margin(r = 15)
+    ),
+    axis.text = element_text(
+      size = 18,
+      colour = "black"
+    ),
+    axis.text.x = element_text(
+      angle = 45,
+      hjust = 1,
+      vjust = 1
+    ),
+    axis.line = element_line(
+      linewidth = 0.6,
+      colour = "black"
+    ),
+    axis.ticks = element_line(
+      linewidth = 0.5,
+      colour = "black"
+    ),
+    axis.ticks.length = unit(0.15, "cm"),
+    panel.grid.major.x = element_line(
+      colour = "grey80",
+      linewidth = 0.35
+    ),
+    panel.grid.major.y = element_line(
+      colour = "grey80",
+      linewidth = 0.35
+    ),
+    panel.grid.minor = element_blank(),
+    plot.margin = margin(
+      t = 5,
+      r = 5,
+      b = 5,
+      l = 5
+    )
+  )
+
+ggsave(
+  "Images/swe_climatology.png",
+  plot = p,
+  width = 14,
+  height = 7,
+  units = "in",
+  dpi = 600
+)
