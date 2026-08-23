@@ -6,17 +6,39 @@ gc()
 library(ggplot2)
 library(tidyr)
 
-fname <- "Runs/moves.dat"
+fname_one <- "Runs/param_evo_1.dat"
+fname_two <- "Runs/param_evo_2.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_calibration/")
 
-df <- read.table(fname, header = FALSE)
 
-plot_df <- data.frame(
-  AcceptedMove = seq_len(nrow(df)),
-  t_th = as.numeric(df$V1),
-  ddfm = as.numeric(df$V2),
-  ddfM = as.numeric(df$V3)
+
+# Importing dataframes
+df_one <- read.table(fname_one, header = FALSE)
+df_two <- read.table(fname_two, header = FALSE)
+
+# df_one <- df_one[200:nrow(df_one), ]
+# df_two <- df_two[200:nrow(df_two), ]
+
+
+
+# Plotting procedure
+plot_df_one <- data.frame(
+  AcceptedMove = seq_len(nrow(df_one)),
+  t_th = as.numeric(df_one$V1),
+  ddfm = as.numeric(df_one$V2),
+  ddfM = as.numeric(df_one$V3),
+  Run = "Run 1"
 )
+
+plot_df_two <- data.frame(
+  AcceptedMove = seq_len(nrow(df_two)),
+  t_th = as.numeric(df_two$V1),
+  ddfm = as.numeric(df_two$V2),
+  ddfM = as.numeric(df_two$V3),
+  Run = "Run 2"
+)
+
+plot_df <- rbind(plot_df_one, plot_df_two)
 
 plot_df_long <- pivot_longer(
   plot_df,
@@ -25,9 +47,10 @@ plot_df_long <- pivot_longer(
   values_to = "Value"
 )
 
-ggplot(plot_df_long, aes(x = AcceptedMove, y = Value)) +
-  geom_line(linewidth = 0.9, color = "#9E27F4") +
-  # geom_point(size = 1.2, alpha = 0.7, color = "#1F77B4") +
+
+ggplot(plot_df_long, aes(x = AcceptedMove, y = Value, color = Run)) +
+  geom_line(linewidth = 0.9) +
+  scale_color_manual(values = c("Run 1" = "#9E27F4", "Run 2" = "#1F77B4")) +
   facet_wrap(
     ~Parameter, ncol = 1, scales = "free_y",
     labeller = as_labeller(c(
@@ -40,7 +63,8 @@ ggplot(plot_df_long, aes(x = AcceptedMove, y = Value)) +
     title = "Evolution of Model Parameters",
     subtitle = "Simulated Annealing Accepted Moves",
     x = "Accepted Move",
-    y = "Parameter Value"
+    y = "Parameter Value",
+    color = NULL
   ) +
   theme_minimal(base_size = 14) +
   theme(
@@ -48,5 +72,6 @@ ggplot(plot_df_long, aes(x = AcceptedMove, y = Value)) +
     plot.subtitle = element_text(size = 12, hjust = 0.5),
     axis.title = element_text(face = "bold"),
     strip.text = element_text(face = "bold"),
-    panel.grid.minor = element_blank()
+    panel.grid.minor = element_blank(),
+    legend.position = "top"
   )
