@@ -4,6 +4,38 @@
 
 \section{Study area}
 
+This thesis focuses on the Italian hydrological portion of the Greater Alpine Region (GAR), comprising all Italian territory located north of $\SI{43}{\degree N}$ 
+together with the Swiss portion of the Po basin. The main features of this territory are respectively: 
+\begin{itemize}[label=$\blacktriangleright$]
+    \item \textit{the Italian Alps}, the southernmost part of the Alpine Arc. They extend for approximately $\SI{1200}{\kilo\meter}$, covering an 
+    area of about $\SI{50000}{\kilo\meter\squared}$. The highest peak, Monte Bianco, reaches $\SI{4810}{\meter}$ a.s.l., and summits above 
+    $\SI{3000}{\meter}$ a.s.l. are  fairly common throughout the range. The considerable elevations sustain 901 glaciers, whose total surface area 
+    is roughly $\SI{368}{\kilo\meter\squared}$ \parencite{catasto_ghiacciai}.
+    \item \textit{the Po Plain}, a predominantly flat region shaped by an initial phase of marine sedimentation followed by later fluvial deposition. 
+    It is drained by the Po river, Italy's longest, which flows for approximately $\SI{652}{\kilo\meter}$. Together with the Veneto-Friulian plains, 
+    it forms one of the country's principal agricultural and industrial areas, home to roughly 20 million people.
+    \item \textit{the Northern Apennines}, formed by the collision between the western margin of the African Promontory and the Sardinia-Corsica block. 
+    Their highest peak reaches only $\SI{2165}{\meter}$ a.s.l., insufficient to prevent the complete melt of the seasonal snowpack
+    \parencite{libro_geografia_IHGAR}. 
+\end{itemize}
+
+The complex orography of the study area, examined in greater detail in Figure \ref{fig:study_area}, governs its climate. Indeed, the Italian Alps act 
+as a barrier against cold air masses from the north, while the Apennines shield the Po Valley from the milder influence of the Tyrrhenian Sea. The 
+main climate types found within in the study area are:
+\begin{itemize}[label=$\blacktriangleright$]
+    \item \textit{the Alpine climate}, dominant across the Alps and the Northern Apennines, associated with low temperatures both at night and during 
+    winter, and with a summer peak in precipitation.
+    \item \textit{the Po Valley climate}, characterized by cold winters and hot summers, with precipitation peaking in spring and autumn 
+    \parencite{clima_IHGAR}.
+\end{itemize}
+
+The high elevations of the Alpine Range, combined with the low winter temperatures, allow the Italian Alps to store substantial volumes of water in 
+solid form, often exceeding $\SI{10}{\giga\meter\cubed}$ \parencite{IT-SNOW}. Some snowfall also occurs over the Norther Apennines, though in far 
+smaller amounts. These differences in snow cover give rise to distinct hydrological regimes, as up to 50\% of the annual stream flow of the main 
+rivers originating in the Italian Alps consists of meltwater \parencite{snow_drought}, and peak discharge is reached in early summer when ablation is 
+most intense. On the other hand, rivers draining the Northern Apennines rely predominantly on rainfall, and often experience low flow, or even run 
+completely dry, during summer. 
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{snow_products/study_area.png}
@@ -57,15 +89,10 @@ drivers via precipitation-phase partitioning and a hybrid temperature and radiat
 \section{MODIS}
 \label{sec:MODIS}
 
-The role of Satellite Remote Sensing (SRS) in global climate monitoring has become increasingly critical, providing 
-spatio-temporal observations across remote regions where conventional ground-based methods are lacking. In particular, 
-those kinds of measurements are highly effective for mapping snow cover extent and duration. NASA's Moderate Resolution 
-Imaging Spectroradiometer (MODIS) is a major tool in this field: this 36-band sensor operates aboard two Earth Observing 
-System (EOS) satellites, namely Terra (launched in December 1999) and Aqua (launched in May 2002). This tool has been 
-used in order to assess snow cover duration (SCD) trends across the Greater Alpine Region \parencite{MODIS_GAR} and to 
-establish SCD climatologies across Europe. One of the latest studies on snow cover metric characteristics and trends 
-focuses on the Italian territory \parencite{MODIS_ITA}, and therefore on the Italian Alps, which are the primary focus of 
-this thesis.
+NASA's Moderate Resolution Imaging Spectroradiometer (MODIS) is a major tool in mapping snow cover extent and duration thanks to the detailed spectral 
+coverage of Earth surface it provides.  This tool has been used in order to assess snow cover duration (SCD) trends across various regions the Greater 
+Alpine Region \parencite{MODIS_GAR} or the Karakoram \parencite{MODIS_KARAKORAM}. One of the latest studies on snow cover metric characteristics and 
+trends focuses on the Italian territory \parencite{MODIS_ITA}, and therefore on the Italian Alps, which are the primary focus of this thesis.
 
 \subsection{Dataset Generation and Gap-Filling Strategy}
 \label{subsec:dataset_MODIS}
