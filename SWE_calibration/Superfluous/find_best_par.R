@@ -4,8 +4,8 @@ rm(list = ls())
 gc()
 
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_calibration/")
-fname_loss <- "Runs/SimAnnealing.dat"
-fname_par <- "Runs/moves.dat"
+fname_loss <- "Runs/Open/loss_evo_1.dat"
+fname_par <- "Runs/Open/param_evo_1.dat"
 
 
 # Importing loss values and finding the minimum value
@@ -19,3 +19,4 @@ min_idx <- which(loss == min_loss)[1]
 # Finding parameters that led to this value
 df <- read.table(fname_par, header = FALSE)
 print(df[min_idx, ])
+print(min_loss)

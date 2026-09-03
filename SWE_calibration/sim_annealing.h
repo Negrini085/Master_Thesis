@@ -103,15 +103,15 @@ class SimAnnealing{
             totali = 0;
             m_beta = 1/T;   //Calcolo parametro beta
             
-            //Voglio accettare almeno 10 mosse
-            while(acce < 1){
+            //Voglio accettare almeno 5 mosse
+            while(acce < 10){
 
                 //Propongo una nuova mossa
                 totali++;
                 appo_th = m_th + m_delta * dis_move(gen);
                 do{
-                   appo_expfact = m_expfact + 0.25 * m_delta *dis_move(gen);
-                }while(appo_expfact < 0.2 || appo_expfact > 0.8);
+                   appo_expfact = m_expfact + 0.3 * m_delta * dis_move(gen);
+                }while(appo_expfact <= 0.0);
                 do{
                     appo_ddfam = m_ddfam + m_delta * dis_move(gen);
                     appo_ddfav = m_ddfav + m_delta * dis_move(gen);
@@ -143,7 +143,8 @@ class SimAnnealing{
                     cout << "T_th = " << m_th << "     ddf_ave = " << m_ddfav << "     ddf_amp = " << m_ddfam <<  "     expfact = " << m_expfact << "     loss = " << m_new << "     weight = " << peso << endl;
                 }
 
-                if(totali == 1000) break;
+                if((totali % 200 == 0) && (totali > 0)) m_delta = max(m_delta/5, 1e-4);
+                if(totali == 750) break;
             }
 
             acc_rate = static_cast<double>(acce)/static_cast<double>(totali) * 100;
@@ -151,13 +152,13 @@ class SimAnnealing{
             cout << "                T = " << T << "                  " << endl;
             cout << "               AR = " << acc_rate << " %         " << endl;
             cout << "            Delta = " << m_delta  << "           " << endl;
-            if(totali == 1000)   cout << "            Exceeded 1000 attempts" << endl;
+            if(totali == 750)   cout << "            Exceeded 750 attempts" << endl;
             cout << "-------------------------------------------------" << endl;
 
             T = 0.95 * T;
 
-            factor = exp(acc_rate/100 - 0.3);
-            factor = max(0.75, min(1.25, factor));
+            factor = exp(acc_rate/100 - 0.4);
+            factor = max(0.6, min(1.4, factor));
 
             m_delta = m_delta * factor;
             m_delta = max(0.0001, min(m_delta, 1.0)); 

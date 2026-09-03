@@ -201,7 +201,7 @@ expfact <- as.numeric(df_in$expfact)
 t_th <- as.numeric(df_in$tlim)
 
 if(expfact <= 0) stop(paste0("Expfact parameter should be bigger than zero!"))
-if((ddf_ave - ddf_ampl) < 0) stop(paste0("It's not physically possible to have a negative degree day factor!"))
+# if((ddf_ave - ddf_ampl) < 0) stop(paste0("It's not physically possible to have a negative degree day factor!"))
 
 files <- list.files(path = "Dataset/PCPD", full.names = TRUE)
 files <- sub("Dataset/PCPD/DV_", "", files)
