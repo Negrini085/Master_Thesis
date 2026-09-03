@@ -26,6 +26,13 @@ SC_studies/MODIS/Datas/sd_maps
 SC_studies/MODIS/DEM
 
 # ---------------------------
+#       Comparison
+# ---------------------------
+SC_studies/Comparison/MODIS_vs_ITSNOW/Dataset/
+SC_studies/Comparison/MODIS_vs_PO/Dataset
+SC_studies/Comparison/PO_vs_ITSNOW/Dataset
+
+# ---------------------------
 #       HS series datas
 # ---------------------------
 HS_series/Original/STATION_check/Manual/Images
@@ -71,4 +78,3 @@ __pycache__/
 #  	System files
 # ---------------------------
 .DS_Store
-SC_studies/Comparison/MODIS_vs_ITSNOW/Dataset/*.tif
