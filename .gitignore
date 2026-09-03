@@ -71,3 +71,4 @@ __pycache__/
 #  	System files
 # ---------------------------
 .DS_Store
+SC_studies/Comparison/MODIS_vs_ITSNOW/Dataset/*.tif
