@@ -139,7 +139,7 @@ evolves in time as:
 where $\mathcal{H}$ is the internal energy per unit area and $R_N$ is the net radiative flux at the surface. $H_S$ and $H_L$ denote, respectively, 
 the turbulent fluxes of sensible and latent heat, governed by the action of turbulent eddies within the boundary layer. $H_P$ accounts for the 
 energy exchange associated with precipitation, since rainfall carries additional heat that must be distributed within the snowpack. Finally, $G$ 
-represents the energy exchange with the ground, which is especially important during the deposition of the first snow layer. Each term in 
+represents the energy exchange with the ground, which is especially important during the deposition of the first snow layer. Each term in Equation 
 \eqref{eq:energy_balance} is expressed in $\SI{}{\watt\per\meter\squared}$ and, by convention, a positive sign indicates an energy flux directed into 
 the snow layer. 
 
@@ -217,23 +217,34 @@ to the longer lived components of the cryosphere, such as glaciers and ice sheet
 
 
 \section{Snow observation and measurement}
-Knowledge of snow cover properties is essential to understand snow dynamics and to make avalanche forecasts. One of the primary quantities of interest in snow measurement 
-campaigns is snow depth (HS), defined as the vertical distance between the top of the snowpack and a reference surface, which is usually the ground 
-for seasonal snowpacks. HS must not be confused with snow thickness (DS), by convention the perpendicular distance to the same reference surface. 
-Once the slope angle $\phi$ of the measurement site is known, HS can be converted into DS by means of 
+A detailed knowledge of the snow cover and of its physical properties is a prerequisite for studying snowpack dynamics and for issuing reliable avalanche 
+forecasts. Among the quantities routinely collected during snow measurement campaigns, snow depth (HS) plays a central role: it is defined as the vertical 
+distance between the top of the snowpack and a reference surface, which for seasonal snowpacks is normally the ground. HS should not be confused with snow 
+thickness (DS), which is conventionally the perpendicular distance to the same reference surface. Provided that the slope angle $\phi$ of the measurement 
+site is known, the two quantities are related by 
 \begin{equation}
-    \text{DS}\,=\,\text{HS} \cos{\left(\phi\right)}.
+    \text{DS}\,=\,\text{HS} \cos{\left(\phi\right)}, 
     \label{eq:hs_to_ds}
 \end{equation}
-Both snow depth and snow thickness are measured in $\SI{}{\centi\meter}$, often rounded to the nearest integer. While these metrics describe only 
-the geometrical extent of the snowpack, other quantities provide deeper insight into its physical state. The most hydrologically relevant of these 
-is snow water equivalent (SWE), namely the amount of water stored within the snowpack. Being closely related to snow density, it can be expressed as 
+so that the two definitions coincide on flat terrain ($\phi\,=\,0$) and progressively diverge as the slope steepens. The geometrical meaning of Equation 
+\eqref{eq:hs_to_ds} is illustrated in Figure \ref{fig:depth_vs_thicness}. Both quantities are expressed in $\SI{}{\centi\meter}$ and are usually rounded 
+to the 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{snow_basics/depth_vs_thicness.png}
+    \caption{Relationship between snow depth (HS) and snow thickness (DS) on a slope. Image adapted from \cite{snow_instrument}.}
+    \label{fig:depth_vs_thicness}
+\end{figure}
+nearest integer.
+While these metrics describe only the geometrical extent of the snowpack, other quantities provide deeper insight into its physical state. The most 
+hydrologically relevant of these is snow water equivalent (SWE), namely the amount of water stored within the snowpack. Being closely related to snow 
+density, it can be expressed as 
 \begin{equation}
     \text{SWE}\,=\,\int_{0}^{\text{HS}}\rho_{s}\left(z\right) dz, 
     \label{eq:swe_density_link}
 \end{equation}
-where $\rho_s\left(z\right)$ is the vertical density profile of the snowpack. The result is given in $\SI{}{\kilo\gram\per\squared\meter}$, an can be 
-converted in $\SI{}{\meter}$ (or $\SI{}{\milli\meter}$) by dividing by the water density $\rho_w$. Although formally correct, \eqref{eq:swe_density_link} 
+where $\rho_s\left(z\right)$ is the vertical density profile of the snowpack. The result is given in $\SI{}{\kilo\gram\per\squared\meter}$, and can be 
+converted in $\SI{}{\meter}$ (or $\SI{}{\milli\meter}$) by dividing by the water density $\rho_w$. Although formally correct, Equation \eqref{eq:swe_density_link} 
 is of limited practical use, since continuous knowledge of the density profile is generally unattainable. What can realistically be measured is the 
 density of the individual layers, so that SWE is more commonly computed as 
 \begin{equation}
@@ -297,7 +308,7 @@ of sensors, such as:
     turbulent heat fluxes, thus playing a significant role in energy balance considerations.
     \item \textit{wind wane}, typically coupled with the anemometer to assess wind direction. It consists of a horizontal arm bearing a flat vertical 
     vane at one end. Incoming wind gusts push against the vain, causing the arm to rotate freely until it aligns with the wind direction.
-    \item \textit{pyranometer}, which measures shortwave solar radiation. An AWS is typicaly equipped with both and upward and a downward facing 
+    \item \textit{pyranometer}, which measures shortwave solar radiation. An AWS is typically equipped with both and upward and a downward facing 
     pyranometer, in order to quantity incoming and outgoing SW radiation, thus enabling albedo estimates.
     \item \textit{pyrgeometer}, which measures the longwave (infrared) radiation. Pyrgeometers likewise come in oppositely facing pairs, so that, 
     combined with a pair of pyranometers, an evaluation of the net radiation balance of the surface is possible.
@@ -311,15 +322,6 @@ of sensors, such as:
 In alpine catchments and at high latitudes, these sensors are typically complemented by additional instruments specifically dedicated to snow monitoring.
 Mounted together on the same tripod or mounting structure, as shown in Figure \ref{fig:station_close_up}, they constitute what is referred to as an 
 alpine automatic weather station, a key tool for the study of snow related dynamics.
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\linewidth]{snow_basics/aws.png}
-    \caption{The AWS UPE\_L which is part of an automated network of the Programme for Monitoring of the Greenland Ice Sheet 
-    (PROMICE). The constituents are respectively: (1) radiometer LW + SW, (2) inclinometer, (3) satellite antenna, (4) anemometer and wind vane, 
-    (5) snow depth sensor, (6) thermometer and hygrometer, (7) pressure transducer, (8) solar panel, (9) data logger and GPS, (10) battery box and 
-    (11) ground temperature sensor. Image adapted from \cite{image_aws}.}
-    \label{fig:station_close_up}
-\end{figure}
 
 Automated HS measurements can be performed using instruments based on either sonic or optical (laser) technology. Sonic sensors transmit an 
 ultrasonic pulse towards the snow surface and detect the returning echo. Since the speed of sound depends on meteorological conditions, a concurrent 
@@ -333,7 +335,17 @@ In both cases, the sensor measures the distance to the upper surface of the snow
 \end{equation}
 The zero depth distance must be determined before snow accumulates and constitutes a key step in instrument calibration. To ensure reliable 
 measurements, the sensor should be positioned well above the maximum expected snow depth, preventing burial and the consequent loss of data during 
-winter. Minimizing interference from the support structure is equally important, since the mast itself acts as a wind obstacle and may induce 
+winter. Minimizing interference from 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{snow_basics/aws.png}
+    \caption{The AWS UPE\_L which is part of an automated network of the Programme for Monitoring of the Greenland Ice Sheet 
+    (PROMICE). The constituents are respectively: (1) radiometer LW + SW, (2) inclinometer, (3) satellite antenna, (4) anemometer and wind vane, 
+    (5) snow depth sensor, (6) thermometer and hygrometer, (7) pressure transducer, (8) solar panel, (9) data logger and GPS, (10) battery box and 
+    (11) ground temperature sensor. Image adapted from \cite{image_aws}.}
+    \label{fig:station_close_up}
+\end{figure}
+the support structure is equally important, since the mast itself acts as a wind obstacle and may induce 
 measurement artefacts. For this reason, HS sensors are typically mounted on a horizontal arm stretching outward from the pole, keeping the target 
 area sufficiently far from the mounting structure.
 
