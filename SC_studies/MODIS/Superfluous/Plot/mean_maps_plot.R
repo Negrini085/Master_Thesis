@@ -86,18 +86,18 @@ p2 <- make_snow_plot(
   snow_metrics[[2]],
   breaks = c(23, 40, 56, 73, 89, 102, 111),
   labels = c("0 - 23 (24 Oct)", "24 - 40 (10 Nov)", "41 - 56 (26 Nov)", "57 - 73 (13 Dec)", "74 - 89 (29 Dec)", "90 - 102 (11 Jan)", "103 - 111 (20 Jan)", "112 - 116 (25 Jan)"),
-  palette = rev(custom_palette), "Average SOD (day)"
+  palette = rev(custom_palette), "Average SOD [day]"
 )
 
 p3 <- make_snow_plot(
   snow_metrics[[3]],
   breaks = c(123, 139, 165, 193, 221, 250, 300),
   labels = c("116 - 123 (1 Feb)", "124 - 139 (17 Feb)", "140 - 165 (15 March)", "166 - 193 (12 Apr)", "194 - 221 (10 May)", "222 - 250 (8 Jun)", "251 - 300 (28 Jul)", "301 - 365 (1 Oct)"),
-  palette = custom_palette, "Average SED (day)"
+  palette = custom_palette, "Average SED [day]"
 )
 
-final_plot <- p1 + p2 + p3 +
-  plot_layout(ncol = 3) +
+final_plot <- p2 + p3 +
+  plot_layout(ncol = 2) +
   plot_annotation(tag_levels = 'A') &
   theme(
     plot.tag = element_text(size = 12, face = "bold"),

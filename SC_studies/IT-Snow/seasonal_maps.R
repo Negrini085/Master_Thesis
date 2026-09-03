@@ -7,7 +7,7 @@ gc()
 library(ncdf4)
 library(matrixStats)
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/IT-Snow")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SC_studies/IT-Snow")
 
 years <- 2011:2025
 months <- c("11", "12", "01", "02", "03", "04", "05", "06")
@@ -77,6 +77,6 @@ swe_var <- ncvar_def(
 )
 
 # Creating netCDF and filling SWE values
-nc_out <- nc_create("SeasonMaps.nc", vars = list(swe_var))
+nc_out <- nc_create("Datas/swe_seasonal_maps.nc", vars = list(swe_var))
 ncvar_put(nc_out, swe_var, stackSWE)
 nc_close(nc_out)

@@ -18,8 +18,8 @@ theme_paper_clean <- function() {
     theme(
       legend.position = "bottom",
       legend.direction = "horizontal", 
-      legend.title = element_text(face = "bold", size = 9, vjust = 1),
-      legend.text = element_text(size = 7),
+      legend.title = element_text(face = "bold", size = 20, vjust = 1),
+      legend.text = element_text(size = 15),
       legend.spacing.x = unit(0.3, 'cm'), 
       legend.spacing.y = unit(0.2, 'cm'),
       plot.subtitle = element_text(face = "bold", hjust = 0.5, size = 11, margin = margin(b = 5)),
@@ -52,6 +52,7 @@ make_snow_plot <- function(raster_lyr, title, breaks, labels, palette, legend_na
       name = legend_name,
       na.value = "transparent",
       guide = guide_legend(
+        title.position = "top",
         ncol = 2,           
         byrow = FALSE,
         label.position = "right",
@@ -82,20 +83,20 @@ p1 <- make_snow_plot(
 
 p2 <- make_snow_plot(
   snow_metrics[[2]], "",
-  breaks = c(10, 15, 20, 25, 30),
-  labels = c("0 - 10", "10 - 15", "15 - 20", "20 - 25", "25 - 30", " > 30"),
-  palette = custom_palette, "Days"
+  breaks = c(4, 8, 12, 16, 20),
+  labels = c("0 - 4", "4 - 8", "8 - 12", "12 - 16", "16 - 20", " > 20"),
+  palette = custom_palette, "Standard deviation SOD [Days]"
 )
 
 p3 <- make_snow_plot(
   snow_metrics[[3]], "",
-  breaks = c(10, 15, 20, 25, 30),
-  labels = c("0 - 10", "10 - 15", "15 - 20", "20 - 25", "25 - 30", " > 30"),
-  palette = custom_palette, "Days"
+  breaks = c(4, 8, 12, 16, 20),
+  labels = c("0 - 4", "4 - 8", "8 - 12", "12 - 16", "16 - 20", " > 20"),
+  palette = custom_palette, "Standard deviation SED [Days]"
 )
 
-final_plot <- p1 + p2 + p3 + 
-  plot_layout(ncol = 3) +
+final_plot <- p2 + p3 + 
+  plot_layout(ncol = 2) +
   plot_annotation(tag_levels = 'A') &
   theme(
     plot.tag = element_text(size = 12, face = "bold"),
