@@ -45,101 +45,356 @@ completely dry, during summer.
 \end{figure}
 
 
-\section{IT-Snow}
-\label{sec:it_snow}
 
-IT-SNOW is a high resolution, multi-year snow reanalysis dataset covering the whole Italian territory. 
-It provides daily maps of snow water equivalent (SWE), snow depth, bulk snow density and liquid water 
-content of the snowpack for a period spanning from September $1^{st}$, 2010 to August $31^{st}$, 2025. 
-The spatial resolution is approximately 500 meters. IT-SNOW maps are the output of an operational chain 
-developed by CIMA Research Foundation called S3M Italy.
 
-\subsection{S3M}
-\label{subsec:s3m}
 
-S3M, also known as \textit{Snow Multidata Mapping and Modelling}, is a hydrology-oriented cryospheric 
-model that simulates seasonal snow evolution through time. S3M is a raster-based model treating pixels 
-as independent units, as it neglects mass and energy transport processes such as wind redistribution. The 
-same set of ordinary differential equations (ODEs) is solved for each grid point by means of the Euler 
-method: the hourly time-step can be adjusted by the user to meet specific application needs. All input and 
-output variables are distributed. 
 
-S3M is specifically designed for large-scale, real-time application in order to be an useful tool in 
-flood forecasting frameworks. This model achieves a high level of performance by focusing on key snow evolution 
-drivers via precipitation-phase partitioning and a hybrid temperature and radiation-driven melt parametrization.
-
-\subsection{Results}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{snow_products/evo_swe_tot_ITSNOW.png}
-    \caption{Total SWE evolution}
-    \label{fig:evo_swe_tot_ITSNOW}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{snow_products/clima_swe_tot_ITSNOW.png}
-    \caption{Total SWE climatologies.}
-    \label{fig:clima_swe_tot_ITSNOW}
-\end{figure}
 
 
 
 \section{MODIS}
 \label{sec:MODIS}
 
-NASA's Moderate Resolution Imaging Spectroradiometer (MODIS) is a major tool in mapping snow cover extent and duration thanks to the detailed spectral 
-coverage of Earth surface it provides.  This tool has been used in order to assess snow cover duration (SCD) trends across various regions the Greater 
-Alpine Region \parencite{MODIS_GAR} or the Karakoram \parencite{MODIS_KARAKORAM}. One of the latest studies on snow cover metric characteristics and 
-trends focuses on the Italian territory \parencite{MODIS_ITA}, and therefore on the Italian Alps, which are the primary focus of this thesis.
+Thanks to its detailed spectral coverage of the Earth's surface, NASA's Moderate Resolution Imaging Spectroradiometer (MODIS) has 
+become a key tool for mapping snow cover extent and duration across various regions, such as the Greater Alpine Region 
+\parencite{MODIS_GAR} or the Karakoram \parencite{MODIS_KARAKORAM}. One of the most recent studies employing MODIS focuses on the 
+Italian territory \parencite{MODIS_ITA}, and therefore on the Italian Alps, which constitute the primary focus of this thesis. This 
+dataset, curated by the Department of Enviromental Science and Policy of the University of Milan, provides daily snow cover 
+information at the national scale and, in its most recent version, spans the period from 2000 to 2025. It consists of binary rasters, 
+in which a value of 0 corresponds to bare ground, while a value of 1 denotes a pixel that is at least half covered by snow. The 
+spatial resolution is approximately $\SI{500}{\meter}$.
 
-\subsection{Dataset Generation and Gap-Filling Strategy}
-\label{subsec:dataset_MODIS}
-In its latest version, this Italian snow cover dataset spans from 2000 to 2025 and consists of binary maps, where a value
-of zero represents to bare ground, whereas one is associated only to snow covered pixels. Available on a daily basis, these
-maps feature a spatial resolution of roughly 500 meters. 
 
-The starting point of the workline that led the authors to those maps are the raw modis datas. To correctly identify snow 
-covered pixels advantage is taken on a property of snow, which is that it has very high reflectance in the visible part of 
-the electromagnetic spectrum, whereas it absorbs most of the shortwave radiation. This characteristics is highlighted by 
-the normalized difference snow index (NDSI), which is defined as
 
-where band 4 is in the visible range (in particular $0.545\,-\,0.565\,\mu \mathrm{m}$) and band 6 (or 7) is in the shortwave infrared 
-(namely $1.628\,-\,1.672\,\mu \mathrm{m}$ for Terra and $2.105\,-\,2.155\,\mu \mathrm{m}$ for Aqua).
+\subsection{Dataset generation and gap-filling strategy}
+
+To obtain binary rasters describing the presence or absence of snow cover, \cite{MODIS_ITA} proposed an operational processing chain 
+designed to maximise prediction reliability. The procedure makes use of the MODIS Terra Snow Cover Daily L3 Global $\SI{500}{\meter}$ 
+SIN Grid V061 (MOD10A1 V61) and MODIS Aqua Snow Cover Daily L3 Global $\SI{500}{\meter}$ SIN Grid V061 (MYD10A1 V61) products, both 
+distributed by the US National Snow and Ice Data Center (NSIDC). In these datasets, an integer value is assigned to each grid cell 
+according to the criteria summarised in Table \ref{tab:integer_value}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Integer values in NSIDC snow product.}
+  \label{tab:integer_value}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{@{} >{\raggedright\arraybackslash}p{2.5cm} >{\raggedright\arraybackslash}p{6.5cm} @{}}
+    \toprule
+    \textbf{Value} & \textbf{Condition} \\
+    \midrule
+    0           &  Snow free\\
+    1-100            & Snow covered (NDSI value) \\
+    200      & Missing data \\
+    201          & No decision \\
+    211          & Recorded during the nigth \\
+    237     & Fresh water \\
+    239      & Sea water \\
+    250              & Cloud covered \\
+    254           & Detector saturated \\
+    255               & Fill value \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Cloud cover can substantially reduce data availability across the study area, as the five year mean cloud cover can exceed 
+80 \%. To address the resulting gaps in the MODIS record, \cite{MODIS_ITA} first reduce the complexity of the dataset to three 
+surface classes: snow covered, snow free and missing data. Integer values between 1 and 100 are reclassified as snow covered 
+whenever the corresponding NDSI exceeded the critical threshold of 0.4, and as snow free otherwise. Pixels aquired at night, 
+affected by cloud cover or flagged with an error condition are all labelled as missing data, whereas freshwater pixels are 
+reclassified as missing only when freshwater presence has been detected in less than 10 \% of the available observations. Once the 
+number of classes has been reduced to three, \cite{MODIS_ITA} propose a gap filling procedure structured into six sequential phases, 
+each exploiting different spatial and temporal information to progressively reclassify the missing pixels untill the record is 
+complete. These steps, adapted from the previous work of \cite{no_cloud_MODIS} consist of the following:
+\begin{itemize}[label=$\blacktriangleright$]
+    \item \textit{Terra-Aqua combination}, which exploits the few hour offset between Terra and Aqua overpasses. Since Terra is 
+    considered more accurate than its counterpart, the snow map is built primarily from Terra values whenever snow presence or 
+    absence is known. If a Terra data is missing, the corresponding Aqua value is examined instead and retained if it is not itself 
+    missing. This step assumes that no snowmelt or snowfall occurs between the two overpasses.
+    \item \textit{Short range temporal filling}, which relies on combining snow cover information from adjacent dates to try filling 
+    the remaining gaps. For each grid point, the values recorded on the previous and following day are considered: if neither is 
+    missing and both agree on the pixel classification, the missing value is reclassified accordingly.
+    \item \textit{Elevation based filling}, which relies on the vertical extent of snow cover on a given day. For each day, the 
+    maximum snow line elevation $H_s^{max}$ (above which every pixel is snow covered), and the minimum snow line elevation $H_s^{min}$ 
+    (below which every pixel is snow free) are computed. A missing pixel located above $H_s^{max}$ is thus reclassified as snow 
+    covered, while one located below $H_s^{min}$ is labelled as snow free.
+    \item \textit{Direct neighbour spatial filling}, during which each missing pixel is compared with its four adjacent pixels. If 
+    at least three share the same class, that class is assigned to the missing pixel.
+    \item \textit{Elevation weighted spatial filling}, in which the $3\times3$ neighbourhood surrounding each missing grid point is 
+    examined. If any neighbouring pixel is snow covered and lies at a lower elevation than the central one, the missing pixel is 
+    reclassified as snow covered.
+    \item \textit{Pixel-wise temporal filling}, which consists of examining the subsequent values of a missing grid point until a 
+    snow covered or snow free classification is found. This value is then assigned to the missing pixel.
+\end{itemize}
+
+After the sixth step, the dataset is entirely free of missing values, providing snow cover information on a daily basis across the 
+whole Italian peninsula.
+
+
 
 \subsection{Results}
+
+Following the approach adopted by the authors, particular attention was devoted to temporal snow metrics. In particular, the 
+duration of the snow season (SCD) at a given location was computed as
+\begin{equation}
+    \text{SCD}_{i,j}\,=\,\sum_{k=1}^{n} \text{S}_{i,j,k},
+    \label{eq:scd}
+\end{equation}
+thereby summing, over an hydrological year spanning from the $1^{st}$ of October to the $30^{th}$ of September, the binary values 
+recorded for that specific pixel. In \ref{eq:scd}, $k$ denotes the day of the hydrological year, while $(i,\,j)$ represent the spatial 
+coordinates of the pixel. The SCD is clearly related to the amount of accumulated snow, to temperature and to other climatic drivers. 
+In order to assess whether the enviromental setting induces a shift in the onset or end of the snow season, a fixed date method is 
+typically employed. The snow onset date (SOD) is defined as 
+\begin{equation}
+    \text{SOD}_{i,j}\,=\,\sum_{k=1}^{D} \text{D} - \text{S}_{i,j,k},
+    \label{eq:sod}
+\end{equation}
+where $\text{D}$ corresponds to 116, namely the number of  days between the beginning of the hydrological year and the $25^{th}$ of 
+January. Conversely, the snow end date (SED) can be computed as
+\begin{equation}
+    \text{SED}_{i,j}\,=\,\sum_{k=D}^{n} \text{D} + \text{S}_{i,j,k},
+    \label{eq:sed}
+\end{equation}
+with D retaining the same meaning as in \eqref{eq:sod}. These three metrics provide only cumulative information, thus disregarding 
+transient snowfall and meltout events. In the following, only results regarding SCD will be presented: for the analogous analysis 
+concering the onset and the end date of the snow season, the reader is referred to Appendix \ref{app:MODIS_app}.
+
+As expected, MODIS proves capable of capturing the spatial inhomogeneities in snowpack lifetime across the Italian peninsula. This 
+becomes particularly evident in the average SCD map, obtained as the mean of the annual SCD maps and shown in Figure \ref{fig:ave_scd_MODIS}. 
+Indeed, mountainous regions are associated with the highest average SCD values, typically exceeding two hundred days of snow presence 
+on the ground in high alpine catchments. The orography of the Italian Alps is closely reproduced, as valleys exhibit markedly lower 
+snow cover duration than the surrounding peaks. The Apennines remain snow free for subsantially longer than the Alps, with only the 
+most prominent massifs, such as Gran Sasso and Maiella, displaying snow behaviour somewhat comparable to their Alpine counterpart. 
+On the other hand, the lowest SCD values are associated with lowland plains, where on average exceeding 5 days of snow on the ground is 
+extrimately rare. SOD and SED exhibit a very similar behaviour to what was previously noted, as mountainous terrain strongly increases 
+the likelihood of a prolonged snow season. 
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{snow_products/ave_los_MODIS.png}
-    \caption{MODIS}
-    \label{fig:ave_metrics_MODIS}
+    \caption{Average SCD map across the Italian peninsula for the 2001-2025 period. MODIS accurately reproduces the orography of the 
+    Italian Alps, as altitude strongly influence the persistence of snow on the ground. The lowest SCD values are associated with 
+    lowland plains, which remain snow free for most of the year.}
+    \label{fig:ave_scd_MODIS}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{snow_products/std_over_mean_MODIS.png}
-    \caption{MODIS}
-    \label{fig:std_over_mean_MODIS}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{snow_products/los_difference_by_ele_MODIS.png}
-    \caption{MODIS}
-    \label{fig:los_difference_by_ele_MODIS}
-\end{figure}
+The analysis of the average SCD map reveals that elevation plays a prominent role in determining both the spatial distribution and 
+the temporal duration of snow cover. To gain deeper insights into this relationship, one possible approach is to divide the Italian 
+territory into $\SI{5}{\meter}$ wide elevation bands, in order to plot the quantiles of the SCD distribution as a function of 
+elevation. Notably, the trend shown in Figure \ref{fig:scd_percentiles_by_ele_MODIS} is clearly monotonic, since higher regions 
+tend to be associated with longer lasting snowpacks, even though a considerable spread is observed within each band. This wide range 
+of possible SCD values indicates that elevation alone cannot fully account for snow distribution: a multilinear regression against 
+several topographic and geographic variables shows that aspect and latitude also provide a non negligible contribution to snowpack 
+behaviour \parencite{MODIS_ITA}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{snow_products/scd_percentiles_by_ele_MODIS.png}
-    \caption{MODIS}
+    \caption{Quantiles of the average SCD distribution in each $\SI{5}{\meter}$ wide elevation band for the 2001-2025 period. The area 
+    taken into account is the whole Italian peninsula. A clear monotonic trend is visible.}
     \label{fig:scd_percentiles_by_ele_MODIS}
 \end{figure}
 
+The importance of aspect for the duration of the snow season is also evident when examining the spatial distribution of the 
+difference between the SCD value of each individual pixel and the mean SCD per elevation band. In fact, in Figure 
+\ref{fig:los_difference_by_ele_MODIS} the Alpine valleys are clearly delineated, since  south facing slopes experience, on average, 
+a shorter snow season than north facing ones at the same elevation. The Easter Apennines can also be seen to be markedly snowier 
+than the western side of the same ridge. This is attributed to cold continental air masses originating from the Balkan region, which 
+become enriched with moisture as they cross the Adriatic Sea. This water vapor is subsequently released as snowfall through 
+orographic forcing \parencite{more_snow_east_apennines}. This east to west gradient progressively weakens toward the Southern 
+Apennines, which typically exhibit a shorter snow cover duration than the other Italian mountain ranges.
 
-\section{Po Basin}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{snow_products/los_difference_by_ele_MODIS.png}
+    \caption{Spatial distribution of the difference between the SCD value of each individual pixel and the mean SCD per $\SI{5}{\meter}$ 
+    wide elevation band.}
+    \label{fig:los_difference_by_ele_MODIS}
+\end{figure}
+
+The snow cover extent and duration observed in any given year cannot, of course, be expected to closely match the 2001-2025 
+average, since the snowpack is highly sensitive to climatic drivers, such as winter precipitation and temperature patterns, that are 
+themselves subject to considerable interannual variability. This translates into substantial year to year fluctuations in snow cover 
+duration, which can be quantified through the pixel by pixel standard deviation from the mean, toghether with its ratio to the 
+corresponding average SCD value. The spatial distribution of these two quantities is shown in Figure \ref{fig:std_over_mean_MODIS}. 
+The standard deviation exhibits a monotonically increasing relationship with up to approximately $\SI{2000}{\meter}$ a.s.l., beyond 
+which it begins to decrease. This behaviour may be partially linked to glacier covered terrain, which, as previously noted, is 
+treated by MODIS as snow covered throughout the whole year, even though bare ice conditions are commonly observed by the end of the 
+melt season. The ratio displays a markedly different pattern, with lower values typically found in high alpine catchments, whereas 
+the highest ones are generally observerd over lowland plains. This trend follows directly from the considerably longer SCD 
+characterising mountainous terrain, which contraints the ratio regardless of the absolute variability. 
+
+% Plot va sistemato (unità di misura)!
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{snow_products/std_over_mean_MODIS.png}
+    \caption{(a) Spatial distribution of SCD standard deviation from the mean, computed over the 2001-2025 period. (b) Spatial 
+    distribution of the ratio between the SCD standard deviation from the mean and the corresponding mean SCD value for the 2001-2025 
+    period.}
+    \label{fig:std_over_mean_MODIS}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+\section{IT-Snow}
+\label{sec:it_snow}
+
+IT-SNOW is a high resolution, multi-year snow reanalysis dataset covering the entire Italian peninsula at a spatial resolution of 
+roughly $\SI{500}{\meter}$. This dataset consist of daily maps of snow water equivalent (SWE), snow depth (HS), bulk snow density 
+and liquid water content of the snowpack, spanning the period from September $1^{st}$, 2010 to August $31^{st}$, 2025 in its latest 
+release. IT-SNOW is the output of S3M Italy, a real-time operational monitoring chain developed by CIMA Research Foundation and 
+specifically designed for large scale applications, with the aim of serving as a valuable tool within flood forecasting frameworks. 
+This model achieves a high level of performance by focusing on the key drivers of snow evolution, namely total precipitation, air 
+temperature, relative humidity, and total radiation, thereby providing a spatially consistent reconstruction of snowpack dynamics.
+
+
+
+\subsection{S3M}
+\label{subsec:s3m}
+
+S3M, also known as \textit{Snow Multidata Mapping and Modelling}, is a hydrology oriented cryospheric model developed to simulate 
+the spatial and temporal evolution of seasonal snowpack. It adopts a raster based approach, in which neighbouring pixels are treated 
+as independent units, so that horizontal mass and energy transport is neglected. All input and output variables are therefore 
+spatially distributed, and the simulated snowpack represents the average conditions within each grid cell. The model provides daily 
+(or even hourly) rasters of snow water equivalent (SWE), snow depth (HS), bulk snow density and liquid water content. From these 
+outputs, the snow cover fraction (SCF) of each pixel can be computed as 
+\begin{equation}
+    \text{SCF}\,=\,\text{min}\left(1,\,\frac{\text{SWE [mm]}}{0.1 \cdot \rho_{s}}\right),
+    \label{eq:scf_ITSNOW}
+\end{equation}
+where $\rho_{s}$ is the bulk snow density \parencite{scf_ITSNOW}. Since a pixel is conventionally regarded as snow covered when at 
+least half of its area is, binary snow extent maps are obtained by assigning a value of one to all grid points with $\text{SCF}>0$, 
+and zero elsewhere. Beside deepening the knowledge of snowpack properties, this quantity also provides a direct term of comparison 
+with satellite snow cover products such as MODIS.
+
+Within S3M, seasonal snow is partitioned into a dry component, corresponding to the ice matrix, and a wet component, given by the 
+interstitial liquid water. These two constituents are modelled separately, and their mutual interactions govern the overall snowpack 
+dynamics. The total snow water equivalent is thus obtained as 
+\begin{equation}
+    \text{SWE}\,=\,\text{SWE}_D\,+\,\text{SWE}_W, 
+    \label{eq:swe_tot_S3M}
+\end{equation}
+so as the sum of its dry ($\text{SWE}_D$) and wet ($\text{SWE}_W$) contributions. The evolution of these two quantities is 
+described by the following mass conservation equations:
+\begin{equation}
+    \frac{d}{dt}\left(\text{SWE}_D\right)\,=\,S_f\,-\,M\,+\,R,
+    \label{eq:swe_dry_S3M}
+\end{equation}
+\begin{equation}
+    \frac{d}{dt}\left(\text{SWE}_W\right)\,=\,R_f\,+\,M\,-\,R\,-\,O,
+    \label{eq:swe_wet_S3M}
+\end{equation}
+where $S_f$ and $R_f$ denote the snowfall and rainfall mass fluxes, $M$ and $R$ the snowmelt and refreezing rates and $O$ the 
+snowpack runoff mass flux. All the terms in equations \eqref{eq:swe_dry_S3M} and \eqref{eq:swe_wet_S3M} are expressed in 
+$\SI{}{\milli\meter}$ w.e. $\SI{}{\per\hour}$ \parencite{S3M_model}. Solving this system of ordinary differential equations (ODEs), 
+which is decremental to assess snowpack modifications, requires specific parametrizations for each of the mass fluxes involved.
+
+Snowfall and rainfall mass fluxes are estimated from the total precipitation $P$ through a phase partitioning scheme based on air 
+temperature and relative humidity. $S_f$ and $R_f$ are thus computed as 
+\begin{equation}
+    \begin{cases}
+        S_f\,=\,\left(1\,-\,p_r\right) P \\
+        R_f\,=\,p_rP
+    \end{cases},
+    \label{eq:snowfall_rainfall_S3M}
+\end{equation}
+where $p_r$ is the rainfall probability, defined as
+\begin{equation}
+    p_r\,=\,\frac{1}{1\,+\,e^{\alpha\,+\,\beta T_{air}\,+\,\gamma RH}}.
+    \label{eq:rain_probability_S3M}
+\end{equation}
+In the previous equation, $ T_{air}$ is the air temperature in $\SI{}{\degreeCelsius}$ and $RH$ is the relative humidity in percent, 
+while the fixed parameter $\alpha\,=\,22$, $\beta\,=\,-2.7$ and $\gamma\,=\,-0.2$ are taken from \cite{S3M_phase_partitioning}. 
+
+Snowmelt occurs only when both the current air temperature and its 10-day running mean exceed a threshold $T_{\tau}$, set to be 
+$\SI{1}{\degreeCelsius}$. This dual condition provides a simple way of accounting for the snowpack's cold content, defined as the 
+energy required to warm a subfreezing snowpack until it reaches an isothermal $\SI{0}{\degreeCelsius}$ state. By requiring sustained 
+mild conditions, rather than a single warm hour, the model avoids triggering unphysical melt events that the snowpack's thermal 
+inertia would not allow. \cite{S3M_model} estimate the melt rate through a hybrid temperature index and radiation driven melt 
+parametrization. This formulation improves S3M's ability to reproduce the strong spatial variability that topography induces in snow 
+cover extent and duration, since slope and aspect play a significant role in mountainous terrain that cannot be fully captured by 
+air temperature alone. The hybrid approach adopted in S3M thus reads 
+\begin{equation}
+    M\,=\,m_{rad}\left[\frac{\left(1\,-\,\alpha_S\right)S_r}{\rho_W \lambda_f}\right]\Delta t\,+\,c_M m_r \left(T_{air}\,-\,T_{\tau}\right),
+    \label{eq:melt_S3M}
+\end{equation}
+where $m_{rad}$ is a dimensionless coefficient that convert the potential radiative melt into actual melt, $\alpha_S$ is the snow 
+albedo, $S_r$ the incoming shortwave radiation, $\rho_W$ the density of water, $\lambda_f$ the specific latent heat of fusion and 
+$m_r$ the degree day parametes [$\SI{}{\milli\meter\per\degreeCelsius\per\hour}$]. Both $m_{rad}$ and $m_r$ are calibration based.
+
+In S3M, refreezing occurs whenever the air temperature drops below $T_{\tau}$ and is computed through a degree day approach as 
+\begin{equation}
+    R = - c_M m_r \left(T_air\,-\,T_{\tau}\right).
+    \label{eq:refreezing_S3M}
+\end{equation}
+Since this expression depends solely on air temperature, refreezing is assumed to respond instantaneously to atmospheric 
+cooling, without accounting for the internal structure or thermal gradient of the snowpack.
+
+Ultimately, the runoff $O$ is estimated by simulating liquid water movement through the snowpack using a matrix-flow approximation. 
+This liquid flux is governed by physical properties of the snow cover, as 
+\begin{equation}
+    O = \alpha \frac{\rho_W g K_W}{\mu_W}, 
+    \label{eq:runoff_S3M}
+\end{equation}
+where $\alpha$ is a conversion parameter, $g$ the acceleration due to gravity, $K_W$ the intrinsic permeability of water in snow and 
+$\mu_W$ is water dynamic viscosity. This parametrization completes the system of ODEs that, together with those governing the 
+evolution of snow density, are solved at each grid point using the forward Euler method. By default, S3M adopts an hourly 
+integration time step, although this can be adjusted by the user to meet specific application needs.
+
+
+\subsection{Results}
+
+The IT-SNOW reanalysis provides daily, high-resolution estimates of snow properties, which are a key input for hydrological 
+applications. Over the 2011-2025 period, peak SWE (intended as the total water volume stored in the snowpack) is on average 
+$\SI{11.9 \pm 5.2}{G\meter\cubed}$, with a minimum of $\SI{5.4}{G\meter\cubed}$ in 2022 and a maximum of $\SI{23.1}{G\meter\cubed}$ 
+in 2014. This peak is typically reached on 4 March $\pm$ 17 days, with the earliest occurance being 26 January 2023 and the latest 
+26 March 2013. This means that over the investigated period the maximum of SWE always precedes the $1^{st}$ of April, which is the 
+date commonly adopted in literature as a reference for peak SWE. The daily evolution of the total SWE volume, shown in Figure 
+\ref{fig:evo_swe_tot_ITSNOW}, exhibits great variability driven by thermal and meteorological conditions. The last few years stand 
+out for a markedly reduced water volume stored in the Italian snowpack, with the partial exception of 2024, which nonetheless 
+remained a slightly below average snow year. This is consistent with the persistent snow drought that characterised the early 2020s, 
+driven by the combined effects of reduced precipitation and higher temperatures \parencite{snow_drought}.  
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{snow_products/evo_swe_tot_ITSNOW.png}
+    \caption{Daily evolution of the total water volume stored in the Italian snowpack, computed as snow water equivalent (SWE) 
+    integrated over the whole national domain, from 1 September 2010 to 31 August 2025. Data are from the IT-SNOW reanalysis 
+    \parencite{IT-SNOW}.}
+    \label{fig:evo_swe_tot_ITSNOW}
+\end{figure}
+Besides this strong temporal variability, the modelled snow cover also displays a marked spatial heterogeneity across Italy, with 
+mountain regions experiencing longer and more intense snow seasons. Both panels of Figure \ref{fig:ave_swe_scd_ITSNOW.png} closely 
+reproduce the orography of the main ranges, showing that the physically based S3M model captures the control exerted by topographic 
+factors such as elevation and aspect on snowpack amount and persistence. According to IT-SNOW estimates, almost 87 \% of the mean 
+national winter SWE is stored within the five main Alpine river basins, namely Po River, Adige, Piave, Tagliamento and Brenta, 
+whereas the Central Apennines account for about 7\% of total SWE. The remaining fraction is distributed across the rest of the 
+country \parencite{IT-SNOW}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{snow_products/ave_swe_scd_ITSNOW.png}
+    \caption{(a) Average seasonal snow water equivalent (SWE), computed as the mean of the November--June averages of each 
+    hydrological year over the period 1 September 2010--31 August 2025. (b) Average snow cover duration (SCD), computed as the mean 
+    of the annual SCD maps across the same period.}
+    \label{fig:ave_swe_scd_ITSNOW.png}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+\section{Po River Basin}
 \label{sec:po_basin}
 
 This snow dataset focuses on the mountainous part of the Po River District, which is an over-regional entity resulting 
@@ -150,7 +405,19 @@ one-third of Italy's total population and produces almost $55\%$ of Italy's hydr
 SWE reconstruction, covering a period spanning from 1992 to 2021. For every hydrological year, SWE maps for the mountainous part 
 of the Po River District are given on a daily basis during the period spanning from October $3^{rd}$ to July $1^st$, which roughly
 corresponds to the period where snow coverage extends beside glacerized area. These SWE maps have a spatial resolution of 
-$500\,\cross\,500\,m^2$ and are created using a hybrid modeling approach "J-snow".
+approximately $\SI{500}{\meter}$ and have been created using a hybrid modelling approach integrating the physically based GEOtop 
+model with in situ snow heigth and snow extent information. This operational chain is referred to as "J-snow".
+
+\subsection{GEOtop}
+
+\begin{equation}
+    to do
+    \label{eq:scf_PO}
+\end{equation}
+
+
+
+\subsection{Results}
 
 \begin{figure}[H]
     \centering
@@ -159,3 +426,54 @@ $500\,\cross\,500\,m^2$ and are created using a hybrid modeling approach "J-snow
     \label{fig:evo_swe_tot_PO}
 \end{figure}
 
+
+
+
+
+
+
+
+
+
+\section{Comparison}
+
+These snow dataset presented above differ between each other in several respects. Indeed, IT-SNOW and Po Basin products result as 
+the output of distinct physically-based snow models, and primarily focus on snow water equivalent as both are hydrology oriented. 
+The former provides additional information compared to the latter, as it also consists of snow density, snow depth and liquid water 
+content maps, which enable the user to deepen its knownledge on the state of the snowpack. Even though MODIS focuses only on snow 
+cover with its binary rasters, a comparison between the three products is still possible, as SWE maps can be converted in binary 
+rasters by means of \eqref{eq:scf_ITSNOW} and \eqref{eq:scf_PO}. Since these dataset cover different territories, have different 
+spatial resolution and sistema di riferimento, and span different periods, in the following comparisons will be made over the same 
+grid, reprojecting when necessary and over a territory and a time span in which all the three dataset are defined. For sake of 
+clarity, in the following Table \ref{tab:dataset_car} are reported the characteristics of each snow product, in order to make clear 
+why some choices are made.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Integer values in NSIDC snow product.}
+  \label{tab:dataset_car}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{@{} >{\raggedright\arraybackslash}p{2.5cm} >{\raggedright\arraybackslash}p{6.5cm} @{}}
+    \toprule
+    \textbf{Value} & \textbf{Condition} \\
+    \midrule
+    0           &  Snow free\\
+    1-100            & Snow covered (NDSI value) \\
+    200      & Missing data \\
+    201          & No decision \\
+    211          & Recorded during the nigth \\
+    237     & Fresh water \\
+    239      & Sea water \\
+    250              & Cloud covered \\
+    254           & Detector saturated \\
+    255               & Fill value \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{snow_products/comparison_SCD_MODIS_ITSNOW.png}
+    \caption{MODIS}
+    \label{fig:comparison_SCD_MODIS_ITSNOW}
+\end{figure}

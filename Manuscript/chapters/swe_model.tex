@@ -1,0 +1,45 @@
+\chapter{SWE model}
+\label{ch:SWE model}
+
+
+\section{Precipitation data}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{swe_model/annual_prec_climatology.png}
+    \caption{}
+    \label{fig:annual_prec_climatology}
+\end{figure}
+
+\section{Temperature data}
+
+
+\section{Phase partitioning and snowmelt}
+
+\begin{equation}
+    P_{s,\,i} =
+    \begin{cases}
+        P_i
+            & \hspace*{1.5em} T_{\max,i} < T_{th} \\[8pt]
+        P_i \dfrac{T_{th} - T_{\min,i}}{T_{\max,i} - T_{\min,i}}
+            & \hspace*{1.5em} T_{\min,i} < T_{th} < T_{\max,i} \\[8pt]
+        0
+            & \hspace*{1.5em} T_{\min,i} > T_{th}
+    \end{cases}
+    \label{eq:swe_phase_partitioning}
+\end{equation}
+
+\begin{equation}
+    \text{DDF}_{i}\,=\,\text{DDF}_{ave}\,+\,\text{DDF}_{amp}\cdot\sin\left(\frac{2\pi i}{366}\right)
+    \label{eq:swe_ddf}
+\end{equation}
+
+\begin{equation}
+    \text{M}_i\,=\,\text{DDF}_i\left\{\left(T_{mean,i}\,-\,T_{th,m}\right)\,+\,\ln\left[1\,+\,\exp\left(-\frac{T_{mean,i}\,-\,T_{th,m}}{m_m}\right)\right]\right\}
+    \label{eq:swe_melt}
+\end{equation}
+
+\begin{equation}
+    \text{SWE}_i\,=\,\text{SWE}_{i-1}\,+\,P_{s,i}\,-\,M_i
+    \label{eq:swe_swe}
+\end{equation}

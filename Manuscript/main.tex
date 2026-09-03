@@ -2,7 +2,7 @@
 %   Compile with: pdflatex -> biber -> pdflatex -> pdflatex   %
 %=============================================================%
 
-\documentclass[12pt, a4paper, twoside, openany]{book}%, openright]{book}
+\documentclass[12pt, a4paper, twoside, openright]{book} %openany]{book}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -155,11 +155,11 @@
   \input{chapters/introduction}
   \input{chapters/snow_basics}
   \input{chapters/snow_products}
-  \input{chapters/model.tex}
+  \input{chapters/swe_model}
 
 
-% \appendix
-%   \input{appendices/appendix_a}
+\appendix
+  \input{appendices/MODIS}
 
 \backmatter
   \printbibliography[heading=bibintoc, title={Bibliography}]
