@@ -1,5 +1,5 @@
 \chapter{Snow products}
-\label{ch:snow_products}
+\label{cap:snow_products}
 
 
 \section{Study area}
@@ -437,38 +437,33 @@ model with in situ snow heigth and snow extent information. This operational cha
 
 \section{Comparison}
 
-These snow dataset presented above differ between each other in several respects. Indeed, IT-SNOW and Po Basin products result as 
-the output of distinct physically-based snow models, and primarily focus on snow water equivalent as both are hydrology oriented. 
-The former provides additional information compared to the latter, as it also consists of snow density, snow depth and liquid water 
-content maps, which enable the user to deepen its knownledge on the state of the snowpack. Even though MODIS focuses only on snow 
-cover with its binary rasters, a comparison between the three products is still possible, as SWE maps can be converted in binary 
-rasters by means of \eqref{eq:scf_ITSNOW} and \eqref{eq:scf_PO}. Since these dataset cover different territories, have different 
-spatial resolution and sistema di riferimento, and span different periods, in the following comparisons will be made over the same 
-grid, reprojecting when necessary and over a territory and a time span in which all the three dataset are defined. For sake of 
-clarity, in the following Table \ref{tab:dataset_car} are reported the characteristics of each snow product, in order to make clear 
-why some choices are made.
+The snow datasets presented above differ from one another in several respects. ITSNOW and the Po Basin product are the outputs of two distinct 
+physically based model, and both focus primarily on snow water equivalent, consistently with their hydrological purpose. ITSNOW, however, provides 
+richer information than the latter, as it also includes maps of snow density, snow depth and liquid water content, which allow the user to gain 
+a deeper insight into the state of the snowpack. MODIS, in contrast, describes snow cover alone through binary rasters. This discrepancy does not 
+limit the possibility of a comparison, as SWE maps can be converted into binary rasters by means of \eqref{eq:scf_ITSNOW} and \eqref{eq:scf_PO}. Since 
+these datasets cover different domains, are provided at different spatial resolutions and in different coordinate reference systems, and span 
+different periods, the comparisons reported hereafter are carried out over the largest common overlap, both in space and in time. For the sake of 
+clarity, Table \ref{tab:dataset_car} summarizes the main characteristics of each snow product, thereby clarifying the rationale behind some of the 
+comparison choices.
 
-\begin{table}[htbp]
+\begin{table}[tb]
   \centering
-  \caption{Integer values in NSIDC snow product.}
+  \caption{Main characteristics of each snow product.}
   \label{tab:dataset_car}
   \renewcommand{\arraystretch}{1.3}
-  \begin{tabular}{@{} >{\raggedright\arraybackslash}p{2.5cm} >{\raggedright\arraybackslash}p{6.5cm} @{}}
+  \renewcommand{\tabularxcolumn}[1]{m{#1}}   % X centrate verticalmente
+  \setlength{\tabcolsep}{4pt}
+  \footnotesize
+  \begin{tabularx}{\textwidth}{@{} >{\raggedright\arraybackslash}m{1.9cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}m{2.1cm} >{\raggedright\arraybackslash}m{2.1cm} >{\raggedright\arraybackslash}m{1.5cm} >{\raggedright\arraybackslash}m{2.1cm} >{\raggedright\arraybackslash}X @{}}
     \toprule
-    \textbf{Value} & \textbf{Condition} \\
+    \textbf{Dataset} & \textbf{Data type} & \textbf{Start date} & \textbf{End date} & \textbf{Study area} & \textbf{Spatial resolution} & \textbf{Reference system} \\
     \midrule
-    0           &  Snow free\\
-    1-100            & Snow covered (NDSI value) \\
-    200      & Missing data \\
-    201          & No decision \\
-    211          & Recorded during the nigth \\
-    237     & Fresh water \\
-    239      & Sea water \\
-    250              & Cloud covered \\
-    254           & Detector saturated \\
-    255               & Fill value \\
+    MODIS & Snow cover & 24-02-2000 & 30-09-2025 & Italy & 0.00417 $\unit{\degree}$ &  WGS 84 (EPSG:4326) \\
+    ITSNOW & SWE & 01-09-2010 & 31-08-2025 & Italy & 0.00506 $\unit{\degree}$ & WGS 84 (EPSG:4326) \\
+    Po Basin & SWE & 03-10-1991 & 01-07-2021 & Po Basin & $\SI{500}{\meter}$ & ETRS89 (EPSG:3035) \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 \begin{figure}[H]
