@@ -15,6 +15,14 @@ consequences of a temperature rise, with potential repercussions for multiple as
 provide a broad overview of snow dynamics, before focusing on snow measurement techniques, which are essential to assess the state of the snowpack.
 
 
+
+
+
+
+
+
+
+
 \section{Snow physics and dynamics}
 
 The formation of snow is the result of a chain of microphysical processes occurring within clouds, from initial ice nucleation to the eventual fall 
@@ -77,6 +85,8 @@ increases of approximately $\SI{1}{\centi\meter\per\hour}$ during snowfall event
 to $\SI{300}{\kilo\gram\per\meter\cubed}$ depending on wind patterns and weather conditions, with higher temperatures generally leading to higher 
 density values \parencite{libro_SNOW}.
 
+
+
 \subsection{Snow metamorphism and compaction}
 Accumulation of snowflakes on bare ground or atop older snow results in the formation of a new snow layer. Snow crystals form a solid matrix 
 delimiting pores filled with humid air or liquid water or both, depending on layer temperature. This structure can be clearly appreciated in Figure 
@@ -126,6 +136,8 @@ of the overlying layers, resulting in higher deformation. The combined effects o
 through a Newtonian viscosity approach. Snow viscosity depends on several parameters, including temperature, liquid water content and porosity and its
 values are generally retrieved by means of empirical relations. Overall, the density of older snow layers can easily exceed values of $\SI{400}{\kilo\gram\per\meter\cubed}$, 
 sometimes even reaching $\SI{500}{\kilo\gram\per\meter\cubed}$ in specific locations, depending on water content and time of the year \parencite{rho_max}.
+
+
 
 \subsection{Snowpack energy balance}
 
@@ -185,6 +197,7 @@ Thanks to its relatively low thermal conductivity, the snowpack also shields the
 closely tied to snow microstructure and therefore evolves with metamorphism, as higher snow densities are associated with increased conductivity. 
 
 
+
 \subsection{Snow melt and water runoff}
 
 The variations in internal energy $\mathcal{H}$, driven by the heat fluxes listed above, ultimately modify the thermal state of the 
@@ -213,6 +226,13 @@ from $\SI{400}{\kilo\gram\per\meter\cubed}$ to $\SI{830}{\kilo\gram\per\meter\cu
 As compaction proceeds further, most pores become sealed, marking the transition to glacier ice proper. The rate of this transformation depends on 
 both accumulation amounts and temperature, since colder climates results in slower crystal evolution. This process directly links seasonal snow cover 
 to the longer lived components of the cryosphere, such as glaciers and ice sheets \parencite{snow_to_ice}. 
+
+
+
+
+
+
+
 
 
 
@@ -265,6 +285,8 @@ features of the surrounding terrain. In alpine regions, monitoring sites must be
 exposure, which can cause premature snowmelt and thus yield unrepresentative data. It is equally important to avoid locations prone to preferential 
 snow accumulation driven by local wind patterns \parencite{snow_instrument}.
 
+
+
 \subsection{Manual snow measurements}
 
 Manual snow depth (HS) records are an effective tool for assessing long-term trends, as they can span several decades. Their longevity is 
@@ -296,6 +318,8 @@ SWE, sacrificing layer-specific information. The snow tube must be inserted vert
 the extracted core volume is made, and the average density is then computed by weighing the snow column. The conversion to SWE is then straightforward. 
 This device should be used where the snow water equivalent is less spatially homogeneous, such at locations with heterogeneous exposure to both wind 
 patterns and solar radiation.
+
+
 
 \subsection{Automatic snow monitoring}
 
@@ -355,6 +379,8 @@ surface, so that it supports the full weight of the overlying snowpack. As snow 
 transduced into snow water equivalent values. Snow pillows were first introduced in the late 1960s, and have proved to be a valuable 
 tool for SWE measurements \parencite{SnowPillow_Hood}. However, they are now being progressively replaced by snow scales due to the toxicity of the 
 antifreeze fluid, which poses an environmental hazard to the installation site.
+
+
 
 \subsection{Remote sensing}
 
@@ -423,3 +449,50 @@ spaceborne techniques have been developed:
     as the revisit time of a specific location is typically five days \parencite{remote_SAR}.
 
 \end{itemize}
+
+
+
+
+
+
+
+
+
+\section{Climate change}
+
+% Citare UNFCCC
+Climate change is conventionally defined as an alteration of the climate attributed, directly or indirectly, to human activities that modify the 
+composition of the global atmosphere. This anthropogenic signal is superimposed on the natural variability of the climate system and must therefore 
+be disentangled from a background of spontaneous fluctuations. Over the past few million years, such fluctuations have produced a cyclic alternation 
+between glacial periods, lasting roughly \num{100000} years, and warmer interglacial conditions. These climatic oscillations are caused by periodic 
+variations in the orbital parameters governing Earth's revolution around the sun, which generate a weak radiative forcing that is subsequently 
+amplified by snow albedo and greenhouse gas feedbacks \parencite{iceage_orbit}. The last glacial period ended around \num{11700} years ago, marking 
+the onset of the Holocene, the geological epoch we live in today.
+
+The ongoing global warming, however, cannot be attributed to natural variability, as it is primarily driven by the large amounts of greenhouse gases 
+released into the atmosphere by human activities. These gaseous compounds, of which carbon dioxide ($\text{CO}_2$) is the best known, partially absorb 
+the longwave radiation emitted by Earth's surface and re-emit it in all directions, so that only a fraction of this energy escapes, thus causing an 
+increase in surface air temperature. Since the Industrial Revolution the atmospheric $\text{CO}_2$ concentration has risen steadily, from about 
+\num{278} part per million (ppm) in pre-industrial times to $\SI{422.8}{ppm}$ in 2024 \parencite{co2_conce}. During the last 60 years, $\text{CO}_2$ 
+concentrations have grown nearly 100 times faster than during previous natural increases, such as the one that occurred at the end of the last ice 
+age. As visible in Figure \ref{fig:co2_and_emissions}, this rise is closely related to the total carbon emissions caused by human activities. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{snow_basics/co2_and_emissions.png}
+    \caption{Visual superposition of $\text{CO}_2$ concentration in the atmosphere and cumulative $\text{CO}_2$ emissions made by mankind. 
+    Image adapted from \cite{co2_conce}.}
+    \label{fig:co2_and_emissions}
+\end{figure}
+
+Relative to the 1850--1900 climatology, the global mean surface air temperature observed over the 2010--2019 period was about $\SI{1.1}{\degreeCelsius}$ 
+higher, and anthropogenic forcing alone is estimated to account for $\SIrange{0.9}{1.3}{\degreeCelsius}$ of this increase, with the best estimate 
+being $\SI{1.07}{\degreeCelsius}$ \parencite{atro_forcing}, thus explaining the vast majority of the measured signal. The warming has also accelerated 
+significantly in recent years, as the mean increase rate of roughly $\SI{0.18}{\degreeCelsius}$ per decade shown during the 1970--2010 period has 
+nearly doubled between 2010 and 2023 \parencite{temp_trend}. This behaviour is clearly visible in Figure \ref{fig:temperature_trend}, which shows 
+the time evolution of the global surface temperature anomaly with respect to the 1880--1920 mean.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{snow_basics/temperature_trend.png}
+    \caption{Global surface temperatures anomaly relative to the 1880--1920 average. Adapted from \cite{temp_trend}.}
+    \label{fig:temperature_trend}
+\end{figure}
