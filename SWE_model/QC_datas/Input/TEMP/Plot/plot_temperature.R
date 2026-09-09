@@ -14,8 +14,8 @@ find_total_min_max <- function(years){
   max_p <- 0
   min_p <- 0
   
-  for(y in years){
-    fname <- paste0("../../../Input/TEMP/temperatures_", y, ".nc")
+  for(y in years[1]){
+    fname <- paste0("../../../Input/TEMP/", y, ".nc")
     if(!file.exists(fname)) stop(paste0("No temperature file for ", y))
     
     nc <- nc_open(fname)
@@ -73,14 +73,14 @@ lims <- find_total_min_max(years = years)
 print("Maximum temperature value found!")
 
 # Cycle over years
-for(y in years){
-  fname <- paste0("../../../Input/TEMP/temperatures_", y, ".nc")
+for(y in years[1]){
+  fname <- paste0("../../../Input/TEMP/", y, ".nc")
   if(!file.exists(fname)) stop(paste0("No temperature file for ", y))
   
   # Opening precipitation maps
   nc <- nc_open(fname)
-  lon <- ncvar_get(nc,"lon")
-  lat <- ncvar_get(nc,"lat")
+  lon <- ncvar_get(nc,"longitude")
+  lat <- ncvar_get(nc,"latitude")
   tmax <- ncvar_get(nc,"tmxd", start = c(1, 1, 1), count = c(-1, -1, 1))
   nc_close(nc)
   

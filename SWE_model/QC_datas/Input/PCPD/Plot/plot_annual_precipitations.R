@@ -45,7 +45,7 @@ plot_annual_prec <- function(annual_prec, max_p, lon, lat, year, out_dir = "Imag
   # Plotting procedure
   p <- ggplot(df_plot, aes(x = lon, y = lat, fill = precipitation)) +
     geom_raster() +
-    coord_equal() +
+    coord_quickmap() +
     scale_fill_viridis_c(
       name = "Precipitation", 
       limits = c(0, max_p)
