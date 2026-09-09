@@ -153,7 +153,17 @@ the turbulent fluxes of sensible and latent heat, governed by the action of turb
 energy exchange associated with precipitation, since rainfall carries additional heat that must be distributed within the snowpack. Finally, $G$ 
 represents the energy exchange with the ground, which is especially important during the deposition of the first snow layer. Each term in Equation 
 \eqref{eq:energy_balance} is expressed in $\SI{}{\watt\per\meter\squared}$ and, by convention, a positive sign indicates an energy flux directed into 
-the snow layer. 
+the snow layer. A schematic representation of the energy balance is provided in Figure \ref{fig:energy_balance}: radiative contributions are 
+discussed in more detail below.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{snow_basics/energy_balance.jpeg}
+    \caption{Schematic representation of the energy balance of a snowpack. Shortwave (SW) and longwave (LW) radiation, originating from the Sun and 
+    from thermal emission respectively, make up the net radiative budget $R_N$. The internal energy of the snowpack $\mathcal{H}$ can also be altered 
+    by the turbulent heat fluxes $H_S$ and $H_L$, the precipitation heat flux $H_P$ and the ground heat flux $G$. Image adapted from \cite{libro_SNOW}.}
+    \label{fig:energy_balance}
+\end{figure}
 
 To fully understand the term $R_N$, it is essential to consider the dual nature of radiation in the atmosphere. Two distinct sources of radiation can in 
 fact be identified: the Sun, with a surface temperature of around $\SI{5800}{\kelvin}$, and the Earth-atmosphere system, whose temperature 
@@ -249,7 +259,7 @@ site is known, the two quantities are related by
 so that the two definitions coincide on flat terrain ($\phi\,=\,0$) and progressively diverge as the slope steepens. The geometrical meaning of Equation 
 \eqref{eq:hs_to_ds} is illustrated in Figure \ref{fig:depth_vs_thicness}. Both quantities are expressed in $\SI{}{\centi\meter}$ and are usually rounded 
 to the 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.7\linewidth]{snow_basics/depth_vs_thicness.png}
     \caption{Relationship between snow depth (HS) and snow thickness (DS) on a slope. Image adapted from \cite{snow_instrument}.}
@@ -346,7 +356,15 @@ of sensors, such as:
 In alpine catchments and at high latitudes, these sensors are typically complemented by additional instruments specifically dedicated to snow monitoring.
 Mounted together on the same tripod or mounting structure, as shown in Figure \ref{fig:station_close_up}, they constitute what is referred to as an 
 alpine automatic weather station, a key tool for the study of snow related dynamics.
-
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{snow_basics/aws.png}
+    \caption{The AWS UPE\_L which is part of an automated network of the Programme for Monitoring of the Greenland Ice Sheet 
+    (PROMICE). The constituents are respectively: (1) radiometer LW + SW, (2) inclinometer, (3) satellite antenna, (4) anemometer and wind vane, 
+    (5) snow depth sensor, (6) thermometer and hygrometer, (7) pressure transducer, (8) solar panel, (9) data logger and GPS, (10) battery box and 
+    (11) ground temperature sensor. Image adapted from \cite{image_aws}.}
+    \label{fig:station_close_up}
+\end{figure}
 Automated HS measurements can be performed using instruments based on either sonic or optical (laser) technology. Sonic sensors transmit an 
 ultrasonic pulse towards the snow surface and detect the returning echo. Since the speed of sound depends on meteorological conditions, a concurrent 
 temperature reading is required to ensure accuracy. Laser instruments, by contrast, determine the distance to the target surface through 
@@ -359,17 +377,7 @@ In both cases, the sensor measures the distance to the upper surface of the snow
 \end{equation}
 The zero depth distance must be determined before snow accumulates and constitutes a key step in instrument calibration. To ensure reliable 
 measurements, the sensor should be positioned well above the maximum expected snow depth, preventing burial and the consequent loss of data during 
-winter. Minimizing interference from 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\linewidth]{snow_basics/aws.png}
-    \caption{The AWS UPE\_L which is part of an automated network of the Programme for Monitoring of the Greenland Ice Sheet 
-    (PROMICE). The constituents are respectively: (1) radiometer LW + SW, (2) inclinometer, (3) satellite antenna, (4) anemometer and wind vane, 
-    (5) snow depth sensor, (6) thermometer and hygrometer, (7) pressure transducer, (8) solar panel, (9) data logger and GPS, (10) battery box and 
-    (11) ground temperature sensor. Image adapted from \cite{image_aws}.}
-    \label{fig:station_close_up}
-\end{figure}
-the support structure is equally important, since the mast itself acts as a wind obstacle and may induce 
+winter. Minimizing interference from the support structure is equally important, since the mast itself acts as a wind obstacle and may induce 
 measurement artefacts. For this reason, HS sensors are typically mounted on a horizontal arm stretching outward from the pole, keeping the target 
 area sufficiently far from the mounting structure.
 
@@ -463,35 +471,35 @@ spaceborne techniques have been developed:
 % Citare UNFCCC
 Climate change is conventionally defined as an alteration of the climate attributed, directly or indirectly, to human activities that modify the 
 composition of the global atmosphere. This anthropogenic signal is superimposed on the natural variability of the climate system and must therefore 
-be disentangled from a background of spontaneous fluctuations. Over the past few million years, such fluctuations have produced a cyclic alternation 
+be disentangled from a background of spontaneous fluctuations. Over the past few million years, such natural fluctuations have produced a cyclic alternation 
 between glacial periods, lasting roughly \num{100000} years, and warmer interglacial conditions. These climatic oscillations are caused by periodic 
 variations in the orbital parameters governing Earth's revolution around the sun, which generate a weak radiative forcing that is subsequently 
 amplified by snow albedo and greenhouse gas feedbacks \parencite{iceage_orbit}.
 
 The ongoing global warming, however, cannot be attributed to natural variability, as it is primarily driven by the large amounts of greenhouse gases 
 released into the atmosphere by human activities. These gaseous compounds, of which carbon dioxide ($\text{CO}_2$) is the best known, partially absorb 
-the longwave radiation emitted by Earth's surface and re-emit it in all directions, so that only a fraction of this energy escapes, thus causing an 
-increase in surface air temperature. Since the Industrial Revolution the atmospheric $\text{CO}_2$ concentration has risen steadily, from about 
-\num{278} part per million (ppm) in pre-industrial times to $\SI{422.8}{ppm}$ in 2024 \parencite{co2_conce}. During the last 60 years, atmospheric 
-$\text{CO}_2$ has risen nearly 100 times faster than during previous natural increases, and present day concentrations exceed those preserved in the ice 
-core record of the last 800 kyr, as visible in Figure \ref{fig:co2_800k}. 
-\begin{figure}[H]
+the longwave radiation emitted by Earth's surface and re-emit it in all directions. A fraction of this energy is thus returned to the surface instead 
+of escaping to space, resulting in an increase in near-surface air temperature. Since the Industrial Revolution the atmospheric $\text{CO}_2$ 
+concentration has risen steadily, from about \num{278} part per million (ppm) in pre-industrial times to $\SI{422.8}{ppm}$ in 2024 \parencite{co2_conce}. 
+During the last 60 years, atmospheric $\text{CO}_2$ has risen nearly 100 times faster than during previous natural increases, and present day 
+concentrations exceed those preserved in the ice core records of the last 800000 years, as shown in Figure \ref{fig:co2_800k}. 
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\linewidth]{snow_basics/co2_800k.png}
-    \caption{Evolution of $\text{CO}_2$ concentration in the atmosphere over the last 800 kyr years. Image adapted from \cite{co2_800k}.}
+    \includegraphics[width=\linewidth]{snow_basics/co2_800k.png}
+    \caption{Evolution of $\text{CO}_2$ concentration in the atmosphere over the last 800000 years. Image adapted from \cite{co2_800k}.}
     \label{fig:co2_800k}
 \end{figure}
 
 Relative to the 1850--1900 climatology, the global mean surface air temperature observed over the 2010--2019 period was about $\SI{1.1}{\degreeCelsius}$ 
 higher, and anthropogenic forcing alone is estimated to account for $\SIrange{0.9}{1.3}{\degreeCelsius}$ of this increase, with the best estimate 
-being $\SI{1.07}{\degreeCelsius}$ \parencite{atro_forcing}, thus explaining the vast majority of the measured signal. The warming has also accelerated 
-significantly in recent years, as the mean increase rate of roughly $\SI{0.18}{\degreeCelsius}$ per decade shown during the 1970--2010 period has 
-nearly doubled between 2010 and 2023 \parencite{temp_trend}. This behaviour is clearly visible in Figure \ref{fig:temperature_trend}, which shows 
-the time evolution of the global surface temperature anomaly with respect to the 1880--1920 mean.
+being $\SI{1.07}{\degreeCelsius}$ \parencite{atro_forcing}. The warming has also accelerated 
+significantly in recent years, as the mean increase rate of roughly $\SI{0.18}{\degreeCelsius}$ per decade typical of the 1970--2010 period has 
+nearly doubled between 2010 and 2023 \parencite{temp_trend}. These trends are illustrated in Figure \ref{fig:temperature_trend}, which shows the 
+global surface temperature anomaly relative to the 1880--1920 average. 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\linewidth]{snow_basics/temperature_trend.png}
-    \caption{Global surface temperatures anomaly relative to the 1880--1920 average. Adapted from \cite{temp_trend}.}
+    \includegraphics[width=\linewidth]{snow_basics/temperature_trend.png}
+    \caption{Global surface temperature anomaly relative to the 1880--1920 average. Adapted from \cite{temp_trend}.}
     \label{fig:temperature_trend}
 \end{figure}
 
@@ -515,7 +523,7 @@ decreasing from approximately \num{12.5} million $\SI{}{\kilo\meter\squared}$ in
 southernmost regions of the Arctic, as shown in Figure \ref{fig:sea_ice_season}. 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\linewidth]{snow_basics/sea_ice_season.png}
+    \includegraphics[width=\linewidth]{snow_basics/sea_ice_season.png}
     \caption{Comparison between the sea ice seasons in 1979 and 2021. Image adapted from \cite{sea_ice_extent}.}
     \label{fig:sea_ice_season}
 \end{figure}
@@ -534,7 +542,7 @@ snowpacks and glacier ice in these regions will be further affected by a warming
 
 \subsection{Impacts on the seasonal snow cover}
 
-The seasonal snow cover is also strongly affected by the consequences of climate change, as air temperature determines whether precipitation falls 
+The seasonal snow cover is clearly affected by the consequences of climate change, as air temperature determines whether precipitation falls 
 in solid or liquid form and regulates the amount of energy available for melt. At the hemispheric scale, snow cover duration (SCD) shows a marked 
 negative trend of \num{-0.44} days $\text{year}^{-1}$ \parencite{scd_trend_hemisphere}. This decline can be attributed to an earlier onset of spring 
 melt: over the 1967--2026 period, the mean snow covered area in April has been shrinking by \num{0.43} million $\SI{}{\kilo\meter\squared}$ per 
@@ -543,8 +551,8 @@ decadal reduction accounts for 14.51\% of the corresponding monthly average, or 
 Total snow mass also exhibits a negative trend at the hemispheric scale, regardless of the period taken into account. This temporal trends, however, 
 show a significant spatial variability, as peak snow mass over North America is currently declining by $\SI{-46}{\giga\tonne}$ per decade, whereas no 
 significant trend is detected over Eurasia, where losses on the European portion are compensated by enhanced snowfall in Siberia. This increase in 
-over Northern Russia is also driven by climate change, as warmer air has a higher water holding capacity causing a shift in precipitation patters 
-\parencite{snow_mass_NH}.
+snow mass over Northern Russia is also driven by climate change, as warmer air has a higher water holding capacity causing a shift in precipitation 
+patters \parencite{snow_mass_NH}.
 
 A similar picture emerges when focusing on mountainous regions, as aggregate trends over global mountain areas are slightly negative, with an 
 average reduction in snow cover extent of $3.6\pm2.7$ \% and a decrease in snow cover duration of $15.6\pm11.6$ days over the 1982--2020 period. 
@@ -552,7 +560,7 @@ Despite the overall reduction at the global scale, the results show substantial 
 driven by climatic forcing may still occur, as visible in Figure \ref{fig:scd_trend_mountainous_globe}. 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\linewidth]{snow_basics/scd_trend_mountains_globe.png}
+    \includegraphics[width=\linewidth]{snow_basics/scd_trend_mountains_globe.png}
     \caption{Trends in snow cover duration over mountainous terrain between 1982 and 2020. Underlined areas indicate trends that are significant at 
     95\% confidence level. Image adapted from \cite{scd_trend_mountains}.}
     \label{fig:scd_trend_mountainous_globe}
@@ -563,4 +571,23 @@ winter westerly disturbance, whereas the neighboring Himalayas experienced signi
 Within this heterogeneous picture the European Alps emerge as a particularly critical region. This vulnerability arises from the combined effects of 
 their mid-latitude location and relatively modest elevations, which cause a substantial fraction of the snowpack to remain close to the melting point 
 throughout the snow season. Under such conditions, even a slight increase in air temperature can lead to sudden changes in snowfall and snow ablation 
-patterns.
+patterns. This is documented by the Swiss meteorological network, whose records show a clearly decreasing trend in the ratio of snowfall days to 
+precipitation days between 1961 and 2008. In particular, present day values for December, January, and February are similar to those observed in 
+November and March during the 1960s, and the decline is more pronounced below $\SI{1400}{\meter}$ a.s.l., where winter temperatures are already 
+close to $\SI{0}{\degreeCelsius}$ \parencite{snow_days_ratio}. The same elevation dependence is found in snow depth across the entire European Alps: 
+below $\SI{1000}{\meter}$ a.s.l. the average HS over November-May decreased by up to \num{10} \% per decade between 1971 and 2019, whereas above 
+$\SI{2000}{\meter}$ a.s.l. the reduction was only about \num{2.4} \% every ten years. This asymmetry is reflected in the duration of snow cover, which over the 
+same period shortened on average by \num{6.5} \% per decade below $\SI{1000}{\meter}$ a.s.l. and just by \num{0.5} \% per decade above 
+$\SI{2000}{\meter}$ of elevation \parencite{Matiu_HS}. The shortening of the snow season is driven, as on the hemispherical scale, by an earlier 
+melt-out of the snowpack, rather than by a delayed onset of snow accumulation. This phenomenon, combined with a declining amount of water stored 
+within the snowpack, is causing a shift in the hydrological cycle potentially exposing millions of people to summer droughts, as the snowmelt 
+contribution to streamflow is no longer sufficient to compensate water deficits later in the season.
+
+Model projections suggest that these negative trends will persist throughout the century, as a further decrease in seasonal snowpack extent, depth 
+and SWE is certain regardless of elevation and emission scenario. Mountainous areas below  $\SI{1200}{\meter}$ a.s.l.  will be the most affected, with 
+simulations showing almost snow free conditions by the end of the century. In a non-intervention scenario, significant losses are projected to 
+affect the highest peaks as well, with a decrease in HS by about \num{50} \% above $\SI{3000}{\meter}$ of elevation. Under these circumstances, the 
+accompanying changes in snow cover patterns would be roughly equivalent to an upward elevation shift of $\SI{750}{\meter}$. By contrast, a 
+substantial cut in greenhouse gas emissions would eventually lead to a stabilization in snow characteristics around the turn of the twenty-second 
+century, with losses settling at about \num{30} \% relative to present day rather than the \num{70} \% projected if no action were taken 
+\parencite{snow_future_proj}.
