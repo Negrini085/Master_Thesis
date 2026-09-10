@@ -6,7 +6,7 @@ gc()
 library(ncdf4)
 library(ggplot2)
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_model/QC_datas/Input/PCPD/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_model/QC_inputs/PCPD/")
 years <- 1951:2023
 
 # Function to find colormap limits
@@ -14,7 +14,7 @@ find_total_max <- function(years){
   max_p <- 0
   
   for(y in years){
-    fname <- paste0("../../../Input/PCPD/", y, ".nc")
+    fname <- paste0("../../Dataset/PCPD/", y, ".nc")
     if(!file.exists(fname)) stop(paste0("No precipitation file for ", y))
     
     nc <- nc_open(fname)
@@ -73,7 +73,7 @@ print("Maximum total precipitation value found!")
 
 # Cycle over years
 for(y in years){
-  fname <- paste0("../../../Input/PCPD/", y, ".nc")
+  fname <- paste0("../../Dataset/PCPD/", y, ".nc")
   if(!file.exists(fname)) stop(paste0("No precipitation file for ", y))
   
   # Opening precipitation maps
