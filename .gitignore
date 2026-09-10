@@ -58,7 +58,7 @@ SWE_calibration/Results
 SWE_calibration/sim_annealing
 SWE_calibration/appo_loss.dat
 
-SWE_model/Input
+SWE_model/Dataset
 SWE_model/QC_datas/Study_area/DEM
 
 # ---------------------------
