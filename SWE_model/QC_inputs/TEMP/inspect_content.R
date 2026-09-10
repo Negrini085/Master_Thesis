@@ -5,8 +5,8 @@ gc()
 
 library(ncdf4)
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_model/QC_datas/Input/TEMP/")
-f_name <- "../../../Dataset/TEMP/T_1951.nc"
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_model/QC_inputs/TEMP/")
+f_name <- "../../Dataset/TEMP/1951.nc"
 
 # Opening netCDF file of SWE
 nc <- nc_open(f_name)
@@ -29,4 +29,4 @@ dates <- as.Date("1951-01-01") + time
 
 target_date <- as.Date("1951-01-15")
 time_index <- which(dates == target_date)
-precip <- ncvar_get(nc,"tmxd", start = c(1, time_index), count = c(-1, 1))
+precip <- ncvar_get(nc,"tmxd", start = c(1, 1, time_index), count = c(-1, -1, 1))
