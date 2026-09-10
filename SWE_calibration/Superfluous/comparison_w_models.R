@@ -25,7 +25,7 @@ for(name in station_names){
   mask <- as.numeric(df_MINE$V1) > 1951
   df_MINE <- df_MINE[mask, ]
   
-  fname_MICH <- paste0("../Original_series/FILTERED_SNW/", name)
+  fname_MICH <- paste0("../../Backup/Original_series/FILTERED_SNW/", name)
   df_MICH <- read.table(fname_MICH, header = FALSE)
   
   mask <- as.numeric(df_MICH$V1) > 1951
