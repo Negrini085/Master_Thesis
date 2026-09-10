@@ -7,7 +7,7 @@ library(ncdf4)
 fillval <- -9999
 years <- 1951:2023
 output_dir <- "Dataset/Sequential/"
-input_dir <- "../../../SWE_calibration/Results/raw"
+input_dir <- "../../../SWE_calibration/Results/raw/"
 fname_anagrafica <- "../../../HS_series/Original/STATION_check/ANAGRAFICA"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_model/QC_datas/Model/")
 
