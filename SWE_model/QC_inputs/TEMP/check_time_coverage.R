@@ -3,11 +3,13 @@
 rm(list = ls())
 gc()
 
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_model/QC_datas/Input/TEMP/")
+library(ncdf4)
+
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_model/QC_inputs/TEMP/")
 years <- 1951:2023
 
 for(y in years){
-  fname <- paste0("../../../Input/TEMP/temperatures_", y, ".nc")
+  fname <- paste0("../../Dataset/TEMP/", y, ".nc")
   if(!file.exists(fname)) stop(paste0("No temperature file for ", y))
   
   # Opening precipitation file
