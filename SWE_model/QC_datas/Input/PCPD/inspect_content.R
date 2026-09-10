@@ -6,7 +6,7 @@ gc()
 library(ncdf4)
 
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_model/QC_datas/Input/PCPD/")
-f_name <- "../../../Input/PCPD/1951.nc"
+f_name <- "../../../Dataset/PCPD/PCPD_1951.nc"
 
 # Opening netCDF file of SWE
 nc <- nc_open(f_name)
@@ -23,8 +23,10 @@ cat("\n")
 # It's useful to note that you can get datas simply by using ncvar_get(). Time is an
 # integer number that starts from the first of january 1950.
 time <- ncvar_get(nc, "time")
-dates <- as.Date("1950-01-01") + time
+dates <- as.Date("1951-01-01") + time
 
 target_date <- as.Date("1951-01-15")
 time_index <- which(dates == target_date)
-precip <- ncvar_get(nc,"total_precipitation", start = c(1, 1, time_index), count = c(-1, -1, 1))
+print(time_index)
+precip <- ncvar_get(nc,"prec", start = c(1, time_index), count = c(-1, 1))
+print(precip)

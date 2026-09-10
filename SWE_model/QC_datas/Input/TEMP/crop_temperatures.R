@@ -9,7 +9,7 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_model/")
 outdir <- "Input/TEMP"
 dir.create(outdir, showWarnings = FALSE, recursive = TRUE)
 
-years <- 1951:2023
+years <- 2000:2023
 vars  <- c("tmxd", "tmd", "tmnd")
 
 for (y in years) {

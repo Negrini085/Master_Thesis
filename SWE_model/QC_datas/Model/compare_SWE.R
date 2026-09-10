@@ -5,10 +5,12 @@
 rm(list = ls())
 gc()
 
+library(ncdf4)
+
 years <- 1951:2023
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_model/QC_datas/Model/")
 
-for(y in years){
+for(y in years[43]){
   
   # Importing SWE datas
   fname_seq <- paste0("Dataset/Sequential/SWE_", y, ".nc")
@@ -23,12 +25,7 @@ for(y in years){
   
   if(dim(swe_ras)[1] != dim(swe_seq)[1]) stop(paste0("No compatible dims for ", y))
   if(dim(swe_ras)[2] != dim(swe_seq)[2]) stop(paste0("No compatible dims for ", y))
-  
+
   mask <- swe_ras != swe_seq
-  if(any(mask)){
-    
-    diff <- swe_ras[mask] - swe_seq[mask]
-    print(diff)
-    # stop(paste0("No compatible values during ", y))
-  } 
+  if(any(mask)){ stop(paste0("No compatible values during ", y)) }
 }
