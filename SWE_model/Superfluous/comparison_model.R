@@ -35,22 +35,14 @@ compute_solid_precipitations <- function(prec, tmnd, tmxd, t_th){
   precs <- prec 
   
   # Masking those pixels where at least the maximum temperature is above the threshold
-  mask <- tmnd <= t_th & tmxd > t_th & !is.na(prec) & !is.na(tmnd) & !is.na(tmxd) & prec > 0
+  mask <- tmnd <= t_th & tmxd > t_th & !is.na(prec) & prec > 0
   precs[mask] <- prec[mask]*(t_th - tmnd[mask])/(tmxd[mask] - tmnd[mask])
-  rm(mask); invisible(gc())
   
-  mask <- tmnd > t_th & !is.na(prec) & !is.na(tmnd) & !is.na(tmxd) & prec > 0
+  mask <- tmnd > t_th & !is.na(prec) & prec > 0
   precs[mask] <- 0
-  rm(mask); invisible(gc())
   
-  
-  # Deleting all the precipitation grid points which don't have corresponding temperatures
-  mask <- !is.na(precs) & (is.na(tmnd) | is.na(tmxd))
-  precs[mask] <- NA
-  rm(mask); invisible(gc())
-  
-  
-  # Returning solid precipitations
+  # Deleting mask in order to free up ram space and then returning solid precipitations
+  rm(mask); invisible(gc)
   return(precs)
 }
 
@@ -65,7 +57,7 @@ compute_ddf <- function(year, ddf_ave, ddf_ampl){
   
   ddf <- ddf_ave + ddf_ampl * sin(2 * pi * (idx - offset)/len)
   
-  if(!(year %% 4 == 0 && (year %% 100 != 0 || year %% 400 == 0))) ddf <- ddf[-60]
+  if(year %% 4 != 0) ddf <- ddf[-60]
   return(ddf)
 }
 
@@ -75,14 +67,9 @@ compute_ddf <- function(year, ddf_ave, ddf_ampl){
 # to avoid non-differentiability at zero degrees.
 compute_melt <- function(year, tmean, ddf_ave, ddf_ampl, expfact){
   
-  # Computing DDF and degree day
   ddf <- compute_ddf(year = year, ddf_ave = ddf_ave, ddf_ampl = ddf_ampl)
   deg_day <- tmean + expfact * log(1 + exp(-tmean/expfact))
-  
-  # Checking if number of days in a given year and the thickness of tmean match
-  # to finally compute melt
-  stopifnot(dim(tmean)[3] == length(ddf))
-  melt <- sweep(deg_day, 3, ddf, "*")
+  melt <- sweep(deg_day, 2, ddf, "*")   # DA CAMBIARE PER VERI RASTER
 
   return(melt)
 }
@@ -92,7 +79,7 @@ compute_melt <- function(year, tmean, ddf_ave, ddf_ampl, expfact){
 # as SWE keeps accumulating year after year in some locations.
 create_swe_container <- function(fname){
   nc <- nc_open(fname)
-  prec <- ncvar_get(nc, "total_precipitation", start = c(1, 1, 1), count = c(-1, -1, 1))
+  prec <- ncvar_get(nc, "prec", start = c(1, 1), count = c(-1, 1)) # DA CAMBIARE PER I VERI RASTER
   nc_close(nc)
   
   appo <- array(0, dim = dim(prec))
@@ -106,46 +93,31 @@ create_swe_container <- function(fname){
 # analysis and assess the amount of water stored within the snowpack. 
 save_annual_swe <- function(total, fname_template, fname_out){
   
+  # Opening netCDF file to rob template to
   nc <- nc_open(fname_template)
-  v <- nc$var[["total_precipitation"]]
-  if(is.null(v)){
-    on.exit(nc_close(nc))
-    stop("Variable 'total_precipitation' not found. You can choose between: ", 
-         paste(names(nc$var), collapse = ", ")
-         )
+  
+
+  # Copying the dimensions of the precipitation variable, one by one
+  dims <- list()
+  for(i in seq_along(nc$var$prec$dim)){
+    d <- nc$var$prec$dim[[i]]
+    dims[[i]] <- ncdim_def(name = d$name, units = d$units, vals = d$vals, unlim = d$unlim)
   }
-  stopifnot(length(v$dim) == 3)
-  
-  dims <- vector("list", 3)
-  for(i in seq_along(v$dim)){
-    d <- v$dim[[i]]
-    dims[[i]] <- ncdim_def(name = d$name, units = d$units, vals = d$vals,
-                           unlim = d$unlim,
-                           create_dimvar = isTRUE(d$create_dimvar),
-                           calendar = if(is.null(d$calendar)) NA else d$calendar)
-  }
-  nc_close(nc); rm(nc, v); invisible(gc())
+  nc_close(nc)
+  rm(nc); invisible(gc)
   
   
-  # Checking if netCDF container and SWE container dimensions match
-  lens <- vapply(dims, function(d) as.integer(d$len), integer(1))
-  stopifnot(identical(lens, as.integer(dim(total))))
-  
+  # Defining the new variable and writing it on disk
   swe <- ncvar_def(name = "swe", units = "mm", dim = dims, missval = -9999,
-                   longname = "Snow water equivalent", prec = "float",
-                   compression = 5)
+                   longname = "Snow water equivalent", prec = "float")
   
-  nc_out <- nc_create(fname_out, swe, force_v4 = TRUE)
-  ncvar_put(nc_out, "swe", total, start = c(1, 1, 1), count = dim(total))
+  nc_out <- nc_create(fname_out, swe)
+  ncvar_put(nc_out, swe, total)
   nc_close(nc_out)
   
-  rm(nc_out, swe, dims); invisible(gc())
+  rm(nc_out, swe, dims); invisible(gc)
+
 }
-
-
-
-
-
 
 
 
@@ -157,44 +129,36 @@ ddf_ampl <- as.numeric(df_in$ddf_ampl)
 expfact <- as.numeric(df_in$expfact)
 t_th <- as.numeric(df_in$tlim)
 
-if((ddf_ave - ddf_ampl) < 0){ stop("DDF is negative on some days: stopping! ") }
-
-appo <- create_swe_container("Dataset/PCPD/1951.nc")
+appo <- create_swe_container("Dataset/PCPD/PCPD_1951.nc")
 for(y in years){
   
   # File-names for precipitation and temperature dataset, to later use
-  fname_prec <- paste0("Dataset/PCPD/", y, ".nc")
-  fname_temp <- paste0("Dataset/TEMP/", y, ".nc")
+  fname_prec <- paste0("Dataset/PCPD/PCPD_", y, ".nc")
+  fname_temp <- paste0("Dataset/TEMP/T_", y, ".nc")
   
   # Importing temperature and precipitation grids in order to assess whether grid 
   # geometry is the same or not. In case of fail, we stop the script.
   prec <- rast(fname_prec)
   temp <- rast(fname_temp)
   
-  if(!compareGeom(prec, temp, stopOnError = FALSE)){
-    stop(paste0("No compatible grids for temperature and precipitation during ", y))
-  }
+  if(!compareGeom(prec, temp)) stop(paste0("No compatible grids for temperature and precipitation during ", y))
   rm(prec, temp)
-  invisible(gc())
+  invisible(gc)
   
   
   
   # Actually loading precipitation and temperature grids for a given year. Every layer corresponds to a day
   nc <- nc_open(fname_prec)
-  prec <- ncvar_get(nc, "total_precipitation")
+  prec <- ncvar_get(nc, "prec")
   nc_close(nc)
   
   nc <- nc_open(fname_temp)
   tmnd <- ncvar_get(nc, "tmnd")
   tmxd <- ncvar_get(nc, "tmxd")
-  stopifnot(identical(dim(tmnd), dim(tmxd)))
-  tmean <- (tmnd + tmxd)/2
+  tmean <- ncvar_get(nc, "tmean")
   nc_close(nc)
   
-  rm(nc); invisible(gc());
-  stopifnot(identical(dim(tmean), dim(prec)))
-  
-  
+  rm(nc); invisible(gc);
   
   
   
@@ -208,29 +172,27 @@ for(y in years){
   # Computing annual melt and then calling garbage cleaner in order to free up as 
   # many RAM as possible
   melt <- compute_melt(year = y, tmean = tmean, ddf_ave = ddf_ave, ddf_ampl = ddf_ampl, expfact = expfact)
-  rm(tmean); invisible(gc())
+  rm(tmean); invisible(gc)
   
   total <- array(NA_real_, dim = dim(melt))
-  for(i in 1:dim(total)[3]){
+  for(i in 1:dim(total)[2]){ # DA CAMBIARE PER I VERI RASTER
     
     # Adding solid precipitations and melt to the SWE map and later looking for 
     # negative values, as they must be set to zero
-    appo <- appo + precs[, , i] - melt[, , i]
+    appo <- appo + precs[, i] - melt[, i]  # DA CAMBIARE PER I VERI RASTER
     
     mask <- appo < 0 & !is.na(appo)
     appo[mask] <- 0
     
-    total[, , i] <- round(appo, 1)
+    rm(mask); invisible(gc)
+    total[, i] <- round(appo, 1)  # DA CAMBIARE PER I VERI RASTER
   }
-  rm(mask); invisible(gc())
   
-
   # Saving SWE data to file
-  total[is.na(total)] <- -9999
-  fname_template <- paste0("Dataset/PCPD/", y, ".nc")
-  fname_out <- paste0("Results/SWE_", y, ".nc")
+  fname_template <- paste0("Dataset/PCPD/PCPD_", y, ".nc")
+  fname_out <- paste0("QC_datas/Model/Dataset/Raster/SWE_", y, ".nc")
   save_annual_swe(total = total, fname_template = fname_template, fname_out = fname_out)
   
   rm(precs, melt, total); invisible(gc())
-  cat("Computed SWE maps for: ", y, "       Number of pixel NAs: ", sum(is.na(appo)),"\n")
+  cat("Done it for ", y, "\n")
 }
