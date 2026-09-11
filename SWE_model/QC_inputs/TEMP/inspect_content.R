@@ -6,7 +6,7 @@ gc()
 library(ncdf4)
 
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_model/QC_inputs/TEMP/")
-f_name <- "../../Dataset/TEMP/1951.nc"
+f_name <- "../../../../Backup/TEMP/temperatures_1951.nc"
 
 # Opening netCDF file of SWE
 nc <- nc_open(f_name)
