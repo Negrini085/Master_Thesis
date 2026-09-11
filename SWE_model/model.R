@@ -83,6 +83,9 @@ compute_melt <- function(year, tmean, ddf_ave, ddf_ampl, expfact){
   # to finally compute melt
   stopifnot(dim(tmean)[3] == length(ddf))
   melt <- sweep(deg_day, 3, ddf, "*")
+  
+  # Looking for eventual overflows
+  stopifnot(all(is.finite(melt) | is.na(melt)))
 
   return(melt)
 }
@@ -182,6 +185,7 @@ for(y in years){
   # Actually loading precipitation and temperature grids for a given year. Every layer corresponds to a day
   nc <- nc_open(fname_prec)
   prec <- ncvar_get(nc, "total_precipitation")
+  prec[!is.na(prec) & prec < 0] <- 0
   nc_close(nc)
   
   nc <- nc_open(fname_temp)
