@@ -5,11 +5,13 @@ rm(list = ls()); gc()
 library(ncdf4)
  
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_model/QC_inputs/TEMP/")
-years <- 1951:2023
+years <- 1951
 block <- 46L
 
 appo <- list()
 for (y in years) {
+  len <- 0
+  count <- 0
   fname <- paste0("../../../../Backup/TEMP/temperatures_", y, ".nc")
   if (!file.exists(fname)) stop("No temperature file for ", y)
    
@@ -29,39 +31,16 @@ for (y in years) {
     
     # Checking raster size
     stopifnot(identical(dim(tmin), dim(tmed)), identical(dim(tmed), dim(tmax)))
-    
-    # Checking temperature existence
-    # mask <- !is.na(tmin) & !is.na(tmax) & is.na(tmed)
-    # if(any(mask, na.rm = TRUE)) stop(paste0("Min and Max existing, Mean non existing during ", y))
-    #      
-    # mask <- !is.na(tmin) & is.na(tmax) & !is.na(tmed)
-    # if(any(mask, na.rm = TRUE)) stop(paste0("Min and Mean existing, Max non existing during ", y))
-    #      
-    # mask <- is.na(tmin) & !is.na(tmax) & !is.na(tmed)
-    # if(any(mask, na.rm = TRUE)) stop(paste0("Max and Mean existing, Min non existing during ", y))
-    # 
-    # mask <- !is.na(tmin) & is.na(tmax) & is.na(tmed)
-    # if(any(mask, na.rm = TRUE)) stop(paste0("Min existing, Max and Mean non existing during ", y))
-    # 
-    # mask <- is.na(tmin) & !is.na(tmax) & is.na(tmed)
-    # if(any(mask, na.rm = TRUE)) stop(paste0("Max existing, Min and Mean non existing during ", y))
-    # 
-    # mask <- is.na(tmin) & is.na(tmax) & !is.na(tmed)
-    # if(any(mask, na.rm = TRUE)) stop(paste0("Min and Max non existing, Mean existing during ", y))
-    
-    
+
          
     # Checking temperature inversion
+    count <- 0
     mask <- (tmin > tmed | tmed > tmax) & !is.na(tmin) & !is.na(tmed) & !is.na(tmax)
     if(any(mask, na.rm = TRUE)){
-      
-      # Counting how many inversions we have
-      len <- sum(mask, na.rm = TRUE)
-      cat("Year: ", y, ",    Inversions: ",  len, "\n")
-      
+
       # Ready to select longitude, latitude and day value
       idx <- which(mask, arr.ind = TRUE)
-      
+
       df <- data.frame(
         year = y,
         lon  = lon[idx[, 1]],
@@ -71,14 +50,19 @@ for (y in years) {
         tmed = tmed[mask],
         tmax = tmax[mask]
       )
-      
+
       appo[[length(appo) + 1L]] <- df
+      count <- sum(mask, na.rm = TRUE)
+      len <- len + count
     }
-     
+    
+    # Counting how many inversions we have
     rm(tmax, tmin, tmed)
     invisible(gc())
   }
-   
+  
+  cat("Year: ", y, "    Inversions: ",  len, "\n")
+  
   nc_close(nc)
   cat("Checked", y, "\n")
 }
