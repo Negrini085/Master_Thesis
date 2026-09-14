@@ -407,7 +407,7 @@ period that roughly corresponds to the snow season in non glacierized areas.
 
 \subsection{GEOtop 2.0}
 
-GEOtop 2.0 is a physically based model that simulates the heat and  water budgets at and below the ground surface. Its primary focus is therefore the 
+GEOtop 2.0 is a physically based model that simulates the heat and water exchanges at and below the ground surface. Its primary focus is therefore the 
 accurate reproduction of soil dynamics, including freezing and thawing processes as well as snow cover properties, whenever thermal and meteorological 
 conditions allow. 
 
@@ -419,33 +419,99 @@ during freezing and thawing processes and, consequently, the densities of liquid
 The simulated snowpack is directly coupled to the modelled soil, since the snow cover buffers the exchanges of energy and mass between the atmosphere and 
 the ground. The heat and water content equations of the two media are solved as a single system by means of a time-lagged approach, whereby the coupling 
 terms at time $t$ are replaced by their values at the previous time step $t-1$. This numerical method reduces the complexity of the problem, as each 
-equation can then be solved separately at time $t$, while preserving stability and first order accuracy.
+equation can then be solved separately at time $t$, while preserving stability and first order accuracy. Within each timestep, the snowpack is simulated 
+by computing, in sequence:
 
-In GEOtop 2.0, the snowpack is simulated by computing, in sequence, heat exchanges, snow metamorphism, water percolation and snow accumulation. The energy 
-balance of the snow cover is treated as in Equation \eqref{eq:energy_balance}, as variations of the modelled internal energy are driven by shortwave and 
-longwave radiative processes, turbulent heat fluxes, precipitation heat fluxes and ground heat fluxes. A distinctive feature of this model is that these 
-terms are computed taking into account the complexity of the terrain, which is particularly relevant in mountainous areas. The direct component of the 
-shortwave radiation is corrected for shading, as the surrounding topography could hide 
-
-\begin{equation}
-    to do
-    \label{eq:scf_PO}
-\end{equation}
+\begin{itemize}[label=$\blacktriangleright$]
+    \item \textit{heat exchanges}, whose treatment follows the general framework presented in Chapter \ref{cap:snow_basics}, since, in GEOtop 2.0, internal 
+    energy fluctuations are driven by shortwave and longwave radiative forcing, turbulent heat fluxes, precipitation heat fluxes and ground heat 
+    fluxes. A distinctive feature of this model is that these terms are computed taking into account the complexity of the terrain, which is particularly 
+    relevant in mountainous areas. The direct component of the shortwave radiation is indeed corrected for shading, since the surrounding topography can 
+    hide the simulated pixel from the Sun, whereas the diffuse SW component is computed as the sum of the solar radiation scattered by the atmosphere and 
+    of the shortwave radiation reflected by the portion of terrain visible from the pixel. Analogous corrections are applied to the thermal radiation, 
+    which in mountainous regions typically originates both from the atmosphere and from the surrounding slopes. The topography also affects turbulent heat 
+    fluxes, since it can generate localized wind patterns and a marked variability in the latent and sensible heat exchanges. 
+    \item \textit{snow metamorphism}, restricted to its destructive form. Constructive metamorphism, which leads to the formation of different snow crystal 
+    shapes such as hoar layers, is not taken into account, as it is mainly relevant to avalanche forecasting, a purpose that differs considerably from the 
+    hydrological one for which this model was developed. Compaction can therefore only result from destructive metamorphism acting on newly fallen snow and 
+    from the overburden exerted by the overlying snowpack, so that the thickness of a snow layer evolves according to 
+    \begin{equation}
+        \frac{1}{D}\frac{\partial D}{\partial t}\,=\,C_1\,+\,C_2,
+        \label{eq:layer_thickness_change_GEOtop}
+    \end{equation}
+    where $D$ is the vertical extent of the simulated layer, $C_1$ is the compaction rate resulting from destructive metamorphism and $C_2$ is the compaction 
+    rate caused by the overlying snow. Equation \eqref{eq:layer_thickness_change_GEOtop} is integrated with the same time step of the heat equation.
+    \item \textit{water percolation}, which can be evaluated by solving a mass conservation equation. The water balance of each snow layer is indeed given 
+    by 
+    \begin{equation}
+    \frac{\partial \theta_{\mathrm{w}}^{\mathrm{fl}}}{\partial t}
+    + \nabla \cdot \boldsymbol{J}_{\mathrm{w}} + S_{\mathrm{w}} = 0 ,
+    \label{eq:liquid_water_content}
+    \end{equation}
+    where $\theta_{\mathrm{w}}^{\mathrm{fl}}$ is the liquid water content, $\boldsymbol{J}_{\mathrm{w}}$ the flux of liquid water and $S_{\mathrm{w}}$ the 
+    liquid water sink term. No percolation occurs untill the liquid water content exceeds the saturation threshold of $3\%$ to $5\%$ of the snow layer mass
+    (see Chapter \ref{cap:snow_basics}). Refreezing in sub-freezing layers is also accounted for: the internal energy carried by the water flux is tracked, 
+    and latent heat is released whenever refreezing occurs.
+    \item \textit{snow accumulation}, which is computed by means of a two air temperature threshold approach. Precipitation is assumed to fall entirely as 
+    rain above the upper threshold and entirely as snow below the lower one, while in between the liquid and solid phases coexist and the solid fraction is 
+    obtained by linear interpolation. The new snow density depends on both air temperature and wind speed, since it is evaluated as 
+    \begin{equation}
+        \rho_{\mathrm{ns}} =
+        \begin{cases}
+            500 - 475.5\exp\!\left[-1.4(5.0 - T)^{-1.15}
+            - 8 \cdot \dfrac{v_{\mathrm{w}}^{1.7}}{1000}\right] \\[1ex]
+            \qquad \text{if } T > -13^{\circ}\mathrm{C} \\[3ex]
+            500 - 452.0\,\exp\!\left[-8 \cdot \dfrac{v_{\mathrm{w}}^{1.7}}{1000}\right] \\[1ex]
+            \qquad  \text{elsewhere,}
+        \end{cases}
+        \label{eq:rho_swe_snow_GEOtop}
+    \end{equation}
+    where $T$ is the air temperature and $v_w$ is the wind speed.
+\end{itemize}
 
 
 
 \subsection{Results}
 
-\begin{figure}[H]
+The total volume of water stored within the snowpack shows substantial year-to-year variability, as shown in Figure \ref{fig:evo_swe_tot_PO}, with 
+an average peak value of $6.7 \pm 2.3 \,\SI{}{\giga\meter\cubed}$ typically reached on $20 \text{March} \,\pm\,25$ days. This date is compatible within 
+one standard deviation with the 1\textsuperscript{st} of April, which is the date conventionally used as a proxy for maximum SWE in snow literature.
+
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{snow_products/evo_swe_tot_PO.png}
-    \caption{MODIS}
+    \caption{Daily evolution of the total water volume stored within the snowpack in the mountainous portion of the Po River District. The investigated 
+    period spans from 3 October 1991 to 1 July 2021. Data are from the Po River District snow dataset \parencite{Po_snow}}
     \label{fig:evo_swe_tot_PO}
 \end{figure}
 
+The vast majority of this peak SWE is stored above
 
-
-
+\begin{table}[tb]
+  \centering
+  \caption{Po Basin}
+  \label{tab:peak_swe_elevation_wise_PO}
+  \renewcommand{\arraystretch}{1.3}
+  \renewcommand{\tabularxcolumn}[1]{m{#1}}   % X centrate verticalmente
+  \setlength{\tabcolsep}{6pt}
+  \footnotesize
+  \begin{tabularx}{\textwidth}{@{}
+      >{\raggedright\arraybackslash}m{3.0cm}
+      >{\raggedright\arraybackslash}m{3.0cm}
+      >{\raggedright\arraybackslash}m{3.0cm}
+      >{\raggedright\arraybackslash}X @{}}
+    \toprule
+    \textbf{Elevation band} & \textbf{Peak SWE} & \textbf{Peak date} & \textbf{SWE trend} \\
+    \midrule
+    0 - 500 m & $0.08 \pm 0.06 \,\SI{}{\giga\meter\cubed}$ & 10 Jan $\pm$ 33 days &  $-\,\SI{0.01}{\giga\meter\cubed}$/decade (p = 0.10)\\
+    500 - 1000 m & $0.22 \pm 0.11 \,\SI{}{\giga\meter\cubed}$ & 13 Jan $\pm$ 32 days & $-\,\SI{0.02}{\giga\meter\cubed}$/decade (p = 0.41)\\
+    1000 - 1500 m & $0.63 \pm 0.39 \,\SI{}{\giga\meter\cubed}$ & 04 Feb $\pm$ 29 days & $-\,\SI{0.06}{\giga\meter\cubed}$/decade (p = 0.30)\\
+    1500 - 2000 m & $1.6 \pm 0.8 \,\SI{}{\giga\meter\cubed}$ & 06 Mar $\pm$ 23 days & $+\,\SI{0.06}{\giga\meter\cubed}$/decade (p = 0.50)\\
+    2000 - 2500 m & $2.7 \pm 0.9 \,\SI{}{\giga\meter\cubed}$ & 05 Apr $\pm$ 19 days & $+\,\SI{0.21}{\giga\meter\cubed}$/decade (p = 0.27)\\
+    > 2500 m& $2.3 \pm 0.6 \,\SI{}{\giga\meter\cubed}$ & 30 Apr $\pm$ 17 days & $+\,\SI{0.19}{\giga\meter\cubed}$/decade (p = 0.20)\\
+    \bottomrule
+  \end{tabularx}
+\end{table}
 
 
 
@@ -464,7 +530,7 @@ different periods, the comparisons reported hereafter are carried out over the l
 clarity, Table \ref{tab:dataset_car} summarizes the main characteristics of each snow product, thereby clarifying the rationale behind some of the 
 comparison choices.
 
-\begin{table}[tb]
+\begin{table}[H]
   \centering
   \caption{Main characteristics of each snow product.}
   \label{tab:dataset_car}
