@@ -56,5 +56,5 @@ for(y in years){
   nc_close(ncout)
   
   rm(swe, snow_cover); gc()
-  cat("Taken into account hydrological year", y, "of our record!", "\n")
+  cat("Taken into account year", y, "of our SWE record!", "\n")
 }
