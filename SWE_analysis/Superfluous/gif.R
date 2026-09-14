@@ -18,7 +18,7 @@ europe <- ne_countries(continent = "Europe", scale = 10, returnclass = "sf")
 
 
 # Opening SWE raster
-nc <- nc_open(filename = paste0("Dataset/SWE_", year, ".nc"))
+nc <- nc_open(filename = paste0("Dataset/SWE/SWE_", year, ".nc"))
 lat <- ncvar_get(nc, "lat")
 lon <- ncvar_get(nc, "lon")
 time <- ncvar_get(nc, "time")
