@@ -62,7 +62,7 @@ swe_def <- ncvar_def(
   compression = 5
 )
 
-ncout <- nc_create("Results/mean_swe_maps_hydro_1952_to_2023.nc", swe_def, force_v4 = TRUE)
+ncout <- nc_create("Results/SWE/mean_swe_maps_hydro_1952_to_2023.nc", swe_def, force_v4 = TRUE)
 ncvar_put(ncout, swe_def, swe)
 
 ncatt_put(ncout, "lon", "axis", "X")
