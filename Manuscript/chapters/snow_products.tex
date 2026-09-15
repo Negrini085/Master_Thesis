@@ -293,33 +293,24 @@ characterising mountainous terrain, which contraints the ratio regardless of the
 \section{IT-Snow}
 \label{sec:it_snow}
 
-IT-SNOW is a high resolution, multi-year snow reanalysis dataset covering the entire Italian peninsula at a spatial resolution of 
-roughly $\SI{500}{\meter}$. This dataset consist of daily maps of snow water equivalent (SWE), snow depth (HS), bulk snow density 
-and liquid water content of the snowpack, spanning the period from September $1^{st}$, 2010 to August $31^{st}$, 2025 in its latest 
-release. IT-SNOW is the output of S3M Italy, a real-time operational monitoring chain developed by CIMA Research Foundation and 
-specifically designed for large scale applications, with the aim of serving as a valuable tool within flood forecasting frameworks. 
-This model achieves a high level of performance by focusing on the key drivers of snow evolution, namely total precipitation, air 
-temperature, relative humidity, and total radiation, thereby providing a spatially consistent reconstruction of snowpack dynamics.
+IT-SNOW is a high resolution, multi-year snow reanalysis covering the entire Italian peninsula at a spatial resolution of roughly $\SI{500}{\meter}$. 
+This dataset consist of daily maps of snow water equivalent (SWE), snow depth (HS), bulk snow density and liquid water content of the snowpack, spanning 
+the period from \num{1} September \num{2010} to \num{31} August \num{2025} in its latest release. IT-SNOW is the output of S3M Italy, a real-time 
+operational monitoring chain developed by CIMA Research Foundation and specifically designed for large scale applications, with the aim of serving as a 
+valuable tool within flood forecasting frameworks. This model achieves a high level of performance by focusing on the key drivers of snow evolution, 
+namely total precipitation, air temperature, relative humidity, and total radiation, thereby providing a spatially consistent reconstruction of snowpack 
+dynamics.
 
 
 
 \subsection{S3M}
 \label{subsec:s3m}
 
-S3M, also known as \textit{Snow Multidata Mapping and Modelling}, is a hydrology oriented cryospheric model developed to simulate 
-the spatial and temporal evolution of seasonal snowpack. It adopts a raster based approach, in which neighbouring pixels are treated 
-as independent units, so that horizontal mass and energy transport is neglected. All input and output variables are therefore 
-spatially distributed, and the simulated snowpack represents the average conditions within each grid cell. The model provides daily 
-(or even hourly) rasters of snow water equivalent (SWE), snow depth (HS), bulk snow density and liquid water content. From these 
-outputs, the snow cover fraction (SCF) of each pixel can be computed as 
-\begin{equation}
-    \text{SCF}\,=\,\text{min}\left(1,\,\frac{\text{SWE [mm]}}{0.1 \cdot \rho_{s}}\right),
-    \label{eq:scf_ITSNOW}
-\end{equation}
-where $\rho_{s}$ is the bulk snow density \parencite{scf_ITSNOW}. Since a pixel is conventionally regarded as snow covered when at 
-least half of its area is, binary snow extent maps are obtained by assigning a value of one to all grid points with $\text{SCF}>0$, 
-and zero elsewhere. Beside deepening the knowledge of snowpack properties, this quantity also provides a direct term of comparison 
-with satellite snow cover products such as MODIS.
+S3M, also known as \textit{Snow Multidata Mapping and Modelling}, is a hydrology oriented cryospheric model developed to simulate the spatial and temporal 
+evolution of seasonal snowpack. It adopts a raster based approach, in which neighbouring pixels are treated as independent units, so that horizontal mass 
+and energy transport is neglected. All input and output variables are therefore spatially distributed, and the simulated snowpack represents the average 
+conditions within each grid cell. The model provides daily (or even hourly) rasters of snow water equivalent (SWE), snow depth (HS), bulk snow density and 
+liquid water content. 
 
 Within S3M, seasonal snow is partitioned into a dry component, corresponding to the ice matrix, and a wet component, given by the 
 interstitial liquid water. These two constituents are modelled separately, and their mutual interactions govern the overall snowpack 
@@ -397,6 +388,15 @@ integration time step, although this can be adjusted by the user to meet specifi
 
 
 \subsection{Results}
+
+SWE maps, coupled with snow density ones, can be used to retrieve the snow cover fraction for each pixel as
+\begin{equation}
+    \text{SCF}\,=\,\text{min}\left(1,\,\frac{\text{SWE [mm]}}{0.1 \cdot \rho_{s}}\right),
+    \label{eq:scf_ITSNOW}
+\end{equation}
+where $\rho_{s}$ is the bulk snow density \parencite{scf_ITSNOW}. Since a pixel is conventionally regarded as snow covered when at least half of its area 
+is, binary snow cover maps are obtained by assigning a value of one to all grid points with $\text{SCF}>0.5$, and zero elsewhere. Beside deepening the 
+knowledge of snowpack properties, this quantity also provides a direct term of comparison with satellite snow cover products such as MODIS.
 
 The IT-SNOW reanalysis provides daily, high-resolution estimates of snow properties, which are a key input for hydrological 
 applications. Over the 2011-2025 period, peak SWE (intended as the total water volume stored in the snowpack) is on average 
