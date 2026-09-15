@@ -1,36 +1,43 @@
 \chapter{Snow products}
 \label{cap:snow_products}
 
-The previous chapter introduced the main physical processes governing the snowpack, showing that snow cover is a highly dynamic system which can be 
-investigated by means of several measurements techniques. None of them, however, can on its own describe every property of the snowpack over a wide 
+The previous chapter introduced the main physical processes governing the snowpack, and showed that snow cover is a highly dynamic system which can be 
+investigated by means of several measurements techniques. None of them, however, is able on its own describe every property of the snowpack over a wide 
 and morphologically complex region. Manual surveys and automatic weather stations provide accurate local observations, but their spatial 
-representativeness remains limited, since monitoring networks are often too sparse to capture the variability of the snowpack and are typically 
+representativeness is limited, since monitoring networks are often too sparse to capture the variability of the snowpack and are typically 
 biased toward low to intermediate elevations. Remote sensing, in contrast, provides the spatial coverage that ground observations lack, but at the 
-price of significant trade-offs in resolution, revisit time and the kind of variable that can be retrieved. MODIS, for instance, yields daily snow 
-cover maps at $\SI{500}{\meter}$ spatial resolution, but provides no hydrological insight, as it only discriminates between snow-covered and 
+price of significant trade-offs in resolution, revisit time and the type of variable that can be retrieved. MODIS, for instance, yields daily snow 
+cover maps at $\SI{500}{\meter}$ resolution, but provides no hydrological insight, as it only discriminates between snow-covered and 
 snow-free pixels. Remote sensing techniques targeting snow water equivalent (SWE), on the other hand, typically operate at resolutions of tens to 
 hundreds of kilometers, too coarse to resolve local topography and therefore suitable only for hydrological studies at the continental scale.  
 
-To overcome these limitations and obtain continuous information on snow variables across a given region, numerical models can be developed to 
-simulate the evolution of the snowpack under meteorological forcing. The simplest approaches rely solely on air temperature and total precipitation, taken 
+To overcome these limitations and obtain continuous information on snow variables across an entire region, numerical models have been developed to 
+simulate the evolution of the snowpack under meteorological forcing. The simplest approaches rely solely on air temperature and total precipitation, regarded 
 as the main drivers of snow accumulation and snowmelt. More advanced models solve the mass and energy balance equations (see Chapter \ref{cap:snow_basics}) 
 at every grid point, accounting for the effects of complex terrain and for microphysical processes such as snow metamorphism, with the goal of reproducing 
-as accurately as possible the state of the snowpack. Their input fields, which must be spatialized beforehand, include incoming solar radiation, air 
+the state of the snowpack as accurately as possible. Their input fields, which must be spatialized beforehand, include incoming solar radiation, air 
 temperature, relative humidity and wind speed, among others. 
 
 Some of these models, such as ALPINE3D, are already employed as tools for avalanche forecasting and danger assessment, since the simulations can accurately 
-identify weak snow layers which are prone to failure \parencite{ALPINE3D}. Snow products are equally relevant in hydrological applications: an accurate estimate of 
+identify weak snow layers that are prone to failure \parencite{ALPINE3D}. Snow products are equally relevant in hydrological applications: an accurate estimate of 
 the amount of water stored within the snowpack and of the timing of its release can substantially improve discharge predictions, which in turn are essential 
 for the management of hydropower production. Beyond these practical applications, snow models play a fundamental role in climate change research, as they 
 allow spatially distributed trend analysis and even make it possible to evaluate the response of the snowpack to different emission scenarios. 
-This flexibility, however, comes at a cost. The snow variables resulting from numerical simulations are indeed affected by the uncertainties of the 
-meteorological forcing fields, since even the inputs must be interpolated over complex terrain in order to match the resolution required by the model. 
-Moreover, the modelling philosophy behind each product may neglect physical processes whose omission proves detrimental in specific applications: most 
-models are therefore task-oriented, and should be used only for the class of problems they were designed to address. Since different models may yield 
-substantially different results for the same snowpack, assessing the extent of such disagreement is a prerequisite for producing reliable snow predictions 
-in a given area. This is exactly the aim of this chapter: the following sections introduce and compare the three main snow dataset available for the study 
-area of this thesis, highlighting their different approaches, the discrepancies that emerge over the investigated domain and the inadequacy to make trend 
-estimates, thereby motivating the need for a new snow dataset.
+
+This flexibility, however, comes at a cost. The snow variables resulting from numerical simulations inherit the uncertainties of the meteorological 
+forcing, whose fields must themselves be interpolated over complex terrain in order to match the resolution required by the model. Moreover, the modelling 
+philosophy behind each product may neglect physical processes whose omission proves detrimental in specific applications: most models are therefore 
+task-oriented, and should be used only for the class of problems they were designed to address. Since different models may yield substantially different 
+results for the same snowpack, assessing the extent of such disagreement is a prerequisite for producing reliable snow predictions in a given area. This 
+is exactly the aim of this chapter: the following sections introduce and compare the three main snow dataset available for the study area of this thesis, 
+highlighting their different approaches, the discrepancies that emerge over the investigated domain and the inadequacy for trend estimations, thereby 
+motivating the need for a new product.
+
+
+
+
+
+
 
 
 
