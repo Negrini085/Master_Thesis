@@ -101,14 +101,13 @@ the methodological framework outlined in the corresponding literature was adopte
 \section{MODIS}
 \label{sec:MODIS}
 
-Thanks to its detailed spectral coverage of the Earth's surface, NASA's Moderate Resolution Imaging Spectroradiometer (MODIS) has 
-become a key tool for mapping snow cover extent and duration across various regions, such as the Greater Alpine Region 
-\parencite{MODIS_GAR} or the Karakoram \parencite{MODIS_KARAKORAM}. One of the most recent studies employing MODIS focuses on the 
-Italian territory \parencite{MODIS_ITA}, and therefore on the Italian Alps, which constitute the primary focus of this thesis. This 
-dataset, curated by the Department of Enviromental Science and Policy of the University of Milan, provides daily snow cover 
-information at the national scale and, in its most recent version, spans the period from 2000 to 2025. It consists of binary rasters, 
-in which a value of 0 corresponds to bare ground, while a value of 1 denotes a pixel that is at least half covered by snow. The 
-spatial resolution is approximately $\SI{500}{\meter}$.
+Owing to its multispectral configuration, MODIS has already proven to be a key tool for mapping snow cover extent and duration across a variety of 
+regions, such as the Karakoram \parencite{MODIS_KARAKORAM}. One of the most recent studies based on this sensor is devoted to the Italian territory 
+\parencite{MODIS_ITA} and thus covers almost the entirety of the IH-GAR. The resulting dataset, curated by the Department of Enviromental Science and 
+Policy of the University of Milan, provides daily snow cover maps at the national scale and, in its latest version, spans the period from \num{24} 
+February \num{2000} to \num{30} September \num{2025}, thereby including \num{25} hydrological years. It consists of binary rasters with a spatial 
+resolution of approximately $\SI{500}{\meter}$, in which a pixel is assigned a value of 1 when it's at least half-covered in snow, and a value of 0 when 
+the ground is bare.
 
 
 
@@ -143,8 +142,7 @@ according to the criteria summarised in Table \ref{tab:integer_value}.
   \end{tabular}
 \end{table}
 
-Cloud cover can substantially reduce data availability across the study area, as the five year mean cloud cover can exceed 
-80 \%. To address the resulting gaps in the MODIS record, \cite{MODIS_ITA} first reduce the complexity of the dataset to three 
+To address the observation gaps caused by cloud cover or by sensor saturation, \cite{MODIS_ITA} first reduce the complexity of the dataset to three 
 surface classes: snow covered, snow free and missing data. Integer values between 1 and 100 are reclassified as snow covered 
 whenever the corresponding NDSI exceeded the critical threshold of 0.4, and as snow free otherwise. Pixels aquired at night, 
 affected by cloud cover or flagged with an error condition are all labelled as missing data, whereas freshwater pixels are 
@@ -180,30 +178,33 @@ whole Italian peninsula.
 
 \subsection{Results}
 
-Following the approach adopted by the authors, particular attention was devoted to temporal snow metrics. In particular, the 
-duration of the snow season (SCD) at a given location was computed as
+Following the approach adopted by the authors, particular attention was devoted to those metrics that describe the timing and the duration of the snow 
+season. In particular, the snow cover duration (SCD) for each pixel was computed as
 \begin{equation}
     \text{SCD}_{i,j}\,=\,\sum_{k=1}^{n} \text{S}_{i,j,k},
     \label{eq:scd}
 \end{equation}
-thereby summing, over an hydrological year spanning from the $1^{st}$ of October to the $30^{th}$ of September, the binary values 
-recorded for that specific pixel. In \ref{eq:scd}, $k$ denotes the day of the hydrological year, while $(i,\,j)$ represent the spatial 
-coordinates of the pixel. The SCD is clearly related to the amount of accumulated snow, to temperature and to other climatic drivers. 
-In order to assess whether the enviromental setting induces a shift in the onset or end of the snow season, a fixed date method is 
-typically employed. The snow onset date (SOD) is defined as 
+thereby summing, over a hydrological year spanning from the $1^{st}$ of October to the $30^{th}$ of September, the binary values recorded at each 
+specific location. In Equation \eqref{eq:scd}, $k$ denotes the day of the hydrological year, whereas $(i,\,j)$ represent the spatial coordinates of the 
+pixel. Two further snow metrics considered in the analysis of this dataset are the snow onset date (SOD) and the snow end date (SED). The former is 
+defined as 
 \begin{equation}
-    \text{SOD}_{i,j}\,=\,\sum_{k=1}^{D} \text{D} - \text{S}_{i,j,k},
+    \text{SOD}_{i,j}\,=\,\text{D}\,-\,\sum_{k=1}^{D} \text{S}_{i,j,k},
     \label{eq:sod}
 \end{equation}
 where $\text{D}$ corresponds to 116, namely the number of  days between the beginning of the hydrological year and the $25^{th}$ of 
-January. Conversely, the snow end date (SED) can be computed as
+January. Conversely, the latter one (SED) can be computed pixel-wise as
 \begin{equation}
-    \text{SED}_{i,j}\,=\,\sum_{k=D}^{n} \text{D} + \text{S}_{i,j,k},
+    \text{SED}_{i,j}\,=\,\text{D}\,+\,\sum_{k=D}^{n} \text{S}_{i,j,k},
     \label{eq:sed}
 \end{equation}
-with D retaining the same meaning as in \eqref{eq:sod}. These three metrics provide only cumulative information, thus disregarding 
-transient snowfall and meltout events. In the following, only results regarding SCD will be presented: for the analogous analysis 
-concering the onset and the end date of the snow season, the reader is referred to Appendix \ref{app:MODIS_app}.
+with D retaining the same meaning as in Equation \eqref{eq:sod}. SOD, SED and SCD provide only cumulative information, thus disregarding transient 
+snowfall and meltout events. At low elevations, SOD and SED consequently do not carry information about the actual beginning and ending of the snow season, 
+since they just reflect the number of snow covered days before and after \num{25} January. This is because snowfalls are rare in the lowlands, and the 
+snow that does accumulate is typically short-lived. In high elevation catchments, by contrast, the snowpack covers the ground continuously for months at 
+a time, and ephemeral snow accounts for only a small fraction of the season. Only under these conditions SOD and SED closely resemble the actual temporal 
+limits of the snow season. In what follows, only the results for SCD are presented: for the analogous analysis of SOD and SED, the reader is referred to 
+Appendix \ref{app:MODIS_app}.
 
 As expected, MODIS proves capable of capturing the spatial inhomogeneities in snowpack lifetime across the Italian peninsula. This 
 becomes particularly evident in the average SCD map, obtained as the mean of the annual SCD maps and shown in Figure \ref{fig:ave_scd_MODIS}. 
