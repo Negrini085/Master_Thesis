@@ -81,6 +81,11 @@ __pycache__/
 .ipynb_checkpoints/
 
 # ---------------------------
+# 	Manuscript
+# ---------------------------
+Manuscript/*.pdf
+
+# ---------------------------
 #  	System files
 # ---------------------------
 .DS_Store
