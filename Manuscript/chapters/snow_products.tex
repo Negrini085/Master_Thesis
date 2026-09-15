@@ -28,10 +28,10 @@ This flexibility, however, comes at a cost. The snow variables resulting from nu
 forcing, whose fields must themselves be interpolated over complex terrain in order to match the resolution required by the model. Moreover, the modelling 
 philosophy behind each product may neglect physical processes whose omission proves detrimental in specific applications: most models are therefore 
 task-oriented, and should be used only for the class of problems they were designed to address. Since different models may yield substantially different 
-results for the same snowpack, assessing the extent of such disagreement is a prerequisite for producing reliable snow predictions in a given area. This 
-is exactly the aim of this chapter: the following sections introduce and compare the three main snow dataset available for the study area of this thesis, 
-highlighting their different approaches, the discrepancies that emerge over the investigated domain and the inadequacy for trend estimations, thereby 
-motivating the need for a new product.
+results for the same snowpack, assessing the extent of such disagreement is a prerequisite for producing reliable snow predictions in a given domain. This 
+is exactly the aim of this chapter: the following sections introduce and compare the main snow datasets available for the study area of this thesis, 
+highlighting their different approaches, the discrepancies that emerge over the investigated region and the inadequacy for trend estimations, thereby 
+motivating the need for a new product. 
 
 
 
@@ -44,45 +44,51 @@ motivating the need for a new product.
 
 \section{Study area}
 
-This thesis focuses on the Italian hydrological portion of the Greater Alpine Region (GAR), comprising all Italian territory located north of $\SI{43}{\degree N}$ 
-together with the Swiss portion of the Po basin. The main features of this territory are respectively: 
+This thesis focuses on the Italian Hydrological portion of the Greater Alpine Region (IH-GAR), comprising all Italian territory located north of $\SI{43}{\degree N}$ 
+together with the Swiss portion of the Po basin. The main geological features of this territory are respectively: 
 \begin{itemize}[label=$\blacktriangleright$]
-    \item \textit{the Italian Alps}, the southernmost part of the Alpine Arc. They extend for approximately $\SI{1200}{\kilo\meter}$, covering an 
+    \item \textit{the Italian Alps}, which are the southernmost of the Alpine Arc. They extend for approximately $\SI{1200}{\kilo\meter}$, covering an 
     area of about $\SI{50000}{\kilo\meter\squared}$. The highest peak, Monte Bianco, reaches $\SI{4810}{\meter}$ a.s.l., and summits above 
-    $\SI{3000}{\meter}$ a.s.l. are  fairly common throughout the range. The considerable elevations sustain 901 glaciers, whose total surface area 
-    is roughly $\SI{368}{\kilo\meter\squared}$ \parencite{catasto_ghiacciai}.
-    \item \textit{the Po Plain}, a predominantly flat region shaped by an initial phase of marine sedimentation followed by later fluvial deposition. 
-    It is drained by the Po river, Italy's longest, which flows for approximately $\SI{652}{\kilo\meter}$. Together with the Veneto-Friulian plains, 
-    it forms one of the country's principal agricultural and industrial areas, home to roughly 20 million people.
+    $\SI{3000}{\meter}$ a.s.l. are  fairly common throughout the range. Such elevations allow snow to persist throughout summer at the highest altitudes, 
+    sustaining 901 glaciers, whose total surface area amounted to roughly $\SI{368}{\kilo\meter\squared}$ in \num{2016}. \parencite{catasto_ghiacciai}.
+    \item \textit{the Po Plain}, which is a predominantly flat region shaped by an initial phase of marine sedimentation followed by later fluvial deposition. 
+    It is drained by the Po river, Italy's longest, which flows for approximately $\SI{652}{\kilo\meter}$. Together with the Venetian and Friulian plains, 
+    it forms the most productive agricultural and industrial area of the country, home to roughly 20 million people.
     \item \textit{the Northern Apennines}, formed by the collision between the western margin of the African Promontory and the Sardinia-Corsica block. 
     Their highest peak reaches only $\SI{2165}{\meter}$ a.s.l., insufficient to prevent the complete melt of the seasonal snowpack
     \parencite{libro_geografia_IHGAR}. 
 \end{itemize}
-
-The complex orography of the study area, examined in greater detail in Figure \ref{fig:study_area}, governs its climate. Indeed, the Italian Alps act 
-as a barrier against cold air masses from the north, while the Apennines shield the Po Valley from the milder influence of the Tyrrhenian Sea. The 
-main climate types found within in the study area are:
-\begin{itemize}[label=$\blacktriangleright$]
-    \item \textit{the Alpine climate}, dominant across the Alps and the Northern Apennines, associated with low temperatures both at night and during 
-    winter, and with a summer peak in precipitation.
-    \item \textit{the Po Valley climate}, characterized by cold winters and hot summers, with precipitation peaking in spring and autumn 
-    \parencite{clima_IHGAR}.
-\end{itemize}
-
-The high elevations of the Alpine Range, combined with the low winter temperatures, allow the Italian Alps to store substantial volumes of water in 
-solid form, often exceeding $\SI{10}{\giga\meter\cubed}$ \parencite{IT-SNOW}. Some snowfall also occurs over the Norther Apennines, though in far 
-smaller amounts. These differences in snow cover give rise to distinct hydrological regimes, as up to 50\% of the annual stream flow of the main 
-rivers originating in the Italian Alps consists of meltwater \parencite{snow_drought}, and peak discharge is reached in early summer when ablation is 
-most intense. On the other hand, rivers draining the Northern Apennines rely predominantly on rainfall, and often experience low flow, or even run 
-completely dry, during summer. 
-
-\begin{figure}[H]
+The high elevations of the Italian Alps, combined with low winter temperatures, allow substantial volumes of water to be stored in solid form. Snow also 
+accumulates over the Northern Apennines, although in far smaller amounts and for shorter periods, since the peaks are substantially lower. These 
+differences in snow cover give rise to distinct hydrological regimes: up to 50\% of the annual streamflow of rivers rising in the Alpine Arc consist 
+of meltwater \parencite{snow_drought}, whereas rivers draining the Apennines rely predominantly on rainfall, and often experience low flow, or even run 
+completely dry, during summer. The complex orography of the study area, examined in greater detail in Figure \ref{fig:study_area}, also plays a 
+significant role in governing the climate of Northern Italy. 
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{snow_products/study_area.png}
     \caption{Topography and elevation distribution of the study area. The frequency histogram is based on 100 
     meters wide elevation bins. Elevation data were obtained from ALOS AW3D30 global digital elevation model (DEM).}
     \label{fig:study_area}
 \end{figure}
+Indeed, the Italian Alps act as a barrier against cold air masses from the north, while the Apennines shield the Po Valley from the milder influence of 
+the Tyrrhenian Sea. Two main climate types can thus be investigated within the study area:
+\begin{itemize}[label=$\blacktriangleright$]
+    \item \textit{the Alpine climate}, which prevails over the Alps and the Northern Apennines and is characterized by low nighttime and winter 
+    temperatures, with precipitation peaking in summer;
+    \item \textit{the Po Valley climate}, with cold winters, hot summers, and precipitation concentrated during spring and autumn 
+    \parencite{clima_IHGAR}.
+\end{itemize}
+
+This complex climatological and topographical setting gives rise to a substantial variability in the snowpack, which makes the IH-GAR region an ideal test 
+bed for comparing the performance of snow models and remote sensing products in reproducing the actual state of the snow cover. The strong dependence on 
+orography can be investigated by means of satellite observations alone, whereas the accurate streamflow estimates required by agriculture and hydropower 
+production call for more complex and physically based modelling. To date, three spatially distributed snow datasets are available over the area: MODIS, 
+IT-SNOW and a product specifically developed for the mountainous portion of the Po River District. None of them matches the IH-GAR boundaries exactly, but 
+all overlap with the investigated domain to a large extent. Each dataset is discussed in a dedicated section below. The main results presented hereafter 
+were computed as a part of the spin-up work of this thesis, which was made possible by the public online availability of the three datasets. In each case, 
+the methodological framework outlined in the corresponding literature was adopted.
+
 
 
 
