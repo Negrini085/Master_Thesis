@@ -201,41 +201,43 @@ January. Conversely, the latter one (SED) can be computed pixel-wise as
 with D retaining the same meaning as in Equation \eqref{eq:sod}. In what follows, only the results for SCD are presented: for the analogous analysis of 
 SOD and SED, the reader is referred to Appendix \ref{app:MODIS_app}.
 
-Averaged over all pixels and over the 2001--2025 period, the mean snow cover duration across the Italy is 22 days, with an interannual standard deviation 
+The mean snow cover duration across Italy, computed as an average over every pixel and over the 2001-2025 period, is 22 days, with an interannual standard deviation 
 of 5 days. This rather low value is significantly biased by the abundance of plains and low-elevation terrains, which in the climatic setting of the study 
 region remain essentially snow free all year round. MODIS observations indeed reveal that the snowpack is characterized by pronounced spatial variability: 
 the longest snow seasons occur in high-altitude mountainous catchments, whereas the lowlands receive only sporadic and ephemeral snowfall. In the Po Plain, 
 for instance, elevations below $\SI{500}{\meter}$ a.s.l. experience less than \num{5} days of snow cover per year on average, while the surrounding peaks 
-often endure snow on the ground for over \num{250} days a year. The mean SCD map, shown in Figure \ref{fig:ave_scd_MODIS}, closely follows the orography of 
+are often snow covered for over \num{250} days a year. The mean SCD map, shown in Figure \ref{fig:ave_scd_MODIS}, closely follows the orography of 
 the main mountain ranges, with valleys exhibiting markedly lower snow cover durations than the adjacent slopes. 
 \begin{figure}[htb]
     \centering
     \includegraphics[width=\linewidth]{snow_products/ave_los_MODIS.png}
-    \caption{Average SCD map across the Italian peninsula for the 2001-2025 period. MODIS accurately reproduces the orography of the 
+    \caption{Average SCD map across the Italian peninsula for the 2001-2025 period. SCD values accurately follow the orography of the 
     Italian Alps, as altitude strongly influence the persistence of snow on the ground. The lowest SCD values are associated with 
     lowland plains, which remain snow free for most of the year.}
     \label{fig:ave_scd_MODIS}
 \end{figure}
 It also underlines that the snow season in the Appenines is substantially shorter than in the Alps, with only the most prominent massifs, such as Gran 
-Sasso and Maiella, displaying snow behaviour somewhat comparable to their Alpine counterpart. SOD and SED exhibit a comparable spatial variability, as 
+Sasso and Maiella, displaying snow behaviour somewhat comparable to their Alpine counterpart. SOD and SED exhibit a similar spatial variability, as 
 mountainous terrain strongly increases the likelihood of an earlier onset and a later end of the snow season. 
 
-The analysis of the average SCD map reveals that elevation plays a prominent role in determining both the spatial distribution and 
-the temporal duration of snow cover. To gain deeper insights into this relationship, one possible approach is to divide the Italian 
-territory into $\SI{5}{\meter}$ wide elevation bands, in order to plot the quantiles of the SCD distribution as a function of 
-elevation. Notably, the trend shown in Figure \ref{fig:scd_percentiles_by_ele_MODIS} is clearly monotonic, since higher regions 
-tend to be associated with longer lasting snowpacks, even though a considerable spread is observed within each band. This wide range 
-of possible SCD values indicates that elevation alone cannot fully account for snow distribution: a multilinear regression against 
-several topographic and geographic variables shows that aspect and latitude also provide a non negligible contribution to snowpack 
-behaviour \parencite{MODIS_ITA}.
-
-\begin{figure}[H]
+The predominant role of elevation in determining the duration of snow cover can be investigated by dividing the Italian territory into $\SI{5}{\meter}$ 
+wide elevation bands. The quantiles of the SCD distribution, shown in Figure \ref{fig:scd_percentiles_by_ele_MODIS}, exhibit a clear monotonic 
+relationship with elevation, as higher regions are typically associated with longer-lasting snowpacks. However, the considerable spread observed within 
+each elevation band suggest that additional factors, such as climatic regimes or additional topographic variables, may influence snow cover duration across 
+the Italian peninsula. For instance, repeating the same analysis for individual sub-regions of the investigated domain shows that the steepness of the 
+quantile curve depends on the specific region considered. 
+\begin{figure}[htpb]
     \centering
     \includegraphics[width=\linewidth]{snow_products/scd_percentiles_by_ele_MODIS.png}
     \caption{Quantiles of the average SCD distribution in each $\SI{5}{\meter}$ wide elevation band for the 2001-2025 period. The area 
-    taken into account is the whole Italian peninsula. A clear monotonic trend is visible.}
+    taken into account is the whole Italian peninsula. A clear monotonic trend with elevation is visible.}
     \label{fig:scd_percentiles_by_ele_MODIS}
 \end{figure}
+The snow regimes in the Alps and the Eastern Apennines are similar, with a rapid increase of 
+SCD with elevation, whereas the Western Apennines, Sicily and Sardinia show a more gradual trend. Moreover, a multilinear regression with respect to 
+several topographic and geographic parameter shows that aspect and latitude also provide a non-negligible contribution to snowpack properties \parencite{MODIS_ITA}.
+
+
 
 The importance of aspect for the duration of the snow season is also evident when examining the spatial distribution of the 
 difference between the SCD value of each individual pixel and the mean SCD per elevation band. In fact, in Figure 
