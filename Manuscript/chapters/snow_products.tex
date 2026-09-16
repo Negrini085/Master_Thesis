@@ -307,20 +307,27 @@ dynamics.
 \label{subsec:s3m}
 
 S3M, also known as \textit{Snow Multidata Mapping and Modelling}, is a hydrology oriented cryospheric model developed to simulate the spatial and temporal 
-evolution of seasonal snowpack. It adopts a raster based approach, in which neighbouring pixels are treated as independent units, so that horizontal mass 
+evolution of seasonal snowpacks. It adopts a raster based approach, in which neighbouring pixels are treated as independent units, so that horizontal mass 
 and energy transport is neglected. All input and output variables are therefore spatially distributed, and the simulated snowpack represents the average 
-conditions within each grid cell. The model provides daily (or even hourly) rasters of snow water equivalent (SWE), snow depth (HS), bulk snow density and 
-liquid water content. 
+conditions within each grid cell. The model provides daily (or even hourly if needed) rasters of snow water equivalent (SWE), snow depth (HS), bulk snow 
+density and liquid water content. These outputs can then be used to compute, during post-processing, snow cover maps spanning across the investigated 
+domain, which could be used for direct comparison with remote sensing products. The snow cover fraction of each pixel can indeed be evaluated as
+\begin{equation}
+    \text{SCF}\,=\,\text{min}\left(1,\,\frac{\text{SWE [mm]}}{0.1 \cdot \rho_{s}}\right),
+    \label{eq:scf_ITSNOW}
+\end{equation}
+where $\rho_{s}$ is the bulk snow density \parencite{scf_ITSNOW}. Since a pixel is conventionally regarded as snow covered when at least half of its area 
+is, binary snow cover maps can be obtained by assigning a value of one to all grid points with $\text{SCF}>0.5$, and zero elsewhere.
 
-Within S3M, seasonal snow is partitioned into a dry component, corresponding to the ice matrix, and a wet component, given by the 
-interstitial liquid water. These two constituents are modelled separately, and their mutual interactions govern the overall snowpack 
-dynamics. The total snow water equivalent is thus obtained as 
+Within S3M, seasonal snow is partitioned into a dry component, corresponding to the ice matrix, and a wet component, given by the interstitial liquid 
+water. These two constituents are modelled separately, and their mutual interactions govern the overall snowpack dynamics. The total snow water equivalent 
+is thus obtained as 
 \begin{equation}
     \text{SWE}\,=\,\text{SWE}_D\,+\,\text{SWE}_W, 
     \label{eq:swe_tot_S3M}
 \end{equation}
-so as the sum of its dry ($\text{SWE}_D$) and wet ($\text{SWE}_W$) contributions. The evolution of these two quantities is 
-described by the following mass conservation equations:
+so as the sum of its dry ($\text{SWE}_D$) and wet ($\text{SWE}_W$) contributions. The evolution of these two quantities is described by the following mass 
+conservation equations:
 \begin{equation}
     \frac{d}{dt}\left(\text{SWE}_D\right)\,=\,S_f\,-\,M\,+\,R,
     \label{eq:swe_dry_S3M}
@@ -329,13 +336,21 @@ described by the following mass conservation equations:
     \frac{d}{dt}\left(\text{SWE}_W\right)\,=\,R_f\,+\,M\,-\,R\,-\,O,
     \label{eq:swe_wet_S3M}
 \end{equation}
-where $S_f$ and $R_f$ denote the snowfall and rainfall mass fluxes, $M$ and $R$ the snowmelt and refreezing rates and $O$ the 
-snowpack runoff mass flux. All the terms in equations \eqref{eq:swe_dry_S3M} and \eqref{eq:swe_wet_S3M} are expressed in 
-$\SI{}{\milli\meter}$ w.e. $\SI{}{\per\hour}$ \parencite{S3M_model}. Solving this system of ordinary differential equations (ODEs), 
-which is decremental to assess snowpack modifications, requires specific parametrizations for each of the mass fluxes involved.
+where $S_f$ and $R_f$ denote the snowfall and rainfall mass fluxes, $M$ and $R$ the snowmelt and refreezing rates and $O$ the snowpack runoff mass flux. 
+All the terms in Equations \eqref{eq:swe_dry_S3M} and \eqref{eq:swe_wet_S3M} are expressed in $\SI{}{\milli\meter}$ w.e. $\SI{}{\per\hour}$ \parencite{S3M_model}. 
+Solving this system of ordinary differential equations (ODEs) is a key step in simulating snowpack dynamics: in order to do so it is essential 
+to make specific parametrizations for each of the mass fluxes involved.
 
 Snowfall and rainfall mass fluxes are estimated from the total precipitation $P$ through a phase partitioning scheme based on air 
-temperature and relative humidity. $S_f$ and $R_f$ are thus computed as 
+temperature and relative humidity. These two quantities are respectively computed as 
+%\begin{equation}
+%        S_f\,=\,\left(1\,-\,p_r\right) P
+%    \label{eq:snowfall_S3M}
+%\end{equation}
+%\begin{equation}
+%        R_f\,=\,p_rP
+%    \label{eq:rainfall_S3M}
+%\end{equation}
 \begin{equation}
     \begin{cases}
         S_f\,=\,\left(1\,-\,p_r\right) P \\
@@ -351,25 +366,23 @@ where $p_r$ is the rainfall probability, defined as
 In the previous equation, $ T_{air}$ is the air temperature in $\SI{}{\degreeCelsius}$ and $RH$ is the relative humidity in percent, 
 while the fixed parameter $\alpha\,=\,22$, $\beta\,=\,-2.7$ and $\gamma\,=\,-0.2$ are taken from \cite{S3M_phase_partitioning}. 
 
-Snowmelt occurs only when both the current air temperature and its 10-day running mean exceed a threshold $T_{\tau}$, set to be 
-$\SI{1}{\degreeCelsius}$. This dual condition provides a simple way of accounting for the snowpack's cold content, defined as the 
-energy required to warm a subfreezing snowpack until it reaches an isothermal $\SI{0}{\degreeCelsius}$ state. By requiring sustained 
-mild conditions, rather than a single warm hour, the model avoids triggering unphysical melt events that the snowpack's thermal 
-inertia would not allow. \cite{S3M_model} estimate the melt rate through a hybrid temperature index and radiation driven melt 
-parametrization. This formulation improves S3M's ability to reproduce the strong spatial variability that topography induces in snow 
-cover extent and duration, since slope and aspect play a significant role in mountainous terrain that cannot be fully captured by 
-air temperature alone. The hybrid approach adopted in S3M thus reads 
+Snowmelt occurs only when both the current air temperature and its 10-day running mean exceed a threshold $T_{\tau}$, which S3M is set by default to 
+$\SI{1}{\degreeCelsius}$. This dual condition provides a simple way of accounting for the snowpack's cold content, since by requiring sustained 
+mild conditions, rather than a single warm hour, the model avoids triggering unphysical melt events that the snowpack's thermal inertia would not allow. 
+S3M estimates the melt rate through a hybrid temperature index and radiation driven melt parametrization. This formulation improves the model's ability 
+to reproduce the strong spatial variability induced by topography on snow cover extent and duration, since slope and aspect play a significant role in 
+mountainous terrain that cannot be fully captured by air temperature alone. The hybrid approach adopted in S3M thus reads 
 \begin{equation}
-    M\,=\,m_{rad}\left[\frac{\left(1\,-\,\alpha_S\right)S_r}{\rho_W \lambda_f}\right]\Delta t\,+\,c_M m_r \left(T_{air}\,-\,T_{\tau}\right),
+    M\,=\,m_{rad}\left[\frac{\left(1\,-\,\alpha\right)\text{SW}\downarrow}{\rho_W \lambda_f}\right]\Delta t\,+\,c_M m_r \left(T_{air}\,-\,T_{\tau}\right),
     \label{eq:melt_S3M}
 \end{equation}
-where $m_{rad}$ is a dimensionless coefficient that convert the potential radiative melt into actual melt, $\alpha_S$ is the snow 
-albedo, $S_r$ the incoming shortwave radiation, $\rho_W$ the density of water, $\lambda_f$ the specific latent heat of fusion and 
-$m_r$ the degree day parametes [$\SI{}{\milli\meter\per\degreeCelsius\per\hour}$]. Both $m_{rad}$ and $m_r$ are calibration based.
+where $m_{rad}$ is a dimensionless coefficient that convert the potential radiative melt into actual melt, $\alpha$ is the snow 
+albedo, $\lambda_f$ the specific latent heat of fusion and $m_r$ the degree day parameter [$\SI{}{\milli\meter\per\degreeCelsius\per\hour}$]. 
+Both $m_{rad}$ and $m_r$ are calibration based.
 
 In S3M, refreezing occurs whenever the air temperature drops below $T_{\tau}$ and is computed through a degree day approach as 
 \begin{equation}
-    R = - c_M m_r \left(T_air\,-\,T_{\tau}\right).
+    R = - c_M m_r \left(T_{air}\,-\,T_{\tau}\right).
     \label{eq:refreezing_S3M}
 \end{equation}
 Since this expression depends solely on air temperature, refreezing is assumed to respond instantaneously to atmospheric 
@@ -389,26 +402,12 @@ integration time step, although this can be adjusted by the user to meet specifi
 
 \subsection{Results}
 
-SWE maps, coupled with snow density ones, can be used to retrieve the snow cover fraction for each pixel as
-\begin{equation}
-    \text{SCF}\,=\,\text{min}\left(1,\,\frac{\text{SWE [mm]}}{0.1 \cdot \rho_{s}}\right),
-    \label{eq:scf_ITSNOW}
-\end{equation}
-where $\rho_{s}$ is the bulk snow density \parencite{scf_ITSNOW}. Since a pixel is conventionally regarded as snow covered when at least half of its area 
-is, binary snow cover maps are obtained by assigning a value of one to all grid points with $\text{SCF}>0.5$, and zero elsewhere. Beside deepening the 
-knowledge of snowpack properties, this quantity also provides a direct term of comparison with satellite snow cover products such as MODIS.
-
-The IT-SNOW reanalysis provides daily, high-resolution estimates of snow properties, which are a key input for hydrological 
-applications. Over the 2011-2025 period, peak SWE (intended as the total water volume stored in the snowpack) is on average 
-$\SI{11.9 \pm 5.2}{G\meter\cubed}$, with a minimum of $\SI{5.4}{G\meter\cubed}$ in 2022 and a maximum of $\SI{23.1}{G\meter\cubed}$ 
-in 2014. This peak is typically reached on 4 March $\pm$ 17 days, with the earliest occurance being 26 January 2023 and the latest 
-26 March 2013. This means that over the investigated period the maximum of SWE always precedes the $1^{st}$ of April, which is the 
-date commonly adopted in literature as a reference for peak SWE. The daily evolution of the total SWE volume, shown in Figure 
-\ref{fig:evo_swe_tot_ITSNOW}, exhibits great variability driven by thermal and meteorological conditions. The last few years stand 
-out for a markedly reduced water volume stored in the Italian snowpack, with the partial exception of 2024, which nonetheless 
-remained a slightly below average snow year. This is consistent with the persistent snow drought that characterised the early 2020s, 
-driven by the combined effects of reduced precipitation and higher temperatures \parencite{snow_drought}.  
-\begin{figure}[H]
+According to the IT-SNOW reanalysis over the 2011-2025 period, the total volume of water stored within the snowpack on the national scale is on average 
+$\SI{11.9 \pm 5.2}{G\meter\cubed}$, with a maximum of $\SI{23.1}{G\meter\cubed}$ in 2014 and a minimum of $\SI{5.4}{G\meter\cubed}$ in 2022. This peak is 
+typically reached on 4 March $\pm$ 17 days, with the earliest occurrence being on 26 January 2023 and the latest on 26 March 2013. This means that over 
+the investigated period the peak SWE condition is always achieved before \num{1} April, which is the date commonly adopted in literature as a reference 
+for maximum SWE. The temporal evolution of the total SWE, which is shown in Figure \ref{fig:evo_swe_tot_ITSNOW}, exhibits a great year-to-year variability.
+\begin{figure}[htpb]
     \centering
     \includegraphics[width=\linewidth]{snow_products/evo_swe_tot_ITSNOW.png}
     \caption{Daily evolution of the total water volume stored in the Italian snowpack, computed as snow water equivalent (SWE) 
@@ -416,13 +415,12 @@ driven by the combined effects of reduced precipitation and higher temperatures 
     \parencite{IT-SNOW}.}
     \label{fig:evo_swe_tot_ITSNOW}
 \end{figure}
-Besides this strong temporal variability, the modelled snow cover also displays a marked spatial heterogeneity across Italy, with 
-mountain regions experiencing longer and more intense snow seasons. Both panels of Figure \ref{fig:ave_swe_scd_ITSNOW.png} closely 
-reproduce the orography of the main ranges, showing that the physically based S3M model captures the control exerted by topographic 
-factors such as elevation and aspect on snowpack amount and persistence. According to IT-SNOW estimates, almost 87 \% of the mean 
-national winter SWE is stored within the five main Alpine river basins, namely Po River, Adige, Piave, Tagliamento and Brenta, 
-whereas the Central Apennines account for about 7\% of total SWE. The remaining fraction is distributed across the rest of the 
-country \parencite{IT-SNOW}.
+In particular, the last years of the record stand out for SWE values markedly below the long term mean, with the partial exception of 2024 since a 
+unusually wet spring helped to balance the deficits accumulated during the early snow season. This pattern provides further evidence of the persistent 
+snow drought conditions which have been detected in the Italian Alps during the early 2020s, driven by the combined effects of reduced precipitation and 
+higher temperatures \parencite{snow_drought}. 
+Besides a strong temporal variability, the modelled snow cover also displays a substantial spatial heterogeneity across Italy, as shown in Figure 
+\ref{fig:ave_swe_scd_ITSNOW.png}. 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{snow_products/ave_swe_scd_ITSNOW.png}
@@ -431,6 +429,14 @@ country \parencite{IT-SNOW}.
     of the annual SCD maps across the same period.}
     \label{fig:ave_swe_scd_ITSNOW.png}
 \end{figure}
+The simulated snowpack results indeed deeper and longer-lasting in high altitude catchments, whereas the lowlands only experience an ephemeral snow cover, 
+owing to their milder temperatures. Water storage is also unevenly distributed between mountain ranges, since according to IT-SNOW estimates almost 87 \% 
+of the national SWE is found within the five main Alpine river basins, namely the Po, Adige, Piave, Tagliamento and Brenta. The Central Apennines are 
+Italy's second most important water tower, accounting for about 7\% of total SWE, whereas the remaining fraction is distributed across the rest of the 
+country \parencite{IT-SNOW}. 
+
+
+
 
 
 
