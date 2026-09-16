@@ -8,7 +8,7 @@ library(hdf5r)
 library(R.matlab)
 
 year <- 2000
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SnowCover_studies/MODIS/")
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SC_studies/MODIS/")
 
 
 # Function to read mat files that takes care of different saving procedures.
@@ -25,7 +25,7 @@ read_mod_file <- function(fname) {
   })
 }
 
-sc_matrix <- read_mod_file(paste0("Dataset/mod_", year, ".mat"))
+sc_matrix <- read_mod_file(paste0("Dataset/mod_", years, ".mat"))
 
 
 # Reading coordinates
