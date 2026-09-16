@@ -165,6 +165,8 @@ if((ddf_ave - ddf_ampl) < 0){ stop("DDF is negative on some days: stopping! ") }
 appo <- create_swe_container("Dataset/PCPD/1951.nc")
 for(y in years){
   
+  if(y %% 4 == 0) next
+  
   # File-names for precipitation and temperature dataset, to later use
   fname_prec <- paste0("Dataset/PCPD/", y, ".nc")
   fname_temp <- paste0("Dataset/TEMP/", y, ".nc")
