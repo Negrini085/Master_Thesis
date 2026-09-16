@@ -201,17 +201,14 @@ January. Conversely, the latter one (SED) can be computed pixel-wise as
 with D retaining the same meaning as in Equation \eqref{eq:sod}. In what follows, only the results for SCD are presented: for the analogous analysis of 
 SOD and SED, the reader is referred to Appendix \ref{app:MODIS_app}.
 
-As expected, MODIS proves capable of capturing the spatial inhomogeneities in snowpack lifetime across the Italian peninsula. This 
-becomes particularly evident in the average SCD map, obtained as the mean of the annual SCD maps and shown in Figure \ref{fig:ave_scd_MODIS}. 
-Indeed, mountainous regions are associated with the highest average SCD values, typically exceeding two hundred days of snow presence 
-on the ground in high alpine catchments. The orography of the Italian Alps is closely reproduced, as valleys exhibit markedly lower 
-snow cover duration than the surrounding peaks. The Apennines remain snow free for subsantially longer than the Alps, with only the 
-most prominent massifs, such as Gran Sasso and Maiella, displaying snow behaviour somewhat comparable to their Alpine counterpart. 
-On the other hand, the lowest SCD values are associated with lowland plains, where on average exceeding 5 days of snow on the ground is 
-extrimately rare. SOD and SED exhibit a very similar behaviour to what was previously noted, as mountainous terrain strongly increases 
-the likelihood of a prolonged snow season. 
-
-\begin{figure}[H]
+Averaged over all pixels and over the 2001--2025 period, the mean snow cover duration across the Italy is 22 days, with an interannual standard deviation 
+of 5 days. This rather low value is significantly biased by the abundance of plains and low-elevation terrains, which in the climatic setting of the study 
+region remain essentially snow free all year round. MODIS observations indeed reveal that the snowpack is characterized by pronounced spatial variability: 
+the longest snow seasons occur in high-altitude mountainous catchments, whereas the lowlands receive only sporadic and ephemeral snowfall. In the Po Plain, 
+for instance, elevations below $\SI{500}{\meter}$ a.s.l. experience less than \num{5} days of snow cover per year on average, while the surrounding peaks 
+often endure snow on the ground for over \num{250} days a year. The mean SCD map, shown in Figure \ref{fig:ave_scd_MODIS}, closely follows the orography of 
+the main mountain ranges, with valleys exhibiting markedly lower snow cover durations than the adjacent slopes. 
+\begin{figure}[htb]
     \centering
     \includegraphics[width=\linewidth]{snow_products/ave_los_MODIS.png}
     \caption{Average SCD map across the Italian peninsula for the 2001-2025 period. MODIS accurately reproduces the orography of the 
@@ -219,6 +216,9 @@ the likelihood of a prolonged snow season.
     lowland plains, which remain snow free for most of the year.}
     \label{fig:ave_scd_MODIS}
 \end{figure}
+It also underlines that the snow season in the Appenines is substantially shorter than in the Alps, with only the most prominent massifs, such as Gran 
+Sasso and Maiella, displaying snow behaviour somewhat comparable to their Alpine counterpart. SOD and SED exhibit a comparable spatial variability, as 
+mountainous terrain strongly increases the likelihood of an earlier onset and a later end of the snow season. 
 
 The analysis of the average SCD map reveals that elevation plays a prominent role in determining both the spatial distribution and 
 the temporal duration of snow cover. To gain deeper insights into this relationship, one possible approach is to divide the Italian 
