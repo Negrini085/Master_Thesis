@@ -198,13 +198,8 @@ January. Conversely, the latter one (SED) can be computed pixel-wise as
     \text{SED}_{i,j}\,=\,\text{D}\,+\,\sum_{k=D}^{n} \text{S}_{i,j,k},
     \label{eq:sed}
 \end{equation}
-with D retaining the same meaning as in Equation \eqref{eq:sod}. SOD, SED and SCD provide only cumulative information, thus disregarding transient 
-snowfall and meltout events. At low elevations, SOD and SED consequently do not carry information about the actual beginning and ending of the snow season, 
-since they just reflect the number of snow covered days before and after \num{25} January. This is because snowfalls are rare in the lowlands, and the 
-snow that does accumulate is typically short-lived. In high elevation catchments, by contrast, the snowpack covers the ground continuously for months at 
-a time, and ephemeral snow accounts for only a small fraction of the season. Only under these conditions SOD and SED closely resemble the actual temporal 
-limits of the snow season. In what follows, only the results for SCD are presented: for the analogous analysis of SOD and SED, the reader is referred to 
-Appendix \ref{app:MODIS_app}.
+with D retaining the same meaning as in Equation \eqref{eq:sod}. In what follows, only the results for SCD are presented: for the analogous analysis of 
+SOD and SED, the reader is referred to Appendix \ref{app:MODIS_app}.
 
 As expected, MODIS proves capable of capturing the spatial inhomogeneities in snowpack lifetime across the Italian peninsula. This 
 becomes particularly evident in the average SCD map, obtained as the mean of the annual SCD maps and shown in Figure \ref{fig:ave_scd_MODIS}. 
@@ -491,7 +486,7 @@ sequence:
         \frac{1}{D}\frac{\partial D}{\partial t}\,=\,C_1\,+\,C_2,
         \label{eq:layer_thickness_change_GEOtop}
     \end{equation}
-    where $D$ is the vertical extent of each grid cell, $C_1$ is the compaction rate resulting from destructive metamorphism and $C_2$ is the compaction 
+        where $D$ is the vertical extent of each grid cell, $C_1$ is the compaction rate resulting from destructive metamorphism and $C_2$ is the compaction 
     rate caused by the overlying snow. Equation \eqref{eq:layer_thickness_change_GEOtop} is integrated with the same time step of the heat equation.
     \item \textit{water percolation}, which can be evaluated by solving a mass conservation equation. The water balance of each snow layer is indeed given 
     by 
