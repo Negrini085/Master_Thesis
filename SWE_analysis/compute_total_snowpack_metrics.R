@@ -46,7 +46,12 @@ area <- make_area_map("Dataset/SWE/SWE_1951.nc")
 
 # Cycle over years
 swe_evo <- numeric(0)
+mean_height <- numeric(0)
+covered_pixels <- numeric(0)
+data <- as.Date(character(0))
+mean_over_covered <- numeric(0)
 for(y in years){
+  
   if(y%%4 == 0) next
   
   # Selecting start and end days to consider for a given year
@@ -60,16 +65,35 @@ for(y in years){
   swe <- ncvar_get(nc, "swe", start = c(1, 1, start), count = c(-1, -1, end))
   nc_close(nc)
   
+  if(end == -1) data <- c(data, seq((as.Date(paste0(y-1, "-12-31"))+start), as.Date(paste0(y, "-12-31")),"day"))
+  else data <- c(data, seq((as.Date(paste0(y-1, "-12-31"))+start), as.Date(paste0(y, "-09-30")),"day"))
+  
   appo <- sweep(swe, c(1, 2), area, `*`)
   annual_swe_evo <- colSums(appo, dims = 2, na.rm = TRUE)*10^-12
+  annual_mean_height <- colSums(swe, dims = 2, na.rm = TRUE)/sum(!is.na(swe[, , 1]), na.rm = TRUE)
+  annual_mean_over_covered <- colSums(swe, dims = 2, na.rm = TRUE)/colSums(swe > 0, dims = 2, na.rm = TRUE)
+  
+  
+  appo <- swe
+  appo <- swe > 0
+  annual_covered_pixels <- colSums(appo, dims = 2, na.rm = TRUE)
+  
   
   swe_evo <- c(swe_evo, annual_swe_evo)
+  mean_height <- c(mean_height, annual_mean_height)
+  covered_pixels <- c(covered_pixels, annual_covered_pixels)
+  mean_over_covered <- c(mean_over_covered, annual_mean_over_covered)
   cat("Taken into account year", y, "of our record!", "\n")
 }
 
 
 
 # Saving data
-plot(swe_evo, type = "l")
-df <- data.frame(data = seq(as.Date("1951-10-01"), by = "day", length.out = length(swe_evo)), swe = swe_evo)
-write.table(df, file = "swe_evolution.dat", row.names = FALSE, col.names = TRUE, quote = FALSE)
+df <- data.frame(
+  data = data, 
+  swe = swe_evo,
+  mean_swe = mean_height,
+  covered = covered_pixels,
+  mean_over_covered = mean_over_covered
+  )
+write.table(df, file = "Results/SWE/total_snowpack_metrics.dat", row.names = FALSE, col.names = TRUE, quote = FALSE)

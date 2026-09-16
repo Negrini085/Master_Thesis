@@ -8,7 +8,7 @@ library(ncdf4)
 library(ggplot2)
 library(rnaturalearth)
 
-year <- 2001
+year <- 2023
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_analysis/")
 
 
@@ -46,11 +46,11 @@ for(i in 1:length(time)){
     geom_sf(data = europe, fill = "grey90", color = "black", inherit.aes = FALSE) +
     coord_sf(xlim = c(6.2, 14.5), ylim = c(43, 47.1)) +
     geom_raster(data = grid, aes(x = lon, y = lat, fill = appo_swe)) +
-    scale_fill_viridis_c(option = "C", limits = c(0, 1000), na.value = "transparent", oob = scales::squish) +
+    scale_fill_viridis_c(option = "C", na.value = "transparent", oob = scales::squish) +
     labs(title = paste("SWE -", format(target_date, "%B %Y")), x = "Longitude", y = "Latitude", fill = "SWE (mm w.e.)") +
     theme_minimal()
 
-  fileout = paste0("Images/Gif/SWE_map_", target_date, ".png")
+  fileout = paste0("Images/Appo/SWE_map_", target_date, ".png")
   ggsave(fileout, plot = p, width = 8, height = 6, dpi = 300)
   print(paste0("Saved map ", target_date))
 }
