@@ -2,7 +2,7 @@
 \label{cap:snow_products}
 
 The previous chapter introduced the main physical processes governing the snowpack, and showed that snow cover is a highly dynamic system which can be 
-investigated by means of several measurements techniques. None of them, however, is able on its own describe every property of the snowpack over a wide 
+investigated by means of several measurements techniques. None of them, however, is able on its own to describe in detail every property of the snowpack over a wide 
 and morphologically complex region. Manual surveys and automatic weather stations provide accurate local observations, but their spatial 
 representativeness is limited, since monitoring networks are often too sparse to capture the variability of the snowpack and are typically 
 biased toward low to intermediate elevations. Remote sensing, in contrast, provides the spatial coverage that ground observations lack, but at the 
@@ -22,16 +22,15 @@ Some of these models, such as ALPINE3D, are already employed as tools for avalan
 identify weak snow layers that are prone to failure \parencite{ALPINE3D}. Snow products are equally relevant in hydrological applications: an accurate estimate of 
 the amount of water stored within the snowpack and of the timing of its release can substantially improve discharge predictions, which in turn are essential 
 for the management of hydropower production. Beyond these practical applications, snow models play a fundamental role in climate change research, as they 
-allow spatially distributed trend analysis and even make it possible to evaluate the response of the snowpack to different emission scenarios. 
+allow spatially distributed trend analysis and even make it possible to predict the response of the snowpack to different emission scenarios. 
 
-This flexibility, however, comes at a cost. The snow variables resulting from numerical simulations inherit the uncertainties of the meteorological 
-forcing, whose fields must themselves be interpolated over complex terrain in order to match the resolution required by the model. Moreover, the modelling 
-philosophy behind each product may neglect physical processes whose omission proves detrimental in specific applications: most models are therefore 
-task-oriented, and should be used only for the class of problems they were designed to address. Since different models may yield substantially different 
-results for the same snowpack, assessing the extent of such disagreement is a prerequisite for producing reliable snow predictions in a given domain. This 
-is exactly the aim of this chapter: the following sections introduce and compare the main snow datasets available for the study area of this thesis, 
-highlighting their different approaches, the discrepancies that emerge over the investigated region and the inadequacy for trend estimations, thereby 
-motivating the need for a new product. 
+This flexibility, however, comes at a cost, since the snow variables resulting from numerical simulations inherit the uncertainties of the meteorological 
+forcing. Moreover, the modelling philosophy behind each product may neglect physical processes whose omission is critical in specific applications: 
+most models are therefore task-oriented, and should be used only for the class of problems they were designed to address. Since different models may yield 
+substantially different results for the same snowpack, assessing the extent of such disagreement is a prerequisite for producing reliable snow predictions 
+in a given domain. This is exactly the aim of this chapter: the following sections introduce and compare the main snow datasets available for the study 
+area of this thesis, highlighting their different approaches, the discrepancies that emerge over the investigated region and the inadequacy for trend 
+estimations, thereby motivating the need for a new product. 
 
 
 
@@ -353,14 +352,6 @@ to make specific parametrizations for each of the mass fluxes involved.
 
 Snowfall and rainfall mass fluxes are estimated from the total precipitation $P$ through a phase partitioning scheme based on air 
 temperature and relative humidity. These two quantities are respectively computed as 
-%\begin{equation}
-%        S_f\,=\,\left(1\,-\,p_r\right) P
-%    \label{eq:snowfall_S3M}
-%\end{equation}
-%\begin{equation}
-%        R_f\,=\,p_rP
-%    \label{eq:rainfall_S3M}
-%\end{equation}
 \begin{equation}
     \begin{cases}
         S_f\,=\,\left(1\,-\,p_r\right) P \\
@@ -417,7 +408,15 @@ $\SI{11.9 \pm 5.2}{G\meter\cubed}$, with a maximum of $\SI{23.1}{G\meter\cubed}$
 typically reached on 4 March $\pm$ 17 days, with the earliest occurrence being on 26 January 2023 and the latest on 26 March 2013. This means that over 
 the investigated period the peak SWE condition is always achieved before \num{1} April, which is the date commonly adopted in literature as a reference 
 for maximum SWE. The temporal evolution of the total SWE, which is shown in Figure \ref{fig:evo_swe_tot_ITSNOW}, exhibits a great year-to-year variability.
-\begin{figure}[htpb]
+In particular, the last years of the record stand out for SWE values markedly below the long term mean, with the partial exception of 2024 since a 
+unusually wet spring helped to balance the deficits accumulated during the early snow season. This pattern provides further evidence of the persistent 
+snow drought conditions which have been detected in the Italian Alps during the early 2020s, driven by the combined effects of reduced precipitation and 
+higher temperatures \parencite{snow_drought}. Besides a strong temporal variability, the modelled snow cover also displays a substantial spatial 
+heterogeneity across Italy, as shown in Figure \ref{fig:ave_swe_scd_ITSNOW.png}. The simulated snowpack results indeed deeper and longer-lasting in high 
+altitude catchments, whereas the lowlands only experience an ephemeral snow cover, owing to their milder temperatures. Water storage is also unevenly 
+distributed between mountain ranges, since according to IT-SNOW estimates almost 87 \% of the national SWE is found within the five main Alpine river 
+basins, namely the Po, Adige, Piave, 
+\begin{figure}[htb]
     \centering
     \includegraphics[width=\linewidth]{snow_products/evo_swe_tot_ITSNOW.png}
     \caption{Daily evolution of the total water volume stored in the Italian snowpack, computed as snow water equivalent (SWE) 
@@ -425,12 +424,7 @@ for maximum SWE. The temporal evolution of the total SWE, which is shown in Figu
     \parencite{IT-SNOW}.}
     \label{fig:evo_swe_tot_ITSNOW}
 \end{figure}
-In particular, the last years of the record stand out for SWE values markedly below the long term mean, with the partial exception of 2024 since a 
-unusually wet spring helped to balance the deficits accumulated during the early snow season. This pattern provides further evidence of the persistent 
-snow drought conditions which have been detected in the Italian Alps during the early 2020s, driven by the combined effects of reduced precipitation and 
-higher temperatures \parencite{snow_drought}. 
-Besides a strong temporal variability, the modelled snow cover also displays a substantial spatial heterogeneity across Italy, as shown in Figure 
-\ref{fig:ave_swe_scd_ITSNOW.png}. 
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{snow_products/ave_swe_scd_ITSNOW.png}
@@ -439,12 +433,9 @@ Besides a strong temporal variability, the modelled snow cover also displays a s
     of the annual SCD maps across the same period.}
     \label{fig:ave_swe_scd_ITSNOW.png}
 \end{figure}
-The simulated snowpack results indeed deeper and longer-lasting in high altitude catchments, whereas the lowlands only experience an ephemeral snow cover, 
-owing to their milder temperatures. Water storage is also unevenly distributed between mountain ranges, since according to IT-SNOW estimates almost 87 \% 
-of the national SWE is found within the five main Alpine river basins, namely the Po, Adige, Piave, Tagliamento and Brenta. The Central Apennines are 
-Italy's second most important water tower, accounting for about 7\% of total SWE, whereas the remaining fraction is distributed across the rest of the 
-country \parencite{IT-SNOW}. 
 
+Tagliamento and Brenta. The Central Apennines are Italy's second most important water tower, accounting for about 7\% of total SWE, whereas the remaining 
+fraction is distributed across the rest of the country \parencite{IT-SNOW}. 
 
 
 
