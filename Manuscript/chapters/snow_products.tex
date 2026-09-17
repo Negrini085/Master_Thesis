@@ -256,23 +256,41 @@ the Adriatic Sea, resulting in consistent snowfall through the whole mountain ar
 progressively weakens toward the Southern Apennines, which typically exhibit a shorter snow season than the other Italian mountain ranges.
 
 Since the snowpack is highly sensitive to meteorological conditions, such as thermal regimes and precipitation patterns, the extent and duration of snow 
-cover observed in any given hydrological year cannot be expected to closely match the 2001-2025 average. The substantial interannual variability of the 
-snowpack can be quantified through the standard deviation of SCD from its mean value over the investigated period. This quantity, as shown in Figure 
+cover observed in any given hydrological year cannot be expected to exactly follow the 2001-2025 average. The substantial interannual variability of the 
+snowpack can be quantified through the standard deviation of SCD from its mean value across the investigated period. This quantity, as shown in Figure 
 \ref{fig:sd_scd_with_ele_MODIS}, increases steadily with elevation, peaking at approximately $\SI{1800}{\meter}$ a.s.l. and then gradually decreasing up 
 to $\SI{3000}{\meter}$ a.s.l., beyond which a sharp drop is observed. This complex relationship with elevation may be linked to both thermal regimes and 
 glacier presence. 
 \begin{figure}[htb]
     \centering
     \includegraphics[width=\linewidth]{snow_products/sd_scd_with_ele_MODIS.png}
-    \caption{(a) Spatial distribution of SCD standard deviation from the mean, computed over the 2001-2025 period. (b) }
+    \caption{(a) Spatial distribution of the standard deviation of SCD from the mean, computed over the 2001-2025 period. (b) Quantiles of the same 
+    quantity as a function of elevation. In order to produce this plot, standard deviation values across the whole Italian territory have been organized 
+    into 5 meters wide elevation bands.}
     \label{fig:sd_scd_with_ele_MODIS}
 \end{figure}
 Low-elevation mountainous terrain is indeed more sensitive to year-to-year variability, as temperatures are typically close to freezing 
 point, and even a slight increase in temperature may lead to liquid precipitation instead of snowfall or to a substantially earlier end of the snow season 
-due to warmer spring temperatures, whose impact at higher elevations is less pronounced. Moreover, above $\SI{3000}{\meter}$ a.s.l. a large portion of 
-the terrain is ice-covered and is classified by MODIS sensors as snow-covered all year round, thereby reducing the variability of SCD values. 
+due to warmer spring months, whose impact at higher elevations is less pronounced. Moreover, above $\SI{3000}{\meter}$ a.s.l. large portion of the study 
+area is ice-covered all year round, thereby reducing the variability of SCD values since MODIS does not distinguish between snow and glacier ice.
 
-
+Ultimately, this snow dataset can be used to assess the response of the cryosphere to climate change over the Italian territory. Although the actual 
+temporal coverage of \num{25} hydrological years is still relatively limited and falls five years short of the thirty-year period conventionally required for 
+trend analyses, it is nevertheless sufficient to provide an initial perspective of persistent changes in snow cover dynamics. SCD is experiencing 
+widespread reductions across the whole investigated domain, as show in Figure \ref{fig:slope_pval_2001_2025_MODIS} where the results of Mann-Kendall (trend 
+significance) and Sen-Theil (trend magnitude) non-parametric tests are presented. Decreasing trends exceeding $-15$ days/decade are observed in the 
+Western Alps and in the Central Apennines, whereas over the lowlands the reduction does not exceed $-2.5\,\text{days/decade}$, consistent with the much 
+shorter snow seasons of these areas. Most of the statistically significant trends are found in mountainous area, highlighting 
+the sensitivity of those regions to the ongoing warming. This analysis also reveals that trend magnitude has a non-trivial dependence with elevation: the 
+most pronounced changes occur in the \num{1500}--\num{2000} m a.s.l. elevation band where on average the snow season is shrinking by 10 days per decade, whereas 
+areas above \num{3000} are experiencing substantially weaker changes, maxing out at \num{5} days per decade.
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\linewidth]{snow_products/slope_pval_2001_2025_MODIS.png}
+    \caption{(a) SCD trend slope computed by means of Sen-Theil non-parametric test over the 2001--2025 period. (b) Trend sign and significance over the 
+    2001-2025 period computed by means of Mann-Kendall non-parametric test.}
+    \label{fig:slope_pval_2001_2025_MODIS}
+\end{figure}
 
 
 
