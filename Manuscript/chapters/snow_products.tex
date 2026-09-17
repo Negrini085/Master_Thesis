@@ -216,12 +216,13 @@ the main mountain ranges, with valleys exhibiting markedly lower snow cover dura
     lowland plains, which remain snow free for most of the year.}
     \label{fig:ave_scd_MODIS}
 \end{figure}
-It also underlines that the snow season in the Appenines is substantially shorter than in the Alps, with only the most prominent massifs, such as Gran 
-Sasso and Maiella, displaying snow behaviour somewhat comparable to their Alpine counterpart. SOD and SED exhibit a similar spatial variability, as 
-mountainous terrain strongly increases the likelihood of an earlier onset and a later end of the snow season. 
+It also underlines that the snow season in the Apennines is substantially shorter than in the Alps, mainly due to their lower average elevations. Only the 
+highest massifs of the former mountain range, such as Gran Sasso and Maiella, exhibit snow patterns somewhat comparable to those observed in the Alpine area. 
+SOD and SED show similar spatial variability, as mountainous terrain strongly increases the likelihood of an earlier onset and a later end of the snow 
+season. 
 
-The predominant role of elevation in determining the duration of snow cover can be investigated by dividing the Italian territory into $\SI{5}{\meter}$ 
-wide elevation bands. The quantiles of the SCD distribution, shown in Figure \ref{fig:scd_percentiles_by_ele_MODIS}, exhibit a clear monotonic 
+The predominant role of elevation in determining the duration of snow cover can be investigated by dividing the Italian territory into \num{5} meter 
+wide elevation bands. The quantiles of the average SCD distribution, shown in Figure \ref{fig:scd_percentiles_by_ele_MODIS}, exhibit a clear monotonic 
 relationship with elevation, as higher regions are typically associated with longer-lasting snowpacks. However, the considerable spread observed within 
 each elevation band suggest that additional factors, such as climatic regimes or additional topographic variables, may influence snow cover duration across 
 the Italian peninsula. For instance, repeating the same analysis for individual sub-regions of the investigated domain shows that the steepness of the 
@@ -241,10 +242,8 @@ snow than its surroundings. At the same elevation, for instance, south facing sl
 ones, since aspect controls the amount of incoming shortwave radiation contributing to the snowpack energy balance. Similarly, enhanced snowfall resulting 
 from the orographic lifting of air masses may lead to higher SCD values, as greater snowpacks require more time to melt completely. These processes are 
 captured by MODIS observations, as shown in Figure \ref{fig:los_difference_by_ele_MODIS}, which reports the difference between the average SCD value of each 
-pixel and the mean SCD of the $\SI{5}{\meter}$ elevation band it belongs to. A striking feature of this map, is that the Eastern Apennines are significantly 
-snowier than the Italian average at comparable elevations: this particular behaviour is driven by cold continental air masses originating from the Balkan 
-region, which become enriched with moisture as they cross the Adriatic Sea, resulting in consistent snowfall through the whole mountain arc 
-\parencite{more_snow_east_apennines}. 
+pixel and the mean SCD of the $\SI{5}{\meter}$ elevation band it belongs to. A striking feature of this map is that the Eastern Apennines are significantly 
+snowier than the Italian average at comparable elevations. 
 \begin{figure}[htb]
     \centering
     \includegraphics[width=\linewidth]{snow_products/los_difference_by_ele_MODIS.png}
@@ -252,31 +251,27 @@ region, which become enriched with moisture as they cross the Adriatic Sea, resu
     wide elevation band it belongs to.}
     \label{fig:los_difference_by_ele_MODIS}
 \end{figure}
-This east to west contrast progressively weakens toward the Southern Apennines, which typically exhibit a shorter 
-snow season than the other Italian mountain ranges.
+This particular behaviour is driven by cold continental air masses originating from the Balkan region, which become enriched with moisture as they cross 
+the Adriatic Sea, resulting in consistent snowfall through the whole mountain arc\parencite{more_snow_east_apennines}. This east to west contrast 
+progressively weakens toward the Southern Apennines, which typically exhibit a shorter snow season than the other Italian mountain ranges.
 
-The snow cover extent and duration observed in any given year cannot, of course, be expected to closely match the 2001-2025 average, since the snowpack 
-is highly sensitive to climatic drivers, such as winter precipitation and temperature patterns, that are themselves subject to considerable interannual 
-variability. This translates into substantial year-to-year fluctuations in snow cover duration, which can be quantified through the pixel by pixel 
-standard deviation from the mean. 
-
-together with its ratio to the corresponding average SCD value. The spatial distribution of these two quantities is shown in Figure \ref{fig:std_over_mean_MODIS}. 
-The standard deviation exhibits a monotonically increasing relationship with up to approximately $\SI{2000}{\meter}$ a.s.l., beyond 
-which it begins to decrease. This behaviour may be partially linked to glacier covered terrain, which, as previously noted, is 
-treated by MODIS as snow covered throughout the whole year, even though bare ice conditions are commonly observed by the end of the 
-melt season. The ratio displays a markedly different pattern, with lower values typically found in high alpine catchments, whereas 
-the highest ones are generally observerd over lowland plains. This trend follows directly from the considerably longer SCD 
-characterising mountainous terrain, which contraints the ratio regardless of the absolute variability. 
-
-% Plot va sistemato (unità di misura)!
-\begin{figure}[H]
+Since the snowpack is highly sensitive to meteorological conditions, such as thermal regimes and precipitation patterns, the extent and duration of snow 
+cover observed in any given hydrological year cannot be expected to closely match the 2001-2025 average. The substantial interannual variability of the 
+snowpack can be quantified through the standard deviation of SCD from its mean value over the investigated period. This quantity, as shown in Figure 
+\ref{fig:sd_scd_with_ele_MODIS}, increases steadily with elevation, peaking at approximately $\SI{1800}{\meter}$ a.s.l. and then gradually decreasing up 
+to $\SI{3000}{\meter}$ a.s.l., beyond which a sharp drop is observed. This complex relationship with elevation may be linked to both thermal regimes and 
+glacier presence. 
+\begin{figure}[htb]
     \centering
-    \includegraphics[width=\linewidth]{snow_products/std_over_mean_MODIS.png}
-    \caption{(a) Spatial distribution of SCD standard deviation from the mean, computed over the 2001-2025 period. (b) Spatial 
-    distribution of the ratio between the SCD standard deviation from the mean and the corresponding mean SCD value for the 2001-2025 
-    period.}
-    \label{fig:std_over_mean_MODIS}
+    \includegraphics[width=\linewidth]{snow_products/sd_scd_with_ele_MODIS.png}
+    \caption{(a) Spatial distribution of SCD standard deviation from the mean, computed over the 2001-2025 period. (b) }
+    \label{fig:sd_scd_with_ele_MODIS}
 \end{figure}
+Low-elevation mountainous terrain is indeed more sensitive to year-to-year variability, as temperatures are typically close to freezing 
+point, and even a slight increase in temperature may lead to liquid precipitation instead of snowfall or to a substantially earlier end of the snow season 
+due to warmer spring temperatures, whose impact at higher elevations is less pronounced. Moreover, above $\SI{3000}{\meter}$ a.s.l. a large portion of 
+the terrain is ice-covered and is classified by MODIS sensors as snow-covered all year round, thereby reducing the variability of SCD values. 
+
 
 
 
