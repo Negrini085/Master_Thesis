@@ -35,8 +35,8 @@ for(y in years){
   
   # Masking in order to compute SWE metrics only on common area
   compareGeom(dem, r, stopOnError = TRUE)
-  mask <- !is.na(dem) & !is.na(r)
-  r[!mask] <- NA
+  # mask <- !is.na(dem) & !is.na(r)
+  # r[!mask] <- NA
   r <- crop(r, correct_ext)
   
   outnames <- file.path("Dataset/Daily/Po", paste0("SWE_", c(dates_first, dates_second), ".tif"))

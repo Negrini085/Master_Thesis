@@ -66,8 +66,8 @@ size_axis_text    <- 15
 size_legend_title <- 20
 size_legend_text  <- 15
 
-italy_border <- gadm(country = "ITA", level = 0, path = tempdir())
-italy_border <- project(italy_border, diff)
+world_borders <- geodata::world(resolution = 3, path = "gadm_cache")
+italy_border  <- crop(world_borders, ext(diff))
 
 p_map <- ggplot() +
   geom_spatraster(data = diff, aes(fill = diff)) +
