@@ -7,7 +7,7 @@ library(terra)
 library(hdf5r)
 library(R.matlab)
 
-year <- 2000
+years <- 2000
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SC_studies/MODIS/")
 
 
@@ -25,31 +25,34 @@ read_mod_file <- function(fname) {
   })
 }
 
-sc_matrix <- read_mod_file(paste0("Dataset/mod_", years, ".mat"))
-
-
-# Reading coordinates
-misc <- readMat("Dataset/misc_data.mat")
-lat <- misc$lat[, 1]
-lon <- misc$lon[, 1]
-
-
-# Creating template raster and getting ready to fill it
-r_template <- rast("Dataset/annual_maps/LOS/los_2025.tif")
-r_template[] <- NA
-cell_idx <- cellFromXY(r_template, cbind(lon, lat))
-
-
-# Creating daily raster maps
-n_days <- ncol(sc_matrix)
-for (d in seq_len(n_days)) {
-  r_day <- r_template
-  vals <- rep(NA_real_, ncell(r_day))
-  vals[cell_idx] <- sc_matrix[, d]
-  values(r_day) <- vals
-
-  fname_out <- paste0("Dataset/daily/", year, "/day_", sprintf("%03d", d), ".tif")
-  writeRaster(r_day, fname_out, overwrite = TRUE, datatype = "INT1U")
-
-  if (d %% 10 == 0) print(paste0("Dealing with day ", d, "/", n_days, " of ", year))
+for(year in years){
+  sc_matrix <- read_mod_file(paste0("Dataset/mod_", year, ".mat"))
+  
+  
+  # Reading coordinates
+  misc <- readMat("Dataset/misc_data.mat")
+  lat <- misc$lat[, 1]
+  lon <- misc$lon[, 1]
+  
+  
+  # Creating template raster and getting ready to fill it
+  r_template <- rast("Dataset/annual_maps/LOS/los_2025.tif")
+  r_template[] <- NA
+  cell_idx <- cellFromXY(r_template, cbind(lon, lat))
+  
+  
+  # Creating daily raster maps
+  n_days <- ncol(sc_matrix)
+  for (d in seq_len(n_days)) {
+    print(d)
+    r_day <- r_template
+    vals <- rep(NA_real_, ncell(r_day))
+    vals[cell_idx] <- sc_matrix[, d]
+    values(r_day) <- vals
+    
+    fname_out <- paste0("Dataset/appo/", year, "/day_", (as.Date(paste0(year, "-02-24")) + d - 1), ".tif")
+    writeRaster(r_day, fname_out, overwrite = TRUE, datatype = "INT1U")
+    
+    if (d %% 10 == 0) print(paste0("Dealing with day ", d, "/", n_days, " of ", year))
+  }
 }
