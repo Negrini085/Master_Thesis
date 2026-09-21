@@ -529,8 +529,8 @@ cover with the aim of adjusting the melting rate in order to ensure a more accur
 
 \subsection{Results}
 
-The total volume of water stored within the snowpack shows substantial year-to-year variability, as shown in Figure \ref{fig:evo_swe_tot_PO}, with 
-an average peak value of $6.7 \pm 2.3 \,\SI{}{\giga\meter\cubed}$, typically reached on $20\,\,\text{March} \,\pm\,25$ days. 
+The total volume of water stored within the snowpack shows substantial year-to-year variability, as shown in Figure \ref{fig:evo_swe_tot_PO}. The 
+average peak SWE value is $6.7 \pm 2.3 \,\SI{}{\giga\meter\cubed}$, typically reached on $20\,\,\text{March} \,\pm\,25$ days. 
 \begin{figure}[htb]
     \centering
     \includegraphics[width=\linewidth]{snow_products/evo_swe_tot_PO.png}
@@ -538,8 +538,9 @@ an average peak value of $6.7 \pm 2.3 \,\SI{}{\giga\meter\cubed}$, typically rea
     District snow dataset \parencite{Po_snow}}
     \label{fig:evo_swe_tot_PO}
 \end{figure}
-This timing is consistent, within one standard deviation, with 1 April, the date conventionally used in snow literature as a proxy for maximum SWE. 
-However, snow accumulation can continue beyond 20 March in some portions of the Po River District, as the timing of peak SWE varies substantially across 
+This timing is consistent, within one standard deviation, with 1 April, the date conventionally used in snow literature as a proxy for maximum SWE.
+
+Snow accumulation can continue beyond 20 March in some portions of the Po River District, as the timing of runoff varies substantially across a 
 complex terrain. This variability can be captured by dividing the study area into \num{500} meter wide elevation bands. As reported in Table \ref{tab:peak_swe_elevation_wise_PO} 
 the maximum amount of water stored within the snowpack below $\SI{500}{\meter}$ a.s.l. is reached at the beginning on January, during the coldest period 
 of winter. In contrast, above $\SI{2500}{\meter}$ a.s.l. the snow cover begins to melt significantly only towards the end of April. Moreover, temporal 
@@ -549,7 +550,7 @@ $\SI{2000}{\meter}$ have increased substantially between 1992 and 2021, although
 may provide further evidence of the recent SWE and HS trends observed across the European Alps, as several monitoring networks recorded a sharp (almost 
 step-like) decrease in snow cover at the beginning of the 1990s, followed by a partial recovery in the following decade \parencite{Matiu_HS}. 
 
-\begin{table}[tb]
+\begin{table}[htb]
   \centering
   \caption{Elevation wise peak SWE, timing of peak SWE and SWE trends.}
   \label{tab:peak_swe_elevation_wise_PO}
@@ -582,15 +583,13 @@ step-like) decrease in snow cover at the beginning of the 1990s, followed by a p
 
 \section{Comparison}
 
-The snow datasets presented above differ from one another in several respects. ITSNOW and the Po Basin product are the outputs of two distinct 
-physically based model, and both focus primarily on snow water equivalent, consistently with their hydrological purpose. ITSNOW, however, provides 
-richer information than the latter, as it also includes maps of snow density, snow depth and liquid water content, which allow the user to gain 
-a deeper insight into the state of the snowpack. MODIS, in contrast, describes snow cover alone through binary rasters. This discrepancy does not 
-limit the possibility of a comparison, as SWE maps can be converted into binary rasters by means of \eqref{eq:scf_ITSNOW} and \eqref{eq:scf_PO}. Since 
-these datasets cover different domains, are provided at different spatial resolutions and in different coordinate reference systems, and span 
-different periods, the comparisons reported hereafter are carried out over the largest common overlap, both in space and in time. For the sake of 
-clarity, Table \ref{tab:dataset_car} summarizes the main characteristics of each snow product, thereby clarifying the rationale behind some of the 
-comparison choices.
+The snow datasets presented above differ in several respects. IT-SNOW and the Po River District product are the outputs of two distinct physically 
+based model, both primarily focused on snow water equivalent, in line with their hydrological purpose. IT-SNOW, however, provides more comprehensive 
+information, as it also includes maps of snow density, snow depth and liquid water content, allowing for a more detailed characterization of the 
+snowpack. In contrast, MODIS describes snow cover alone through binary rasters: this discrepancy does not preclude a comparison, since SWE maps can 
+be converted into binary snow cover maps by means of \eqref{eq:scf_ITSNOW} and \eqref{eq:scf_PO}. These datasets also differ in spatial coverage, 
+resolution, coordinate reference system, and temporal extent, as summarized in Table \ref{tab:dataset_car}. Therefore, the comparisons are carried 
+out over the largest common spatial and temporal overlap.
 
 \begin{table}[H]
   \centering
@@ -611,9 +610,56 @@ comparison choices.
   \end{tabularx}
 \end{table}
 
+The first comparison that we shall make is the one between IT-SNOW and Po River District datasets. Both are the output of a modelling chain which 
+consists of a physically based snow model and of an assimilation scheme of in situ HS measurements and snow cover satellite readings in order to 
+improve the accuracy of the product. Even through the overall structure of the modelling chains is rather similar, the simulated processes are rather 
+different, given that IT-SNOW is designed to make efficient predictions which could be valuable in real-time flood forcasting, whereas GEOtop 2.0 
+models the entire energy balance of the snowpack, going into much greater detail and taking into account more complex physical phenomenon. In order 
+to make this comparison possible, it is first necessary armonize both dataset, projecting Po Basin maps onto the crs and the grid of ITSNOW. The 
+two datasets are thus analyzed over the 2011-2021 hydrological years, which is the longest timespan covered by both snow product. The common area 
+over which spatial trends or anomalies are computed is the Italian mountainous part of the Po River Discrict. The average peak volume of water 
+stored within the snowpack is rather comparable between the two predictions, as IT-SNOW suggest a maximum SWE of $6.8 \pm 2.3\,\,\SI{}{\giga\meter\cubed}$ 
+happening on average on 4 March $\pm$ 15 days, whereas GEOtop 2.0 is more conservative as it predicts a peak SWE of $5.9 \pm 1.7\,\,\SI{}{\giga\meter\cubed}$ 
+over the inversigated area and period happening later in the season, namely on 19 March $\pm$ 22 days. This later prediction of peak SWE 
+
+% Total SWE series
+R2 = 0.88
+RMSE = 0.76 Gm3
+MAE = 0.52 Gm3
+
+% Under 1000
+R2 = 0.56
+RMSE = 0.24 Gm3
+MAE = 0.10 Gm3
+
+% Intermidiate 
+R2 = 0.92
+RMSE = 0.37 Gm3
+MAE = 0.20 Gm3
+
+% Above 2000
+R2 = 0.86
+RMSE = 0.57 Gm3
+MAE = 0.44 Gm3
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{snow_products/comparison_SCD_MODIS_ITSNOW.png}
+    \includegraphics[width=\linewidth]{snow_products/comparison_seasonal_SWE_PO_ITSNOW.png}
     \caption{MODIS}
     \label{fig:comparison_SCD_MODIS_ITSNOW}
 \end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{snow_products/comparison_volume_ITSNOW_PO.png}
+    \caption{MODIS}
+    \label{fig:comparison_volume_ITSNOW_PO}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{snow_products/comparison_trends_MODIS.png}
+    \caption{MODIS}
+    \label{fig:comparison_trends_MODIS}
+\end{figure}
+
