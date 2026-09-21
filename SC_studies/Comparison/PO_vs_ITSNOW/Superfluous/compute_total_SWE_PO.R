@@ -4,9 +4,9 @@ gc()
 
 library(terra)
 
-years <- 2011:2021
+years <- 2003:2021
 fname_dem <- "Dataset/DEM_Italy.tif"
-fname_template <- "Dataset/Daily/Po/SWE_2010-10-03.tif"
+fname_template <- "../../Po-Basin/Dataset/1992/SWE_1991-10-03.tif"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SC_studies/Comparison/PO_vs_ITSNOW/")
 
 
@@ -39,10 +39,10 @@ for(y in years){
   
   # Selecting filenames
   dates_first <-seq(as.Date(paste0(y-1, "-10-03")), as.Date(paste0(y-1, "-12-31")))
-  fnames_first <- paste0("Dataset/Daily/Po/SWE_", dates_first, ".tif")
+  fnames_first <- paste0("../../Po-Basin/Dataset/", y, "/SWE_", dates_first, ".tif")
   
   dates_second <-seq(as.Date(paste0(y, "-01-01")), as.Date(paste0(y, "-07-01")))
-  fnames_second <- paste0("Dataset/Daily/Po/SWE_", dates_second, ".tif")
+  fnames_second <- paste0("../../Po-Basin/Dataset/", y, "/SWE_", dates_second, ".tif")
   fnames <- c(fnames_first, fnames_second)
   
   
@@ -72,4 +72,4 @@ df <- data.frame(
   higher = appo_swe_higher
 )
 
-write.table(df, "Dataset/total_swe_PO.dat", col.names = TRUE, row.names = FALSE, quote = FALSE)
+write.table(df, "appo_SWE.dat", col.names = TRUE, row.names = FALSE, quote = FALSE)
