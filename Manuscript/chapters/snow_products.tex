@@ -324,9 +324,9 @@ density and liquid water content. These outputs can then be used to compute, dur
 domain, which could be used for direct comparison with remote sensing products. The snow cover fraction of each pixel can indeed be evaluated as
 \begin{equation}
     \text{SCF}\,=\,\text{min}\left(1,\,\frac{\text{SWE [mm]}}{0.1 \cdot \rho_{s}}\right),
-    \label{eq:scf_ITSNOW}
+    \label{eq:scf_IT-SNOW}
 \end{equation}
-where $\rho_{s}$ is the bulk snow density \parencite{scf_ITSNOW}. Since a pixel is conventionally regarded as snow covered when at least half of its area 
+where $\rho_{s}$ is the bulk snow density \parencite{scf_IT-SNOW}. Since a pixel is conventionally regarded as snow covered when at least half of its area 
 is, binary snow cover maps can be obtained by assigning a value of one to all grid points with $\text{SCF}>0.5$, and zero elsewhere.
 
 Within S3M, seasonal snow is partitioned into a dry component, corresponding to the ice matrix, and a wet component, given by the interstitial liquid 
@@ -408,12 +408,12 @@ According to the IT-SNOW reanalysis over the 2011-2025 period, the total volume 
 $\SI{11.9 \pm 5.2}{G\meter\cubed}$, with a maximum of $\SI{23.1}{G\meter\cubed}$ in 2014 and a minimum of $\SI{5.4}{G\meter\cubed}$ in 2022. This peak is 
 typically reached on 4 March $\pm$ 17 days, with the earliest occurrence being on 26 January 2023 and the latest on 26 March 2013. This means that over 
 the investigated period the peak SWE condition is always achieved before \num{1} April, which is the date commonly adopted in literature as a reference 
-for maximum SWE. The temporal evolution of the total SWE, which is shown in Figure \ref{fig:evo_swe_tot_ITSNOW}, exhibits a great year-to-year variability.
+for maximum SWE. The temporal evolution of the total SWE, which is shown in Figure \ref{fig:evo_swe_tot_IT-SNOW}, exhibits a great year-to-year variability.
 In particular, the last years of the record stand out for SWE values markedly below the long term mean, with the partial exception of 2024 since an 
 unusually wet spring helped to balance the deficits accumulated during the early snow season. This pattern provides further evidence of the persistent 
 snow drought conditions which have been detected in the Italian Alps during the early 2020s, driven by the combined effects of reduced precipitation and 
 higher temperatures \parencite{snow_drought}. Besides a strong temporal variability, the modelled snow cover also displays a substantial spatial 
-heterogeneity across Italy, as shown in Figure \ref{fig:ave_swe_scd_ITSNOW.png}. The simulated snowpack results indeed deeper and longer-lasting in high 
+heterogeneity across Italy, as shown in Figure \ref{fig:ave_swe_scd_IT-SNOW.png}. The simulated snowpack results indeed deeper and longer-lasting in high 
 altitude catchments, whereas the lowlands only experience an ephemeral snow cover, owing to their milder temperatures. Water storage is also unevenly 
 distributed between mountain ranges, since according to IT-SNOW estimates almost 87 \% of the national SWE is found within the five main Alpine river 
 basins, namely the Po, Adige, Piave, 
@@ -423,7 +423,7 @@ basins, namely the Po, Adige, Piave,
     \caption{Daily evolution of the total water volume stored in the Italian snowpack, computed as snow water equivalent (SWE) 
     integrated over the whole national domain, from 1 September 2010 to 31 August 2025. Data are from the IT-SNOW reanalysis 
     \parencite{IT-SNOW}.}
-    \label{fig:evo_swe_tot_ITSNOW}
+    \label{fig:evo_swe_tot_IT-SNOW}
 \end{figure}
 
 \begin{figure}[H]
@@ -432,7 +432,7 @@ basins, namely the Po, Adige, Piave,
     \caption{(a) Average seasonal snow water equivalent (SWE), computed as the mean of the November--June averages of each 
     hydrological year considered in this reanalysis. (b) Average snow cover duration (SCD), computed as the mean 
     of the annual SCD maps across the same period.}
-    \label{fig:ave_swe_scd_ITSNOW.png}
+    \label{fig:ave_swe_scd_IT-SNOW.png}
 \end{figure}
 
 Tagliamento and Brenta. The Central Apennines are Italy's second most important water tower, accounting for about 7\% of total SWE, whereas the remaining 
@@ -582,14 +582,20 @@ step-like) decrease in snow cover at the beginning of the 1990s, followed by a p
 
 
 
+
+
+
+
+
+
 \section{Comparison}
 
 The snow datasets presented above differ in several respects. IT-SNOW and the Po River District product are the outputs of two distinct physically 
 based model, both primarily focused on snow water equivalent. IT-SNOW, however, provides more comprehensive information, as it also includes maps 
-of snow density, snow depth and liquid water content, allowing for a more detailed characterization of the  snowpack. In contrast, MODIS describes 
+of snow density, snow depth and liquid water content, allowing for a more detailed characterization of the snowpack. In contrast, MODIS describes 
 snow cover alone through binary rasters: this discrepancy does not preclude a comparison, since SWE maps can be converted into binary snow cover 
-maps by means of Equation \eqref{eq:scf_ITSNOW} or similar approaches. These datasets also differ in spatial coverage, resolution, coordinate 
-reference system, and temporal extent, as summarized in Table \ref{tab:dataset_car}. Therefore, the comparisons are carried out over the largest 
+maps by means of Equation \eqref{eq:scf_IT-SNOW} or similar approaches. These datasets also differ in spatial coverage, resolution, coordinate 
+reference system, and temporal extent, as summarized in Table \ref{tab:dataset_car}. Hereafter, the comparisons are carried out over the largest 
 common spatial and temporal overlap.
 
 \begin{table}[H]
@@ -605,60 +611,154 @@ common spatial and temporal overlap.
     \textbf{Dataset} & \textbf{Data type} & \textbf{Start date} & \textbf{End date} & \textbf{Study area} & \textbf{Spatial resolution} & \textbf{Reference system} \\
     \midrule
     MODIS & Snow cover & 24-02-2000 & 30-09-2025 & Italy & 0.00417 $\unit{\degree}$ &  WGS 84 (EPSG:4326) \\
-    ITSNOW & SWE & 01-09-2010 & 31-08-2025 & Italy & 0.00506 $\unit{\degree}$ & WGS 84 (EPSG:4326) \\
+    IT-SNOW & SWE & 01-09-2010 & 31-08-2025 & Italy & 0.00506 $\unit{\degree}$ & WGS 84 (EPSG:4326) \\
     Po Basin & SWE & 03-10-1991 & 01-07-2021 & Po Basin & $\SI{500}{\meter}$ & ETRS89 (EPSG:3035) \\
     \bottomrule
   \end{tabularx}
 \end{table}
 
+
+\subsection{IT-SNOW vs Po River District}
+
 A particularly interesting comparison is the one between the two hydrology oriented snow reanalyses, namely IT-SNOW and the Po River District product. 
 Both are generated by a modelling chain consisting of a physically based snow model and an assimilation scheme using in situ HS measurements and satellite 
-observations to ensure data accuracy and reliability. Even though the two systems share a similar overall structure, their snow models, S3M for ITSNOW and 
+observations to ensure data accuracy and reliability. Even though the two systems share a similar overall structure, their snow models, S3M for IT-SNOW and 
 GEOtop 2.0 for the Po River District, describe the main snowpack dynamics in markedly different ways. The former is indeed designed to provide efficient 
 predictions that could be valuable in real-time flood forecasting, whereas GEOtop 2.0 models the entire energy balance of the snowpack, going into much 
 greater detail and taking into account more complex physical phenomena. In order to compare this snow products, it is first necessary to harmonize these 
-datasets by reprojecting the Po Basin maps onto the CRS and the grid of ITSNOW. The two datasets are consequently analyzed over the 2011--2021 hydrological 
+datasets by reprojecting the Po Basin maps onto the CRS and the grid of IT-SNOW. The two datasets are consequently analyzed over the 2011--2021 hydrological 
 years, the longest period covered by both snow product. The common area over which the following results are computed is the Italian mountainous portion 
 of the Po River District. Within the spatial and temporal overlap of the snow products, the average peak volume of water stored within the snowpack is rather 
 comparable between the two predictions, as IT-SNOW suggest a maximum SWE of $6.8 \pm 2.3\,\,\SI{}{\giga\meter\cubed}$ occurring on average on 4 March $\pm$ 
 15 days, whereas the Po River District estimate is more conservative, predicting a peak SWE of $5.9 \pm 1.7\,\,\SI{}{\giga\meter\cubed}$ happening later in the season, namely 
 on 19 March $\pm$ 22 days. Moreover, the two SWE series over the investigated period also show a rather good agreement, as $\text{R}^2\,=\,0.88$, 
-$\text{RMSE}\,=\,\SI{0.76}{\giga\meter\cubed}$ and $\text{MAE}\,=\,\SI{0.52}{\giga\meter\cubed}$. This cumulative 
+$\text{RMSE}\,=\,\SI{0.76}{\giga\meter\cubed}$ and $\text{MAE}\,=\,\SI{0.52}{\giga\meter\cubed}$. However, this apparent consistency may conceal 
+substantial differences in the spatial distribution of the snowpack, as the total volume of water stored within the snowpack is an aggregated metric over 
+the entire study area. Consequently, over and underestimates in different areas may compensate for each other, resulting in similar total values despite 
+significant local differences. In order to examine the previous result in greater detail, Italy was partitioned between low elevations 
+(\num{0} - $\SI{1000}{\meter}$ a.s.l.), medium elevations (\num{1000} - $\SI{2000}{\meter}$ a.s.l.) and high elevations (above $\SI{2000}{\meter}$ a.s.l.). 
+This elevation-wise comparison shows that a substantial difference exists below $\SI{1000}{\meter}$, as the coefficient of determination (i.e. $R^2$) 
+suggests only a moderate correlation between the two datasets in this portion of the study area. In contrast, above $\SI{1000}{\meter}$ a.s.l. the 
+predictions of the two models are in better agreement, as the statistical estimators summarized in Table \ref{tab:stat_estimator_IT-SNOW_PO} suggest.
 
+\begin{table}[H]
+  \centering
+\caption{Elevation-wise comparison between IT-SNOW and Po River District SWE series.}
+\label{tab:stat_estimator_IT-SNOW_PO}
+\renewcommand{\arraystretch}{1.3}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+\setlength{\tabcolsep}{4pt}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X @{}}
+\toprule
+\textbf{Elevation band} & \textbf{R\textsuperscript{2}} & \textbf{RMSE} & \textbf{MAE} \\
+\midrule
+    \num{0} - $\SI{1000}{\meter}$ & 0.56 & $\SI{0.24}{\giga\meter\cubed}$ & $\SI{0.10}{\giga\meter\cubed}$ \\
+    \num{1000} - $\SI{2000}{\meter}$ & 0.92 & $\SI{0.37}{\giga\meter\cubed}$ & $\SI{0.20}{\giga\meter\cubed}$ \\
+    $>\,\SI{2000}{\meter}$ & 0.86 & $\SI{0.57}{\giga\meter\cubed}$ & $\SI{0.44}{\giga\meter\cubed}$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
-% Under 1000
-R2 = 0.56
-RMSE = 0.24 Gm3
-MAE = 0.10 Gm3
-
-% Intermidiate 
-R2 = 0.92
-RMSE = 0.37 Gm3
-MAE = 0.20 Gm3
-
-% Above 2000
-R2 = 0.86
-RMSE = 0.57 Gm3
-MAE = 0.44 Gm3
-
-\begin{figure}[H]
+The strong correlation for SWE series at medium at high elevations can also be visibly appreciated in Figure \ref{fig:comparison_volume_IT-SNOW_PO}, which 
+shows the elevation wise series computed over the temporal overlap of the two datasets. 
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{snow_products/comparison_volume_ITSNOW_PO.png}
-    \caption{MODIS}
-    \label{fig:comparison_volume_ITSNOW_PO}
+    \caption{Elevation-wise SWE series comparison between IT-SNOW and the Po River District snow product.}
+    \label{fig:comparison_volume_IT-SNOW_PO}
 \end{figure}
+In particular, IT-SNOW shows higher SWE volume during peak accumulation at lower elevations, whereas the Po River District products slightly 
+overestimates with respect to its counterpart the water volume stored above $\SI{2000}{\meter}$ a.s.l. The best agreement between the two snow 
+product is in the medium elevations. From Figure \ref{fig:comparison_volume_IT-SNOW_PO} it is also possible to note that "J-snow", the modelling 
+chain which generates the Po River District snow product, has a significant bias with elevation, as the "gap" between the estimates of the two 
+datasets gets significantly smaller with elevation, eventually going from a deficit to an over-estimation. This could be partially linked to the 
+meteorological forcing of GEOtop 2.0, which consist of station precipitation records spatialized and corrected with ERA5 reanalysis estimates whenever 
+the monitoring network is sparce enough, which systematically overestimates high elevation precipitation in the Alps. The fact that the "J-snow" fraction 
+of the snowpack above $\SI{2000}{\meter}$ is bigger than the IT-SNOW one also explains the delayed timing of peak SWE in the former snow dataset. 
+
+Even when looking at the seasonal average SWE stored within the overlap region, clear differences appear. For instance, as shown in Figure 
+\ref{fig:comparison_SCD_MODIS_IT-SNOW}, IT-SNOW typically overestimates at the seasonal scale the amount of water stored within the highlands of 
+the Aosta Valley, which is the area where it was calibrated on, whereas substantially underestimates in the Adamello and Rhaetian Alps. Disregaring 
+elevation gradients, it also seems that a slight overestimation of IT-SNOW can be detected when considering the whole study area, as there are more 
+pixel with positive bias than negative ones. This is clearly compatible with the fact that the peak volume of water stored within the investigated 
+domain is higher according to IT-SNOW.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{snow_products/comparison_seasonal_SWE_PO_ITSNOW.png}
-    \caption{MODIS}
-    \label{fig:comparison_SCD_MODIS_ITSNOW}
+    \caption{(a) Spatial distribution of the ratio between IT-SNOW and Po River District SWE estimates for each pixel. (b) Frequency histogram of 
+    IT-SNOW - Po River district SWE values.}
+    \label{fig:comparison_SCD_MODIS_IT-SNOW}
 \end{figure}
+
+The last aspect to be taken into consideration in this comparison is the temporal coverage of both datasets. IT-SNOW tracks snow water equivalent 
+from 1 September 2010 to 31 August 2025, which is just not enough to assess temporal modifications in snow cover metrics, as the results would 
+still be dominated by the interannual variability. The Po River District snow product, on the other hand, barely fits the criteria required to 
+produce reliable trend analyses as it spans across 30 hydrological years. However, some modelling choices that were made during the generation of 
+the dataset do not make it the perfect candidate either, as the fact that daily maps are not available between 1 July and 2 October means that 
+the user cannot have information about ephemeral snowfall which could still happen in high alpine catchments during summer. Moreover, the final 
+stages of snowmelt at high altitudes are not taken into account if a specific hydrological year has favorable conditions to the persistence of 
+snow cover on the ground, such as 2014, since the record stops before the SWE series at high elevation reaches zero in Figure 
+\ref{fig:comparison_volume_IT-SNOW_PO}. Ultimately, the covered are for the Po River District is kinda limited, which means that eventual trend 
+estimates could not be extended to the whole alpine arc and to the lowlands, since it focuses only on the mountainous region of the Po River District.
+
+\subsection{SWE vs SCD}
+
+The comparison between IT-SNOW or the Po River District snow product with MODIS is kinda redundant, as both modelling chain leading to the generation 
+of the two hydrological oriented dataset include MODIS reading by means of the assimilation schemes previously alluded to. However, considering that 
+the gap filling strategy used by \cite{MODIS_ITA} to fill the reading gaps plays a role in determining the extent of snow cover on a given day and 
+has not been deeply validated to this day, a brief comparison could still give useful information. Comparing satellite observations with IT-SNOW 
+snow cover duration maps, computed by means of Equation \eqref{eq:scf_IT-SNOW}, it is evident that satellite readings substantially underestimate 
+the snow cover duration across the whole peninsula, as shown in Figure \ref{fig:comparison_SCD_ITSNOW_MODIS}. This bias is enhanced by elevation, as 
+on mountainous terrain some pixels show snow season duration differences up to \num{50} days. This bias toward underestimation is also evident in the 
+difference histogram. The same can be said for the Po River District snow product, as even there MODIS values are substantially underestimating the snow season.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{snow_products/comparison_SCD_ITSNOW_MODIS.png}
+    \caption{(a) Spatial distribution of the SCD difference between IT-SNOW and MODIS estimates. (b) Relative frequency histogram of SCD difference 
+    values between IT-SNOW and MODIS estimates.}
+    \label{fig:comparison_SCD_ITSNOW_MODIS}
+\end{figure}
+
+Without going into further detail in this kind of comparison, since as previously stated IT-SNOW and Po River District estimates already assimilate 
+MODIS readings, it is also fundamental to focus on the correctness of using MODIS observations to make trend estimates. At the moment of pubblication 
+of \cite{MODIS_ITA}, snow cover datas were available on Italian territory only untill 2022 and thus trend analyses were made only up to 2022. At the 
+time of this thesis, however, daily maps of snow cover were available up untill 31 August 2025, meaning that three extra years, mainly characterized 
+by snow droughts on the Italian territory, could be used to make trend assessments. This made it possible to assess how a small number of years lead 
+to a sensible increase in pixels with statistically significant decreasing trends, thus highlighting that the MODIS temporal coverage could still be 
+probably a little too much short in order to not be influenced by interannual variability. This limited time coverage is due to the fact that remote 
+sensing technology underwent a phase of rapid development during the final part of the last century, achieving high spatial resolution only at the 
+beginning of the 2000s. MODIS estimates still have a primary role in snow cover studies, as they are keep getting updated and they are one of the 
+few spatialized direct observations, not depending on numerical simulations of the snowpack.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{snow_products/comparison_trends_MODIS.png}
-    \caption{MODIS}
+    \caption{(a) Sign and significance of SCD trends derived from MODIS observations over the 2001--2022 period. (b) Sign and significance of SCD trends 
+    derived from MODIS observations over the 2001--2025 period. The comparison highlights the strong impact of three snow scarce years on trend analyses 
+    across the Italian peninsula.}
     \label{fig:comparison_trends_MODIS}
 \end{figure}
 
+
+
+\subsection{Conclusions}
+
+The three spatially distributed snow datasets currently available over the IH-GAR provide different insights on snow cover properties and variability. MODIS 
+observations provide direct daily maps of snow cover extent as binary maps, but does not constitute a good source for trend estimations, given that it only 
+spans 25 hydrological years and interannual variability can have a substantial role in altering trend analyses. IT-SNOW and the Po River District product 
+show a rather good agreement over the whole investigated area, but elevation plays a key role, given that under $\SI{1000}{\meter}$ a.s.l. the two models 
+give substantially different estimates of the volume of water stored within the snowpack. Moreover, neither of this two snow products is a reliable 
+source for making trend estimates, since the temporal coverage of IT-SNOW (namely 15 years) is too short to avoid being sensibly influenced by interannual 
+variability, whereas the Po River District dataset does not garantee complete coverage of the 1992--2021 period, given that SWE rasters are not available 
+between 2 July and 2 October of each year, resulting in disregarding ephemeral snow on highest peak during summer and the latest stage of snowmelt in 
+particularly snowy years, such as 2014. 
+
+These limitations do not diminish the value of the existing snow datasets, but highlight the need for a new snow product specifically designed for 
+climatological applications over the IH-GAR. This new approach should thus span a period long enough to make trend estimates robust against interannual 
+variability and provide spatially and temporally continuous observations of the study area. Moreover, this snow model should be driven by input data that 
+avoid the correction with reanalysis estimates, such as precipitation in Po River District product, which were corrected by mean of ERA5, leading to an 
+overestimation of precipitations in high alpine catchments. The aim of this thesis is to respond to this need, developing a modelling procedure capable 
+of reproducing the evolution of snow water equivalent of the seasonal snowpack between 1951 and 2023, in order to produce better estimates.
