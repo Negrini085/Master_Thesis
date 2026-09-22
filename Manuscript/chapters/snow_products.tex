@@ -660,29 +660,29 @@ Table \ref{tab:stat_estimator_IT-SNOW_PO}.
 \end{tabularx}
 \end{table}
 
-The strong correlation for SWE series at medium at high elevations can also be visibly appreciated in Figure \ref{fig:comparison_volume_IT-SNOW_PO}, which 
-shows the elevation wise series computed over the temporal overlap of the two datasets. 
+The strong correlation observed for the SWE series at medium and high elevations can also be appreciated in Figure \ref{fig:comparison_volume_IT-SNOW_PO}, 
+which shows the elevation wise series computed over the period of temporal overlap between the two datasets. 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{snow_products/comparison_volume_ITSNOW_PO.png}
     \caption{Elevation-wise SWE series comparison between IT-SNOW and the Po River District snow product.}
     \label{fig:comparison_volume_IT-SNOW_PO}
 \end{figure}
-In particular, IT-SNOW shows higher SWE volume during peak accumulation at lower elevations, whereas the Po River District products slightly 
-overestimates with respect to its counterpart the water volume stored above $\SI{2000}{\meter}$ a.s.l. The best agreement between the two snow 
-product is in the medium elevations. From Figure \ref{fig:comparison_volume_IT-SNOW_PO} it is also possible to note that "J-snow", the modelling 
-chain which generates the Po River District snow product, has a significant bias with elevation, as the "gap" between the estimates of the two 
-datasets gets significantly smaller with elevation, eventually going from a deficit to an over-estimation. This could be partially linked to the 
-meteorological forcing of GEOtop 2.0, which consist of station precipitation records spatialized and corrected with ERA5 reanalysis estimates whenever 
-the monitoring network is sparce enough, which systematically overestimates high elevation precipitation in the Alps. The fact that the "J-snow" fraction 
-of the snowpack above $\SI{2000}{\meter}$ is bigger than the IT-SNOW one also explains the delayed timing of peak SWE in the former snow dataset. 
+In particular, IT-SNOW shows  a higher SWE volume during peak accumulation at lower elevations, whereas the Po River District product slightly overestimates 
+the water volume stored above $\SI{2000}{\meter}$ a.s.l. with respect to its counterpart. The best agreement between the two snow product is in the medium 
+elevations. Figure \ref{fig:comparison_volume_IT-SNOW_PO} also highlights a significant elevation dependent bias in the "J-snow" modelling chain used to 
+generate the Po River District product: the discrepancy with respect to IT-SNOW decreases steadily with elevation, until the underestimation eventually 
+turns into an overestimation. This behaviour could be partially related to the meteorological forcing used by GEOtop 2.0, which is based on precipitation 
+records spatialized and, where the monitoring network is too sparse, corrected using ERA5 reanalysis estimates, which systematically overestimates total 
+precipitations in high elevation Alpine catchments. Moreover, the fraction of SWE stored above $\SI{2000}{\meter}$ is larger in the PO River District 
+product than in IT-SNOW, which also helps explain the delayed timing of peak SWE in the former dataset. 
 
-Even when looking at the seasonal average SWE stored within the overlap region, clear differences appear. For instance, as shown in Figure 
-\ref{fig:comparison_SCD_MODIS_IT-SNOW}, IT-SNOW typically overestimates at the seasonal scale the amount of water stored within the highlands of 
-the Aosta Valley, which is the area where it was calibrated on, whereas substantially underestimates in the Adamello and Rhaetian Alps. Disregaring 
-elevation gradients, it also seems that a slight overestimation of IT-SNOW can be detected when considering the whole study area, as there are more 
-pixel with positive bias than negative ones. This is clearly compatible with the fact that the peak volume of water stored within the investigated 
-domain is higher according to IT-SNOW.
+Even when considering at the seasonal average SWE over the overlap region, clear differences between the two snow products can be observed. For instance, 
+as shown in Figure \ref{fig:comparison_SCD_MODIS_IT-SNOW}, IT-SNOW generally overestimates the amount of water stored within the highlands of 
+the Aosta Valley at the seasonal scale, whereas it substantially underestimates SWE over the Adamello and Rhaetian Alps with respect to the Po River 
+District dataset. Regardless of elevation gradients, a slight overall overestimation by IT-SNOW can also be identified across the entire study area, as 
+the number of pixel with a positive bias is higher than that with a negative bias, as shown in Panel (b) of Figure \ref{fig:comparison_SCD_MODIS_IT-SNOW}. 
+This result is consistent with the higher peak water volume estimated by IT-SNOW over the investigated domain. 
 
 \begin{figure}[H]
     \centering
@@ -692,16 +692,17 @@ domain is higher according to IT-SNOW.
     \label{fig:comparison_SCD_MODIS_IT-SNOW}
 \end{figure}
 
-The last aspect to be taken into consideration in this comparison is the temporal coverage of both datasets. IT-SNOW tracks snow water equivalent 
-from 1 September 2010 to 31 August 2025, which is just not enough to assess temporal modifications in snow cover metrics, as the results would 
-still be dominated by the interannual variability. The Po River District snow product, on the other hand, barely fits the criteria required to 
-produce reliable trend analyses as it spans across 30 hydrological years. However, some modelling choices that were made during the generation of 
-the dataset do not make it the perfect candidate either, as the fact that daily maps are not available between 1 July and 2 October means that 
-the user cannot have information about ephemeral snowfall which could still happen in high alpine catchments during summer. Moreover, the final 
-stages of snowmelt at high altitudes are not taken into account if a specific hydrological year has favorable conditions to the persistence of 
-snow cover on the ground, such as 2014, since the record stops before the SWE series at high elevation reaches zero in Figure 
-\ref{fig:comparison_volume_IT-SNOW_PO}. Ultimately, the covered are for the Po River District is kinda limited, which means that eventual trend 
-estimates could not be extended to the whole alpine arc and to the lowlands, since it focuses only on the mountainous region of the Po River District.
+Another aspect to consider when comparing the two snow datasets is their temporal coverage. IT-SNOW provides snow water equivalent estimates from 1 
+September 2010 to 31 August 2025, which is insufficient for assessing long term changes in snow cover metrics, as the results would still be strongly 
+affected by interannual variability. The Po River District product, on the other hand, meets the temporal requirements for reliable trend analyses, 
+since it spans over \num{30} hydrological years. However, some modelling choices made during the generation of the dataset limit its suitability for this 
+purpose. In particular, daily maps are not available between 2 July and 2 October preventing the identification of ephemeral snowfall that may still 
+occur in high alpine catchments during summer. Moreover, the final stages of snowmelt at high elevations are not taken into account during those years, 
+such as 2014, where favorable conditions allow the snowpack to persist beyond 1 July. This is evident in panel (a) of Figure \ref{fig:comparison_volume_IT-SNOW_PO}, 
+as the SWE record it interrupted before reaching zero during several years. Finally, the spatial coverage of the Po River District product is relatively 
+limited, meaning any trend estimates derived from this dataset could not be generalized to the entire Alpine arc or to the lowlands.
+
+
 
 \subsection{SWE vs SCD}
 
