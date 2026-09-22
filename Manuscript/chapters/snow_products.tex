@@ -706,14 +706,16 @@ limited, meaning any trend estimates derived from this dataset could not be gene
 
 \subsection{SWE vs SCD}
 
-The comparison between IT-SNOW or the Po River District snow product with MODIS is kinda redundant, as both modelling chain leading to the generation 
-of the two hydrological oriented dataset include MODIS reading by means of the assimilation schemes previously alluded to. However, considering that 
-the gap filling strategy used by \cite{MODIS_ITA} to fill the reading gaps plays a role in determining the extent of snow cover on a given day and 
-has not been deeply validated to this day, a brief comparison could still give useful information. Comparing satellite observations with IT-SNOW 
-snow cover duration maps, computed by means of Equation \eqref{eq:scf_IT-SNOW}, it is evident that satellite readings substantially underestimate 
-the snow cover duration across the whole peninsula, as shown in Figure \ref{fig:comparison_SCD_ITSNOW_MODIS}. This bias is enhanced by elevation, as 
-on mountainous terrain some pixels show snow season duration differences up to \num{50} days. This bias toward underestimation is also evident in the 
-difference histogram. The same can be said for the Po River District snow product, as even there MODIS values are substantially underestimating the snow season.
+The comparison between the two hydrological oriented products with MODIS is somewhat redundant, since the modelling chains used to generate both 
+IT-SNOW and the Po River District dataset already incorporates MODIS observations through the assimilation schemes discussed above. However, the gap 
+filling strategy adopted by \cite{MODIS_ITA} to reconstruct missing values gaps plays a role in determining the extent of snow cover on a given day and, 
+to date, has not been extensively validated. A brief comparison can therefore still provide useful information. By comparing satellite observations with 
+IT-SNOW snow cover duration maps, computed using Equation \eqref{eq:scf_IT-SNOW}, it is evident that satellite readings substantially underestimate 
+SCD across the whole peninsula, as shown in Figure \ref{fig:comparison_SCD_ITSNOW_MODIS}. This bias becomes more pronounced with increasing elevation, as 
+differences of up to \num{50} snow cover days can be detected in mountainous terrain. The tendency to underestimation is also clearly visible in the 
+difference histogram. A similar behaviour is observed while comparing the Po River District snow product with MODIS estimates. The origin of this 
+behaviour is still unclear and may result from a combination of factors related to the satellite gap-filling procedure and to the modelling philosophies 
+of the two hydrologically oriented snow products.
 
 \begin{figure}[H]
     \centering
@@ -723,16 +725,15 @@ difference histogram. The same can be said for the Po River District snow produc
     \label{fig:comparison_SCD_ITSNOW_MODIS}
 \end{figure}
 
-Without going into further detail in this kind of comparison, since as previously stated IT-SNOW and Po River District estimates already assimilate 
-MODIS readings, it is also fundamental to focus on the correctness of using MODIS observations to make trend estimates. At the moment of pubblication 
-of \cite{MODIS_ITA}, snow cover datas were available on Italian territory only untill 2022 and thus trend analyses were made only up to 2022. At the 
-time of this thesis, however, daily maps of snow cover were available up untill 31 August 2025, meaning that three extra years, mainly characterized 
-by snow droughts on the Italian territory, could be used to make trend assessments. This made it possible to assess how a small number of years lead 
-to a sensible increase in pixels with statistically significant decreasing trends, thus highlighting that the MODIS temporal coverage could still be 
-probably a little too much short in order to not be influenced by interannual variability. This limited time coverage is due to the fact that remote 
-sensing technology underwent a phase of rapid development during the final part of the last century, achieving high spatial resolution only at the 
-beginning of the 2000s. MODIS estimates still have a primary role in snow cover studies, as they are keep getting updated and they are one of the 
-few spatialized direct observations, not depending on numerical simulations of the snowpack.
+However, since both IT-SNOW and Po River District product already assimilate MODIS observations, a more detailed discussion of this comparison is beyond 
+the scope of this thesis. It is instead more important to focus on the reliability of MODIS snow cover maps for estimating trends. At the time of 
+publication of \cite{MODIS_ITA}, MODIS snow cover data were available over the Italian territory only up to 2022, and trend analyses were thus limited 
+to that year. At the time of this thesis, however, MODIS observations were available up to 31 August 2025. The additional three years, which were mainly 
+characterized by snow droughts across Italy, made it possible to extend trend analysis and assess the effect of this additional period on the results. The 
+inclusion of only a few extra years led to a noticeable increase in the number of pixels exhibiting statistically significant decreasing trends. This 
+suggests that the relatively limited MODIS temporal coverage may still be strongly affected by interannual variability and may therefore be insufficient 
+for obtaining robust long term trend estimates. Despite this limitation, MODIS remains highly relevant for snow cover studies, as its observations are 
+continuously updated and represent one of the few sources of spatially distributed observations that do not rely on numerical simulations of the snowpack.
 
 \begin{figure}[H]
     \centering
