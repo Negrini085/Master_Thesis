@@ -22,7 +22,7 @@ plot_annual_prec <- function(annual_prec, max_p, lon, lat, out_dir = "Images/") 
   
   p <- ggplot(df_plot, aes(x = lon, y = lat, fill = precipitation)) +
     geom_raster() +
-    coord_equal() +
+    coord_quickmap() +
     scale_fill_viridis_c(
       name = "Precipitation [mm]", 
       limits = c(0, max_p),
@@ -30,7 +30,7 @@ plot_annual_prec <- function(annual_prec, max_p, lon, lat, out_dir = "Images/") 
       direction = -1
     ) +
     labs(
-      title = "",
+      title = NULL,
       x = "Longitude [°E]",
       y = "Latitude [°N]"
     ) +
@@ -61,7 +61,7 @@ annual_prec <- NULL
 for(y in years){
   
   # Importing netCDF file
-  fname <- paste0("Input/PCPD/", y, ".nc")
+  fname <- paste0("Dataset/PCPD/", y, ".nc")
   nc <- nc_open(fname)
   lon <- ncvar_get(nc,"lon")
   lat <- ncvar_get(nc,"lat")
@@ -78,4 +78,4 @@ for(y in years){
   print(paste0("Correctly added ", y))
 }
 
-plot_annual_prec(annual_prec = annual_prec, max_p = max(annual_prec, na.rm = TRUE), lon = lon, lat = lat)
+plot_annual_prec(annual_prec = annual_prec, max_p = 3000, lon = lon, lat = lat)
