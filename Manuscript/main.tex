@@ -106,6 +106,14 @@
 }
 \lstset{style=physicscode}
 
+\lstdefinestyle{Rcode}{
+  style=physicscode,
+  language=R,
+  showstringspaces=false,
+  upquote=true,
+  literate={à}{{\`a}}1 {è}{{\`e}}1 {é}{{\'e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+}
+
 \usepackage[
   colorlinks = true,
   linkcolor  = black,
@@ -163,6 +171,7 @@
 
 \appendix
   \input{appendices/MODIS}
+  \input{appendices/model_implementation}
 
 \backmatter
   \printbibliography[heading=bibintoc, title={Bibliography}]

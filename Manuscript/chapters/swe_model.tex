@@ -1,12 +1,20 @@
 \chapter{SWE model}
 \label{cap:swe_model}
 
+
+
+
 % Giustificare il perchè viene utilizzata un'architettura così semplice, alla base del modello insomma
 \section{Model description}
 
-% Descrizione generale, pixel sono indipendenti (trascurato alcun tipo di trasporto fra i vari pixel)
-
+L'approccio scelto per modellizzare lo SWE del manto nevoso è raster-based one
+The chosen modelling approach is a raster-based one: adjacent pixels were treated as independet, neglecting every horizontal transport mechanism,. Snowfall and snowmelt were computed on a daily basis, for estimating the changes in water storage spatial distribution 
+across the investigated domain. 
 \subsection{Snow accumulation}
+
+The occurance of snowfall was determined on a daily basis using a temperature threshold method. In particular, the minimum and maximum daily 
+temperatures were compared, for each grid point, with the threshold one $T_\tau$, in order to compute the solid precipitation fraction. If a 
+
 
 \begin{equation}
     P_{s,\,i} =
@@ -74,5 +82,3 @@ The precipitation dataset, developed by Department of Enviromental Science and P
 
 
 \section{Temperature data}
-
-\section{Model implementation in R}
