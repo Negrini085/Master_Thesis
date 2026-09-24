@@ -15,9 +15,9 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SC_studies/Comparison/PO_vs_
 # Importing both SWE evolution files in order to make a comparison
 po <- read.table(fname_PO, header = TRUE)
 itsnow <- read.table(fname_ITSNOW, header = TRUE)
-itsnow[is.na(itsnow$lower), 3] <- 0
-itsnow[is.na(itsnow$medium), 4] <- 0
-itsnow[is.na(itsnow$higher), 5] <- 0
+# itsnow[is.na(itsnow$lower), 3] <- 0
+# itsnow[is.na(itsnow$medium), 4] <- 0
+# itsnow[is.na(itsnow$higher), 5] <- 0
 
 po$dates     <- as.Date(po$dates)
 itsnow$dates <- as.Date(itsnow$dates)
@@ -25,8 +25,8 @@ itsnow$dates <- as.Date(itsnow$dates)
 cmp <- merge(po, itsnow, by = "dates", all = TRUE, suffixes = c("_po", "_itsnow"))
 cmp <- cmp[order(cmp$dates), ]
 
-mask <- !is.na(cmp$swe_po)
-cmp <- cmp[mask, ]
+# mask <- !is.na(cmp$swe_po)
+# cmp <- cmp[mask, ]
 
 
 d <- cmp$lower_po - cmp$lower_itsnow
@@ -41,5 +41,3 @@ print(MD)
 print(MAE)
 print(RMSD)
 print(R2)
-
-write.table(data.frame(appo = cmp$lower_itsnow), "appo.dat", row.names = FALSE, col.names = FALSE, quote = FALSE)

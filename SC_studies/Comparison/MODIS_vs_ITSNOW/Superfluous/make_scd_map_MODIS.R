@@ -5,7 +5,7 @@ gc()
 
 library(terra)
 
-fname_mask <- "../../MODIS/Dataset/annual_maps/LOS/los_2020.tif"
+fname_mask <- "../../MODIS/Dataset/annual_maps/LOS/los_2023.tif"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SC_studies/Comparison/MODIS_vs_ITSNOW/")
 
 years <- 2010:2025
@@ -37,9 +37,9 @@ for(y in years){
 }
 
 my_mask <- rast(fname_mask)
-mask_twos <- is.na(my_mask)
+mask_ita <- is.na(my_mask)
 
-total <- mask(total, mask_twos, maskvalues = 1)
+total <- mask(total, mask_ita, maskvalues = 1)
 total <- total/(length(years) - 1)
 
-writeRaster(total, "mean_SCD_MODIS.tif", overwrite = TRUE, datatype = "FLT4S", NAflag = -9999, gdal = c("COMPRESS=DEFLATE", "PREDICTOR=3"))
+writeRaster(total, "Dataset/mean_SCD_MODIS.tif", overwrite = TRUE, datatype = "FLT4S", NAflag = -9999, gdal = c("COMPRESS=DEFLATE", "PREDICTOR=3"))

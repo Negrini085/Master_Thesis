@@ -47,7 +47,7 @@ val_min <- -100
 val_max <- 100
 
 map_title        <- "SCD difference (MODIS - ITSNOW)"
-map_legend_title  <- "SCD diff.\n[Days]"
+map_legend_title  <- "SCD \n difference \n[Days]"
 col_low   <- "#2166AC"
 col_mid   <- "white"
 col_high  <- "#B2182B"
