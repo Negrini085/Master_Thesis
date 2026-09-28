@@ -4,53 +4,17 @@
 
 
 
-% Giustificare il perchè viene utilizzata un'architettura così semplice, alla base del modello insomma
-\section{Model description}
-
-L'approccio scelto per modellizzare lo SWE del manto nevoso è raster-based one
-The chosen modelling approach is a raster-based one: adjacent pixels were treated as independet, neglecting every horizontal transport mechanism,. Snowfall and snowmelt were computed on a daily basis, for estimating the changes in water storage spatial distribution 
-across the investigated domain. 
-\subsection{Snow accumulation}
-
-The occurance of snowfall was determined on a daily basis using a temperature threshold method. In particular, the minimum and maximum daily 
-temperatures were compared, for each grid point, with the threshold one $T_\tau$, in order to compute the solid precipitation fraction. If a 
 
 
-\begin{equation}
-    P_{s,\,i} =
-    \begin{cases}
-        P_i
-            & \hspace*{1.5em} T_{\max,i} < T_{th} \\[8pt]
-        P_i \dfrac{T_{th} - T_{\min,i}}{T_{\max,i} - T_{\min,i}}
-            & \hspace*{1.5em} T_{\min,i} < T_{th} < T_{\max,i} \\[8pt]
-        0
-            & \hspace*{1.5em} T_{\min,i} > T_{th}
-    \end{cases}
-    \label{eq:swe_phase_partitioning}
-\end{equation}
 
-\section{Snowmelt}
 
-\begin{equation}
-    \text{DDF}_{i}\,=\,\text{DDF}_{ave}\,+\,\text{DDF}_{amp}\cdot\sin\left(\frac{2\pi i}{366}\right)
-    \label{eq:swe_ddf}
-\end{equation}
 
-\begin{equation}
-    \text{M}_i\,=\,\text{DDF}_i\left\{\left(T_{mean,i}\,-\,T_{th,m}\right)\,+\,\ln\left[1\,+\,\exp\left(-\frac{T_{mean,i}\,-\,T_{th,m}}{m_m}\right)\right]\right\}
-    \label{eq:swe_melt}
-\end{equation}
-
-\begin{equation}
-    \text{SWE}_i\,=\,\text{SWE}_{i-1}\,+\,P_{s,i}\,-\,M_i
-    \label{eq:swe_swe}
-\end{equation}
-
-% Bisogna parlare delle glaciarized area in qualche modo
 
 \section{Precipitation data}
 
 The precipitation dataset, developed by Department of Enviromental Science and Policy of the University of Milan, was set up by retrieving 
+
+% 1086.795 188.0656
 
 \begin{figure}[H]
     \centering
@@ -81,4 +45,66 @@ The precipitation dataset, developed by Department of Enviromental Science and P
 
 
 
+
+
+
+
+
+
+
 \section{Temperature data}
+
+
+
+
+
+
+
+
+
+
+% Giustificare il perchè viene utilizzata un'architettura così semplice, alla base del modello insomma
+\section{Model description}
+
+The snow model developed during this thesis uses a raster based approach, in which adjacent pixels are treated as independent, thus neglecting every kind of 
+horizontal transport. The main drivers of snowpack dynamics are total precipitation and air temperature, available on a daily basis. 
+
+\subsection{Snow accumulation}
+
+The simplest approach to estimate the amount of snowfall on a given day, while having only information on air temperature and total precipitation, 
+consists in comparing the mean daily air temperature with a temperature threshold $T_\tau$ in order to discriminate between precipitation phases. In such 
+a framework, the variability of air temperature is completely neglected, thus leading to rough estimates. However, the availability of daily maximum and 
+minimum temperature data allows for a more realistic evaluation of the fraction of precipitation that reaches the ground in solid form, owning to the fact 
+that the total range of variability is known on a daily basis. In particular, the amount of snowfall $S_f$ is evaluated at each grid point as 
+\begin{equation}
+    S_{f} =
+    \begin{cases}
+        P
+            & \hspace*{1.5em} T_{\max} < T_{\tau} \\[8pt]
+        P \cdot \dfrac{T_{\tau} - T_{\min}}{T_{\max} - T_{\min}}
+            & \hspace*{1.5em} T_{\min} < T_{\tau} < T_{\max} \\[8pt]
+        0
+            & \hspace*{1.5em} T_{\min} > T_{\tau},
+    \end{cases}
+    \label{eq:phase_partitioning_SWE_model}
+\end{equation}
+where $T_{\max}$ and $T_{\min}$ are the daily maximum and minimum temperature respectively, and $P$ the total amount of precipitation.
+
+\section{Snowmelt}
+
+\begin{equation}
+    \text{DDF}_{i}\,=\,\text{DDF}_{ave}\,+\,\text{DDF}_{amp}\cdot\sin\left(\frac{2\pi i}{366}\right)
+    \label{eq:swe_ddf}
+\end{equation}
+
+\begin{equation}
+    \text{M}_i\,=\,\text{DDF}_i\left\{\left(T_{mean,i}\,-\,T_{th,m}\right)\,+\,\ln\left[1\,+\,\exp\left(-\frac{T_{mean,i}\,-\,T_{th,m}}{m_m}\right)\right]\right\}
+    \label{eq:swe_melt}
+\end{equation}
+
+\begin{equation}
+    \text{SWE}_i\,=\,\text{SWE}_{i-1}\,+\,P_{s,i}\,-\,M_i
+    \label{eq:swe_swe}
+\end{equation}
+
+% Bisogna parlare delle glaciarized area in qualche modo
