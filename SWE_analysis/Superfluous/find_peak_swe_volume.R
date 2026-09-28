@@ -4,7 +4,7 @@
 rm(list = ls())
 gc()
 
-years <- 1952:2023
+years <- 1951:2023
 fname <- "Results/SWE/masked_swe_evolution.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_analysis/")
 
