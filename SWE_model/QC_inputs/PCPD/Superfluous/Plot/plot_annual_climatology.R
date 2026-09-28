@@ -24,8 +24,9 @@ plot_annual_prec <- function(annual_prec, max_p, lon, lat, out_dir = "Images/") 
     geom_raster() +
     coord_quickmap() +
     scale_fill_viridis_c(
-      name = "Precipitation [mm]", 
+      name = "Precipitation \n [mm]", 
       limits = c(0, max_p),
+      oob = scales::squish,
       na.value = "transparent",
       direction = -1
     ) +
