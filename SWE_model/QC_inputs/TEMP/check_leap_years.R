@@ -4,11 +4,11 @@ gc()
 
 library(ncdf4)
 
-years <- seq(1952, 2020, 4)
+years <- seq(1948, 2020, 4)
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_model/QC_inputs/TEMP/")
 
 for(y in years){
-  fname <- paste0("../../../../Backup/TEMP/temperatures_", y, ".nc")
+  fname <- paste0("../../Dataset/TEMP/", y, ".nc")
   if (!file.exists(fname)) stop("No temperature file for ", y)
   
   nc <- nc_open(fname)

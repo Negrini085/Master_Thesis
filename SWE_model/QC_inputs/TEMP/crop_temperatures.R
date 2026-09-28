@@ -6,17 +6,17 @@ library(terra)
 
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_model/")
 
-outdir <- "Input/TEMP"
+outdir <- "Dataset/TEMP"
 dir.create(outdir, showWarnings = FALSE, recursive = TRUE)
 
-years <- 2000:2023
+years <- 1966:2023
 vars  <- c("tmxd", "tmd", "tmnd")
 
 for (y in years) {
   fin <- sprintf("../../Backup/TEMP/temperatures_%d.nc", y)
   if (!file.exists(fin)) { warning("Not existing! ", fin); next }
   
-  prec <- rast(sprintf("Input/PCPD/%d.nc", y), subds = "total_precipitation")
+  prec <- rast(sprintf("Dataset/PCPD/%d.nc", y), subds = "total_precipitation")
   
   lst <- lapply(vars, function(v) {
     r <- rast(fin, subds = v)

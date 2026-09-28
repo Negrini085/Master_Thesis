@@ -6,7 +6,7 @@ gc()
 library(ncdf4)
 
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_model/QC_inputs/TEMP/")
-years <- 1951:2023
+years <- 1945:2023
 
 for(y in years){
   fname <- paste0("../../Dataset/TEMP/", y, ".nc")

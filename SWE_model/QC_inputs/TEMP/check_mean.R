@@ -5,21 +5,21 @@ rm(list = ls()); gc()
 library(ncdf4)
  
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_model/QC_inputs/TEMP/")
-years <- 1951
+years <- 1945:2023
 block <- 46L
 
 appo <- list()
 for (y in years) {
   len <- 0
   count <- 0
-  fname <- paste0("../../../../Backup/TEMP/temperatures_", y, ".nc")
+  fname <- paste0("../../Dataset/TEMP/", y, ".nc")
   if (!file.exists(fname)) stop("No temperature file for ", y)
    
   nc <- nc_open(fname)
   nt <- nc$dim$time$len
   
-  lon <- ncvar_get(nc, "lon")
-  lat <- ncvar_get(nc, "lat")
+  lon <- ncvar_get(nc, "longitude")
+  lat <- ncvar_get(nc, "latitude")
   time <- ncvar_get(nc, "time")
    
   for (t0 in seq(1L, nt, by = block)) {
@@ -68,4 +68,4 @@ for (y in years) {
 }
 
 appo <- do.call(rbind, appo)
-write.table(appo, "total_inversions.dat", row.names = FALSE, col.names = FALSE, quote = FALSE)
+write.table(appo, "Results/total_inversions.dat", row.names = FALSE, col.names = FALSE, quote = FALSE)
