@@ -6,7 +6,7 @@ library(ggplot2)
 
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_analysis/")
 
-swe <- read.table("Results/masked_swe_evolution.dat", header = TRUE)
+swe <- read.table("Results/SWE/swe_evolution.dat", header = TRUE)
 swe <- swe$swe
 
 df <- data.frame(
@@ -30,6 +30,7 @@ p <- ggplot(df, aes(x = day, y = swe)) +
     expand = expansion(mult = c(0.005, 0.005))
   ) +
   scale_y_continuous(
+    limits = c(0, NA),
     expand = expansion(mult = c(0, 0.04))
   ) +
   labs(
@@ -87,11 +88,4 @@ p <- ggplot(df, aes(x = day, y = swe)) +
     )
   )
 
-ggsave(
-  "Images/masked_swe_evolution.png",
-  plot = p,
-  width = 14,
-  height = 6,
-  units = "in",
-  dpi = 600
-)
+print(p)

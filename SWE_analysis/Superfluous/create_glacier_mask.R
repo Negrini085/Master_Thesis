@@ -4,7 +4,7 @@ gc()
 
 library(ncdf4)
 
-years <- 1952:2023
+years <- 1951:2023
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_analysis/")
 
 

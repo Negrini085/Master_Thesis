@@ -8,7 +8,7 @@ library(ncdf4)
 library(ggplot2)
 library(rnaturalearth)
 
-year <- 2023
+year <- 2000
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_analysis/")
 
 
@@ -50,7 +50,7 @@ for(i in 1:length(time)){
     labs(title = paste("SWE -", format(target_date, "%B %Y")), x = "Longitude", y = "Latitude", fill = "SWE (mm w.e.)") +
     theme_minimal()
 
-  fileout = paste0("Images/Appo/SWE_map_", target_date, ".png")
+  fileout = paste0("Images/Gif/SWE_map_", target_date, ".png")
   ggsave(fileout, plot = p, width = 8, height = 6, dpi = 300)
   print(paste0("Saved map ", target_date))
 }

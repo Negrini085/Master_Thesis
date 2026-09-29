@@ -47,8 +47,7 @@ area <- make_area_map("Dataset/SWE/SWE_1951.nc")
 # Cycle over years
 swe_evo <- numeric(0)
 for(y in years){
-  if(y%%4 == 0) next
-  
+
   # Selecting start and end days to consider for a given year
   start <- 1
   end <- -1
@@ -70,6 +69,5 @@ for(y in years){
 
 
 # Saving data
-plot(swe_evo, type = "l")
 df <- data.frame(data = seq(as.Date("1951-10-01"), by = "day", length.out = length(swe_evo)), swe = swe_evo)
-write.table(df, file = "swe_evolution.dat", row.names = FALSE, col.names = TRUE, quote = FALSE)
+write.table(df, file = "Results/SWE/swe_evolution.dat", row.names = FALSE, col.names = TRUE, quote = FALSE)
