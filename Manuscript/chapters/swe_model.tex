@@ -124,13 +124,13 @@ transition at the threshold snowmelt temperature.
 
 \subsection{SWE evaluation}
 
-Finally, the temporal evolution of snow water equivalent is simulated by accumulating on a daily basis the difference between solid precipitation and 
-snowmelt over the investigated period. The SWE on day $t$ is thus computed, at each pixel, as 
+Finally, the temporal evolution of snow water equivalent over the investigated period is simulated by accumulating, on a daily basis, the difference 
+between solid precipitation and snowmelt. The SWE on day $t$ is therefore computed at each pixel as 
 \begin{equation}
-    \text{SWE}_t\,=\,\text{SWE}_{t-1}\,+\,S_{f,t}\,-\,M_t, 
+    \text{SWE}(t)\,=\,\text{SWE}(t\,-\,1)\,+\,S_{f}(t)\,-\,M(t), 
     \label{eq:swe_swe}
 \end{equation}
-where the subscripts indicate which day each value refers to. If the computed snowmelt is bigger than the snow water equivalent at some locations, the 
-pixel value is automatically set to zero as this condition occurs when there is a complete meltout of the snowpack. Before actually being able to produce 
-SWE maps for the IH-GAR territory, it is fundamental to calibrate the model parameters which are, namely, $\left(T_{\tau},\,T_{melt},\,\text{DDF}_{ave},\,
-\text{DDF}_{amp},\,m_m \right)$. The calibration procedure is described in the following chapter.
+where $t$ or $t\,-\,1$ denote the day on which each quantity is evaluated. When the computed snowmelt exceeds the available snow water equivalent at a 
+given location, the corresponding pixel value is set to zero, as this condition indicates the complete meltout of the snowpack. Before producing SWE maps 
+for the IH-GAR territory, however, the model parameters $\left(T_{\tau},\,T_{melt},\,\text{DDF}_{ave},\,\text{DDF}_{amp},\,m_m \right)$ must be calibrated. 
+The calibration procedure is described in the following chapter.
