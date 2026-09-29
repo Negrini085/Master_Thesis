@@ -55,7 +55,7 @@ make_plot <- function(data, yvar, title) {
 col_pts <- "#2C7FB8"
 col_trend <- "#B2182B"
 
-outfig <- "Images/swe_volume_trends.png"
+outfig <- "Images/peak_swe_trends.png"
 fname <- "Results/SWE/peak_and_first_april_swe_volume.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_analysis/")
 
