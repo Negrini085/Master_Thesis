@@ -13,15 +13,15 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_analysis/")
 # Opening netCDF file and loading what we want to plot (this being the SWE snapshot
 # of the first day of March). We will not get into details, because we already covered
 # them in the previous couple of R files.
-f_name <- "Dataset/SWE/SWE_1985.nc"
+f_name <- "../SWE_model/Results/SWE_1946.nc"
 nc <- nc_open(f_name)
 lat_name = "lat"
 lon_name = "lon"
 swe_name = "swe"
 lat <- ncvar_get(nc, lat_name)
 lon <- ncvar_get(nc, lon_name)
-swe <- ncvar_get(nc, swe_name, start = c(1, 1, 16), count = c(-1, -1, 1))
-swe[swe == 0] <- NA
+swe <- ncvar_get(nc, swe_name, start = c(1, 1, 20), count = c(-1, -1, 1))
+#swe[swe == 0] <- NA
   
   
 # Selecting the geographical background, in order to really understand where the
@@ -37,7 +37,7 @@ ggplot() +
   geom_sf(data = europe, fill = "grey90", color = "black", inherit.aes = FALSE) +
   coord_sf(xlim = c(6.8, 14), ylim = c(43.2, 47.1)) +
   geom_raster(data = grid, aes(x = lon, y = lat, fill = swe)) +
-  scale_fill_viridis_c(option = "C", na.value = "transparent", limits = c(0, 100), oob = scales::squish) +
+  scale_fill_viridis_c(option = "C", na.value = "transparent", limits = c(0, 1000), oob = scales::squish) +
   labs(title = "Mean SWE map", x = "Longitude", y = "Latitude", fill = "SWE (mm w.e.)") +
   theme_minimal()
   
