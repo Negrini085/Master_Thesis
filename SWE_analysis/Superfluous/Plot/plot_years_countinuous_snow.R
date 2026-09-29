@@ -39,6 +39,6 @@ ggplot() +
   coord_sf(xlim = c(6.2, 14.5), ylim = c(43, 47)) +
   geom_raster(data = grid, aes(x = lon, y = lat, fill = swe)) +
   scale_fill_viridis_c(option = "C", na.value = "transparent") +
-  labs(title = "Years with continuous snow coverage", x = "Longitude", y = "Latitude", fill = "SWE (mm w.e.)") +
+  labs(title = "Years with continuous snow coverage", x = "Longitude", y = "Latitude", fill = "# years") +
   theme_minimal()
   
