@@ -29,7 +29,7 @@ The precipitation dataset, developed by Department of Enviromental Science and P
     \centering
     \includegraphics[width=\linewidth]{swe_model/seasonal_prec_clima_1991_2020.png}
     \caption{Seasonal precipitation climatology for the Italian Hydrological part of the Greater Alpine Arc (IH-GAR), computed over the 1991--2020 
-    period at a spatial resolution of 30 arc-seconds. Autumn is the wettest seaon on average over the lowlands and the Alpine foothills, whereas the 
+    period at a spatial resolution of 30 arc-seconds. Autumn is the wettest season on average over the lowlands and the Alpine foothills, whereas the 
     internal Alps experience enhanced precipitations during summer.}
     \label{fig:seasonal_prec_clima_1991_2020}
 \end{figure}
@@ -67,15 +67,16 @@ The precipitation dataset, developed by Department of Enviromental Science and P
 \section{Model description}
 
 The snow model developed during this thesis uses a raster based approach, in which adjacent pixels are treated as independent, thus neglecting every kind of 
-horizontal transport. The main drivers of snowpack dynamics are total precipitation and air temperature, available on a daily basis. 
+horizontal transport. The main drivers of snowpack dynamics are total precipitation and air temperature, available on a daily basis. The whole code is 
+available in Appendix \ref{app:model_impl}.
 
 \subsection{Snow accumulation}
 
-The simplest approach to estimate the amount of snowfall on a given day, while having only information on air temperature and total precipitation, 
-consists in comparing the mean daily air temperature with a temperature threshold $T_\tau$ in order to discriminate between precipitation phases. In such 
-a framework, the variability of air temperature is completely neglected, thus leading to rough estimates. However, the availability of daily maximum and 
-minimum temperature data allows for a more realistic evaluation of the fraction of precipitation that reaches the ground in solid form, owning to the fact 
-that the total range of variability is known on a daily basis. In particular, the amount of snowfall $S_f$ is evaluated at each grid point as 
+The simplest way to estimate daily snowfall when only air temperature and total precipitation are available is to compare the mean daily temperature with 
+a threshold temperature $T_\tau$ in order to determine the precipitation phase. This approach, however, completely neglects the variability of air 
+temperature within the day, and therefore yields only rough estimates. When daily maximum and minimum temperatures are also available, such as in this 
+thesis, the fraction of precipitation that reaches the ground as snow can be evaluated more realistically, since the full daily temperature range is known. 
+In particular, the snowfall $S_f$ at each grid point is evaluated as 
 \begin{equation}
     S_{f} =
     \begin{cases}
@@ -88,23 +89,48 @@ that the total range of variability is known on a daily basis. In particular, th
     \end{cases}
     \label{eq:phase_partitioning_SWE_model}
 \end{equation}
-where $T_{\max}$ and $T_{\min}$ are the daily maximum and minimum temperature respectively, and $P$ the total amount of precipitation.
+where $T_{\max}$ and $T_{\min}$ are the daily maximum and minimum temperatures respectively, and $P$ the total daily precipitation.
 
-\section{Snowmelt}
+\subsection{Snowmelt}
 
+The snow models considered in Chapter \ref{cap:snow_products} had different approaches to snowmelt estimation. "J-snow", the modelling chain that led to 
+the generation of the Po River District dataset, simulated the whole energy balance of the snowpack, whereas "S3M" treated the problem through a hybrid 
+degree day method, focusing on both air temperature and shortwave radiation. Both methods, however, are not feasible to evaluate the snowpack dynamics 
+over the 1951--2023 period, as they are data intensive requiring inputs that are unavailable over the whole investigated period.
+
+The chosen modelling approach is thus a canonical degree-day method, in which air temperature is used to account for all the energy fluxes which alter the 
+energy state of the snowpack. In particular, the model developed during this thesis follows the approach suggested by \cite{Magnusson_DDF}, thus computing 
+the snowmelt at each grid point as 
 \begin{equation}
-    \text{DDF}_{i}\,=\,\text{DDF}_{ave}\,+\,\text{DDF}_{amp}\cdot\sin\left(\frac{2\pi i}{366}\right)
-    \label{eq:swe_ddf}
-\end{equation}
-
-\begin{equation}
-    \text{M}_i\,=\,\text{DDF}_i\left\{\left(T_{mean,i}\,-\,T_{th,m}\right)\,+\,\ln\left[1\,+\,\exp\left(-\frac{T_{mean,i}\,-\,T_{th,m}}{m_m}\right)\right]\right\}
+    \text{M}\,=\,\text{DDF}\left\{\left(T_{mean}\,-\,T_{melt}\right)\,+\,m_m \cdot \ln\left[1\,+\,\exp\left(-\frac{T_{mean}\,-\,T_{melt}}{m_m}\right)\right]\right\},
     \label{eq:swe_melt}
 \end{equation}
+where $T_{mean}$ is the mean daily temperature, $T_{melt}$ is a threshold temperature for snowmelt to occur and $m_m$ is a smoothing factor measured in 
+$\SI{}{\degreeCelsius}$. 
 
+In Equation \eqref{eq:swe_melt} the term DDF stands for degree day factor, which is a parameter measured in 
+$\SI{}{\milli\meter\per\degreeCelsius\per\day}$, and multiplied gives the amount of water melted away on a given day. In order to account for shortwave in 
+some extent, and in order to keep track of its variability, which has a significant role in the snowpack energy balance, the DDF has an annual cycle with 
+the following shape
 \begin{equation}
-    \text{SWE}_i\,=\,\text{SWE}_{i-1}\,+\,P_{s,i}\,-\,M_i
+    \text{DDF}_{i}\,=\,\text{DDF}_{ave}\,+\,\text{DDF}_{amp}\cdot\sin\left(\frac{2\pi \left(i\,-\,81\right)}{366}\right),
+    \label{eq:swe_ddf}
+\end{equation}
+where the subscript $i$ is the number of the day in a solar year, $\text{DDF}_{ave}$ is the average value of the degree day factor, whereas $\text{DDF}_{amp}$ 
+is the amplitude of its oscillation. The DDF peaks on summer sulstice, following the solar radial evolution. 
+
+The term within curly brackets in Equation \eqref{eq:swe_melt} is dimensionally a temperature: the neperian logarithm is necessary to ensure a smooth 
+transition at the threshold snowmelt temperature.
+
+\subsection{SWE evaluation}
+
+Finally, the temporal evolution of snow water equivalent is simulated by accumulating on a daily basis the difference between solid precipitation and 
+snowmelt over the investigated period. The SWE on day $t$ is thus computed, at each pixel, as 
+\begin{equation}
+    \text{SWE}_t\,=\,\text{SWE}_{t-1}\,+\,S_{f,t}\,-\,M_t, 
     \label{eq:swe_swe}
 \end{equation}
-
-% Bisogna parlare delle glaciarized area in qualche modo
+where the subscripts indicate which day each value refers to. If the computed snowmelt is bigger than the snow water equivalent at some locations, the 
+pixel value is automatically set to zero as this condition occurs when there is a complete meltout of the snowpack. Before actually being able to produce 
+SWE maps for the IH-GAR territory, it is fundamental to calibrate the model parameters which are, namely, $\left(T_{\tau},\,T_{melt},\,\text{DDF}_{ave},\,
+\text{DDF}_{amp},\,m_m \right)$. The calibration procedure is described in the following chapter.
