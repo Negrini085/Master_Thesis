@@ -34,10 +34,10 @@ for(y in years){
   # Masking pixels to assess snow cover
   stopifnot(identical(dim(swe), c(length(lon), length(lat), length(tvals))))
   
-  mask <- swe > 0 & !is.na(swe)
+  mask <- swe > 10 & !is.na(swe)
   snow_cover[mask] <- 1
   
-  mask <- swe <= 0 & !is.na(swe)
+  mask <- swe <= 10 & !is.na(swe)
   snow_cover[mask] <- 0
   
   
