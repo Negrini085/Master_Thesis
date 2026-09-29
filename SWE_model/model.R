@@ -18,13 +18,50 @@
 rm(list = ls())
 gc()
 
-library(terra)
 library(ncdf4)
 
 years <- 1945:2023
 fname_in <- "input.dat"
+fname_water_mask <- "Dataset/water_mask.nc"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_model/")
 
+
+
+# Function to check whether two netCDF variables are defined on the same spatial 
+# grid, comparing directly the coordinate values stored in the files.
+compare_nc_coords <- function(fname_1, var_1, fname_2, var_2, tol = 1e-6){
+  
+  fnames <- c(fname_1, fname_2)
+  vars <- c(var_1, var_2)
+  coords <- vector("list", 2)
+  
+  # Importing coordinates of the two variables
+  for(i in 1:2){
+    nc <- nc_open(fnames[i])
+    v <- nc$var[[vars[i]]]
+    if(is.null(v)){
+      on.exit(nc_close(nc))
+      stop("Variable '", vars[i], "' not found in ", fnames[i], ". You can choose between: ", 
+           paste(names(nc$var), collapse = ", ")
+      )
+    }
+    stopifnot(length(v$dim) >= 2)
+    
+    coords[[i]] <- list(x = v$dim[[1]]$vals, y = v$dim[[2]]$vals)
+    nc_close(nc); rm(nc, v); invisible(gc())
+  }
+  
+  
+  # Checking if the number of grid points matches along both dimensions
+  if(length(coords[[1]]$x) != length(coords[[2]]$x)) return(FALSE)
+  if(length(coords[[1]]$y) != length(coords[[2]]$y)) return(FALSE)
+  
+  # Checking if coordinates match one by one.
+  if(any(abs(coords[[1]]$x - coords[[2]]$x) > tol)) return(FALSE)
+  if(any(abs(coords[[1]]$y - coords[[2]]$y) > tol)) return(FALSE)
+  
+  return(TRUE)
+}
 
 
 # Function to compute solid precipitations. The approach is the one described above, 
@@ -153,7 +190,7 @@ save_annual_swe <- function(total, fname_template, fname_out){
 
 
 
-
+# Importing model parameters
 df_in <- read.table(fname_in, header = TRUE)
 ddf_ave <- as.numeric(df_in$ddf_ave)
 ddf_ampl <- as.numeric(df_in$ddf_ampl)
@@ -162,6 +199,14 @@ t_th <- as.numeric(df_in$tlim)
 
 if((ddf_ave - ddf_ampl) < 0){ stop("DDF is negative on some days: stopping! ") }
 
+
+# Importing water mask
+nc <- nc_open(fname_water_mask)
+water_mask <- ncvar_get(nc, "water")
+nc_close(nc)
+
+
+# Cycle over years
 appo <- create_swe_container("Dataset/PCPD/1951.nc")
 for(y in years){
   
@@ -169,16 +214,13 @@ for(y in years){
   fname_prec <- paste0("Dataset/PCPD/", y, ".nc")
   fname_temp <- paste0("Dataset/TEMP/", y, ".nc")
   
-  # Importing temperature and precipitation grids in order to assess whether grid 
-  # geometry is the same or not. In case of fail, we stop the script.
-  prec <- rast(fname_prec)
-  temp <- rast(fname_temp)
-  
-  if(!compareGeom(prec, temp, stopOnError = FALSE)){
-    stop(paste0("No compatible grids for temperature and precipitation during ", y))
+  # Checking that netCDF maps are aligned
+  if(!compare_nc_coords(fname_prec, "total_precipitation", fname_temp, "tmnd")){
+    stop(paste0("Temperature and precipitation arrays are not aligned during ", y))
   }
-  rm(prec, temp)
-  invisible(gc())
+  if(!compare_nc_coords(fname_prec, "total_precipitation", fname_water_mask, "water")){
+    stop(paste0("Water mask and precipitation arrays are not aligned during ", y))
+  }
   
   
   
@@ -226,6 +268,13 @@ for(y in years){
     
     total[, , i] <- round(appo, 1)
   }
+  rm(mask); invisible(gc())
+  
+  
+  # Masking swe maps with water mask
+  stopifnot(identical(dim(water_mask), dim(total)[1:2]))
+  mask <- as.vector(!is.na(water_mask) & water_mask == 1) & !is.na(total)
+  total[mask] <- NA
   rm(mask); invisible(gc())
   
 
