@@ -70,6 +70,8 @@ The snow model developed during this thesis uses a raster based approach, in whi
 horizontal transport. The main drivers of snowpack dynamics are total precipitation and air temperature, available on a daily basis. The whole code is 
 available in Appendix \ref{app:model_impl}.
 
+
+
 \subsection{Snow accumulation}
 
 The simplest way to estimate daily snowfall when only air temperature and total precipitation are available is to compare the mean daily temperature with 
@@ -91,36 +93,42 @@ In particular, the snowfall $S_f$ at each grid point is evaluated as
 \end{equation}
 where $T_{\max}$ and $T_{\min}$ are the daily maximum and minimum temperatures respectively, and $P$ the total daily precipitation.
 
+
+
 \subsection{Snowmelt}
 
-The snow models considered in Chapter \ref{cap:snow_products} had different approaches to snowmelt estimation. "J-snow", the modelling chain that led to 
-the generation of the Po River District dataset, simulated the whole energy balance of the snowpack, whereas "S3M" treated the problem through a hybrid 
-degree day method, focusing on both air temperature and shortwave radiation. Both methods, however, are not feasible to evaluate the snowpack dynamics 
-over the 1951--2023 period, as they are data intensive requiring inputs that are unavailable over the whole investigated period.
+The snow models discussed in Chapter \ref{cap:snow_products} adopted different approaches to snowmelt estimation. "J-snow", the modelling chain that led 
+to the generation of the Po River District dataset, explicitly simulated the energy balance of the snowpack, whereas "S3M" employed an hybrid degree-day 
+method, accounting for both air temperature and shortwave radiation. Neither method, however, is suitable for investigating snowpack dynamics over the 
+1951--2023 period, as both require input variables that are not unavailable continuously throughout the entire study period. Moreover, the aim of this 
+thesis is to generate SWE rasters from meteorological observations alone. Among these, precipitation and air temperature are typically the only variables 
+with long records available at a large number of stations.
 
-The chosen modelling approach is thus a canonical degree-day method, in which air temperature is used to account for all the energy fluxes which alter the 
-energy state of the snowpack. In particular, the model developed during this thesis follows the approach suggested by \cite{Magnusson_DDF}, thus computing 
-the snowmelt at each grid point as 
+The modelling approach adopted is therefore a canonical degree-day method, in which mean air temperature is used as a proxy for the various energy fluxes 
+affecting the energy state of the snowpack. In particular, the model follows the formulation proposed by \cite{Magnusson_DDF}, whereby the daily snowmelt 
+at each grid point is computed as 
 \begin{equation}
     \text{M}\,=\,\text{DDF}\left\{\left(T_{mean}\,-\,T_{melt}\right)\,+\,m_m \cdot \ln\left[1\,+\,\exp\left(-\frac{T_{mean}\,-\,T_{melt}}{m_m}\right)\right]\right\},
     \label{eq:swe_melt}
 \end{equation}
-where $T_{mean}$ is the mean daily temperature, $T_{melt}$ is a threshold temperature for snowmelt to occur and $m_m$ is a smoothing factor measured in 
+where $T_{mean}$ is the mean daily temperature, $T_{melt}$ is the threshold snowmelt temperature, and $m_m$ is a smoothing parameter measured in 
 $\SI{}{\degreeCelsius}$. 
 
-In Equation \eqref{eq:swe_melt} the term DDF stands for degree day factor, which is a parameter measured in 
-$\SI{}{\milli\meter\per\degreeCelsius\per\day}$, and multiplied gives the amount of water melted away on a given day. In order to account for shortwave in 
-some extent, and in order to keep track of its variability, which has a significant role in the snowpack energy balance, the DDF has an annual cycle with 
-the following shape
+In Equation \eqref{eq:swe_melt},  DDF denotes the degree-day factor, which is a parameter measured in $\SI{}{\milli\meter\per\degreeCelsius\per\day}$: 
+its multiplication by the temperature dependent term yields the amount of snow melted away on a given day. To account, at least partially, for the seasonal 
+variability of shortwave radiation, which plays a significant role in the snowpack energy balance, the degree-day factor is prescribed with an annual cycle 
+according to
 \begin{equation}
-    \text{DDF}_{i}\,=\,\text{DDF}_{ave}\,+\,\text{DDF}_{amp}\cdot\sin\left(\frac{2\pi \left(i\,-\,81\right)}{366}\right),
+    \text{DDF}_{t}\,=\,\text{DDF}_{ave}\,+\,\text{DDF}_{amp}\cdot\sin\left(\frac{2\pi \left(t\,-\,81\right)}{366}\right),
     \label{eq:swe_ddf}
 \end{equation}
-where the subscript $i$ is the number of the day in a solar year, $\text{DDF}_{ave}$ is the average value of the degree day factor, whereas $\text{DDF}_{amp}$ 
-is the amplitude of its oscillation. The DDF peaks on summer sulstice, following the solar radial evolution. 
+where $t$ is the day of the solar year, $\text{DDF}_{ave}$ is the mean degree day factor, whereas $\text{DDF}_{amp}$ is the amplitude of its oscillation. 
+With this formulation, the DDF peaks on summer solstice, in qualitative agreement with the seasonal evolution of incoming solar radiation. 
 
-The term within curly brackets in Equation \eqref{eq:swe_melt} is dimensionally a temperature: the neperian logarithm is necessary to ensure a smooth 
-transition at the threshold snowmelt temperature.
+The term enclosed in curly brackets in Equation \eqref{eq:swe_melt} has the dimensions of a temperature: the natural logarithm ensures a smooth transition 
+between melting and freezing conditions around the snowmelt threshold.
+
+
 
 \subsection{SWE evaluation}
 
