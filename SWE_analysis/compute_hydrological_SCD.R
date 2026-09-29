@@ -63,7 +63,7 @@ scd_def <- ncvar_def(
   compression = 5
 )
 
-ncout <- nc_create("Results/scd_maps_hydro_1952_to_2023.nc", scd_def, force_v4 = TRUE)
+ncout <- nc_create("Results/SCD/scd_maps_hydro_1952_to_2023.nc", scd_def, force_v4 = TRUE)
 ncvar_put(ncout, scd_def, scd)
 
 ncatt_put(ncout, "lon", "axis", "X")

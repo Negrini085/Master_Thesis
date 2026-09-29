@@ -61,7 +61,7 @@ p2 <- ggplot(subset(df, yrs > 0), aes(x = elev)) +
   theme(panel.grid.minor = element_blank())
 
 
-p1 + p2
+print(p1 + p2)
 
 ggsave("Images/elevation_vs_continuous_snow.png", p1 + p2,
        width = 11, height = 4.5, dpi = 300, bg = "white")
