@@ -9,7 +9,7 @@ library(matrixStats)
 
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SC_studies/IT-Snow")
 
-years <- 2011:2025
+years <- 2011:2021
 months <- c("11", "12", "01", "02", "03", "04", "05", "06")
 
 nc <- nc_open("y2011/ITSNOW_SWE_201011.nc")
@@ -68,7 +68,7 @@ for(y in years){
 # Creating netCDF dimensions
 lat_dim <- ncdim_def("lat", "degrees_north", lat)
 lon_dim <- ncdim_def("lon", "degrees_east", lon)
-time_dim <- ncdim_def("time", "Season maps Nov -> June: 2011 -> 2025", 1:length(2011:2025), unlim = TRUE)
+time_dim <- ncdim_def("time", "Season maps Nov -> June: 2011 -> 2021", 1:length(2011:2021), unlim = TRUE)
 
 # Creating netCDF variable
 swe_var <- ncvar_def(
