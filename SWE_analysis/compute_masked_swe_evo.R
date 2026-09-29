@@ -81,4 +81,4 @@ for(y in years){
 
 # Saving data
 df <- data.frame(data = seq(as.Date("1951-10-01"), by = "day", length.out = length(swe_evo)), swe = swe_evo)
-write.table(df, file = "Results/masked_swe_evolution.dat", row.names = FALSE, col.names = TRUE, quote = FALSE)
+write.table(df, file = "Results/SWE/masked_swe_evolution.dat", row.names = FALSE, col.names = TRUE, quote = FALSE)

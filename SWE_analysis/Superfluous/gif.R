@@ -8,7 +8,7 @@ library(ncdf4)
 library(ggplot2)
 library(rnaturalearth)
 
-year <- 2000
+year <- 2001
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_analysis/")
 
 

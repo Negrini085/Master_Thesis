@@ -6,7 +6,7 @@ library(ggplot2)
 
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_analysis/")
 
-swe <- read.table("Results/SWE/swe_evolution.dat", header = TRUE)
+swe <- read.table("Results/SWE/masked_swe_evolution.dat", header = TRUE)
 swe <- swe$swe
 
 df <- data.frame(
