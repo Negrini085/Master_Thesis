@@ -10,7 +10,6 @@ library(ncdf4)
 
 years <- 1951:2023
 fname_in <- "input.dat"
-fn_wm <- "Dataset/water_mask.nc"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_model/")
 
 
@@ -176,13 +175,8 @@ ddf_ave <- as.numeric(df_in$ddf_ave)
 ddf_ampl <- as.numeric(df_in$ddf_ampl)
 expfact <- as.numeric(df_in$expfact)
 t_th <- as.numeric(df_in$tlim)
+
 if((ddf_ave - ddf_ampl) < 0){ stop("DDF not correct: stopping! ") }
-
-
-# Importing water mask
-nc <- nc_open(fn_wm)
-wm <- ncvar_get(nc, "water")
-nc_close(nc)
 
 
 # Cycle over years
@@ -192,9 +186,8 @@ for(y in years){
   # Checking that netCDF maps are aligned
   fn_p <- paste0("Dataset/PCPD/", y, ".nc")
   fn_t <- paste0("Dataset/TEMP/", y, ".nc")
-  com_1 <- !com_coord(fn_p, "total_precipitation", fn_t, "tmnd")
-  com_2 <- !com_coord(fn_p, "total_precipitation", fn_wm, "water")
-  if(com_1 | com_2) stop(paste("Input dataset not aligned in", y))
+  com_mask <- !com_coord(fn_p, "total_precipitation", fn_t, "tmnd")
+  if(com_mask) stop(paste("Input dataset not aligned in", y))
   
   
   # Loading precipitation and temperature grids (1 layer = 1 day)
@@ -232,12 +225,6 @@ for(y in years){
     total[, , i] <- round(appo, 1)
   }
   rm(mask); invisible(gc())
-
-
-  # Masking swe maps with water mask
-  stopifnot(identical(dim(wm), dim(total)[1:2]))
-  mask <- as.vector(!is.na(wm) & wm == 1) & !is.na(total)
-  total[mask] <- NA; rm(mask); invisible(gc())
   
 
   # Saving SWE data to file

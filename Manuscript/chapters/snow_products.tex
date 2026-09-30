@@ -101,22 +101,22 @@ the methodological framework outlined in the corresponding literature was adopte
 \label{sec:MODIS}
 
 Owing to its multispectral configuration, MODIS has already proven to be a key tool for mapping snow cover extent and duration across a variety of 
-regions, such as the Karakoram \parencite{MODIS_KARAKORAM}. One of the most recent studies based on this sensor is devoted to the Italian territory 
-\parencite{MODIS_ITA} and thus covers almost the entirety of the IH-GAR. The resulting dataset, curated by the Department of Enviromental Science and 
-Policy of the University of Milan, provides daily snow cover maps at the national scale and, in its latest version, spans the period from \num{24} 
-February \num{2000} to \num{30} September \num{2025}, thereby including \num{25} hydrological years. It consists of binary rasters with a spatial 
-resolution of approximately $\SI{500}{\meter}$, in which a pixel is assigned a value of 1 when it's at least half-covered in snow, and a value of 0 when 
-the ground is bare.
+regions, such as the Karakoram \parencite{MODIS_KARAKORAM} or the Greater Alpine Region \parencite{MODIS_GAR}. One of the most recent studies based on 
+this sensor is devoted to the Italian territory \parencite{MODIS_ITA} and thus covers almost the entirety of the IH-GAR. The resulting dataset, curated 
+by the Department of Enviromental Science and Policy of the University of Milan, provides daily snow cover maps at the national scale and, in its latest 
+version, spans the period from \num{24} February \num{2000} to \num{30} September \num{2025}, thereby including \num{25} hydrological years. It consists 
+of binary rasters with a spatial resolution of approximately $\SI{500}{\meter}$, in which a pixel is assigned a value of 1 when it's at least half-covered 
+in snow, and a value of 0 when the ground is bare.
 
 
 
 \subsection{Dataset generation and gap-filling strategy}
 
-To obtain binary rasters describing the presence or absence of snow cover, \cite{MODIS_ITA} proposed an operational processing chain 
-designed to maximise prediction reliability. The procedure makes use of the MODIS Terra Snow Cover Daily L3 Global $\SI{500}{\meter}$ 
-SIN Grid V061 (MOD10A1 V61) and MODIS Aqua Snow Cover Daily L3 Global $\SI{500}{\meter}$ SIN Grid V061 (MYD10A1 V61) products, both 
-distributed by the US National Snow and Ice Data Center (NSIDC). In these datasets, an integer value is assigned to each grid cell 
-according to the criteria summarised in Table \ref{tab:integer_value}.
+To obtain binary rasters describing the presence or absence of snow cover, \cite{MODIS_GAR} proposed an operational processing chain designed to maximize 
+prediction reliability. The procedure, was also used by \cite{MODIS_ITA} to produce snow cover maps across Italy, and takes as input MODIS Terra Snow 
+Cover Daily L3 Global $\SI{500}{\meter}$ SIN Grid V061 (MOD10A1 V61) and MODIS Aqua Snow Cover Daily L3 Global $\SI{500}{\meter}$ SIN Grid V061 (MYD10A1 
+V61) products, both distributed by the US National Snow and Ice Data Center (NSIDC). In these datasets, an integer value is assigned to each grid cell 
+according to the criteria summarized in Table \ref{tab:integer_value}.
 
 \begin{table}[htbp]
   \centering
@@ -141,12 +141,12 @@ according to the criteria summarised in Table \ref{tab:integer_value}.
   \end{tabular}
 \end{table}
 
-To address the observation gaps caused by cloud cover or by sensor saturation, \cite{MODIS_ITA} first reduce the complexity of the dataset to three 
+To address the observation gaps caused by cloud cover or by sensor saturation, \cite{MODIS_GAR} first reduce the complexity of the dataset to three 
 surface classes: snow covered, snow free and missing data. Integer values between 1 and 100 are reclassified as snow covered 
 whenever the corresponding NDSI exceeded the critical threshold of 0.4, and as snow free otherwise. Pixels acquired at night, 
 affected by cloud cover or flagged with an error condition are all labelled as missing data, whereas freshwater pixels are 
 reclassified as missing only when freshwater presence has been detected in less than 10 \% of the available observations. Once the 
-number of classes has been reduced to three, \cite{MODIS_ITA} propose a gap filling procedure structured into six sequential phases, 
+number of classes has been reduced to three, \cite{MODIS_GAR} propose a gap filling procedure structured into six sequential phases, 
 each exploiting different spatial and temporal information to progressively reclassify the missing pixels until the record is 
 complete. These steps, adapted from the previous work of \cite{no_cloud_MODIS} consist of the following:
 \begin{itemize}[label=$\blacktriangleright$]
@@ -300,16 +300,16 @@ areas above $\SI{3000}{\meter}$ are experiencing substantially weaker changes, m
 
 
 
-\section{IT-Snow}
+\section{IT-SNOW}
 \label{sec:it_snow}
 
-IT-SNOW is a high resolution, multi-year snow reanalysis covering the entire Italian peninsula at a spatial resolution of roughly $\SI{500}{\meter}$. 
-This dataset consist of daily maps of snow water equivalent (SWE), snow depth (HS), bulk snow density and liquid water content of the snowpack, spanning 
-the period from \num{1} September \num{2010} to \num{31} August \num{2025} in its latest release. IT-SNOW is the output of S3M Italy, a real-time 
-operational monitoring chain developed by CIMA Research Foundation and specifically designed for large scale applications, with the aim of serving as a 
-valuable tool within flood forecasting frameworks. This model achieves a high level of performance by focusing on the key drivers of snow evolution, 
-namely total precipitation, air temperature, relative humidity, and total radiation, thereby providing a spatially consistent reconstruction of snowpack 
-dynamics. Assimilation of in situ HS measurements and MODIS products is employed to ensure data reliability.
+IT-SNOW is a snow reanalysis covering the entire Italian peninsula at a spatial resolution of roughly $\SI{500}{\meter}$. This dataset consist of 
+daily maps of snow water equivalent, snow depth, bulk snow density and liquid water content of the snowpack, spanning the period from \num{1} 
+September \num{2010} to \num{31} August \num{2025} in its latest release. IT-SNOW is the output of S3M Italy, a modelling chain developed by CIMA 
+Research Foundation and specifically designed for large scale applications, with the aim of serving as a valuable tool within flood forecasting 
+frameworks. This model achieves a high level of performance by focusing on the key drivers of snow evolution, namely total precipitation, air 
+temperature, relative humidity, and total radiation, thereby providing a spatially consistent reconstruction of snowpack dynamics. Assimilation 
+of in situ HS measurements and MODIS products is employed to ensure data reliability \parencite{IT-SNOW}.
 
 
 
@@ -449,7 +449,7 @@ fraction is distributed across the rest of the country.
 
 
 
-\section{Po River District}
+\section{Po River District dataset}
 \label{sec:po_district}
 
 This snow dataset focuses on the mountainous portion of the Po River District, an over-regional entity that cover almost $\SI{87000}{\kilo\meter\squared}$ and comprises 
@@ -457,7 +457,7 @@ the Po River Basin together with some smaller adjacent catchments, such as Conca
 as "J-snow", which is a hybrid approach that combines a physically based snow model named GEOtop \num{2.0} with in situ snow depth measurements and 
 remote sensing snow cover extent estimates. SWE maps with a spatial resolution of approximately $\SI{500}{\meter}$ are available on a daily basis for all the hydrological 
 years between 1992 and 2021. Within each hydrological year, maps are available only between October $3^{rd}$ and July $1^{st}$, a period that roughly 
-corresponds to the longet snow covers in non glacierized areas.
+corresponds to the longest snow covers in non glacierized areas \parencite{Po_River_District_dataset}.
 
 \subsection{GEOtop 2.0}
 
@@ -618,15 +618,15 @@ common spatial and temporal overlap.
 \end{table}
 
 
-\subsection{IT-SNOW and Po River District product}
+\subsection{IT-SNOW and Po River District dataset}
 
-A particularly interesting comparison is that between the two hydrology oriented snow reanalyses, namely IT-SNOW and the Po River District product. Both 
+It is particularly interesting to compare the two hydrology oriented snow reanalyses, namely IT-SNOW and the Po River District product. Both 
 are generated by a modelling chain that couples a physically based snow model with a data assimilation scheme, which uses in situ HS measurements and satellite 
 observations to improve prediction accuracy and reliability. Despite this overall similar structure, the two snow models, S3M for IT-SNOW and GEOtop 2.0 
 for the Po River District, represent the main snowpack dynamics in markedly different ways. S3M is designed for computational efficiency, so that its 
 predictions could be valuable in real-time flood forecasting, whereas GEOtop 2.0 models the entire energy balance of the snowpack, providing a much more 
-detailed picture of the complex physical phenomena governing snow cover dynamics. Before the two products can be compared, they must be harmonized by reprojecting 
-the Po River District maps onto the coordinate reference system (CRS) and grid of IT-SNOW. The comparison is then carried out over the Italian mountainous 
+detailed picture of the complex physical phenomena governing snow cover dynamics. Before the comparison of the two products, it is necessary to reproject
+the Po River District maps onto the coordinate reference system (CRS) and grid of IT-SNOW. The analysis is then carried out over the Italian mountainous 
 portion of the Po River District (i.e. the overlap area), and spans the hydrological years between 2011 and 2021, which is the longest common period. 
 Within this spatial and temporal overlap, the average peak volume of water stored in the snowpack is rather comparable between the two products: 
 IT-SNOW suggest a maximum SWE of $6.8 \pm 2.3\,\,\SI{}{\giga\meter\cubed}$ occurring on average on 4 March $\pm$ 15 days, whereas the Po River District 
@@ -638,7 +638,7 @@ underestimates in different areas may compensate for each other, resulting in si
 this aspect in greater detail, the common domain was partitioned into three elevation bands: low elevations (\num{0} - $\SI{1000}{\meter}$ a.s.l.), medium 
 elevations (\num{1000} - $\SI{2000}{\meter}$ a.s.l.) and high elevations (above $\SI{2000}{\meter}$ a.s.l.). The elevation-based comparison highlights a 
 substantial difference below $\SI{1000}{\meter}$, as the coefficient of determination (i.e. $R^2$) indicates only a moderate correlation between the two 
-datasets. Above $\SI{1000}{\meter}$ a.s.l., in contrast, the two snow products are in better agreement, as show by the statistical indicators reported in 
+datasets. Above $\SI{1000}{\meter}$ a.s.l., in contrast, the two snow products are in better agreement, as shown by the statistical indicators reported in 
 Table \ref{tab:stat_estimator_IT-SNOW_PO}.
 
 \begin{table}[H]
@@ -660,8 +660,8 @@ Table \ref{tab:stat_estimator_IT-SNOW_PO}.
 \end{tabularx}
 \end{table}
 
-The strong correlation observed for the SWE series at medium and high elevations can also be appreciated in Figure \ref{fig:comparison_volume_IT-SNOW_PO}, 
-which shows the elevation wise series computed over the period of temporal overlap between the two datasets. 
+The strong agreement observed for the SWE series at medium and high elevations can be also appreciated in Figure \ref{fig:comparison_volume_IT-SNOW_PO}, 
+which shows the elevation-dependent series computed over the period of temporal overlap between the two datasets. 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{snow_products/comparison_volume_ITSNOW_PO.png}
@@ -669,13 +669,13 @@ which shows the elevation wise series computed over the period of temporal overl
     \label{fig:comparison_volume_IT-SNOW_PO}
 \end{figure}
 In particular, IT-SNOW shows  a higher SWE volume during peak accumulation at lower elevations, whereas the Po River District product slightly overestimates 
-the water volume stored above $\SI{2000}{\meter}$ a.s.l. with respect to its counterpart. The best agreement between the two snow product is in the medium 
+the water volume stored above $\SI{2000}{\meter}$ a.s.l. with respect to its counterpart. The best agreement between the two snow product is at medium 
 elevations. Figure \ref{fig:comparison_volume_IT-SNOW_PO} also highlights a significant elevation dependent bias in the "J-snow" modelling chain used to 
 generate the Po River District product: the discrepancy with respect to IT-SNOW decreases steadily with elevation, until the underestimation eventually 
 turns into an overestimation. This behaviour could be partially related to the meteorological forcing used by GEOtop 2.0, which is based on precipitation 
 records spatialized and, where the monitoring network is too sparse, corrected using ERA5 reanalysis estimates, which systematically overestimates total 
 precipitations in high elevation Alpine catchments. Moreover, the fraction of SWE stored above $\SI{2000}{\meter}$ is larger in the PO River District 
-product than it is in IT-SNOW, which also helps explaining the delayed timing of peak SWE in the former dataset. 
+product than it is in IT-SNOW, which also helps explain the delayed timing of peak SWE in the former dataset \parencite{Po_snow}. 
 
 Even when considering the seasonal average SWE over the overlap region, clear differences between the two snow products can be observed. For instance, 
 as shown in Figure \ref{fig:comparison_SCD_MODIS_IT-SNOW}, IT-SNOW generally overestimates the amount of water stored within the highlands of 
@@ -708,7 +708,7 @@ limited, meaning that any trend estimate derived from this dataset could not be 
 
 The comparison between the two hydrological oriented products with MODIS is somewhat redundant, since the modelling chains used to generate both 
 IT-SNOW and the Po River District dataset already incorporate MODIS observations through the assimilation schemes discussed above. However, the gap 
-filling strategy adopted by \cite{MODIS_ITA} to reconstruct missing values gaps plays a role in determining the extent of snow cover on a given day and, 
+filling strategy adopted by \cite{MODIS_GAR} and \cite{MODIS_ITA} to reconstruct missing values gaps plays a role in determining the extent of snow cover on a given day and, 
 to date, has not been extensively validated. A brief comparison can therefore still provide useful information. By comparing satellite observations with 
 IT-SNOW snow cover duration maps, computed using Equation \eqref{eq:scf_IT-SNOW}, it is evident that satellite readings substantially underestimate 
 SCD across the whole peninsula, as shown in Figure \ref{fig:comparison_SCD_ITSNOW_MODIS}. This systematic difference becomes more pronounced with increasing elevation, as 
