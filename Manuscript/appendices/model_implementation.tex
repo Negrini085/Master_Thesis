@@ -6,15 +6,45 @@
 #                    SWE model implementation                     #
 ###################################################################
 rm(list = ls()); invisible(gc())
-
-library(terra)
 library(ncdf4)
 
 years <- 1951:2023
 fname_in <- "input.dat"
-fname_water_mask <- "Dataset/water_mask.nc"
+fn_wm <- "Dataset/water_mask.nc"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_model/")
 
+
+# Function to check whether two netCDF variables are defined on the 
+# same spatial grid, comparing directly the coordinate values
+com_coord <- function(fname_1, var_1, fname_2, var_2, tol = 1e-6){
+  
+  fnames <- c(fname_1, fname_2)
+  vars <- c(var_1, var_2)
+  coords <- vector("list", 2)
+  
+  # Importing coordinates of the two variables
+  for(i in 1:2){
+    nc <- nc_open(fnames[i])
+    v <- nc$var[[vars[i]]]
+    if(is.null(v)){
+      on.exit(nc_close(nc))
+      stop(paste("Variable", vars[i], "not found in", fnames[i]))
+    }
+    stopifnot(length(v$dim) >= 2)
+    
+    coords[[i]] <- list(x = v$dim[[1]]$vals, y = v$dim[[2]]$vals)
+    nc_close(nc); rm(nc, v); invisible(gc())
+  }
+  
+  # Checking if the number of grid points matches along dimensions
+  if(length(coords[[1]]$x) != length(coords[[2]]$x)) return(FALSE)
+  if(length(coords[[1]]$y) != length(coords[[2]]$y)) return(FALSE)
+  
+  # Checking if coordinates match one by one.
+  if(any(abs(coords[[1]]$x - coords[[2]]$x) > tol)) return(FALSE)
+  if(any(abs(coords[[1]]$y - coords[[2]]$y) > tol)) return(FALSE)
+  return(TRUE)
+}
 
 
 # Fun. to compute solid precipitations through a single temperature
@@ -50,7 +80,6 @@ compute_solid_precipitations <- function(prec, tmnd, tmxd, t_th){
 # Fun. to compute oscillating DDF. The period of the oscillation is 
 # 366 days, but for non-leap years the 29 February value is deleted
 compute_ddf <- function(year, ddf_ave, ddf_ampl){
-  
   # DDF computation
   len <- 366; offset <- 81;idx <- 1:len
   ddf <- ddf_ave + ddf_ampl * sin(2 * pi * (idx - offset)/len)
@@ -141,87 +170,74 @@ save_annual_swe <- function(total, fname_template, fname_out){
 
 
 
-
-
 # Importing model parameters
 df_in <- read.table(fname_in, header = TRUE)
 ddf_ave <- as.numeric(df_in$ddf_ave)
 ddf_ampl <- as.numeric(df_in$ddf_ampl)
 expfact <- as.numeric(df_in$expfact)
 t_th <- as.numeric(df_in$tlim)
-
 if((ddf_ave - ddf_ampl) < 0){ stop("DDF not correct: stopping! ") }
 
 
 # Importing water mask
-nc <- nc_open(fname_water_mask)
-water_mask <- ncvar_get(nc, "water")
+nc <- nc_open(fn_wm)
+wm <- ncvar_get(nc, "water")
 nc_close(nc)
 
 
 # Cycle over years
 appo <- create_swe_container("Dataset/PCPD/1951.nc")
 for(y in years){
-  
-  # Importing temperature and precipitation files
-  fname_prec <- paste0("Dataset/PCPD/", y, ".nc")
-  fname_temp <- paste0("Dataset/TEMP/", y, ".nc")
-  
-  prec <- rast(fname_prec)
-  temp <- rast(fname_temp)
-  
-  if(!compareGeom(prec, temp, stopOnError = FALSE)){
-    stop(paste0("No compatible input grids during ", y))
-  }
-  rm(prec, temp)
-  invisible(gc())
+
+  # Checking that netCDF maps are aligned
+  fn_p <- paste0("Dataset/PCPD/", y, ".nc")
+  fn_t <- paste0("Dataset/TEMP/", y, ".nc")
+  com_1 <- !com_coord(fn_p, "total_precipitation", fn_t, "tmnd")
+  com_2 <- !com_coord(fn_p, "total_precipitation", fn_wm, "water")
+  if(com_1 | com_2) stop(paste("Input dataset not aligned in", y))
   
   
-  
-  # Loading precipitation and temperature grids 
-  # (every layer is one daily map)
-  nc <- nc_open(fname_prec)
+  # Loading precipitation and temperature grids (1 layer = 1 day)
+  nc <- nc_open(fn_p)
   prec <- ncvar_get(nc, "total_precipitation")
   nc_close(nc)
   
-  nc <- nc_open(fname_temp)
-  tmnd <- ncvar_get(nc, "tmnd")
-  tmxd <- ncvar_get(nc, "tmxd")
+  nc <- nc_open(fn_t)
+  tmnd <- ncvar_get(nc, "tmnd"); tmxd <- ncvar_get(nc, "tmxd")
   stopifnot(identical(dim(tmnd), dim(tmxd)))
   tmean <- (tmnd + tmxd)/2
   nc_close(nc)
   
   rm(nc); invisible(gc());
   stopifnot(identical(dim(tmean), dim(prec)))
-  
-  
-  
-  
-  
+
+
   # Computing solid precipitations
   precs <- compute_solid_precipitations(prec, tmnd, tmxd, t_th)
-  rm(prec, tmnd, tmxd)
-  invisible(gc())
-  
-  
+  rm(prec, tmnd, tmxd); invisible(gc())
   # Computing annual melt
   melt <- compute_melt(y, tmean, ddf_ave, ddf_ampl, expfact)
   rm(tmean); invisible(gc())
+  
   
   total <- array(NA_real_, dim = dim(melt))
   for(i in 1:dim(total)[3]){
     
     # Adding solid precipitations and melt to the SWE map. If some 
-    # negative values appear, it means that snow has melted all the 
-    # way to the ground (these pixels must be set to zero)
+    # negative values appear, snow has melted all the way.
     appo <- appo + precs[, , i] - melt[, , i]
-    
     mask <- appo < 0 & !is.na(appo)
     appo[mask] <- 0
     
     total[, , i] <- round(appo, 1)
   }
   rm(mask); invisible(gc())
+
+
+  # Masking swe maps with water mask
+  stopifnot(identical(dim(wm), dim(total)[1:2]))
+  mask <- as.vector(!is.na(wm) & wm == 1) & !is.na(total)
+  total[mask] <- NA; rm(mask); invisible(gc())
   
 
   # Saving SWE data to file
@@ -231,6 +247,6 @@ for(y in years){
   save_annual_swe(total, fname_template, fname_out)
   
   rm(precs, melt, total); invisible(gc())
-  cat("Computed SWE maps for: ", y, "       Number of pixel NAs: ", sum(is.na(appo)),"\n")
+  cat("Computed SWE maps for: ", y, "\n")
 }
 \end{lstlisting}
