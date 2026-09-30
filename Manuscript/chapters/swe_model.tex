@@ -1,12 +1,13 @@
 \chapter{SWE model}
 \label{cap:swe_model}
 
+This chapter describes the snow model developed to generate daily snow water equivalent maps over the IH-GAR territory for the 1951--2023 period. 
+Since this study is based entirely on meteorological observations, a parsimonious modelling approach was adopted, with gridded temperature and 
+precipitation data as inputs. These are typically the only variables recorded by a dense network of stations throughout the investigated period, 
+and hence the only ones that can be spatialized over the whole study area without using reanalysis data.
 
-
-
-
-
-
+The chapter follows the workflow of the proposed approach. The gridded datasets used as model forcing are presented first, followed by a description 
+of precipitation phase partitioning and of the computation of snowmelt and SWE. Model calibration is addressed separately in Chapter \ref{cap:swe_calibration}.
 
 
 
@@ -97,9 +98,7 @@ where $T_{\max}$ and $T_{\min}$ are the daily maximum and minimum temperatures r
 The snow models discussed in Chapter \ref{cap:snow_products} adopted different approaches to snowmelt estimation. "J-snow", the modelling chain that led 
 to the generation of the Po River District dataset, explicitly simulated the energy balance of the snowpack, whereas "S3M" employed an hybrid degree-day 
 method, accounting for both air temperature and shortwave radiation. Neither method, however, is suitable for investigating snowpack dynamics over the 
-1951--2023 period, as both require input variables that are not unavailable continuously throughout the entire study period. Moreover, the aim of this 
-thesis is to generate SWE rasters from meteorological observations alone. Among these, precipitation and air temperature are typically the only variables 
-with long records available at a large number of stations.
+1951--2023 period, as both require input variables that are not unavailable continuously throughout the entire study period.
 
 The modelling approach adopted is therefore a canonical degree-day method, in which mean air temperature is used as a proxy for the various energy fluxes 
 affecting the energy state of the snowpack. In particular, the model follows the formulation proposed by \cite{Magnusson_DDF}, whereby the daily snowmelt 
