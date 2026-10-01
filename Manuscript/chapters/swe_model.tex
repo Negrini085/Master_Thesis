@@ -27,8 +27,17 @@ additive rather than multiplicative.
 The gridding procedure starts from a spatially dense and temporally continuous dataset of station observations, which has been quality checked for spikes 
 and missing values to prevent systematic errors from propagating into the gridded fields. The three main steps to generate daily precipitation maps are:
 \begin{itemize}[label=$\blacktriangleright$]
-    \item \textit{high-resolution climatologies' generation}, 
-    \item \textit{monthly precipitation maps computation}, which requires monthly anomaly maps to compute the actual monthly values over the whole 
+    \item \textit{calculation of high-resolution climatologies}, which are required as a reference standpoint for daily series reconstruction. The first 
+    step to obtain gridded climatologies was the computation of precipitation normals over the 1991--2020 period for each station of the precipitation 
+    dataset. The method selected to generate the climatologies rasters is the Local Weighted Linear Regression (LWLR) of precipitation vs elevation, 
+    which already proved to be a robust method to reconstruct gridded maps \parencite{LWLR_Crespi}. At a specific location $\left(x,\,y\right)$ the 
+    monthly normals are thus reconstructed as
+    \begin{equation}
+        P_{clima}\left(x,\,y\right)\,=\,q\left(x,\,y\right)\,+\,m\left(x,\,y\right) \cdot h\left(x,\,y\right),
+        \label{eq:clima_precipitation_gridding}
+    \end{equation}
+    where $P_{clima}$ is the computed normal, $q$ and $m$ are the site-specific regression coefficients and $h$ the elevation of the considered grid point. 
+    \item \textit{computation of monthly precipitation maps}, which requires monthly anomaly maps to compute the actual monthly values over the whole 
     investigated period as 
     \begin{equation}
         P_{month}\left(x,\,y\right)\,=\,P_{clima}\left(x,\,y\right) \cdot A_{month}\left(x,\,y\right),
@@ -36,13 +45,13 @@ and missing values to prevent systematic errors from propagating into the gridde
     \end{equation}
     where $ P_{month}$ and $A_{month}$ are the precipitation totals and the multiplicative anomaly for a given month at a specific grid point 
     $\left(x,\,y\right)$. To generate the anomaly maps, all the series included in the station dataset are transformed into anomaly series with respect 
-    to the 1991-2020 monthly normals. Each monthly anomaly value for each grid point is then obtained as a wheighted mean of the values of the \num{10} 
+    to the 1991-2020 monthly normals. Each monthly anomaly value for each grid point is then obtained as a weighted mean of the values of the \num{10} 
     closest stations: the weights take into consideration the distance, difference in elevation and angular distribution with respect to the grid point 
     to be reconstructed. The distance weight, of gaussian form as the one in Equation , gets halved at the distance of the third closest station, whereas 
     the elevation one is halved at \num{800} meters for pixels below $\SI{1600}{\meter}$ a.s.l. or at half the elevation of the grid point otherwise. This 
     peculiar scaling approach allows for weights to decrease more gradually where fewer stations are available, but avoids estrapolation from more distant 
     stations whenever there is high data availability. 
-    \item \textit{daily precipitation values estimation}, which at a specific location $\left(x,\,y\right)$ is computed as 
+    \item \textit{estimation of daily precipitation values}, which at a specific location $\left(x,\,y\right)$ is computed as 
     \begin{equation}
         P\left(x,\,y\right)\,=\,P_{month}\left(x,\,y\right) \cdot F_{day}\left(x,\,y\right),
         \label{eq:monthly_precipitation_gridding}
