@@ -42,7 +42,15 @@ and missing values to prevent systematic errors from propagating into the gridde
     the elevation one is halved at \num{800} meters for pixels below $\SI{1600}{\meter}$ a.s.l. or at half the elevation of the grid point otherwise. This 
     peculiar scaling approach allows for weights to decrease more gradually where fewer stations are available, but avoids estrapolation from more distant 
     stations whenever there is high data availability. 
-    \item \textit{daily precipitation values estimation},
+    \item \textit{daily precipitation values estimation}, which at a specific location $\left(x,\,y\right)$ is computed as 
+    \begin{equation}
+        P\left(x,\,y\right)\,=\,P_{month}\left(x,\,y\right) \cdot F_{day}\left(x,\,y\right),
+        \label{eq:monthly_precipitation_gridding}
+    \end{equation}
+    where $P$ is the daily precipitation value and $F_{day}\left(x,\,y\right)$ is the ratio between the daily precipitation and the corresponding monthly 
+    total. In order to obtain $F_{day}\left(x,\,y\right)$ at each grid point, the station series were transformed into daily fractions of precipitation 
+    with respect to the corresponding monthly total. This values were later interpolated over the spatial grid using the same method presented in the 
+    previous bulletpoint.
 \end{itemize}
 
 
