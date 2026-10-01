@@ -24,8 +24,26 @@ additive rather than multiplicative.
 
 \subsection{Gridding procedure}
 
-The gridding procedure consists of three main steps. The starting point is a spatially dense and temporally continous station readings dataset, which has 
-been quality checked for spikes or missing values in order to avoid  
+The gridding procedure starts from a spatially dense and temporally continuous dataset of station observations, which has been quality checked for spikes 
+and missing values to prevent systematic errors from propagating into the gridded fields. The three main steps to generate daily precipitation maps are:
+\begin{itemize}[label=$\blacktriangleright$]
+    \item \textit{high-resolution climatologies' generation}, 
+    \item \textit{monthly precipitation maps computation}, which requires monthly anomaly maps to compute the actual monthly values over the whole 
+    investigated period as 
+    \begin{equation}
+        P_{month}\left(x,\,y\right)\,=\,P_{clima}\left(x,\,y\right) \cdot A_{month}\left(x,\,y\right),
+        \label{eq:monthly_precipitation_gridding}
+    \end{equation}
+    where $ P_{month}$ and $A_{month}$ are the precipitation totals and the multiplicative anomaly for a given month at a specific grid point 
+    $\left(x,\,y\right)$. To generate the anomaly maps, all the series included in the station dataset are transformed into anomaly series with respect 
+    to the 1991-2020 monthly normals. Each monthly anomaly value for each grid point is then obtained as a wheighted mean of the values of the \num{10} 
+    closest stations: the weights take into consideration the distance, difference in elevation and angular distribution with respect to the grid point 
+    to be reconstructed. The distance weight, of gaussian form as the one in Equation , gets halved at the distance of the third closest station, whereas 
+    the elevation one is halved at \num{800} meters for pixels below $\SI{1600}{\meter}$ a.s.l. or at half the elevation of the grid point otherwise. This 
+    peculiar scaling approach allows for weights to decrease more gradually where fewer stations are available, but avoids estrapolation from more distant 
+    stations whenever there is high data availability. 
+    \item \textit{daily precipitation values estimation},
+\end{itemize}
 
 
 
