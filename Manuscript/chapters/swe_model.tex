@@ -14,7 +14,20 @@ of precipitation phase partitioning and of the computation of snowmelt and SWE. 
 \section{Model inputs}
 
 The gridded temperature and precipitation datasets, used as model inputs, were both developed by the Department of Environmental Science and Policy of the 
-University of Milan, building on earlier work aimed at rescuing new station records and improving the quality of existing ones. The method that 
+University of Milan, building on earlier work aimed at rescuing new station records and improving the quality of existing ones. The computational chain 
+used to generate these rasters is based on the anomaly method, which assumes that the spatio-temporal structure of a meteorological signal can be 
+described as the superposition of two fields, namely being the climatological normals over a given reference period and the departures from them. In the 
+following, only the procedure for precipitation is presented. For temperature, the only difference lies in the type of anomalies considered, which are 
+additive rather than multiplicative.
+
+
+
+\subsection{Gridding procedure}
+
+The gridding procedure consists of three main steps. The starting point is a spatially dense and temporally continous station readings dataset, which has 
+been quality checked for spikes or missing values in order to avoid  
+
+
 
 \subsection{Precipitation data}
 
