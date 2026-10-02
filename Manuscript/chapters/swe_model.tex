@@ -1,24 +1,27 @@
 \chapter{SWE model}
 \label{cap:swe_model}
 
-Le limitazioni dei prodotti nivologici esistenti, discusse nel Capitolo precedente, evidenziano la necessità di disporre di una ricostruzione nivologica 
-di lunga durata e basata solamente su dati osservativi, di modo che possano essere effettuate delle analisi di trend robuste, senza essere influenzati da 
-eventuali bias che tipicamente caratterizzano i dati di reanalisi. Per modellare nel modo più accurato possibile il manto nevoso, sarebbe necessario prendere 
-in considerazione tutti i fenomeni fisici che ne caratterizzano la sua evoluzione e modifica durante la stagione nevosa, a partire da una stima di tutti i 
-termini che costituiscono il bilancio energetico del manto nevoso, per arrivare a compattazione e percolazione dell'acqua all'interno della struttura porosa 
-della neve, precedendo di fatto il runoff. La problematica principale che rende di fatto inapplicabile un approccio di questo genere è il fatto che richiede 
-una quantità innumerevole di input, come per esempio la distribuzione della short wave radiation, mappe di velocità del vento, misure di temperatura del 
-suolo che sono state effettuate su una rete densa di stazioni solamente dagli anni 2000 in poi. Per questo motivo, il modello che viene presentato in questo 
-capitolo, presenta un approccio decisamente minimalista data la scarsità di variabili che possono essere utilizzate come input su un periodo lungo come 
-quello dal 1951 al 2023. Infatti, per simulare le dinamiche del manto nevoso nell'ambito di questa tesi, vengono presi in considerazione solo dati di 
-precipitazione totale e temperatura, che vengono di fatto utilizzati come soli driver delle dinamiche d'accumulo e di fusione della risorsa nivale. 
+The limitations of existing snow products, discussed in the previous Chapter, highlight the need for a long term snow reconstruction over IH-GAR based 
+exclusively on observational data. This is essential for carrying out robust trend estimates without being affected by the potential biases intrinsic to 
+reanalysis products. To model the snowpack as accurately as possible, it would be necessary to take into account all the physical processes that characterize its 
+evolution throughout the snow season, starting from an estimate of all terms contributing to the snowpack energy balance to then focus on
+compaction and water percolation, which ultimately precedes runoff. The main issue that makes such an approach effectively inapplicable within the framework 
+of this thesis is that it requires a wide variety of input variables, such as the spatial distribution of incoming shortwave radiation, wind speed maps 
+and soil temperature measurements, which have only been collected through a dense station network since the 2000s. For this reason, the model presented in 
+this chapter adopts a substantially minimalist approach, given the limited number of meteorological inputs available over a period as long as 1951--2023. 
+Indeed, to simulate snowpack dynamics, only temperature and precipitation data are used: these two variables are therefore the only drivers of snow 
+accumulation and snowmelt.
 
-Il capitolo presenta in primo luogo i dataset meteorologici utilizzati come forcing e la procedura impiegata per la loro ricostruzione spaziale, per poi 
-passare alla descrizione del modello vero e proprio. Il processo di calibrazione dello stesso, effettuato su serie osservative di spessore nevoso, è 
-affrontato separatamente nel seguente capitolo.
+In the following sections, the temperature and precipitation datasets, as well as the procedure adopted for their spatial reconstruction, are presented 
+first. The second half of this chapter is instead dedicated to the actual description of the snow model. The model calibration process, carried out 
+comparing model outputs to observational snow depth time series, is addressed separately in Chapter \ref{cap:swe_calibration}.
 
-The chapter follows the workflow of the proposed approach. The gridded datasets used as model forcing are presented first, followed by a description 
-of precipitation phase partitioning and of the computation of snowmelt and SWE. Model calibration is addressed separately in Chapter \ref{cap:swe_calibration}.
+
+
+
+
+
+
 
 
 
