@@ -46,7 +46,7 @@ for(i in 1:length(time)){
     geom_sf(data = europe, fill = "grey90", color = "black", inherit.aes = FALSE) +
     coord_sf(xlim = c(6.2, 14.5), ylim = c(43, 47.1)) +
     geom_raster(data = grid, aes(x = lon, y = lat, fill = appo_swe)) +
-    scale_fill_viridis_c(option = "C", na.value = "transparent", oob = scales::squish) +
+    scale_fill_viridis_c(option = "C", na.value = "transparent", limits = c(0, 1500), oob = scales::squish) +
     labs(title = paste("SWE -", format(target_date, "%B %Y")), x = "Longitude", y = "Latitude", fill = "SWE (mm w.e.)") +
     theme_minimal()
 
