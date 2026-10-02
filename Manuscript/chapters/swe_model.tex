@@ -30,13 +30,31 @@ and missing values to prevent systematic errors from propagating into the gridde
     \item \textit{calculation of high-resolution climatologies}, which are required as a reference standpoint for daily series reconstruction. The first 
     step to obtain gridded climatologies was the computation of precipitation normals over the 1991--2020 period for each station of the precipitation 
     dataset. The method selected to generate the climatologies rasters is the Local Weighted Linear Regression (LWLR) of precipitation vs elevation, 
-    which already proved to be a robust method to reconstruct gridded maps \parencite{LWLR_Crespi}. At a specific location $\left(x,\,y\right)$ the 
+    which already proved to be a robust method to reconstruct gridded maps \parencite{LWLR_Crespi}. The weights for the evaluation of the regression 
+    coefficients consider the distances and the level of orographic similarity between the stations and a specific grid-point. In particular, the weight 
+    for the i-th station involved in the LWLR for grid point $\left(x,\,y\right)$ is:
+    \begin{equation}
+        w_i \left(x,\,y\right)\,=\,w_i^{rad}\left(x,\,y\right) \cdot w_i^{h}\left(x,\,y\right) \cdot w_i^{st}\left(x,\,y\right) \cdot w_i^{facet}\left(x,\,y\right) \cdot w_i^{dsea}\left(x,\,y\right),
+        \label{eq:weights_linear_regression}
+    \end{equation}  
+    where the superscript correspond respectively to radial position, elevation, slope steepness, slope orientation and distance from the sea. The single 
+    factors in Equation \eqref{eq:weights_linear_regression} are based on gaussian functions, so that 
+    \begin{equation}
+        w_i^{par} \left(x,\,y\right)\,=\,\exp{-\frac{\left[\Delta_i^{par}\left(x,\,y\right)\right]^2}{c^{par}}},
+        \label{eq:gaussian_form_weight}
+    \end{equation}
+    where $\Delta_i^{par}$ is the difference between the station and the grid point features and $c^{par}$ determines the width of the gaussian. The $c^{par}$ 
+    factors are locally optimized to maximize the agreement between estimated and observed normals. At a specific location $\left(x,\,y\right)$ the 
     monthly normals are thus reconstructed as
     \begin{equation}
         P_{clima}\left(x,\,y\right)\,=\,q\left(x,\,y\right)\,+\,m\left(x,\,y\right) \cdot h\left(x,\,y\right),
         \label{eq:clima_precipitation_gridding}
     \end{equation}
     where $P_{clima}$ is the computed normal, $q$ and $m$ are the site-specific regression coefficients and $h$ the elevation of the considered grid point. 
+    The regression coefficients for each grid point are estimated taking into account the \num{30} stations with the highest weights. Furthermore, to attain 
+    robust regression coefficients estimates, the LWLR was performed \num{30} times by iteratively removing each station: if the difference between the 
+    lowest and highest estimates exceeded \num{30} \% of the weighted mean obtained considering all 30 stations, the $c^{par}$ where relaxed by \num{10} \% 
+    in order to avoid weighting too much some stations.
     \item \textit{computation of monthly precipitation maps}, which requires monthly anomaly maps to compute the actual monthly values over the whole 
     investigated period as 
     \begin{equation}
