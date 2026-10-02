@@ -1,10 +1,21 @@
 \chapter{SWE model}
 \label{cap:swe_model}
 
-This chapter describes the snow model developed to generate daily snow water equivalent maps over the IH-GAR territory for the 1951--2023 period. 
-Since this study is based entirely on meteorological observations, a parsimonious modelling approach was adopted, with gridded temperature and 
-precipitation data as inputs. These are typically the only variables recorded by a dense network of stations throughout the investigated period, 
-and hence the only ones that can be spatialized over the whole study area without using reanalysis data.
+Le limitazioni dei prodotti nivologici esistenti, discusse nel Capitolo precedente, evidenziano la necessità di disporre di una ricostruzione nivologica 
+di lunga durata e basata solamente su dati osservativi, di modo che possano essere effettuate delle analisi di trend robuste, senza essere influenzati da 
+eventuali bias che tipicamente caratterizzano i dati di reanalisi. Per modellare nel modo più accurato possibile il manto nevoso, sarebbe necessario prendere 
+in considerazione tutti i fenomeni fisici che ne caratterizzano la sua evoluzione e modifica durante la stagione nevosa, a partire da una stima di tutti i 
+termini che costituiscono il bilancio energetico del manto nevoso, per arrivare a compattazione e percolazione dell'acqua all'interno della struttura porosa 
+della neve, precedendo di fatto il runoff. La problematica principale che rende di fatto inapplicabile un approccio di questo genere è il fatto che richiede 
+una quantità innumerevole di input, come per esempio la distribuzione della short wave radiation, mappe di velocità del vento, misure di temperatura del 
+suolo che sono state effettuate su una rete densa di stazioni solamente dagli anni 2000 in poi. Per questo motivo, il modello che viene presentato in questo 
+capitolo, presenta un approccio decisamente minimalista data la scarsità di variabili che possono essere utilizzate come input su un periodo lungo come 
+quello dal 1951 al 2023. Infatti, per simulare le dinamiche del manto nevoso nell'ambito di questa tesi, vengono presi in considerazione solo dati di 
+precipitazione totale e temperatura, che vengono di fatto utilizzati come soli driver delle dinamiche d'accumulo e di fusione della risorsa nivale. 
+
+Il capitolo presenta in primo luogo i dataset meteorologici utilizzati come forcing e la procedura impiegata per la loro ricostruzione spaziale, per poi 
+passare alla descrizione del modello vero e proprio. Il processo di calibrazione dello stesso, effettuato su serie osservative di spessore nevoso, è 
+affrontato separatamente nel seguente capitolo.
 
 The chapter follows the workflow of the proposed approach. The gridded datasets used as model forcing are presented first, followed by a description 
 of precipitation phase partitioning and of the computation of snowmelt and SWE. Model calibration is addressed separately in Chapter \ref{cap:swe_calibration}.
