@@ -2,15 +2,14 @@
 \label{cap:swe_model}
 
 The limitations of existing snow products, discussed in the previous Chapter, highlight the need for a long term snow reconstruction over IH-GAR based 
-exclusively on observational data. This is essential for carrying out robust trend estimates without being affected by the potential biases intrinsic to 
-reanalysis products. To model the snowpack as accurately as possible, it would be necessary to take into account all the physical processes that characterize its 
-evolution throughout the snow season, starting from an estimate of all terms contributing to the snowpack energy balance to then focus on
-compaction and water percolation, which ultimately precedes runoff. The main issue that makes such an approach effectively inapplicable within the framework 
-of this thesis is that it requires a wide variety of input variables, such as the spatial distribution of incoming shortwave radiation, wind speed maps 
-and soil temperature measurements, which have only been collected through a dense station network since the 2000s. For this reason, the model presented in 
-this chapter adopts a substantially minimalist approach, given the limited number of meteorological inputs available over a period as long as 1951--2023. 
-Indeed, to simulate snowpack dynamics, only temperature and precipitation data are used: these two variables are therefore the only drivers of snow 
-accumulation and snowmelt.
+exclusively on observational data. To model the snowpack as accurately as possible, 
+it would be necessary to take into account all the physical processes that characterize its evolution throughout the snow season, starting from an 
+estimate of all terms contributing to the snowpack energy balance to then focus on compaction and water percolation, which ultimately precedes runoff. 
+The main issue that makes such an approach effectively inapplicable within the framework of this thesis is that it requires a wide variety of input 
+variables, such as the spatial distribution of incoming shortwave radiation, wind speed maps and soil temperature measurements, which have only been 
+collected through a spatially dense station network since the 2000s. For this reason, the model presented in this chapter adopts a substantially 
+minimalist approach, given the limited number of meteorological inputs available over a period as long as 1951--2023. Indeed, to simulate snowpack 
+dynamics, only temperature and precipitation data are used: these two variables are therefore the only drivers of snow accumulation and snowmelt.
 
 In the following sections, the temperature and precipitation datasets, as well as the procedure adopted for their spatial reconstruction, are presented 
 first. The second half of this chapter is instead dedicated to the actual description of the snow model. The model calibration process, carried out 
@@ -27,112 +26,96 @@ comparing model outputs to observational snow depth time series, is addressed se
 
 \section{Model inputs}
 
-The gridded temperature and precipitation datasets, used as model inputs, were both developed by the Department of Environmental Science and Policy of the 
-University of Milan, building on earlier work aimed at rescuing new station records and improving the quality of existing ones. The computational chain 
-used to generate these rasters is based on the anomaly method, which assumes that the spatio-temporal structure of a meteorological signal can be 
-described as the superposition of two fields, namely being the climatological normals over a given reference period and the departures from them. In the 
-following, only the procedure for precipitation is presented. For temperature, the only difference lies in the type of anomalies considered, which are 
-additive rather than multiplicative.
+The gridded temperature and precipitation datasets, used as model inputs, have both a spatial resolution of \num{30} arc-seconds. They were developed 
+by the Department of Environmental Science and Policy of the University of Milan, building on earlier work aimed at rescuing new station records and 
+improving the quality of existing ones. The numerical procedure chain used to generate these rasters is based on the anomaly method \parencite{precipitation_IHGAR}, 
+which assumes that the spatio-temporal structure of a meteorological signal can be described as the superposition of two fields, namely being the 
+climatological normals over a reference period of thirty years and the departures from them. In the following, only the precipitation version is presented. 
+For temperature, the only difference is that are used additive anomalies rather than multiplicative ones.
 
 
 
 \subsection{Gridding procedure}
 
-The gridding procedure starts from a spatially dense and temporally continuous dataset of station observations, which has been quality checked for spikes 
-and missing values to prevent systematic errors from propagating into the gridded fields. The three main steps to generate daily precipitation maps are:
+The gridding procedure used to produce the precipitation dataset requires a spatially dense and temporally continuous dataset of station observations, 
+which has undergone rigorous quality checks to identify spikes and missing values. Such control is essential for preventing systematic errors from 
+propagating into the gridded fields. This method is composed by three main steps, namely:
 \begin{itemize}[label=$\blacktriangleright$]
-    \item \textit{calculation of high-resolution climatologies}, which are required as a reference standpoint for daily series reconstruction. The first 
-    step to obtain gridded climatologies was the computation of precipitation normals over the 1991--2020 period for each station of the precipitation 
-    dataset. The method selected to generate the climatologies rasters is the Local Weighted Linear Regression (LWLR) of precipitation vs elevation, 
-    which already proved to be a robust method to reconstruct gridded maps \parencite{LWLR_Crespi}. The weights for the evaluation of the regression 
-    coefficients consider the distances and the level of orographic similarity between the stations and a specific grid-point. In particular, the weight 
-    for the i-th station involved in the LWLR for grid point $\left(x,\,y\right)$ is:
-    \begin{equation}
-        w_i \left(x,\,y\right)\,=\,w_i^{rad}\left(x,\,y\right) \cdot w_i^{h}\left(x,\,y\right) \cdot w_i^{st}\left(x,\,y\right) \cdot w_i^{facet}\left(x,\,y\right) \cdot w_i^{dsea}\left(x,\,y\right),
-        \label{eq:weights_linear_regression}
-    \end{equation}  
-    where the superscript correspond respectively to radial position, elevation, slope steepness, slope orientation and distance from the sea. The single 
-    factors in Equation \eqref{eq:weights_linear_regression} are based on gaussian functions, so that 
-    \begin{equation}
-        w_i^{par} \left(x,\,y\right)\,=\,\exp{-\frac{\left[\Delta_i^{par}\left(x,\,y\right)\right]^2}{c^{par}}},
-        \label{eq:gaussian_form_weight}
-    \end{equation}
-    where $\Delta_i^{par}$ is the difference between the station and the grid point features and $c^{par}$ determines the width of the gaussian. The $c^{par}$ 
-    factors are locally optimized to maximize the agreement between estimated and observed normals. At a specific location $\left(x,\,y\right)$ the 
-    monthly normals are thus reconstructed as
+    \item \textit{calculation of high-resolution climatologies}, which are required as a reference for the reconstruction of daily series. The first 
+    step in deriving the gridded climatologies consisted in computing the 1991--2020 precipitation normals for each station of the dataset. The method 
+    used to generate the climatological rasters is the Local Weighted Linear Regression (LWLR) of precipitation against elevation, which had already 
+    proven to be a robust approach for reconstructing gridded fields \parencite{LWLR_Crespi}. At a specific location $\left(x,\,y\right)$, the 
+    monthly normals were computed as
     \begin{equation}
         P_{clima}\left(x,\,y\right)\,=\,q\left(x,\,y\right)\,+\,m\left(x,\,y\right) \cdot h\left(x,\,y\right),
         \label{eq:clima_precipitation_gridding}
     \end{equation}
-    where $P_{clima}$ is the computed normal, $q$ and $m$ are the site-specific regression coefficients and $h$ the elevation of the considered grid point. 
-    The regression coefficients for each grid point are estimated taking into account the \num{30} stations with the highest weights. Furthermore, to attain 
-    robust regression coefficients estimates, the LWLR was performed \num{30} times by iteratively removing each station: if the difference between the 
-    lowest and highest estimates exceeded \num{30} \% of the weighted mean obtained considering all 30 stations, the $c^{par}$ where relaxed by \num{10} \% 
-    in order to avoid weighting too much some stations.
-    \item \textit{computation of monthly precipitation maps}, which requires monthly anomaly maps to compute the actual monthly values over the whole 
-    investigated period as 
+    where $P_{clima}$ is the reconstructed normal, $q$ and $m$ are the location-specific regression coefficients, and $h$ the elevation of the considered 
+    grid point. The weights used to evaluate the regression coefficients account for both the distances and the level of orographic similarity between 
+    each station and the target grid point. In particular, the weight assigned to the i-th station for a grid point $\left(x,\,y\right)$ was given by
+    \begin{equation}
+        w_i \left(x,\,y\right)\,=\,w_i^{rad}\left(x,\,y\right) \cdot w_i^{h}\left(x,\,y\right) \cdot w_i^{st}\left(x,\,y\right) \cdot w_i^{facet}\left(x,\,y\right) \cdot w_i^{dsea}\left(x,\,y\right),
+        \label{eq:weights_linear_regression}
+    \end{equation}  
+    where the superscripts refer, respectively, to radial distance, elevation, slope steepness, slope orientation, and distance from the sea \parencite{precipitation_IHGAR}. 
+    Each factor on the right side of Equation \eqref{eq:weights_linear_regression} was defined through a Gaussian function, so that 
+    \begin{equation}
+        w_i^{par} \left(x,\,y\right)\,=\,\exp{-\frac{\left[\Delta_i^{par}\left(x,\,y\right)\right]^2}{c^{par}}},
+        \label{eq:gaussian_form_weight}
+    \end{equation}
+    where $\Delta_i^{par}$ represents the difference in features between the selected station and the specific grid point, while $c^{par}$ controls the width of the 
+    Gaussian. The $c^{par}$ parameters were locally optimized to maximize the agreement between estimated and observed normals. For each grid point, the 
+    regression coefficients were estimated taking into account the \num{30} stations with the highest weights. Furthermore, to improve the robustness 
+    of the estimates, the LWLR was performed \num{30} times in a leave-one-out framework, removing one station at each iteration. If the difference 
+    between the lowest and highest estimates exceeded \num{30} \% of the weighted mean obtained using all 30 stations, the $c^{par}$ were relaxed by 
+    \num{10} \% to prevent individual stations to dictate the normal values \parencite{precipitation_IHGAR}.
+    \item \textit{computation of monthly precipitation maps}, which relies on monthly anomaly maps to reconstruct the actual monthly totals over the 
+    entire investigated period as 
     \begin{equation}
         P_{month}\left(x,\,y\right)\,=\,P_{clima}\left(x,\,y\right) \cdot A_{month}\left(x,\,y\right),
         \label{eq:monthly_precipitation_gridding}
     \end{equation}
-    where $ P_{month}$ and $A_{month}$ are the precipitation totals and the multiplicative anomaly for a given month at a specific grid point 
-    $\left(x,\,y\right)$. To generate the anomaly maps, all the series included in the station dataset are transformed into anomaly series with respect 
-    to the 1991-2020 monthly normals. Each monthly anomaly value for each grid point is then obtained as a weighted mean of the values of the \num{10} 
-    closest stations: the weights take into consideration the distance, difference in elevation and angular distribution with respect to the grid point 
-    to be reconstructed. The distance weight, of gaussian form as the one in Equation , gets halved at the distance of the third closest station, whereas 
-    the elevation one is halved at \num{800} meters for pixels below $\SI{1600}{\meter}$ a.s.l. or at half the elevation of the grid point otherwise. This 
-    peculiar scaling approach allows for weights to decrease more gradually where fewer stations are available, but avoids estrapolation from more distant 
-    stations whenever there is high data availability. 
-    \item \textit{estimation of daily precipitation values}, which at a specific location $\left(x,\,y\right)$ is computed as 
+    where $ P_{month}$ and $A_{month}$ are, respectively, the total precipitation and the multiplicative anomaly for a given month at the grid point 
+    $\left(x,\,y\right)$. To generate the anomaly maps, all station series were converted into anomaly series relative to the 1991--2020 monthly normals. 
+    The departures from the climatologies were then computed at each grid point as a weighted mean of the values from the \num{10} nearest stations 
+    \parencite{precipitation_IHGAR}. The weights accounted for distance, elevation difference, and the angular distribution of the stations around the 
+    grid point being reconstructed. The distance weight, which had a Gaussian form as in Equation \eqref{eq:gaussian_form_weight}, was halved at the 
+    distance of the third closest station. The elevation one, on the other hands, got halved at an elevation difference of \num{800} meters for grid 
+    points below $\SI{1600}{\meter}$ a.s.l. or at half the elevation of the grid point otherwise \parencite{precipitation_IHGAR}. This adaptive scaling 
+    scheme allowed the weights to decrease more gradually in areas with a lower station density, while limiting the influence of less compatible stations 
+    whenever there was high data availability.
+    \item \textit{estimation of daily precipitation values}, which, at a given location $\left(x,\,y\right)$, were computed as 
     \begin{equation}
         P\left(x,\,y\right)\,=\,P_{month}\left(x,\,y\right) \cdot F_{day}\left(x,\,y\right),
-        \label{eq:monthly_precipitation_gridding}
+        \label{eq:daily_precipitation_gridding}
     \end{equation}
-    where $P$ is the daily precipitation value and $F_{day}\left(x,\,y\right)$ is the ratio between the daily precipitation and the corresponding monthly 
-    total. In order to obtain $F_{day}\left(x,\,y\right)$ at each grid point, the station series were transformed into daily fractions of precipitation 
-    with respect to the corresponding monthly total. This values were later interpolated over the spatial grid using the same method presented in the 
-    previous bulletpoint.
+    where $P$ denotes the daily precipitation value and $F_{day}\left(x,\,y\right)$ represents the ratio between the daily precipitation and the 
+    corresponding monthly total. To obtain $F_{day}\left(x,\,y\right)$ at each grid point, the station time series were first converted into daily 
+    precipitation fractions by dividing each daily value by the corresponding monthly one. The resulting fractions were then interpolated over the 
+    spatial grid using the same method described in the previous bullet point \parencite{precipitation_IHGAR}.
 \end{itemize}
 
 
 
 \subsection{Precipitation data}
 
-The generation of daily precipitation grids for the 1951--2023 requires a dense network of station-based time series that have undergone rigorous 
-quality control to identify and correct potential reading errors, as well as to account for missing observations. A major challenge in establishing 
-such a dataset over the IH-GAR is the substantial spatial and temporal heterogeneity of meteorological observations in Italy. Following the 
-dissolution of the Italian Hydrographic Service in the 1990s, responsibility for the management and maintenance of meteorological networks was 
-transferred to various regional authorities. This institutional fragmentation has resulted in considerable inconsistencies in the continuity, 
-availability, and temporal homogeneity of observational records, especially because it happened exactly when automatic weather stations were 
-being introduced in the monitoring network. The first step toward the generation of daily precipitation grids by \cite{precipitation_IHGAR} 
-was thus to recover new Italian rainfall data and further enhance existing ones, in order to have as much series as possible to accurately reconstruct 
-precipitation maps. Substantial effort was put into a deep reorganization of the observations, as well as in merging attempt between manual and 
-automatic series, in order to enhance the temporal coverage of precipitation readings. The resulting station dataset, consisting of series with at 
-least \num{1000} daily observations, was composed by \num{8337} stations with daily data and including station that are placed outside the IH-GAR 
-borders, in order to ensure that every grid point is surrounded by a significant amount of weather stations. 
-
-The gridded dataset was then reconstructed over the 1951--2023 period by means of the anomaly method, which assumes that the 
-
-
-The average annual precipitation value over the IH-GAR during the 1991--2020 period is $1090\,\pm\,190\,\SI{}{\milli\meter}$. However, the annual 
-precipitation climatology exhibit a substantial heterogeneity, as shown in Figure \ref{fig:annual_prec_clima_1991_2020}. The highest totals are 
-indeed reached at the foothills of the Alps and in the Northern Apennines, as a consequence of more prominent orographic uplifting of air masses, 
-whereas the lowest ones are achieved in the Po River Delta and in the lowlands of the most intern Alpine valleys, such as Aosta and Venosta ones.
-
-
-\begin{figure}[H]
+The gridded precipitation dataset used as model input in this thesis is publically available through the \href{https://dataverse.unimi.it/dataset.xhtml?persistentId=doi:10.13130/RD_UNIMI/CSYYAP}{UNIMI Dataverse}.
+Over the IH-GAR, the dataset indicates an average annual precipitation of $1090\,\pm\,190\,\SI{}{\milli\meter}$ for the 1991--2020 period. This spatial 
+average, however, masks substantial heterogeneity in the annual precipitation climatology, as shown in Figure \ref{fig:annual_prec_clima_1991_2020}. 
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{swe_model/annual_prec_clima_1991_2020.png}
     \caption{Annual precipitation climatology for the Italian Hydrological part of the Greater Alpine Arc (IH-GAR), computed over the 1991--2020 
-    period at a spatial resolution of 30 arc-seconds. The highest totals occur along the Alpine foothills, where moist air masses undergo orographic 
+    period at a spatial resolution of 30 arc-seconds. The highest totals occur along the Alpine foothills, where air masses undergo orographic 
     lifting.}
     \label{fig:annual_prec_clima_1991_2020}
 \end{figure}
-
-The timing of peak precipitations is site-specific, as different climatic regimes are present in the study region. Lowlands experience enhanced 
-precipitation during spring and autumn months, whereas the inner Alpine region experience a single peak during summer. The transition zone, placed 
-at the foothills of the main highlands, experience instead a significantly wetter season during Autumn, when values over $\SI{1000}{\milli\meter}$ 
-can be achieved over the course of these three months close to the border between Italy and Slovenia.
+The highest totals are indeed observed at the foothills of the Alps and in the Northern Apennines, mainly as a result of the stronger orographic uplift 
+of air masses. Conversely, the lowest values occur in the Po River Delta and in the lowlands of the innermost Alpine valleys, such as the Aosta and Venosta 
+ones. The timing of precipitation maxima is site-specific, as different climatic regimes are present in the study region. In the lowlands, precipitations 
+are typically higher during spring and autumn, whereas the inner Alpine regions experience a single peak during summer. The transition zone, located along 
+the foothills of the main mountain ranges, is instead characterized by a markedly wetter autumn season. In particular, close to the border between Italy 
+and Slovenia, cumulative precipitation can exceed $\SI{1000}{\milli\meter}$ over the course of these three months.
 
 \begin{figure}[H]
     \centering
@@ -143,12 +126,16 @@ can be achieved over the course of these three months close to the border betwee
     \label{fig:seasonal_prec_clima_1991_2020}
 \end{figure}
 
-
+Besides this marked spatial and seasonal variability, the precipitation regime also exhibits substantial interannual variability. In Figure 
+\ref{fig:prec_anomaly_clima_1991_2020} the additive precipitation anomalies are shown relative to the spatially averaged annual normals over the 1991--2020 
+period. An irregular alternation between dry and wet years is evident throughout the record, while no clear long term trend is visible. Indeed, the 21-year 
+moving average of the anomalies never deviates substantially from zero. This behaviour is consistent with that detected over the Mediterranean region, 
+where precipitation patterns are typically dominated by interannual variability rather than by pronounced long-term trends \parencite{no_trend_Mediterranean}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{swe_model/prec_anomaly_clima_1991_2020.png}
-    \caption{Annual precipitation anomalies [mm] averaged over the Italian Hydrological part of the Greater Alpine Arc (IH-GAR) for the period 
+    \caption{Annual precipitation additive anomalies [mm] averaged over the Italian Hydrological part of the Greater Alpine Arc (IH-GAR) for the period 
     1951--2023, relative to the 1991--2020 climatology. Blue (red) bars indicate positive (negative) anomalies. The black line is a 21-year running 
     mean: its dashed segments, at the beginning and at the end of the record, are computed over a truncated time window.}
     \label{fig:prec_anomaly_clima_1991_2020}
