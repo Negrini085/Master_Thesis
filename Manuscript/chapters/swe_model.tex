@@ -1,4 +1,4 @@
-\chapter{SWE model}
+\chapter{Snow model}
 \label{cap:swe_model}
 
 The limitations of existing snow products, discussed in the previous Chapter, highlight the need for a long term snow reconstruction over IH-GAR based 
@@ -7,13 +7,13 @@ it would be necessary to take into account all the physical processes that chara
 estimate of all terms contributing to the snowpack energy balance to then focus on compaction and water percolation, which ultimately precedes runoff. 
 The main issue that makes such an approach effectively inapplicable within the framework of this thesis is that it requires a wide variety of input 
 variables, such as the spatial distribution of incoming shortwave radiation, wind speed maps and soil temperature measurements, which have only been 
-collected through a spatially dense station network since the 2000s. For this reason, the model presented in this chapter adopts a substantially 
+recorded through a spatially dense station network since the 2000s. For this reason, the model presented in this chapter adopts a substantially 
 minimalist approach, given the limited number of meteorological inputs available over a period as long as 1951--2023. Indeed, to simulate snowpack 
 dynamics, only temperature and precipitation data are used: these two variables are therefore the only drivers of snow accumulation and snowmelt.
 
 In the following sections, the temperature and precipitation datasets, as well as the procedure adopted for their spatial reconstruction, are presented 
 first. The second half of this chapter is instead dedicated to the actual description of the snow model. The model calibration process, carried out 
-comparing model outputs to observational snow depth time series, is addressed separately in Chapter \ref{cap:swe_calibration}.
+by comparing model outputs to observational snow depth time series, is addressed separately in Chapter \ref{cap:swe_calibration}.
 
 
 
@@ -29,7 +29,7 @@ comparing model outputs to observational snow depth time series, is addressed se
 The gridded temperature and precipitation datasets, used as model inputs, have both a spatial resolution of \num{30} arc-seconds. They were developed 
 by the Department of Environmental Science and Policy of the University of Milan, building on earlier work aimed at rescuing new station records and 
 improving the quality of existing ones. The numerical procedure chain used to generate these rasters is based on the anomaly method \parencite{precipitation_IHGAR}, 
-which assumes that the spatio-temporal structure of a meteorological signal can be described as the superposition of two fields, namely being the 
+which assumes that the spatio-temporal structure of a meteorological signal can be described as the superposition of two fields, namely the 
 climatological normals over a reference period of thirty years and the departures from them. In the following, only the precipitation version is presented. 
 For temperature, the only difference is that are used additive anomalies rather than multiplicative ones.
 
@@ -37,13 +37,13 @@ For temperature, the only difference is that are used additive anomalies rather 
 
 \subsection{Gridding procedure}
 
-The gridding procedure used to produce the precipitation dataset requires a spatially dense and temporally continuous dataset of station observations, 
+The gridding procedure used to produce daily precipitation maps requires a spatially dense and temporally continuous dataset of station observations, 
 which has undergone rigorous quality checks to identify spikes and missing values. Such control is essential for preventing systematic errors from 
-propagating into the gridded fields. This method is composed by three main steps, namely:
+propagating into the gridded fields. This method is composed of three main steps, namely:
 \begin{itemize}[label=$\blacktriangleright$]
     \item \textit{calculation of high-resolution climatologies}, which are required as a reference for the reconstruction of daily series. The first 
-    step in deriving the gridded climatologies consisted in computing the 1991--2020 precipitation normals for each station of the dataset. The method 
-    used to generate the climatological rasters is the Local Weighted Linear Regression (LWLR) of precipitation against elevation, which had already 
+    step in deriving the gridded climatologies consisted of computing the 1991--2020 precipitation normals for each station of the dataset. The method 
+    used to generate the climatology rasters is the Local Weighted Linear Regression (LWLR) of precipitation against elevation, which had already 
     proven to be a robust approach for reconstructing gridded fields \parencite{LWLR_Crespi}. At a specific location $\left(x,\,y\right)$, the 
     monthly normals were computed as
     \begin{equation}
@@ -51,14 +51,15 @@ propagating into the gridded fields. This method is composed by three main steps
         \label{eq:clima_precipitation_gridding}
     \end{equation}
     where $P_{clima}$ is the reconstructed normal, $q$ and $m$ are the location-specific regression coefficients, and $h$ the elevation of the considered 
-    grid point. The weights used to evaluate the regression coefficients account for both the distances and the level of orographic similarity between 
+    grid point.  The weights used to evaluate the regression coefficients account for both the distances and the level of orographic similarity between 
     each station and the target grid point. In particular, the weight assigned to the i-th station for a grid point $\left(x,\,y\right)$ was given by
     \begin{equation}
         w_i \left(x,\,y\right)\,=\,w_i^{rad}\left(x,\,y\right) \cdot w_i^{h}\left(x,\,y\right) \cdot w_i^{st}\left(x,\,y\right) \cdot w_i^{facet}\left(x,\,y\right) \cdot w_i^{dsea}\left(x,\,y\right),
         \label{eq:weights_linear_regression}
     \end{equation}  
-    where the superscripts refer, respectively, to radial distance, elevation, slope steepness, slope orientation, and distance from the sea \parencite{precipitation_IHGAR}. 
-    Each factor on the right side of Equation \eqref{eq:weights_linear_regression} was defined through a Gaussian function, so that 
+    where the superscripts refer, respectively, to radial distance, elevation, slope steepness, slope orientation, and distance from the sea. To attain these 
+    orographic features, the 7.5 arc-second resolution GTMED2010 DEM was used. \parencite{precipitation_IHGAR}. Each factor on the right side of Equation 
+    \eqref{eq:weights_linear_regression} was defined through a Gaussian function, so that 
     \begin{equation}
         w_i^{par} \left(x,\,y\right)\,=\,\exp{-\frac{\left[\Delta_i^{par}\left(x,\,y\right)\right]^2}{c^{par}}},
         \label{eq:gaussian_form_weight}
@@ -68,7 +69,7 @@ propagating into the gridded fields. This method is composed by three main steps
     regression coefficients were estimated taking into account the \num{30} stations with the highest weights. Furthermore, to improve the robustness 
     of the estimates, the LWLR was performed \num{30} times in a leave-one-out framework, removing one station at each iteration. If the difference 
     between the lowest and highest estimates exceeded \num{30} \% of the weighted mean obtained using all 30 stations, the $c^{par}$ were relaxed by 
-    \num{10} \% to prevent individual stations to dictate the normal values \parencite{precipitation_IHGAR}.
+    \num{10} \% to prevent individual stations from dictating the normal values \parencite{precipitation_IHGAR}.
     \item \textit{computation of monthly precipitation maps}, which relies on monthly anomaly maps to reconstruct the actual monthly totals over the 
     entire investigated period as 
     \begin{equation}
@@ -80,7 +81,7 @@ propagating into the gridded fields. This method is composed by three main steps
     The departures from the climatologies were then computed at each grid point as a weighted mean of the values from the \num{10} nearest stations 
     \parencite{precipitation_IHGAR}. The weights accounted for distance, elevation difference, and the angular distribution of the stations around the 
     grid point being reconstructed. The distance weight, which had a Gaussian form as in Equation \eqref{eq:gaussian_form_weight}, was halved at the 
-    distance of the third closest station. The elevation one, on the other hands, got halved at an elevation difference of \num{800} meters for grid 
+    distance of the third closest station. The elevation one, on the other hand, got halved at an elevation difference of \num{800} meters for grid 
     points below $\SI{1600}{\meter}$ a.s.l. or at half the elevation of the grid point otherwise \parencite{precipitation_IHGAR}. This adaptive scaling 
     scheme allowed the weights to decrease more gradually in areas with a lower station density, while limiting the influence of less compatible stations 
     whenever there was high data availability.
@@ -99,9 +100,9 @@ propagating into the gridded fields. This method is composed by three main steps
 
 \subsection{Precipitation data}
 
-The gridded precipitation dataset used as model input in this thesis is publically available through the \href{https://dataverse.unimi.it/dataset.xhtml?persistentId=doi:10.13130/RD_UNIMI/CSYYAP}{UNIMI Dataverse}.
-Over the IH-GAR, the dataset indicates an average annual precipitation of $1090\,\pm\,190\,\SI{}{\milli\meter}$ for the 1991--2020 period. This spatial 
-average, however, masks substantial heterogeneity in the annual precipitation climatology, as shown in Figure \ref{fig:annual_prec_clima_1991_2020}. 
+The gridded precipitation dataset used as model input in this thesis is publicly available through the \href{https://dataverse.unimi.it/dataset.xhtml?persistentId=doi:10.13130/RD_UNIMI/CSYYAP}{UNIMI Dataverse}.
+Over the IH-GAR, the dataset indicates an average annual precipitation of $1090\,\pm\,190\,\SI{}{\milli\meter}$ for the 1991--2020 period. This spatially 
+aggregated value, however, masks substantial heterogeneity in the annual precipitation climatology, as shown in Figure \ref{fig:annual_prec_clima_1991_2020}. 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{swe_model/annual_prec_clima_1991_2020.png}
@@ -112,22 +113,22 @@ average, however, masks substantial heterogeneity in the annual precipitation cl
 \end{figure}
 The highest totals are indeed observed at the foothills of the Alps and in the Northern Apennines, mainly as a result of the stronger orographic uplift 
 of air masses. Conversely, the lowest values occur in the Po River Delta and in the lowlands of the innermost Alpine valleys, such as the Aosta and Venosta 
-ones. The timing of precipitation maxima is site-specific, as different climatic regimes are present in the study region. In the lowlands, precipitations 
-are typically higher during spring and autumn, whereas the inner Alpine regions experience a single peak during summer. The transition zone, located along 
+ones. The timing of precipitation maxima is site-specific, as different climatic regimes are present in the study region. In the lowlands, precipitation 
+is typically higher during spring and autumn, whereas the inner Alpine regions experience a single peak during summer. The transition zone, located along 
 the foothills of the main mountain ranges, is instead characterized by a markedly wetter autumn season. In particular, close to the border between Italy 
-and Slovenia, cumulative precipitation can exceed $\SI{1000}{\milli\meter}$ over the course of these three months.
+and Slovenia, cumulative precipitation can exceed $\SI{1000}{\milli\meter}$ over the course of these three months alone.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{swe_model/seasonal_prec_clima_1991_2020.png}
     \caption{Seasonal precipitation climatology for the Italian Hydrological part of the Greater Alpine Arc (IH-GAR), computed over the 1991--2020 
     period at a spatial resolution of 30 arc-seconds. Autumn is the wettest season on average over the lowlands and the Alpine foothills, whereas the 
-    internal Alps experience enhanced precipitations during summer.}
+    internal Alps experience enhanced precipitation during summer.}
     \label{fig:seasonal_prec_clima_1991_2020}
 \end{figure}
 
 Besides this marked spatial and seasonal variability, the precipitation regime also exhibits substantial interannual variability. In Figure 
-\ref{fig:prec_anomaly_clima_1991_2020} the additive precipitation anomalies are shown relative to the spatially averaged annual normals over the 1991--2020 
+\ref{fig:prec_anomaly_clima_1991_2020} the additive precipitation anomalies are shown relative to the spatially aggregated annual normal over the 1991--2020 
 period. An irregular alternation between dry and wet years is evident throughout the record, while no clear long term trend is visible. Indeed, the 21-year 
 moving average of the anomalies never deviates substantially from zero. This behaviour is consistent with that detected over the Mediterranean region, 
 where precipitation patterns are typically dominated by interannual variability rather than by pronounced long-term trends \parencite{no_trend_Mediterranean}.
@@ -149,7 +150,7 @@ The paper describing the generation of these temperature rasters is currently un
 Dataverse once the study has been accepted for publication. Three temperature fields were reconstructed on a daily basis, namely mean, minimum and maximum 
 temperature. 
 
-As expected, the temperature dataset indicates that the IH-GAR has experienced marked changes in response to global warming. However, this trends is not 
+As expected, the temperature dataset indicates that the IH-GAR has experienced marked changes in response to global warming. However, this trend is not 
 characterized by a steady increase over the 1951--2023 period, but rather by a pronounced shift in behaviour in the late 1970s, as shown in Figure 
 \ref{fig:mean_temperature_trend}. This is consistent with the broader European climate evolution: until the mid-70s, most temperature related indices 
 exhibited either statistically non-significant cooling trends or approximately stationary long-term conditions, with departures from climatology mainly 
@@ -164,46 +165,42 @@ associated with interannual variability \parencite{two_step_warming_europe}.
 \end{figure}
 From the 1980s onwards, however, warming in the IH-GAR has peaked up significantly, with mean daily temperatures increasing at a rate of $+\,\SI{0.46}{\degreeCelsius}/\text{decade}$ 
 over the last thirty years. Maximum daily temperatures exhibit a slightly stronger trend of $+\,\SI{0.48}{\degreeCelsius}/\text{decade}$ over the same period, 
-whereas minimum daily temperature show a somewhat lower increase of $+\,\SI{0.44}{\degreeCelsius}/\text{decade}$. Such rapid warming represents one of 
+whereas minimum daily temperatures show a somewhat lower increase of $+\,\SI{0.44}{\degreeCelsius}/\text{decade}$. Such rapid warming represents one of 
 the main drivers of glacier melt, which has intensified dramatically over recent decades \parencite{catasto_ghiacciai}. This phenomenon is also having 
-significant consequences for snow resources within the IH-GAR as, for instance, the snowline has been estimated to rise by approximately $\SI{166}{\meter}$
+significant consequences for snow resources within the IH-GAR as, for instance, the snowline has been estimated to rise by approximately $\SI{166}{\meter}$ 
+for each additional degree of warming during the winter months \parencite{snowline_Alps}. 
 
-Questo aumento delle temperature sta avendo anche delle significative conseguenze per quanto riguarda la risorsa nivale all'interno del IH-GAR, dato che 
-per esempio è stato stimato che la snowline si alza di 166 metri per ogni grado in più durante i mesi invernali \parencite{snowline_Alps}. 
-Soprattutto, la temperatura dell'aria ha molta influenza sulla durata della neve specialmente durante la parte intermedia e finale della stagione 
-d'ablazione. In questo contesto, risulta rilevante non soltanto l'aumento medio delle temperature, ma anche il modo in cui la distribuzione delle temperature 
-sta evolvendo in base alla quota ed in base al periodo dell'anno preso in considerazione. Per esempio, fra i 2000 ed i 2500 metri, è evidente nel dataset di 
-input come sia la distribuzione delle temperature massime che la distribuzione delle temperature minime di Aprile abbiano avuto uno shift verso valori maggiori, come 
-mostrato in Figura, dove sono messe a confronto le distribuzioni del 1951-1980 e del 1991-2020. 
-
-
-In particolare, i valori medi di temperatura minima sono 
-aumentati di... Inoltre, le distribuzioni relative al periodo più vicino ad oggi sono più larghe, il che lascia sospettare che si possano presentare delle 
-conndizioni estremamente miti per il periodo preso in considerazion
+In particular, air temperature strongly influences the persistence of snow cover, especially during the middle and final stages of the ablation season. In 
+this context, it is important to consider not only the increase in mean temperature, but also how the thermal regime is evolving with elevation and 
+throughout the year. For example, between \num{2000} and $\SI{2500}{\meter}$ a.s.l., the input dataset clearly shows that both the maximum and minimum 
+temperature distributions during April, while shifting towards higher values, have also significantly widened as a consequence of prolonged mild conditions 
+during the ablation months. This is illustrated in Figure \ref{fig:temperature_regime_shift}, where the distributions for the periods 1951--1980 and 
+1991--2020 are compared.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{swe_model/temperature_regime_shift.png}
-    \caption{}
+    \caption{Minimum (a) and maximum (b) temperature distributions in April during the \num{2000}--$\SI{2500}{\meter}$ elevation band. In both panels, the 
+    distributions for the periods 1951--1980 and 1991--2020 are compared.}
     \label{fig:temperature_regime_shift}
 \end{figure}
 
 
-% spring: +0.4
-% summer: +0.5
-% autumn: +0.59
-% winter: +0.36
 
 
 
 
 
-% Giustificare il perchè viene utilizzata un'architettura così semplice, alla base del modello insomma
+
+
+
 \section{Model structure}
 
-The snow model developed during this thesis uses a raster based approach, in which adjacent pixels are treated as independent, thus neglecting every kind of 
-horizontal transport. The main drivers of snowpack dynamics are total precipitation and air temperature, available on a daily basis. The whole code is 
-available in Appendix \ref{app:model_impl}.
+Since both temperature and precipitation inputs are gridded fields, the snow model developed in this thesis adopts a raster based approach, in which 
+adjacent pixels are treated independently, therefore neglecting every kind of horizontal transport. Model outputs retain the same temporal and spatial 
+resolution of the inputs, respectively being \num{1} day and \num{30} arc-seconds. The following subsections describe the operational workflow developed 
+to reconstruct the snow water equivalent time series. The snow model was implemented in R language, and the corresponding code is provided in Appendix 
+\ref{app:model_impl}.
 
 
 
@@ -233,9 +230,9 @@ where $T_{\max}$ and $T_{\min}$ are the daily maximum and minimum temperatures r
 \subsection{Snowmelt}
 
 The snow models discussed in Chapter \ref{cap:snow_products} adopted different approaches to snowmelt estimation. "J-snow", the modelling chain that led 
-to the generation of the Po River District dataset, explicitly simulated the energy balance of the snowpack, whereas "S3M" employed an hybrid degree-day 
+to the generation of the Po River District dataset, explicitly simulated the energy balance of the snowpack, whereas "S3M" employed a hybrid degree-day 
 method, accounting for both air temperature and shortwave radiation. Neither method, however, is suitable for investigating snowpack dynamics over the 
-1951--2023 period, as both require input variables that are not unavailable continuously throughout the entire study period.
+1951--2023 period, as both require input variables that are not continuously available throughout the entire study period.
 
 The modelling approach adopted is therefore a canonical degree-day method, in which mean air temperature is used as a proxy for the various energy fluxes 
 affecting the energy state of the snowpack. In particular, the model follows the formulation proposed by \cite{Magnusson_DDF}, whereby the daily snowmelt 
@@ -244,22 +241,21 @@ at each grid point is computed as
     \text{M}\,=\,\text{DDF}\left\{\left(T_{mean}\,-\,T_{melt}\right)\,+\,m_m \cdot \ln\left[1\,+\,\exp\left(-\frac{T_{mean}\,-\,T_{melt}}{m_m}\right)\right]\right\},
     \label{eq:swe_melt}
 \end{equation}
-where $T_{mean}$ is the mean daily temperature, $T_{melt}$ is the threshold snowmelt temperature, and $m_m$ is a smoothing parameter measured in 
-$\SI{}{\degreeCelsius}$. 
+where $T_{mean}$ is the mean daily temperature, computed as the average between the maximum and minimum ones, $T_{melt}$ is the threshold snowmelt 
+temperature, and $m_m$ is a smoothing parameter measured in $\SI{}{\degreeCelsius}$. The term enclosed in curly brackets can be interpreted as an effective 
+melt temperature: the logarithmic contribution ensures a smooth transition between melting and freezing conditions around $T_{melt}$.
 
 In Equation \eqref{eq:swe_melt},  DDF denotes the degree-day factor, which is a parameter measured in $\SI{}{\milli\meter\per\degreeCelsius\per\day}$: 
 its multiplication by the temperature dependent term yields the amount of snow melted away on a given day. To account, at least partially, for the seasonal 
 variability of shortwave radiation, which plays a significant role in the snowpack energy balance, the degree-day factor is prescribed with an annual cycle 
 according to
 \begin{equation}
-    \text{DDF}_{t}\,=\,\text{DDF}_{ave}\,+\,\text{DDF}_{amp}\cdot\sin\left(\frac{2\pi \left(t\,-\,81\right)}{366}\right),
+    \text{DDF}_{t}\,=\,\text{DDF}_{ave}\,+\,\text{DDF}_{amp}\cdot\sin\left[\frac{2\pi \left(t\,-\,81\right)}{366}\right],
     \label{eq:swe_ddf}
 \end{equation}
 where $t$ is the day of the solar year, $\text{DDF}_{ave}$ is the mean degree day factor, whereas $\text{DDF}_{amp}$ is the amplitude of its oscillation. 
-With this formulation, the DDF peaks on summer solstice, in qualitative agreement with the seasonal evolution of incoming solar radiation. 
-
-The term enclosed in curly brackets in Equation \eqref{eq:swe_melt} has the dimensions of a temperature: the natural logarithm ensures a smooth transition 
-between melting and freezing conditions around the snowmelt threshold.
+With this formulation, the DDF peaks on summer solstice, in qualitative agreement with the seasonal evolution of incoming solar radiation. Moreover, 
+during non-leap years, the DDF value corresponding to 29 February is neglected.
 
 
 
@@ -272,6 +268,6 @@ between solid precipitation and snowmelt. The SWE on day $t$ is therefore comput
     \label{eq:swe_swe}
 \end{equation}
 where $t$ or $t\,-\,1$ denote the day on which each quantity is evaluated. When the computed snowmelt exceeds the available snow water equivalent at a 
-given location, the corresponding pixel value is set to zero, as this condition indicates the complete meltout of the snowpack. Before producing SWE maps 
-for the IH-GAR territory, however, the model parameters $\left(T_{\tau},\,T_{melt},\,\text{DDF}_{ave},\,\text{DDF}_{amp},\,m_m \right)$ must be calibrated. 
-The calibration procedure is described in the following chapter.
+given location, the corresponding pixel value is set to zero, as this condition indicates the complete meltout of the snowpack. Application of the snow 
+model over the IH-GAR territory requires the calibration of the parameters $\left(T_{\tau},\,T_{melt},\,\text{DDF}_{ave},\,\text{DDF}_{amp},\,m_m \right)$. 
+The procedure employed to determine their optimal values is described in the following chapter.
