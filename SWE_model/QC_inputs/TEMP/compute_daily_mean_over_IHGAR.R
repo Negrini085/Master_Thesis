@@ -15,7 +15,7 @@ for(y in years){
   # Importing netCDF file
   fname <- paste0("../../Dataset/TEMP/", y, ".nc")
   nc <- nc_open(fname)
-  temp <- ncvar_get(nc, "tmd")
+  temp <- ncvar_get(nc, "tmnd")
   appo <- apply(temp, 3, mean, na.rm = TRUE)
   nc_close(nc)
   
