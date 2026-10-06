@@ -277,7 +277,7 @@ area is ice-covered all year round, thereby reducing the variability of SCD valu
 Ultimately, this snow dataset can be used to assess the response of the cryosphere to climate change over the Italian territory. Although the actual 
 temporal coverage of \num{25} hydrological years is still relatively limited and falls five years short of the thirty-year period conventionally required for 
 trend analyses, it is nevertheless sufficient to provide an initial perspective of persistent changes in snow cover dynamics. SCD is experiencing 
-widespread reductions across the whole investigated domain, as show in Figure \ref{fig:trends_scd_MODIS.png} where the results of Mann-Kendall (trend 
+widespread reductions across the whole investigated domain, as shown in Figure \ref{fig:trends_scd_MODIS.png} where the results of Mann-Kendall (trend 
 significance) and Sen-Theil (trend magnitude) non-parametric tests are presented. Decreasing trends exceeding $-15$ days/decade are observed in the 
 Western Alps and in the Central Apennines, whereas over the lowlands the reduction does not exceed $-2.5\,\text{days/decade}$, consistent with the much 
 shorter snow seasons of these areas. Most of the statistically significant trends are found in mountainous area, highlighting 
@@ -323,7 +323,7 @@ conditions within each grid cell. The model provides daily (or even hourly if ne
 density and liquid water content. These outputs can then be used to compute, during post-processing, snow cover maps spanning across the investigated 
 domain, which could be used for direct comparison with remote sensing products. The snow cover fraction of each pixel can indeed be evaluated as
 \begin{equation}
-    \text{SCF}\,=\,\text{min}\left(1,\,\frac{\text{SWE [mm]}}{0.1 \cdot \rho_{s}}\right),
+    \text{SCF}\,=\,\text{min}\left(1,\,\frac{\text{SWE [\SI{}{\kilo\gram\per\meter\squared}]}}{0.1 \cdot \rho_{s}}\right),
     \label{eq:scf_IT-SNOW}
 \end{equation}
 where $\rho_{s}$ is the bulk snow density \parencite{scf_ITSNOW}. Since a pixel is conventionally regarded as snow covered when at least half of its area 
@@ -378,8 +378,8 @@ mountainous terrain that cannot be fully captured by air temperature alone. The 
     M\,=\,m_{rad}\left[\frac{\left(1\,-\,\alpha\right)\text{SW}\downarrow}{\rho_W \lambda_f}\right]\Delta t\,+\,c_M m_r \left(T_{air}\,-\,T_{\tau}\right),
     \label{eq:melt_S3M}
 \end{equation}
-where $m_{rad}$ is a dimensionless coefficient that convert the potential radiative melt into actual melt, $\alpha$ is the snow 
-albedo, $\lambda_f$ the specific latent heat of fusion and $m_r$ the degree day parameter [$\SI{}{\milli\meter\per\degreeCelsius\per\hour}$]. 
+where $m_{rad}$ is a dimensionless coefficient that converts the potential radiative melt into actual melt, $c_M$ is a timestep-adjusting parameter, $\alpha$ 
+is the snow albedo, $\lambda_f$ the specific latent heat of fusion and $m_r$ the degree day parameter [$\SI{}{\milli\meter\per\degreeCelsius\per\hour}$]. 
 Both $m_{rad}$ and $m_r$ are calibration based.
 
 In S3M, refreezing occurs whenever the air temperature drops below $T_{\tau}$ and is computed through a degree day approach as 
@@ -404,7 +404,7 @@ integration time step, although this can be adjusted by the user to meet specifi
 
 \subsection{Results}
 
-According to the IT-SNOW reanalysis over the 2011-2025 period, the total volume of water stored within the snowpack on the national scale is on average 
+According to the IT-SNOW reanalysis over the 2011-2025 period, the yearly maximum volume of water stored within the snowpack on the national scale is on average 
 $\SI{11.9 \pm 5.2}{G\meter\cubed}$, with a maximum of $\SI{23.1}{G\meter\cubed}$ in 2014 and a minimum of $\SI{5.4}{G\meter\cubed}$ in 2022. This peak is 
 typically reached on 4 March $\pm$ 17 days, with the earliest occurrence being on 26 January 2023 and the latest on 26 March 2013. This means that over 
 the investigated period the peak SWE condition is always achieved before \num{1} April, which is the date commonly adopted in literature as a reference 
@@ -415,8 +415,7 @@ snow drought conditions which have been detected in the Italian Alps during the 
 higher temperatures \parencite{snow_drought}. Besides a strong temporal variability, the modelled snow cover also displays a substantial spatial 
 heterogeneity across Italy, as shown in Figure \ref{fig:ave_swe_scd_IT-SNOW.png}. The simulated snowpack results indeed deeper and longer-lasting in high 
 altitude catchments, whereas the lowlands only experience an ephemeral snow cover, owing to their milder temperatures. Water storage is also unevenly 
-distributed between mountain ranges, since according to IT-SNOW estimates almost 87 \% of the national SWE is found within the five main Alpine river 
-basins, namely the Po, Adige, Piave, 
+distributed between mountain ranges, since according to IT-SNOW estimates almost 87 \% of 
 \begin{figure}[htb]
     \centering
     \includegraphics[width=\linewidth]{snow_products/evo_swe_tot_ITSNOW.png}
@@ -435,8 +434,8 @@ basins, namely the Po, Adige, Piave,
     \label{fig:ave_swe_scd_IT-SNOW.png}
 \end{figure}
 
-Tagliamento and Brenta. The Central Apennines are Italy's second most important water tower, accounting for about 7\% of total SWE, whereas the remaining 
-fraction is distributed across the rest of the country. 
+the national SWE is found within the five main Alpine river basins, namely the Po, Adige, Piave, Tagliamento and Brenta. The Central Apennines are Italy's 
+second most important water tower, accounting for about 7\% of total SWE, whereas the remaining fraction is distributed across the rest of the country. 
 
 
 
@@ -521,7 +520,7 @@ sequence:
         \end{cases}
         \label{eq:rho_swe_snow_GEOtop}
     \end{equation}
-    where $T$ is the air temperature and $v_w$ is the wind speed.
+    where $T$ is the mean air temperature over the time-step and $v_w$ is the average wind speed.
 \end{itemize}
 
 The model predictions are subsequently corrected using in situ snow measurements to account for precipitation under-catch by rain gauges during the snow 
@@ -534,7 +533,7 @@ The total volume of water stored within the snowpack exhibits substantial year-t
 average peak SWE value is $6.7 \pm 2.3 \,\SI{}{\giga\meter\cubed}$, typically reached on $20\,\,\text{March} \,\pm\,25$ days. This timing is 
 consistent, within one standard deviation, with 1 April, the date conventionally used in snow literature as a proxy for maximum SWE. The largest 
 amount of water stored within the study area, according to J-snow estimates, was $\SI{12.6}{\giga\meter\cubed}$ on 6 March 2009, whereas the minimum 
-peak SWE was recorded on 18 April 2005 and amounted to $\SI{3.5}{\giga\meter\cubed}$.
+annual peak of SWE was recorded on 18 April 2005 and amounted to $\SI{3.5}{\giga\meter\cubed}$.
 \begin{figure}[htb]
     \centering
     \includegraphics[width=\linewidth]{snow_products/evo_swe_tot_PO.png}
@@ -590,7 +589,7 @@ step-like) decrease in snow cover at the beginning of the 1990s, followed by a p
 
 \section{Intercomparison of snow products}
 
-The snow datasets presented above differ in several respects. IT-SNOW and the Po River District product are the outputs of two distinct modelling 
+The snow datasets presented above differ in several respects. IT-SNOW and the Po River District products are the outputs of two distinct modelling 
 chains, both primarily focused on snow water equivalent. IT-SNOW, however, provides more comprehensive information, as it also includes maps 
 of snow density, snow depth and liquid water content, allowing for a more detailed characterization of the snowpack. In contrast, MODIS describes 
 snow cover alone through binary rasters: this discrepancy does not preclude a comparison, since SWE maps can be converted into binary snow cover 
@@ -631,7 +630,7 @@ portion of the Po River District (i.e. the overlap area), and spans the hydrolog
 Within this spatial and temporal overlap, the average peak volume of water stored in the snowpack is rather comparable between the two products: 
 IT-SNOW suggest a maximum SWE of $6.8 \pm 2.3\,\,\SI{}{\giga\meter\cubed}$ occurring on average on 4 March $\pm$ 15 days, whereas the Po River District 
 estimate is more conservative, predicting a peak SWE of $5.9 \pm 1.7\,\,\SI{}{\giga\meter\cubed}$ happening later in the season, namely on 19 March $\pm$ 
-22 days. Moreover, the two SWE time series also show good agreement over the investigated period, as $\text{R}^2\,=\,0.88$, $\text{RMSE}\,=\,\SI{0.76}{\giga\meter\cubed}$ 
+22 days. Moreover, the two daily SWE time series also show good agreement over the investigated period, as $\text{R}^2\,=\,0.88$, $\text{RMSE}\,=\,\SI{0.76}{\giga\meter\cubed}$ 
 and $\text{MAE}\,=\,\SI{0.52}{\giga\meter\cubed}$. However, this overall consistency may conceal substantial differences in the spatial distribution of 
 the snowpack, since the total volume of water stored within the snowpack is an aggregated metric over the entire study area. Consequently, over and 
 underestimates in different areas may compensate for each other, resulting in similar total values despite significant local differences. To investigate 
@@ -674,8 +673,9 @@ elevations. Figure \ref{fig:comparison_volume_IT-SNOW_PO} also highlights a sign
 generate the Po River District product: the discrepancy with respect to IT-SNOW decreases steadily with elevation, until the underestimation eventually 
 turns into an overestimation. This behaviour could be partially related to the meteorological forcing used by GEOtop 2.0, which is based on precipitation 
 records spatialized and, where the monitoring network is too sparse, corrected using ERA5 reanalysis estimates, which systematically overestimates total 
-precipitations in high elevation Alpine catchments. Moreover, the fraction of SWE stored above $\SI{2000}{\meter}$ is larger in the PO River District 
-product than it is in IT-SNOW, which also helps explain the delayed timing of peak SWE in the former dataset \parencite{Po_snow}. 
+precipitations in high elevation Alpine catchments \parencite{Po_snow}. A more detailed assessment of ERA5 precipitation biases, which is beyond the scope 
+of this thesis, can be found in \cite{ERA5_bias}. In this context, it is also worth noting that the fraction of SWE stored above $\SI{2000}{\meter}$ is 
+larger in the PO River District product than it is in IT-SNOW, which may also help explain the delayed timing of peak SWE in the former dataset. 
 
 Even when considering the seasonal average SWE over the overlap region, clear differences between the two snow products can be observed. For instance, 
 as shown in Figure \ref{fig:comparison_SCD_MODIS_IT-SNOW}, IT-SNOW generally overestimates the amount of water stored within the highlands of 
@@ -698,7 +698,7 @@ affected by interannual variability. The Po River District product, on the other
 since it spans over \num{30} hydrological years. However, some modelling choices made during the generation of the dataset limit its suitability for this 
 purpose. In particular, daily maps are not available between 2 July and 2 October of each year preventing the identification of ephemeral snowfall that may still 
 occur in high alpine catchments during summer. Moreover, the final stages of snowmelt at high elevations are not taken into account during those years 
-where favorable conditions allow the snowpack to persist beyond 1 July. This is evident in panel (a) of Figure \ref{fig:comparison_volume_IT-SNOW_PO}, 
+when favorable conditions allow the snowpack to persist beyond 1 July. This is evident in panel (a) of Figure \ref{fig:comparison_volume_IT-SNOW_PO}, 
 as the SWE record is interrupted before reaching zero during several years, such as 2014. Finally, the spatial coverage of the Po River District product is relatively 
 limited, meaning that any trend estimate derived from this dataset could not be generalized to the entire Alps or to the lowlands.
 
@@ -715,15 +715,17 @@ SCD across the whole peninsula, as shown in Figure \ref{fig:comparison_SCD_ITSNO
 differences of up to \num{50} snow cover days can be detected in mountainous terrain. The tendency to underestimation is also clearly visible in the 
 difference histogram. The origin of this behaviour, which can be observed also while comparing the Po River District product with MODIS estimates, is 
 still unclear and may result from a combination of factors related to the satellite gap-filling procedure and to the modelling philosophies of the two 
-hydrologically oriented modelling chains. However, a more detailed discussion of this underestimation is beyond the scope of this thesis.
-
-\begin{figure}[H]
+hydrologically oriented modelling chains. For example, the NDSI threshold of \num{0.4} may be overly stringent, potentially leading to substantial 
+underestimations. Moreover, the main differences visible in Figure \ref{fig:comparison_SCD_ITSNOW_MODIS} appear to occur in densely forested areas, 
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{snow_products/comparison_SCD_ITSNOW_MODIS.png}
     \caption{(a) Spatial distribution of the SCD difference between IT-SNOW and MODIS estimates. (b) Relative frequency histogram of SCD difference 
     values between IT-SNOW and MODIS estimates.}
     \label{fig:comparison_SCD_ITSNOW_MODIS}
 \end{figure}
+suggesting that significant tree cover could introduce additional biases. However, a more detailed discussion of this underestimation is beyond the 
+scope of this thesis.
 
 It is instead more important to focus on the reliability of MODIS snow cover maps for estimating trends. At the time of 
 publication of \cite{MODIS_ITA}, MODIS snow cover data were available over the Italian territory only up to 2022, and trend analyses were thus limited 
@@ -733,9 +735,7 @@ inclusion of only a few extra years led to a noticeable increase in the number o
 in Figure \ref{fig:comparison_trends_MODIS}. This 
 suggests that the relatively limited MODIS temporal coverage may still be strongly affected by interannual variability and may therefore be insufficient 
 for obtaining robust long term trend estimates. Despite this limitation, MODIS remains highly relevant for snow cover studies, as this dataset gets 
-continuously updated and represent one of the few sources of spatially distributed observations that do not rely on numerical simulations of the snowpack.
-
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{snow_products/comparison_trends_MODIS.png}
     \caption{(a) Sign and significance of SCD trends derived from MODIS observations over the 2001--2022 period. (b) Sign and significance of SCD trends 
@@ -743,7 +743,7 @@ continuously updated and represent one of the few sources of spatially distribut
     across the Italian peninsula.}
     \label{fig:comparison_trends_MODIS}
 \end{figure}
-
+continuously updated and represent one of the few sources of spatially distributed observations that do not rely on numerical simulations of the snowpack.
 
 
 \subsection{Conclusions}
