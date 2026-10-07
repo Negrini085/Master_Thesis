@@ -16,7 +16,32 @@ in Figure \ref{fig:hs_series_origin}.
     \label{fig:hs_series_origin}
 \end{figure}
 
-\subsection{Dataset correction}
+The original HS dataset, however, was affected by several issues that needed to be addressed before it could be considered suitable for 
+further analysis. The first reliability check that was done focused on assessing the accuracy of the station metadata, namely longitude, latitude 
+and elevation. In particular, the ALOS AW3D30 digital elevation model was used to compare the reported elevation of each station with that of the DEM 
+pixel closest to its coordinates. A compatibility threshold of $\SI{12}{\meter}$ was adopted: although this criterion is rather stringent given the 
+complex topography of the Alpine Arc, it was considered appropriate given the high spatial resolution of the DEM, namely $\SI{30}{\meter}$. With this 
+threshold, more than half of the stations were classified as unreliable, as show in Figure \ref{fig:station_distribution_original}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{swe_calibration/station_distribution_original.png}
+    \caption{(a) Spatial distribution of reliable and unreliable stations. (b) Frequency histogram of the elevation differences between the reported 
+    station elevations and those derived from the ALOS AW3D30 DEM. In both panels, green indicates reliable stations, i.e. stations for which the 
+    absolute difference between the reported and DEM-derived elevations does not exceed $\SI{12}{\meter}$, while red is used for stations that did 
+    not satisfy this criterion.}
+    \label{fig:station_distribution_original}
+\end{figure}
+that needed to be taken care of before labelling it as usable. The two main issues, presented in 
+Figure , were missing data (i.e. reading gaps) across the time series and summer values that weer not going to zero when clearly the ground should be bare. 
+In particular, the latter numerical error came in two form, namely as a homogenoeus bias across the whole year, or as increasing values as the season went on. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{swe_calibration/comparison_HS_MODIS_original.png}
+    \caption{(a) Spatial distribution of station }
+    \label{fig:comparison_HS_MODIS_original}
+\end{figure}
+
+\subsection{Position correction}
 
 \begin{figure}[H]
     \centering
@@ -33,3 +58,13 @@ in Figure \ref{fig:hs_series_origin}.
     \caption{}
     \label{fig:elevation_distribution_stations}
 \end{figure}
+
+\subsection{HS series correction}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{swe_calibration/comparison_HS_MODIS_corrected.png}
+    \caption{}
+    \label{fig:comparison_HS_MODIS_corrected}
+\end{figure}
+
