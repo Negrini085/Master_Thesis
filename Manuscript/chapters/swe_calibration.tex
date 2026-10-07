@@ -3,11 +3,16 @@
 
 \section{HS data}
 
+The snow depth dataset used to calibrate the degree-day model described in the previous chapter was created through a data rescue activity. It combines 
+HS time series from \cite{Matiu_HS} with data provided by national and regional meteorological and hydrological services, including ARPA Piemonte, Centro 
+Funzionale della Valle d'Aosta, Meteoswiss, WSL Institute for Snow and Avalanche Research SLF, ARPA Lombardia, Meteotrentino, ARPA Veneto, and the Austrian 
+Hydrological Service \parencite{hs_data}. The final dataset includes 1052 stations, mostly automatic, distributed across the entire Alpine Arc, as shown 
+in Figure \ref{fig:hs_series_origin}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/hs_series_origin.jpg}
     \caption{Spatial distribution of the stations that made up the original dataset. Each station is marked with the symbol associated with the 
-    data source from which the data were obtained.}
+    data source from which the data were obtained. Image from \parencite{hs_data}.}
     \label{fig:hs_series_origin}
 \end{figure}
 
@@ -20,4 +25,11 @@
     between declared station elevation and closest DEM point after checking station coordinates. In both cases the ALOS AW3D30 global DEM was used: 
     stations are labelled as compatible (OK) if the elevation difference is smaller than $\SI{12}{\meter}$, namely 2/5 of pixel size.}
     \label{fig:station_compatibility_before_after_QC}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{swe_calibration/elevation_distribution_stations.png}
+    \caption{}
+    \label{fig:elevation_distribution_stations}
 \end{figure}
