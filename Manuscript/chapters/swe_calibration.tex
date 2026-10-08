@@ -119,16 +119,24 @@ lack of reliable sources.
 
 \subsection{HS series correction}
 
-Before developing numerical procedures to deal with temporal series issues, the HS series were visualized in order to have a reasoning 
-
-\begin{figure}[H]
+Before directly modifying the snow depth time series, they were visually inspected in order to develop procedures that could effectively address 
+the issues present in the dataset. In particular, for each station, all hydrological years containing at least one numerical value (i.e. not 
+consisting entirely of missing dataset) were considered to generate comparison plots such as the one shown in Figure \ref{fig:visual_check_example}. 
+Each plot consisted of three rows: the first displayed the snow depth time series, the second one showed its conversion into SWE obtained using the 
+Delta Snow model, while the third consisted of the model outputs obtained using the melt parameters optimized by \cite{Magnusson_DDF} and a 
+temperature threshold of $\SI{2.5}{\degreeCelsius}$ for precipitation phase partitioning.
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=\linewidth]{swe_calibration/comparison_HS_MODIS_corrected.png}
-    \caption{(a) Comparison between SCD values computed from HS series after correction and MODIS data. Each dot represents a pseudo-hydrological year, 
-    which is the period spanning from 1 September of a given year to 31 August of the following one. Blue dots are data retrieved from stations whose 
-    metadata are reliable, whereas orange ones are not. (b) Confusion matrix comparing snow presence according to  MODIS and HS data.}
-    \label{fig:comparison_HS_MODIS_corrected}
+    \includegraphics[width=\linewidth]{swe_calibration/visual_check_example.png}
+    \caption{Plot used to visually inspect the numerical issues of the HS series. A comparison between (a) snow depth values, (b) swe conversion of 
+    HS reading and (c) model outputs is made. The model parameters used to produce the last series are: the melt parameters optimized by \cite{Magnusson_DDF} 
+    and a temperature threshold of $\SI{2.5}{\degreeCelsius}$. The red part of each graph is the summer window to be automatically set to zero.}
+    \label{fig:visual_check_example}
 \end{figure}
+Although this approach may seem circular, the relatively 
+high threshold used to distinguish between snow and rain ensures that, if a spike in snow depth (such as the one observed in early September in 
+Figure \ref{fig:visual_check_example}) is not accompanied by a corresponding one in the model outputs, it can be confidently attributed to a numerical 
+artifact. 
 
 
 
@@ -148,4 +156,13 @@ Before developing numerical procedures to deal with temporal series issues, the 
     \includegraphics[width=\linewidth]{swe_calibration/elevation_distribution_stations.png}
     \caption{}
     \label{fig:elevation_distribution_stations}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{swe_calibration/comparison_HS_MODIS_corrected.png}
+    \caption{(a) Comparison between SCD values computed from HS series after correction and MODIS data. Each dot represents a pseudo-hydrological year, 
+    which is the period spanning from 1 September of a given year to 31 August of the following one. Blue dots are data retrieved from stations whose 
+    metadata are reliable, whereas orange ones are not. (b) Confusion matrix comparing snow presence according to  MODIS and HS data.}
+    \label{fig:comparison_HS_MODIS_corrected}
 \end{figure}
