@@ -2,6 +2,7 @@
 \label{cap:swe_calibration}
 
 \newpage
+% Consistency parola carina da usare
 \section{HS data}
 
 The snow depth dataset used to calibrate the degree-day model described in the previous chapter was created through a data rescue activity. It combines 
@@ -27,8 +28,8 @@ threshold, more than half of the stations were classified as unreliable, as show
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/station_distribution_original.png}
-    \caption{(a) Spatial distribution of reliable and unreliable stations. (b) Frequency histogram of the elevation differences between the reported 
-    station elevations and those derived from the ALOS AW3D30 DEM. In both panels, green indicates reliable stations, i.e. stations for which the 
+    \caption{(a) Spatial distribution of stations with reliable (unreliable) metadata. (b) Frequency histogram of the elevation differences between the 
+    reported station elevations and those derived from the ALOS AW3D30 DEM. In both panels, green indicates reliable stations, i.e. stations for which the 
     absolute difference between the reported and DEM-derived elevations does not exceed $\SI{12}{\meter}$, while red is used for stations that did 
     not satisfy this criterion.}
     \label{fig:station_distribution_original}
@@ -88,8 +89,50 @@ whenever possible and necessary, the numerical artifacts that originally were ma
 
 
 
-
 \subsection{Position correction}
+
+The main issue with the unreliable coordinates was that the vast majority of them had been approximated to the nearest arc-minute. In the complex 
+topography of the Alps, this level of spatial uncertainty, corresponding to roughly $\SI{2}{\kilo\meter}$, may translate into elevation differences 
+of several hundred meters and thus substantially affect the representativeness of the station location. For this reason, the metadata of each 
+unreliable station were manually checked to retrieve its exact position, a crucial step for ensuring the accuracy of the subsequent model 
+calibration. In particular, the metadata rescue procedure consisted in searching them in the catalogues of the agencies managing the various stations. 
+While in some instances, such as with ARPA Lombardia, this review let to no improvement, in others, like WSL Institute for Snow and Avalanche Research 
+SLF, it made it possible to recover the exact coordinates of dozen of stations. The new coordinates were then checked using Google Earth, in order 
+to visually check if they actually corresponded to a meteorological station, as shown in panel (a) of Figure \ref{fig:station_search}. Panel (b), on 
+the other hand, displays the difference between the original and actual position of the reviewed stations, showing that the vast majority of them 
+was corrected for less than a kilometer.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{swe_calibration/station_search.png}
+    \caption{(a) Example of a Swiss AWS viewed from satellite images. The original location was roughly $\SI{1}{\kilo\meter}$ east of the actual site. 
+    (b) Comparison between original location and actual position of the reviewed stations. The actual position is the red cross on the center of the 
+    plot.}
+    \label{fig:station_search}
+\end{figure}
+
+The procedure presented above enabled the retrieval of roughly \num{300} locations, increasing the number of stations consistent with the DEM 
+elevation from \num{532} to \num{829}. For the remainder of the station dataset, it was decided not to alter the unreliable positions due to the 
+lack of reliable sources.
+
+
+
+\subsection{HS series correction}
+
+Before developing numerical procedures to deal with temporal series issues, 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{swe_calibration/comparison_HS_MODIS_corrected.png}
+    \caption{(a) Comparison between SCD values computed from HS series after correction and MODIS data. Each dot represents a pseudo-hydrological year, 
+    which is the period spanning from 1 September of a given year to 31 August of the following one. Blue dots are data retrieved from stations whose 
+    metadata are reliable, whereas orange ones are not. (b) Confusion matrix comparing snow presence according to  MODIS and HS data.}
+    \label{fig:comparison_HS_MODIS_corrected}
+\end{figure}
+
+
+
+\subsection{Final dataset}
 
 \begin{figure}[H]
     \centering
@@ -106,13 +149,3 @@ whenever possible and necessary, the numerical artifacts that originally were ma
     \caption{}
     \label{fig:elevation_distribution_stations}
 \end{figure}
-
-\subsection{HS series correction}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{swe_calibration/comparison_HS_MODIS_corrected.png}
-    \caption{}
-    \label{fig:comparison_HS_MODIS_corrected}
-\end{figure}
-
