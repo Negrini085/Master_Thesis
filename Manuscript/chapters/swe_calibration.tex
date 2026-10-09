@@ -208,6 +208,15 @@ In Figure the shape of an HS series on some steps og the correction procedure ar
 
 \subsection{Final dataset}
 
+The two procedures developed to improve the dataset quality resulted in the removal of \num{220} stations, reducing the total number from 1052 to 832. 
+Furthermore, the total number of hydrological years decreased from \num{27388} to \num{20248}, representing a \num{26}\% reduction. The spatial 
+distribution of snow depth stations didn't change substantially, as they were moved at most by $\SI{1.5}{\kilo\meter}$. A sensible change can be instead 
+detected on the number of station whose metadata are deemed as reliable by comparing them with the ALOS AW3D30 DEM, as shown in Figure 
+\ref{fig:station_compatibility_before_after_QC}. In fact, on the total of 832 final stations, as many as 714 passed the consistency check, and are 
+consequently colored green in panel (b) of the same figure. Regarding the elevation distribution, no major changes are detected. In fact, both original 
+and corrected networks are more focused on the medium elevations, with the most represented elevation band being the one comprised between \num{1000} and 
+\SI{2000}{\meter} a.s.l. 
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/station_compatibility_before_after_QC.png}
@@ -217,18 +226,39 @@ In Figure the shape of an HS series on some steps og the correction procedure ar
     \label{fig:station_compatibility_before_after_QC}
 \end{figure}
 
-\begin{figure}[H]
+At the end of correction procedures, the same comparison between a subset of the HS series and the corresponding MODIS observations was done in order to 
+assess whether the actions taken had helped to clear the scatterplot in panel (a) of Figure \ref{fig:comparison_HS_MODIS_corrected} of anomalous or 
+erroneous points. The outcome of the work is positive, in the sense that what can be observed in Figure \ref{fig:comparison_HS_MODIS_corrected} is much 
+closer to what one would expect from a comparison between station data and satellite data, namely being a slight overestimation of the former ones relative 
+to the latter ones. 
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=\linewidth]{swe_calibration/elevation_distribution_stations.png}
-    \caption{}
-    \label{fig:elevation_distribution_stations}
+    \includegraphics[width=\linewidth]{swe_calibration/comparison_HS_MODIS_corrected.png}
+    \caption{(a) Comparison between SCD values computed from HS series after correction and MODIS data. Each dot represents a pseudo-hydrological year: 
+    blue ones are data retrieved from stations whose metadata are reliable, whereas orange ones are not. (b) Confusion matrix comparing snow presence 
+    according to  MODIS and HS data.}
+    \label{fig:comparison_HS_MODIS_corrected}
 \end{figure}
+Given the significant spread observed in the distribution, a more detailed comparison was conducted to assess whether this behaviour was linked to snow 
+depth data or to other factors. This step helped to clean the snow depth dataset of the few remaining numerical issues, but also pointed out, differently 
+than in Chapter \ref{cap:snow_products} that MODIS struggles in high forested areas. In fact, superimposing HS series with the corresponding MODIS 
+observations often resulted in plots such as the one reported in Figure , with the snow covered period according to satellite imagery (light blue) which 
+clearly underestimate the duration of the snow season.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{swe_calibration/comparison_HS_MODIS_corrected.png}
-    \caption{(a) Comparison between SCD values computed from HS series after correction and MODIS data. Each dot represents a pseudo-hydrological year, 
-    which is the period spanning from 1 September of a given year to 31 August of the following one. Blue dots are data retrieved from stations whose 
-    metadata are reliable, whereas orange ones are not. (b) Confusion matrix comparing snow presence according to  MODIS and HS data.}
-    \label{fig:comparison_HS_MODIS_corrected}
+    \includegraphics[width=\linewidth]{swe_calibration/modis_vs_hs.png}
+    \caption{Comparison between HS and MODIS snow cover series. The light blue windows are snow covered according to MODIS.}
+    \label{fig:modis_vs_hs}
 \end{figure}
+
+
+
+
+
+
+\section{Calibration procedure}
+
+\subsection{Homogeneous calibration}
+
+\subsection{Simulated annealing}
