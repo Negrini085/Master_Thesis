@@ -257,7 +257,26 @@ clearly underestimate the duration of the snow season.
 
 
 
+
+
+
+
+
 \section{Calibration procedure}
+
+The previously performed correction of the station metadata is particularly relevant at this stage, as accurate knowledge of the stations' geographical 
+coordinates is essential to ensure proper calibration. From now on, only the 714 reliable stations of the 832 constituing the corrected dataset were 
+taken into account. For each of their coordinates, a reconstruction of daily temperature and precipitation fields over the 1951--2023 period was attempted. 
+This procedure was successful for only 632 station out of the 714, since in some cases there were too few data to obtain reliable outputs. Having this 
+temperature and precipitation data made it possible to reconstruct SWE series for each of the remaining stations, which could then be compared with the 
+corresponding snow depth series, since both quantify the amount of snow within the snowpack, but through different unit of measurements. However, the 
+conversion from one to another is not straightforward, since it requires the knowledge of the vertical profile of snow density, which in the framework of 
+this thesis remains unknown. This issue can be solved by means of a snow model such as $\Delta$Snow, which makes the conversion from snow depth to 
+snow water equivalent under the assumption that every increase of more than a threshold $\tau$ in snow depth can be interpreted as a snowfall event. This 
+multi layered simulation of the snowpack even predicts snow compaction by mean of a Newtonian approach. Within the framework of this thesis, however, 
+it was decided to not make a direct comparison between model outputs and observational data, given that the usage of $\Delta$Snow during the calibration 
+would have made it susceptible to modelling errors and uncertainties within $\Delta$Snow itself. The chosen approach consists in focusing on the 
+temporal allignement of snow series, meaning that 
 
 \subsection{Homogeneous calibration}
 
