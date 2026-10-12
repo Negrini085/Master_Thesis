@@ -18,11 +18,11 @@ loss <- as.numeric(df$loss)
 # Plotting options (we will do a better job when it's all finished)
 ggplot(df, aes(x = tval, y = loss)) + 
   geom_line(color = "blue", size = 1.5) +
-  labs(x = "Temperature [°C]", y = "Loss [a.u.]") +
+  labs(x = expression(T[tau] ~ "[" * degree * "C]"), y = "Loss [a.u.]") + 
   theme_minimal() +
   theme(
-    axis.text.x = element_text(hjust = 1, size = 11),
-    axis.text.y = element_text(size = 11),
-    axis.title.x = element_text(margin = margin(t = 10), size = 11, face = "bold"),
-    axis.title.y = element_text(size = 11, face = "bold")
+    axis.text.x = element_text(hjust = 1, size = 15),
+    axis.text.y = element_text(size = 15),
+    axis.title.x = element_text(margin = margin(t = 10), size = 20),
+    axis.title.y = element_text(size = 20)
   )

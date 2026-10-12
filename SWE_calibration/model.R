@@ -8,6 +8,7 @@ invisible(gc())
 library(parallel)
 
 fname_in <- "input.dat"
+fname_anag <- "../HS_series/Correct/STATION_check/Dataset/ANAGRAFICA"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_calibration/")
 
 n_cores <- 8
@@ -205,6 +206,20 @@ if(expfact <= 0) stop(paste0("Expfact parameter should be bigger than zero!"))
 
 files <- list.files(path = "Dataset/PCPD", full.names = TRUE)
 files <- sub("Dataset/PCPD/DV_", "", files)
+
+
+
+# Importing anagrafica to filter only on station which are consistent with DEM
+df <- read.table(fname_anag, header = TRUE)
+name_anag <- df$name
+flag <- df$flag
+
+mask <- flag != "NO"
+name_anag <- name_anag[mask]
+
+mask <- files %in% name_anag
+files <- files[mask]
+
 
 
 # Actual swe computation
