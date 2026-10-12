@@ -3,7 +3,7 @@
 rm(list = ls())
 gc()
 
-name <- "HSD_TAA_TN_VERMIGLIO_CAPANNA_PRESENA"
+name <- "HSD_TAA_TN_PASSO_PIAN_DELLE_FUGAZZE"
 fname <- paste0("Dataset/Gap/", name)
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/HS_correction/QC_series/")
 

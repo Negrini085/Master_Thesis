@@ -3,9 +3,9 @@
 rm(list = ls())
 gc()
 
-name <- "HSD_TAA_TN_VERMIGLIO_CAPANNA_PRESENA"
-end_idx <- 15
-start_idx <- 318
+name <- "HSD_TAA_TN_PASSO_PIAN_DELLE_FUGAZZE"
+end_idx <- 90
+start_idx <- 238
 fname <- paste0("Dataset/Filtered/", name)
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/HS_correction/QC_series/")
 

@@ -4,8 +4,8 @@ rm(list = ls())
 gc()
 
 
-sta <- "HSD_TAA_TN_VERMIGLIO_CAPANNA_PRESENA"
-appo_omit_years <- c(2014, 2015, 2017, 2020, 2021, 2023)
+sta <- "HSD_TAA_TN_PASSO_PIAN_DELLE_FUGAZZE"
+appo_omit_years <- c(2013, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024)
 fname_gap <- paste0("../Dataset/hs_series/with_gaps/", sta)
 fname_com <- paste0("../Dataset/hs_series/all_complete/", sta)
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/HS_correction/QC_series/")

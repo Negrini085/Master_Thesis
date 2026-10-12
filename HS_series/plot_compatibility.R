@@ -53,29 +53,48 @@ europe <- ne_countries(continent = "Europe", scale = 10, returnclass = "sf")
 
 p1 <- ggplot() +
   geom_sf(data = europe, fill = "antiquewhite1", color = "grey70") +
-  geom_point(data = df_original, aes(x = lon, y = lat, color = status), size = 1.5, alpha = 0.9) +
-  scale_color_manual(values = c("OK" = "forestgreen", "NO" = "firebrick1"), name = "Compatibility") +
+  geom_point(
+    data = df_original,
+    aes(x = lon, y = lat, color = status),
+    size = 1.5, alpha = 0.9
+  ) +
+  scale_color_manual(
+    values = c("OK" = "forestgreen", "NO" = "firebrick1"),
+    name = "Compatibility"
+  ) +
   coord_sf(xlim = c(3.5, 17), ylim = c(43, 49), expand = FALSE) +
   theme_minimal() +
   labs(title = NULL, x = "Longitude [°E]", y = "Latitude [°N]") +
-  theme(panel.background = element_rect(fill = "aliceblue"), legend.position = "bottom")
+  theme(panel.background = element_rect(fill = "aliceblue"))
 
 
 p2 <- ggplot() +
   geom_sf(data = europe, fill = "antiquewhite1", color = "grey70") +
-  geom_point(data = df_corrected, aes(x = lon, y = lat, color = status), size = 1.5, alpha = 0.9) +
-  scale_color_manual(values = c("OK" = "forestgreen", "REV" = "forestgreen", "NO" = "firebrick1"), name = "Compatibility") +
+  geom_point(
+    data = df_corrected,
+    aes(x = lon, y = lat, color = status),
+    size = 1.5, alpha = 0.9
+  ) +
+  scale_color_manual(
+    values = c("OK" = "forestgreen", "NO" = "firebrick1"),
+    name = "Compatibility"
+  ) +
   coord_sf(xlim = c(3.5, 17), ylim = c(43, 49), expand = FALSE) +
   theme_minimal() +
   labs(title = NULL, x = "Longitude [°E]", y = "") +
-  theme(panel.background = element_rect(fill = "aliceblue"), legend.position = "bottom")
+  theme(panel.background = element_rect(fill = "aliceblue"))
 
 
-p <- (p1 | p2) &
+p <- (p1 | p2) +
+  plot_layout(guides = "collect") +
+  plot_annotation(tag_levels = "A") &
   theme_fonts &
-  plot_annotation(tag_levels = 'A') &
   theme(
+    legend.position = "bottom",
     plot.tag = element_text(size = 15, face = "bold"),
-    plot.tag.position = c(0.05, 0.95)
-  )#& theme(legend.position = "none")
+    plot.tag.position = c(0.05, 0.95),
+    legend.title = element_text(size =20),
+    legend.text = element_text(size = 15)
+  )
+
 print(p)

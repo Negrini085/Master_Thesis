@@ -30,12 +30,12 @@ ggplot(df_plot, aes(x = los_MOD, y = los_STA, color = mark)) +
   geom_abline(slope = 1, intercept = 0, color = "black", linetype = "dashed", linewidth = 0.8) +
   scale_color_manual(
     values = c("NO" = "tomato", "OK" = "steelblue"),
-    name   = "Recovered"
+    name   = "Compatible"
   ) +
   labs(
-    title = "MODIS vs Station LOS comparison",
-    x     = "LOS MODIS [days]",
-    y     = "LOS Station [days]"
+    title = NULL,
+    x     = "SCD MODIS [days]",
+    y     = "SCD Station [days]"
   ) +
-  theme_minimal(base_size = 13) +
+  theme_minimal(base_size = 20) +
   coord_equal(xlim = c(0, 370), ylim = c(0, 370))

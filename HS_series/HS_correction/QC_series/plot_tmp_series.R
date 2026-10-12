@@ -6,8 +6,8 @@ library(ggplot2)
 library(nixmass)
 library(patchwork)
 
-name <- "HSD_TAA_TN_VERMIGLIO_CAPANNA_PRESENA"
-fname <- paste0("Dataset/Tmp/", name)
+name <- "HSD_TAA_TN_PASSO_PIAN_DELLE_FUGAZZE"
+fname <- paste0("Dataset/", name)
 fname_max_vals <- "Results/max_hs_swe_values.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/HS_series/HS_correction/QC_series/")
 
