@@ -19,37 +19,34 @@ onwards.
     \label{fig:hs_series_origin}
 \end{figure}
 
-The original HS dataset, however, was affected by several issues that needed to be addressed before it could be considered suitable for 
-further analysis. The first reliability check that was done focused on assessing the accuracy of the station metadata, namely longitude, latitude 
-and elevation. In particular, the ALOS AW3D30 digital elevation model was used to compare the reported elevation of each station with that of the DEM 
-pixel closest to its coordinates. A compatibility threshold of $\SI{12}{\meter}$ was adopted: although this criterion is rather stringent given the 
-complex topography of the Alpine Arc, it was considered appropriate given the high spatial resolution of the DEM, namely $\SI{30}{\meter}$. With this 
-threshold, more than half of the stations were classified as unreliable, as show in Figure \ref{fig:station_distribution_original}.
+The original HS dataset, however, presented several issues that needed to be addressed before it could be considered suitable for further analysis. The 
+first reliability check that was done focused on the accuracy of the station metadata, specifically longitude, latitude and elevation. To this end, the 
+ALOS AW3D30 digital elevation model (DEM) was used to compare the reported elevation of each station with the elevation of the DEM pixel nearest to its 
+coordinates. A compatibility threshold of $\SI{12}{\meter}$ was adopted. Although this criterion is relatively strict given the complex topography of the 
+Alpine Arc, it was considered appropriate due to the high spatial resolution of the DEM, namely $\SI{30}{\meter}$. Based on this threshold, more than 
+half of the stations were classified as unreliable, as show in Figure \ref{fig:station_distribution_original}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/station_distribution_original.png}
-    \caption{(a) Spatial distribution of stations with reliable (unreliable) metadata. (b) Frequency histogram of the elevation differences between the 
-    reported station elevations and those derived from the ALOS AW3D30 DEM. In both panels, green indicates reliable stations, i.e. stations for which the 
-    absolute difference between the reported and DEM-derived elevations does not exceed $\SI{12}{\meter}$, while red is used for stations that did 
-    not satisfy this criterion.}
+    \caption{(a) Spatial distribution of stations with reliable (unreliable) metadata. (b) Frequency histogram of the differences between the reported 
+    station elevations and those derived from the ALOS AW3D30 DEM. In both panels, green represents reliable stations, for which the absolute elevation 
+    difference didn't exceed $\SI{12}{\meter}$, while red indicates stations that didn't meet this criterion.}
     \label{fig:station_distribution_original}
 \end{figure}
-Moreover, a second quality check showed that not only the station metadata, but also the snow depth time series required direct processing. In fact, 
-a comparison between HS series and MODIS observations was made for those stations enclosed on both the study area and the covered period of \cite{MODIS_ITA} 
-in order to attain information on eventual patologies within the dataset. MODIS series were extracted for each grid point that was the closest to a given 
-station of the investigated subset, while HS series were converted in snow cover ones using $\SI{0}{\centi\meter}$ as depth threshold: above that, the 
-snow depth values were substituted with one, otherwise with zero. Both time series for each station were then organized in pseudo-hydrological years, 
-spanning from 1 September of a given year to 31 August of the following one, allowing for a direct comparison. Although a perfect match was not the 
-expected outcome, since station data are recorded in-situ, whereas MODIS makes spatialized observations, with pixels being classified as snow free 
-when the SCF does not exceed \num{0.5}, however the comparison shown in Figure \ref{fig:comparison_HS_MODIS_original} is characterized by substantial 
-disagreement. 
+Moreover, a second quality check revealed that not only the station metadata, but also the snow depth time series required further processing. In fact, to 
+investigate potential issues whithin the snow depth dataset, HS series were compared with MODIS observations for stations falling within the study area 
+and the period covered by \cite{MODIS_ITA}. For each station in this subset, the MODIS time series was extracted from the nearest grid point, while the HS 
+data were converted into binary snow cover series using a threshold of $\SI{0}{\centi\meter}$: positive snow depth values were assigned a value of one, 
+whereas zeros remained unchanged. Both time series were then organized in pseudo-hydrological years, extending from 1 September of a given year to 31 
+August of the following one, to allow for a direct comparison. A perfect match was not expected, as station measurements are collected in-situ, whereas 
+MODIS provides spatially distributed observations with pixels classified as snow free if the snow cover fraction does not exceed \num{0.5}. Nevertheless, 
+the comparison shown in Figure \ref{fig:comparison_HS_MODIS_original} revealed substantial discrepancies between the two datasets.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/comparison_HS_MODIS_original.png}
     \caption{(a) Comparison between SCD values computed from HS series and MODIS data. Each dot represents a pseudo-hydrological year, which is the 
-    period spanning from 1 September of a given year to 31 August of the following one. Blue dots are data retrieved from stations which are reliable 
-    as in Figure \ref{fig:station_distribution_original}, whereas orange ones are not. (b) Confusion matrix comparing snow presence according to 
-    MODIS and HS data.}
+    period spanning from 1 September of a given year to 31 August of the following one. Blue dots are data retrieved from reliable stations, whereas 
+    orange ones are not. (b) Confusion matrix comparing snow cover observations according to MODIS and HS data.}
     \label{fig:comparison_HS_MODIS_original}
 \end{figure}
 In particular, what emerges is a substantial overestimation of snow presence on the ground by station measurements: even though a 
@@ -275,26 +272,63 @@ this thesis remains unknown. This issue can be solved by means of a snow model s
 snow water equivalent under the assumption that every increase of more than a threshold $\tau$ in snow depth can be interpreted as a snowfall event. This 
 multi layered simulation of the snowpack even predicts snow compaction by mean of a Newtonian approach. Within the framework of this thesis, however, 
 it was decided to not make a direct comparison between model outputs and observational data, given that the usage of $\Delta$Snow during the calibration 
-would have made it susceptible to modelling errors and uncertainties within $\Delta$Snow itself. The chosen approach consists in focusing on the 
-temporal allignement of snow series, meaning that 
+would have made it susceptible to modelling errors and uncertainties within $\Delta$Snow itself. The chosen approach consisted instead in converting both 
+HS and SWE series into binary ones, labelling as zero the days with \SI{0}{\centi\meter} of snow depth (or \SI{0}{\milli\meter} of SWE), whereas positive 
+values got labelled as ones. The main focus of the calibration was then the temporal allignement of these binary series, with the goal of making them 
+overlap in snow presence prediction as much as possible. The loss function chosen to compare model outputs with snow depth time series is
+\begin{equation}
+    \mathcal{L}\,=\,1\,-\,\text{CSI}, 
+    \label{eq:loss_function}
+\end{equation}
+where CSI stands for the Critical Success Index, computed as 
+\begin{equation}
+    \text{CSI}\,=\,\frac{\text{TP}}{\text{TP}\,+\,\text{FP}\,+\,\text{FN}}.
+    \label{eq:csi}
+\end{equation}
+This means that the loss function effectively focuses on the snow event, disregarding true negative predictions (i.e. zero to zero correspondance in 
+binary series).
 
 \subsection{Homogeneous calibration}
 
-\begin{figure}[htbp]
+The first step of the calibration procedure consisted on focusing on the temperature threshold for phase partitioning $T_\tau$ alone. The melt parameters 
+are instead fixed, while the melt parameters were fixed to the values proposed by \cite{Magnusson_DDF}. In particular, 
+\begin{table}[htbp]
+  \centering
+  \caption{Model parameters proposed by \cite{Magnusson_DDF}.}
+  \label{tab:optimal_parameters}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{@{} >{\raggedright\arraybackslash}m{2.5cm} >{\raggedright\arraybackslash}m{3cm} @{}}
+    \toprule
+    \textbf{Parameter} & \textbf{Value} \\
+    \midrule
+    $\text{DDF}_{ave}$ & \SI{2.2}{\milli\meter} w.e. \\
+    $\text{DDF}_{amp}$ & \SI{1.7}{\milli\meter} w.e. \\
+    $m_m$ & \SI{0.5}{\degreeCelsius} \\
+    $T_{melt}$ & \SI{0.0}{\degreeCelsius} \\
+
+    \bottomrule
+  \end{tabular}
+\end{table}
+Considering that only $T_\tau$ was assumed as free, the optimization approach consisted of uniformly sampling the interval between 0 and 3 degrees, 
+experimentally known as the range where the transition from rain to snow occurs. The temperature step used in this phase was \num{1e-3} 
+\SI{}{\degreeCelsius}, which is already too much given that temperatures are usually measured with a precision of one-tenth of a degree. The least loss 
+value is 
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/homogeneous_calib.png}
     \caption{}
     \label{fig:homogenoeus_calib}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/homogenous_calib_elevation_wise.png}
     \caption{}
     \label{fig:homogenous_calib_elevation_wise}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/homogeneous_calib_monthly_wise.png}
     \caption{}
