@@ -41,11 +41,11 @@ The gridding procedure used to produce daily precipitation maps requires a spati
 which has undergone rigorous quality checks to identify spikes and missing values. Such control is essential for preventing systematic errors from 
 propagating into the gridded fields. This method is composed of three main steps, namely:
 \begin{itemize}[label=$\blacktriangleright$]
-    \item \textit{calculation of high-resolution climatologies}, which are required as a reference for the reconstruction of daily series. The first 
-    step in deriving the gridded climatologies consisted of computing the 1991--2020 precipitation normals for each station of the dataset. The method 
-    used to generate the climatology rasters is the Local Weighted Linear Regression (LWLR) of precipitation against elevation, which had already 
-    proven to be a robust approach for reconstructing gridded fields \parencite{LWLR_Crespi}. At a specific location $\left(x,\,y\right)$, the 
-    monthly normals were computed as
+    \item \textit{calculation of high-resolution monthly climatologies}, which are required as a reference for the reconstruction of daily series. 
+    The first step in deriving the gridded climatologies consisted of computing the 1991--2020 precipitation monthly normals for each station of the 
+    dataset. The method used to generate the climatology rasters is the Local Weighted Linear Regression (LWLR) of precipitation against elevation, 
+    which had already proven to be a robust approach for reconstructing gridded fields \parencite{LWLR_Crespi}. At a specific location 
+    $\left(x,\,y\right)$, the monthly normals were computed as
     \begin{equation}
         P_{clima}\left(x,\,y\right)\,=\,q\left(x,\,y\right)\,+\,m\left(x,\,y\right) \cdot h\left(x,\,y\right),
         \label{eq:clima_precipitation_gridding}
@@ -66,10 +66,10 @@ propagating into the gridded fields. This method is composed of three main steps
     \end{equation}
     where $\Delta_i^{par}$ represents the difference in features between the selected station and the specific grid point, while $c^{par}$ controls the width of the 
     Gaussian. The $c^{par}$ parameters were locally optimized to maximize the agreement between estimated and observed normals. For each grid point, the 
-    regression coefficients were estimated taking into account the \num{30} stations with the highest weights. Furthermore, to improve the robustness 
-    of the estimates, the LWLR was performed \num{30} times in a leave-one-out framework, removing one station at each iteration. If the difference 
-    between the lowest and highest estimates exceeded \num{30} \% of the weighted mean obtained using all 30 stations, the $c^{par}$ were relaxed by 
-    \num{10} \% to prevent individual stations from dictating the normal values \parencite{precipitation_IHGAR}.
+    regression coefficients were estimated taking into account the \num{30} stations with the highest weights. Furthermore, to evaluate the robustness 
+    of the estimates, the LWLR was performed \num{30} times removing a single station at each iteration. If the difference between the lowest and highest 
+    estimates exceeded \num{30} \% of the weighted mean obtained using all 30 stations, the $c^{par}$ were relaxed by \num{10} \% to prevent individual 
+    stations from dictating the normal values \parencite{precipitation_IHGAR}.
     \item \textit{computation of monthly precipitation maps}, which relies on monthly anomaly maps to reconstruct the actual monthly totals over the 
     entire investigated period as 
     \begin{equation}
@@ -90,9 +90,9 @@ propagating into the gridded fields. This method is composed of three main steps
         P\left(x,\,y\right)\,=\,P_{month}\left(x,\,y\right) \cdot F_{day}\left(x,\,y\right),
         \label{eq:daily_precipitation_gridding}
     \end{equation}
-    where $P$ denotes the daily precipitation value and $F_{day}\left(x,\,y\right)$ represents the ratio between the daily precipitation and the 
-    corresponding monthly total. To obtain $F_{day}\left(x,\,y\right)$ at each grid point, the station time series were first converted into daily 
-    precipitation fractions by dividing each daily value by the corresponding monthly one. The resulting fractions were then interpolated over the 
+    where $P$ denotes the daily precipitation value and $F_{day}\left(x,\,y\right)$ is the ratio between the daily precipitation and the corresponding 
+    monthly total. To obtain $F_{day}\left(x,\,y\right)$ at each grid point, the station time series were first converted into daily precipitation 
+    fractions by dividing each daily value by the corresponding monthly one. The resulting fractions were then interpolated over the 
     spatial grid using the same method described in the previous bullet point \parencite{precipitation_IHGAR}.
 \end{itemize}
 

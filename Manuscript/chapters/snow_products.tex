@@ -76,7 +76,7 @@ the Tyrrhenian Sea. Two main climate types can thus be identified within the stu
     \item \textit{the Alpine climate}, which prevails over the Alps and the Northern Apennines and is characterized by low nighttime and winter 
     temperatures, with precipitation peaking in summer;
     \item \textit{the Po Valley climate}, with cold winters, hot summers, and precipitation concentrated during spring and autumn 
-    \parencite{clima_IHGAR}.
+    \parencite{precipitation_IHGAR, clima_IHGAR}.
 \end{itemize}
 
 This complex climatological and topographical setting gives rise to a substantial variability in the snowpack, which makes the IH-GAR region an ideal test 
@@ -128,7 +128,7 @@ according to the criteria summarized in Table \ref{tab:integer_value}.
     \textbf{Value} & \textbf{Condition} \\
     \midrule
     0           &  Snow free\\
-    1-100            & Snow covered (NDSI value) \\
+    1-100            & Snow covered (NDSI value x 100) \\
     200      & Missing data \\
     201          & No decision \\
     211          & Recorded during the nigth \\
@@ -143,7 +143,7 @@ according to the criteria summarized in Table \ref{tab:integer_value}.
 
 To address the observation gaps caused by cloud cover or by sensor saturation, \cite{MODIS_GAR} first reduce the complexity of the dataset to three 
 surface classes: snow covered, snow free and missing data. Integer values between 1 and 100 are reclassified as snow covered 
-whenever the corresponding NDSI exceeded the critical threshold of 0.4, and as snow free otherwise. Pixels acquired at night, 
+whenever the corresponding NDSI exceeded the critical threshold of 40, and as snow free otherwise. Pixels acquired at night, 
 affected by cloud cover or flagged with an error condition are all labelled as missing data, whereas freshwater pixels are 
 reclassified as missing only when freshwater presence has been detected in less than 10 \% of the available observations. Once the 
 number of classes has been reduced to three, \cite{MODIS_GAR} propose a gap filling procedure structured into six sequential phases, 
@@ -720,8 +720,8 @@ underestimations. Moreover, the main differences visible in Figure \ref{fig:comp
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{snow_products/comparison_SCD_ITSNOW_MODIS.png}
-    \caption{(a) Spatial distribution of the SCD difference between IT-SNOW and MODIS estimates. (b) Relative frequency histogram of SCD difference 
-    values between IT-SNOW and MODIS estimates.}
+    \caption{(a) Spatial distribution of the SCD difference between MODIS and IT-SNOW estimates. (b) Relative frequency histogram of SCD difference 
+    values between MODIS and IT-SNOW estimates.}
     \label{fig:comparison_SCD_ITSNOW_MODIS}
 \end{figure}
 suggesting that significant tree cover could introduce additional biases. However, a more detailed discussion of this underestimation is beyond the 
