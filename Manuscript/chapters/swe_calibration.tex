@@ -136,9 +136,7 @@ when a spike in snow depth, such as the one observed in early September in Figur
 corresponding increase in the simulated SWE, it can reasonably be considered a numerical artifact since with a high temperature threshold the number 
 of snowfall events is overestimated, since even rainfall sometimes meets the requirements for solid precipitation computation. Each comparison plot 
 also included a red shaded interval corresponding to a period typically associated with bare ground. HS values within this window were proposed to 
-be automatically set to zero. The duration of this interval varies according to the elevation of each station as summarized in Table 
-\ref{tab:time_window_to_zero}:
-
+be automatically set to zero. The duration of this interval varies depending on the elevation of the station as shown in Table \ref{tab:time_window_to_zero}:
 \begin{table}[htbp]
   \centering
   \caption{Proposed time windows to be automatically set to zero.}
@@ -158,51 +156,45 @@ be automatically set to zero. The duration of this interval varies according to 
     \bottomrule
   \end{tabular}
 \end{table}
-
-During the visual inspection of time series, for each station were signalled the hydrological years which could be deleted, both because missing data 
-were so numerous that it was impossible to obtain useful information from the snow depth series, and because the noise could not be clearly 
-decoupled from the snow reading. In particular, all HS series truncated before reaching zero or started after the beginning of accumulation were 
-discarded, as the correct evaluation of the end or the beginning of the snow season respectively (and thus the reconstruction of the time series) 
-was not possible. Due to this signal cut-offs, some stations operating within ski areas were discarded right away since recordings covered only the 
-ski season, disregarding the rest of snow phenomena. Moreover, the main numerical artifacts for each station were reported, in addition to specifying 
-whether the proposed window for automatic zeroing needed to be modified or not. Once all snow depth series had been visually inspected, the following 
-procedures were developed in order to be later applied to one station at a time. This semi-automated procedure, which required a lot of human work, 
-was necessary in order to ensure that the complex picture of numerical artifacts, typical of each station, was taken care of with attention. In 
-particular, for each snow depth time series, the following steps were followed:
-
+During the preliminary visual inspection, hydrological years unsuitable for reconstruction were identified and flagged for exclusion. This was 
+necessary when missing values were too numerous to extract meaningful information from the HS series, or when measurement noise could not reliably 
+be distinguished from the actual snow signal. In particular, all series ending before the snow depth had returned to zero, or beginning after snow 
+accumulation had already started, were discarded. In these cases the onset or end of the snow season could not be determined accurately, making a 
+proper reconstruction impossible. This truncation of the HS series led to the exclusion of the majority of stations located in ski areas, where 
+measurements typically did not cover the entire snow cycle. Moreover, the main numerical artifacts for each station were recorded, together with 
+any necessary adjustments to the proposed summer zeroing window. Based on these observations, a set of correction steps was developed and 
+subsequently applied to each station separately. Although this semi-automated approach required substantial manual effort, it was necessary to 
+account for the different types of numerical artifacts affecting individual stations. The denoising and gap-filling procedure consisted of the 
+following steps:
 \begin{itemize}[label=$\blacktriangleright$]
-    \item \textit{series filtering}, which consisted in discarding every pseudo-hydrological year that was previously labelled as not adequate for signal 
-    reconstruction. Moreover, negative HS values were reclassified as missing data, since snow depth must always be non-negative.
-    \item \textit{summer handling}, which consisted in setting automatically to zero the proposed time window. If a given pseudo-hydrological year had an 
-    HS series like the one in panel (a) of Figure \ref{fig:hs_series_wrong_summer}, namely with a ground level bias over the entire investigated period, 
-    before setting to zero the summer window, the average snow depth value was computed in order to subtract it to every daily HS measurement. If some values 
-    became negative as a consequence of noise fluctuations, they were automatically set to zero at this stage of HS correction.
-    \item \textit{spikes and drops identification}, which consisted in finding such numerical artifact and reclassifying them as missing data, in order to 
-    avoid that such errors influenced data quality of the final dataset. A particular effort was devoted to identify and correct spiked higher than 
-    $\SI{80}{\centi\meter}$ and snow depth drops of more than $\SI{50}{\centi\meter}$.
-    \item \textit{gap filling}, which consisted in filling each gap which was located within numerical values both bigger than zero by means of a linear 
-    interpolation of the endpoints. Clearly, this methodology does not allow for an accurate reconstruction of the snow depth on a given day within the 
-    reading gap, but nevertheless makes it possible to distinguish whether the ground is bare or covered with snow. Requiring both endpoints bigger than 
-    zero reduces the number of instances where the reconstruction is flawed, assigning numerical values to days when the presence of snow is uncertain. 
-    \item \textit{first visual inspection}, in order to ensure that the gap filling was done correctly and to evaluate how to proceed with the organization 
-    of the snow depth series. If the gap filling procedure resulted in faulty reconstructions, the previous step is done again changing the gap filling 
-    parameters, in order to avoid erroneous outputs. 
-    \item \textit{gap to zero}, which consisted in zeroing all the remaining missing data. This step, although it seems a bit rough, doesn't actually 
-    introduce numerical artifacts, since series with gaps substantially affecting the start or the end of the snow season have already been discarded 
-    at the first step. The worst-case scenario is that, at most, a couple of days per hydrological year are forced to zero due to the procedure just 
-    described.
-    \item \textit{zero under threshold}, which was done only in case the first visual inspection had highlighted the need to remove further (and not 
-    overly significant) noise. In practice, all days whose HS falls below a certain threshold, typically a couple of centimeters, are set to zero.
-    \item \textit{final visual inspection}, done in order to assess whether the outputs of the snow depth correction procedure are plausible. If some issues 
-    are detected, they are handled singularly in order to ensure the successful outcome of the entire procedure.
+    \item \textit{series filtering}, which consisted of discarding all pseudo-hydrological year previously flagged as unsuitable for signal 
+    reconstruction. In addition, negative HS values were reclassified as missing data, since snow depth must always be bigger or equal to zero.
+    \item \textit{summer zeroing}, in which the selected summer window was automatically set to zero. For pseudo-hydrological years characterized 
+    by a ground-level bias over the entire period, as in panel (a) of Figure \ref{fig:hs_series_wrong_summer}, the average HS value was first 
+    computed and subtracted from every daily measurement, and only then was the summer window zeroed. Any values that became negative because of 
+    noise fluctuations were clipped to zero at this stage.
+    \item \textit{spike and drop detection}, aimed at identifying such numerical artifacts and reclassifying them as missing data. ?articular 
+    attention was paid to spiked higher than $\SI{80}{\centi\meter}$ and to drops larger than $\SI{50}{\centi\meter}$.
+    \item \textit{gap filling}, which consisted of linearly interpolating between the endpoints of every gap bounded by two strictly positive values 
+    or by two zeros.  This approach clearly cannot reconstruct the actual snow depth on each day within the gap, but nevertheless makes it possible 
+    to distinguish between bare and snow covered ground. Requiring both endpoints to be positive or zero limits the cases in which the interpolation 
+    assigns positive snow depth values to days when the presence of snow is uncertain.
+    \item \textit{first visual inspection}, carried out to verify that the gaps had been filled correctly and to decide how to proceed. Whenever the 
+    gap filling strategy produced faulty reconstructions, it was repeated selecting which gap to fill. 
+    \item \textit{gap to zero}, which consisted of replacing all remaining missing values with zeros. Although this may seem somewhat crude, it does 
+    not introduce significant artifacts, because series whose gaps substantially affected the start or the end of the snow season had already been 
+    discarded during series filtering. In the worst case, only a couple of days per pseudo-hydrological year are forced to zero. 
+    \item \textit{zero under threshold}, applied only when the first visual inspection had revealed minor residual noise. In such cases, all days 
+    with HS below a given threshold, typically a couple of centimetres, were set to zero.
+    \item \textit{final visual inspection}, performed to assess the plausibility of the corrected series. Any remaining issues were addressed case 
+    by case.
 \end{itemize}
-In Figure the shape of an HS series on some steps og the correction procedure are shown: 
-% Sistemare il grafico
-\begin{figure}[H]
+Figure \ref{fig:hs_correction_steps} illustrates how a typical HS time series changed throughout the main stages of the correction procedure. 
+    \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/hs_correction_steps.png}
-    \caption{Example of HS correction procedure. (a) Original HS series. (b) HS series after the summer window have been put to zero. (c) HS series after 
-    gap filling procedure. (d) Final (and corrected) HS series.}
+    \caption{Example of the HS correction procedure. (a) Original HS series. (b) HS series after setting the summer window to zero. (c) HS series 
+    after gap filling. (d) Final corrected HS series.}
     \label{fig:hs_correction_steps}
 \end{figure}
 
