@@ -49,40 +49,39 @@ the comparison shown in Figure \ref{fig:comparison_HS_MODIS_original} revealed s
     orange ones are not. (b) Confusion matrix comparing snow cover observations according to MODIS and HS data.}
     \label{fig:comparison_HS_MODIS_original}
 \end{figure}
-In particular, what emerges is a substantial overestimation of snow presence on the ground by station measurements: even though a 
-slight bias toward HS measurements was expected, such a strong imbalance suggests that some numerical issues could be affecting HS data. Furthermore, 
-in panel (a) of Figure \ref{fig:comparison_HS_MODIS_original} can be identified two distinct types of data points, both deviating markedly from the 
-identity line, since the first group is concentrated in the upper-left corner of the plot, whereas the second one is located much closer to the x-axis 
-than it should be. The latter family of points is mainly made up of hydrological years with several and/or big reading gaps, meaning that for the 
-majority of the snow season snow depth is not recorded as it should be. A visual example of such a recording is shown in Figure \ref{fig:hs_series_with_gap}.
+In particular, the comparison between MODIS and HS time series showed a considerable scatter in SCD values, as visible in panel (a) of Figure 
+\ref{fig:comparison_HS_MODIS_original}. Two distinct groups of data point deviating markedly from the identity line can indeed be identified: the first 
+is concentrated in the upper-left corner of the plot, while the second one lies much closer to the x-axis than expected. The latter group mainly consists 
+of hydrological years characterized by numerous and/or prolonged gaps in the snow depth records, with observations missing for much of the snow season. 
+A representative example is shown in Figure \ref{fig:hs_series_with_gap}.  
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/hs_series_with_gap.png}
-    \caption{Example of an HS series strongly influenced by missing values (i.e. the green parts). Such a series is not retriviable with typical 
-    techniques, since the SOD is unknown.}
+    \caption{Example of an HS time series affected by extensive data gaps (highlighted in green). This series cannot be reliably reconstructed using 
+    standard gap-filling methods because the SOD (snow onset date) is unknown.}
     \label{fig:hs_series_with_gap}
 \end{figure}
 
-The former one is instead characterized by HS readings which, converted in SC series, predict snow presence on the ground over most (if not all) the 
-hydrological year. This behaviour is a consequence of a snow depth series that rarely reaches zero. The way in which this occur may be linked to a 
-reading bias of the measuring instrument, which identifies the ground level as standing some centimeters above the ground, or to systematic errors 
-while recording bare ground during summer. A couple of more examples are shown in Figure \ref{fig:hs_series_wrong_summer}.
+The former group, instead, is characterized by HS measurements that, when converted into snow cover series, indicate the presence of snow on the ground 
+for most of the hydrological years. This behaviour results from snow depth values that rarely reach zero. Such anomalies may be caused by a bias in the 
+measuring instrument, which incorrectly identifies the ground level as being a few centimetres above its actual position, or by systematic errors in 
+recording snow free conditions during summer. An example of each of these cases is shown in Figure \ref{fig:hs_series_wrong_summer}.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/hs_series_wrong_summer.png}
-    \caption{(a) HS series which exhibits a ground level misidentification, with summer values constant at $\sim \SI{10}{\centi\meter}$. (b) HS 
-    series which exhibits summer spikes and misreading, given that Rumo Lanza stands at $\SI{1100}{\meter}$ a.s.l. and clearly can't experience 
-    snow cover during the hottest months.}
+    \caption{(a) HS time series showing an incorrect identification of the ground level, with snow depth values remaining approximately constant at 
+    $\sim \SI{10}{\centi\meter}$ throughout the summer. (b) HS time series showing anomalous summer spikes, clearly caused by erroneous readings. Snow 
+    cover during the hottest months is indeed not possible at Rumo Lanza, which is located at $\SI{1100}{\meter}$ a.s.l.}
     \label{fig:hs_series_wrong_summer}
 \end{figure}
 
-Clearly, missing values and summer faulty data are not mutually exclusive, so that even more complex and peculiar behaviour can be detected during 
-a single pseudo-hydrological year. Moreover, other numerical artifacts such as spikes or sudden drops in snow depth affect several HS series. Given 
-the presence of all these issues, it was necessary to develop specific techniques to improve the quality of the snow depth dataset before proceeding 
-with the calibration. In the remainder of this section, the procedures adopted to improve the accuracy of the station metadata and to correct, 
-whenever possible and necessary, the numerical artifacts that originally were making these data unusable will be presented separately.
+Clearly, missing values and erroneous summer readings are not mutually exclusive, and more complex numerical anomalies may therefore occur within the same 
+pseudo-hydrological year. Moreover, several HS series are affected by other numerical artifacts, such as spikes or sudden drops in snow depth. Given these 
+issues, specific procedures were developed to improve the quality of the snow depth dataset before proceeding with the calibration. The remainder of this 
+section is devoted to describing separately the methods adopted to improve the accuracy of the station metadata and to correct, whenever possible and 
+necessary, the numerical artifacts that initially compromised the reliability of the data.
 
 
 
