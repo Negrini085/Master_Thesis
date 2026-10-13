@@ -115,25 +115,29 @@ sufficiently reliable sources were available to support a correction.
 
 \subsection{HS series correction}
 
-Before directly modifying the snow depth time series, they were visually inspected in order to develop procedures that could effectively address 
-the issues present in the dataset. In particular, for each station, all hydrological years containing at least one numerical value (i.e. not 
-consisting entirely of missing dataset) were considered to generate comparison plots such as the one shown in Figure \ref{fig:visual_check_example}. 
-Each plot consisted of three rows: the first displayed the snow depth time series, the second one showed its conversion into SWE obtained using the 
-Delta Snow model, while the third consisted of the model outputs obtained using the melt parameters optimized by \cite{Magnusson_DDF} and a 
-temperature threshold of $\SI{2.5}{\degreeCelsius}$ for precipitation phase partitioning.
+Before applying any corrections to the snow depth time series, the data were visually inspected to identify the main issues and develop suitable 
+correction procedures. For each station, comparison plots were generated for all hydrological years containing at least one non-missing HS value, 
+as illustrated in Figure \ref{fig:visual_check_example}. Each plot consisted of three panels: the first displayed the original HS time series, the 
+second one showed the corresponding snow water equivalent (SWE) obtained using the $\Delta$Snow model, while the third presented the SWE simulated 
+using the melt parameters optimized by \cite{Magnusson_DDF} and a temperature threshold of $\SI{2.5}{\degreeCelsius}$ for precipitation phase 
+partitioning.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/visual_check_example.png}
-    \caption{Plot used to visually inspect the numerical issues of the HS series. A comparison between (a) snow depth values, (b) swe conversion of 
-    HS reading and (c) model outputs is made. The model parameters used to produce the last series are: the melt parameters optimized by \cite{Magnusson_DDF} 
-    and a temperature threshold of $\SI{2.5}{\degreeCelsius}$. The red part of each graph is the summer window to be automatically set to zero.}
+    \caption{Example of a comparison plot used to visually identify numerical artifacts in the HS series. The three panels show (a) the original 
+    snow depth measurements, (b) the corresponding SWE values obtained using the $\Delta$Snow model, and (c) the simulated SWE. The latter was 
+    obtained using the melt parameters optimized by \cite{Magnusson_DDF} and a temperature threshold of $\SI{2.5}{\degreeCelsius}$ for phase 
+    partitioning. The red shaded areas indicate the summer window to be automatically set to zero.}
     \label{fig:visual_check_example}
 \end{figure}
-Although this approach may seem circular, the relatively high threshold used to distinguish between snow and rain ensures that, if a spike in snow 
-depth (such as the one observed in early September in Figure \ref{fig:visual_check_example}) is not accompanied by a corresponding one in the model 
-outputs, it can be confidently attributed to a numerical artifact. In each of these comparison plots, a portion of the time series was coloured red. 
-This highlighted time window, which covers to a period typically associated with bare ground conditions, is proposed to be automatically set to 
-zero: its width varies with station declared elevation as reported in Table \ref{tab:time_window_to_zero}.
+Although using model outputs to identify errors in the observations may appear circular, the relatively high temperature threshold adopted for 
+precipitation phase partitioning provides additional confidence in distinguishing numerical issues from actual snowfall events. In particular, 
+when a spike in snow depth, such as the one observed in early September in Figure \ref{fig:visual_check_example}, is not accompanied by a 
+corresponding increase in the simulated SWE, it can reasonably be considered a numerical artifact since with a high temperature threshold the number 
+of snowfall events is overestimated, since even rainfall sometimes meets the requirements for solid precipitation computation. Each comparison plot 
+also included a red shaded interval corresponding to a period typically associated with bare ground. HS values within this window were proposed to 
+be automatically set to zero. The duration of this interval varies according to the elevation of each station as summarized in Table 
+\ref{tab:time_window_to_zero}:
 
 \begin{table}[htbp]
   \centering
@@ -193,6 +197,7 @@ particular, for each snow depth time series, the following steps were followed:
     are detected, they are handled singularly in order to ensure the successful outcome of the entire procedure.
 \end{itemize}
 In Figure the shape of an HS series on some steps og the correction procedure are shown: 
+% Sistemare il grafico
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/hs_correction_steps.png}
