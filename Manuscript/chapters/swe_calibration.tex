@@ -34,7 +34,7 @@ half of the stations were classified as unreliable, as show in Figure \ref{fig:s
     \label{fig:station_distribution_original}
 \end{figure}
 Moreover, a second quality check revealed that not only the station metadata, but also the snow depth time series required further processing. In fact, to 
-investigate potential issues whithin the snow depth dataset, HS series were compared with MODIS observations for stations falling within the study area 
+investigate potential issues within the snow depth dataset, HS series were compared with MODIS observations for stations falling within the study area 
 and the period covered by \cite{MODIS_ITA}. For each station in this subset, the MODIS time series was extracted from the nearest grid point, while the HS 
 data were converted into binary snow cover series using a threshold of $\SI{0}{\centi\meter}$: positive snow depth values were assigned a value of one, 
 whereas zeros remained unchanged. Both time series were then organized in pseudo-hydrological years, extending from 1 September of a given year to 31 
@@ -87,29 +87,29 @@ necessary, the numerical artifacts that initially compromised the reliability of
 
 \subsection{Position correction}
 
-The main issue with the unreliable coordinates was that the vast majority of them had been approximated to the nearest arc-minute. In the complex 
-topography of the Alps, this level of spatial uncertainty, corresponding to roughly $\SI{2}{\kilo\meter}$, may translate into elevation differences 
-of several hundred meters and thus substantially affect the representativeness of the station location. For this reason, the metadata of each 
-unreliable station were manually checked to retrieve its exact position, a crucial step for ensuring the accuracy of the subsequent model 
-calibration. In particular, the metadata rescue procedure consisted in searching them in the catalogues of the agencies managing the various stations. 
-While in some instances, such as with ARPA Lombardia, this review let to no improvement, in others, like WSL Institute for Snow and Avalanche Research 
-SLF, it made it possible to recover the exact coordinates of dozen of stations. The new coordinates were then checked using Google Earth, in order 
-to visually check if they actually corresponded to a meteorological station, as shown in panel (a) of Figure \ref{fig:station_search}. Panel (b), on 
-the other hand, displays the difference between the original and actual position of the reviewed stations, showing that the vast majority of them 
-was corrected for less than a kilometer.
+The main issue with the unreliable coordinates was that most of them had been rounded to the nearest arc-minute. In the complex topography of the 
+Alps, this spatial resolution, corresponding to roughly $\SI{2}{\kilo\meter}$, can result in elevation differences of several hundred meters, 
+potentially affecting the representativeness of the reported station location. For this reason, the metadata of each station with unreliable 
+coordinates were manually reviewed to identify its precise position, an important step for ensuring the accuracy of the subsequent model 
+calibration. The review involved consulting the catalogues of the agencies responsible for the different stations. While this process did not lead 
+to any improvement in some cases, such as for ARPA Lombardia, it allowed the retrieval of the exact coordinates of dozen of stations managed by 
+WSL Institute for Snow and Avalanche Research SLF, Meteoswiss, Meteo France and the Austrian Hydrological Service. The updated coordinates were 
+then inspected using Google Earth to visually verify whether the identified sites corresponded to meteorological stations, as illustrated in panel 
+(a) of Figure \ref{fig:station_search}. Panel (b), on the other hand, displays the original locations relative to their true positions, highlighting 
+that most corrections involved shifts of less than $\SI{1}{\kilo\meter}$.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/station_search.png}
-    \caption{(a) Example of a Swiss AWS viewed from satellite images. The original location was roughly $\SI{1}{\kilo\meter}$ east of the actual site. 
-    (b) Comparison between original location and actual position of the reviewed stations. The actual position is the red cross on the center of the 
-    plot.}
+    \caption{(a) Example of a Swiss AWS viewed from satellite imagery. The original coordinates placed the station approximately $\SI{1}{\kilo\meter}$ 
+    east of its actual location. (b) Original station locations relative to their corrected positions, indicated by the red cross at the center of 
+    the plot.}
     \label{fig:station_search}
 \end{figure}
 
-The procedure presented above enabled the retrieval of roughly \num{300} locations, increasing the number of stations consistent with the DEM 
-elevation from \num{532} to \num{829}. For the remainder of the station dataset, it was decided not to alter the unreliable positions due to the 
-lack of reliable sources.
+Overall, this procedure allowed the precise coordinates of approximately \num{300} stations to be recovered, increasing the number of stations whose 
+elevations were consistent with the DEM from \num{532} to \num{829}. For the remaining stations, the original coordinates were retained because no 
+sufficiently reliable sources were available to support a correction.
 
 
 
