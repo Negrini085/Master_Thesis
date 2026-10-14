@@ -280,8 +280,8 @@ function focuses on snow, without considering true negatives, i.e. days in which
 
 \subsection{Homogeneous calibration}
 
-The first calibration attempt focused solely on the temperature threshold for precipitation phase partitioning $T_\tau$. The melt parameters 
-were fixed to the values proposed by \cite{Magnusson_DDF}, which are reported in Table \ref{tab:optimal_parameters}.
+The first calibration attempt focused exclusively on the temperature threshold for precipitation phase partitioning $T_\tau$, while the snowmelt 
+parameters were fixed at the values proposed by \cite{Magnusson_DDF}, reported in Table \ref{tab:optimal_parameters}.
 \begin{table}[htbp]
   \centering
   \caption{Model parameters proposed by \cite{Magnusson_DDF}.}
@@ -295,28 +295,25 @@ were fixed to the values proposed by \cite{Magnusson_DDF}, which are reported in
     $\text{DDF}_{amp}$ & \SI{1.7}{\milli\meter} w.e. \\
     $m_m$ & \SI{0.5}{\degreeCelsius} \\
     $T_{melt}$ & \SI{0.0}{\degreeCelsius} \\
-
     \bottomrule
   \end{tabular}
 \end{table}
-Considering that only $T_\tau$ was assumed as free, the optimization approach consisted of uniformly sampling the interval between 0 and 3 degrees, 
-experimentally known as the range where the transition from rain to snow occurs. The temperature step used in this phase was \num{1e-3} 
-\SI{}{\degreeCelsius}, which is already too much given that temperatures are usually measured with a precision of one-tenth of a degree. The behaviour 
-of the loss function as the temperature varies is shown in panel (a) of Figure \ref{fig:homogenoeus_calib}: a single and clear minimum can be found around 
-one degree Celsius, with the best comparison with snow depth observations happening at \SI{1.073}{\degreeCelsius}. The estimates of snow water equivalent 
-are misaligned, in predicting snow presence on the ground, by approximately \num{7.4} \%, with a slight tendency to overestimate snowpack persistence as 
-illustrated in panel (b) of Figure \ref{fig:homogenoeus_calib}.
+With $T_\tau$ as the only free parameter, the optimization was carried out by evaluating the loss function at uniformly spaced temperatures between 
+\SI{0}{\degreeCelsius} and \SI{3}{\degreeCelsius}, the range commonly associated with the transition from snowfall to rainfall.  A temperature step of 
+\SI{1e-3}{\degreeCelsius} was used, considerably finer than the \SI{0.1}{\degreeCelsius} resolution of temperature series. The resulting 
+loss function is shown in panel (a) of Figure \ref{fig:homogenoeus_calib}. A single, well-defined minimum occurs near \SI{1}{\degreeCelsius}, with the 
+best agreement between model estimates and snow depth observations obtained at $T_\tau\,=\,\SI{1.073}{\degreeCelsius}$. At the best temperature, the 
+simulated snow water equivalent and observed HS are misaligned for approximately \num{7.4} \% of the estimates. The model also shows a slight tendency 
+to overestimate snowpack persistence, as illustrated in panel (b) of the same picture.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/homogeneous_calib.png}
-    \caption{(a) Loss as a function of temperature. The SWE outputs were generated using \cite{Magnusson_DDF} optimized parameters for snowmelt, whereas 
-    the threshold temperature for phase partitioning was changed with a temperature step of \SI{1e-3}{\degreeCelsius}. (b) Comparison between HS and SWE 
-    series at the best temperature $T_\tau\,=\,\SI{1.073}{\degreeCelsius}$.}
+    \caption{(a) Loss function as a function of temperature threshold $T_\tau$. SWE estimates were generated using snowmelt parameters proposed by 
+    \cite{Magnusson_DDF}, while $T_\tau$ was varied in steps of \SI{1e-3}{\degreeCelsius}. (b) Comparison between observed HS and simulated SWE time 
+    series at the optimal $T_\tau\,=\,\SI{1.073}{\degreeCelsius}$.}
     \label{fig:homogenoeus_calib}
 \end{figure}
-Although full year comparison appear encouraging, it is necessary to examine the details more closely to highlight any shortcomings in the model being 
-optimized. 
-
+Although the comparison over the full year was encouraging, a closer examination was needed to identify potential limitations of the calibrated model.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/homogeneous_calib_monthly_wise.png}
@@ -324,15 +321,28 @@ optimized.
     for precipitation phase partitioning.}
     \label{fig:homogeneous_calib_monthly_wise}
 \end{figure}
+A first insight into the model behaviour can be gained by examining the monthly agreement between simulated SWE and observed HS series, as shown in Figure 
+\ref{fig:homogeneous_calib_monthly_wise}. In particular, during the first part of the snow season, the model markedly overestimates the presence of snow 
+on the ground compared to the HS series. This mismatch may be partially attributed to the fact that the model does not explicitly account for the 
+individual heat fluxes contributing to the energy balance of the snowpack. Specifically, during 
 
-A first analysis that can be made in order to study the model behaviour is to focus on monthly correspondence between simulated SWE and observed HS 
-series. Such a comparison is shown in Figure \ref{fig:homogeneous_calib_monthly_wise}
+
+Ciò che si può osservare è che nella prima parte della stagione nevosa, rispettivamente composta dai mesi di Novembre, Dicembre e Gennaio, il modello 
+sovrastima decisamente la presenza di neve a terra rispetto alle serie di spessore nevoso. Possiamo supporre che questo comportamento sia in parte legato 
+al fatto che il nostro modello non tiene conto dei singoli flussi di calore che vanno a costituire il bilancio energetico del manto nevoso. In particolare, 
+nei primi mesi invernali, il terreno scambia efficacemente il calore immagazzinato durante il periodo estivo con l'esterno, con lo scopo di giungere all'
+equilibrio termico. Chiaramente, tale comportamento inibisce la presenza della neve a terra, facilitando la fusione del manto appena creato. Oltre a 
+questo fenomeno, è possibile anche osservare come la fusione nevosa sia anticipata nel modello, evidenza che sembrerebbe indicare l'utilizzo di DDF 
+eccessivamente elevati. Questa seconda imprecisione nella caratterizzazione della durata della stagione nevosa potrebbe anche essere in parte causa 
+delle sovrastime presenti nella prima parte dell'anno idrologico, dato che per ottenere il valore minimo della loss function potrebbe convenire avere 
+alcuni falsi positivi nella parte iniziale, per avere meno falsi negativi nella seconda.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{swe_calibration/homogenous_calib_elevation_wise.png}
-    \caption{}
-    \label{fig:homogenous_calib_elevation_wise}
+    \includegraphics[width=\linewidth]{swe_calibration/homogeneous_calib_elevation_wise.png}
+    \caption{Elevation-wise confusion matrices comparing SWE series and HS observations. The model outputs are generated with $T_\tau\,=\,\SI{1.073}{\degreeCelsius}$ 
+    for precipitation phase partitioning.}
+    \label{fig:homogeneous_calib_elevation_wise}
 \end{figure}
 
 
