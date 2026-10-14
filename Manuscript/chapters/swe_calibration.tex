@@ -2,7 +2,6 @@
 \label{cap:swe_calibration}
 
 \newpage
-% Consistency parola carina da usare
 \section{HS data}
 
 The snow depth dataset used to calibrate the degree-day model presented in the previous chapter was generated through a data rescue activity. It combines 
@@ -252,36 +251,37 @@ periods identified by satellite observations (light blue) are noticeably shorter
 
 \section{Calibration procedure}
 
-The correction of metadata described previously is particularly relevant at this stage, as accurate station coordinates are essential for the 
-calibration procedure. In fact, of the \num{832} stations being a part of the corrected dataset, only the \num{714} considered reliable were 
-retained for the subsequent analysis. The first step of model calibration was the reconstruction of daily temperature and precipitation time series 
-at the exact coordinates of each station over the 1951--2023 period. This procedure was successful for \num{632} stations, while the remaining 82 
-had insufficient data to obtain reliable reconstructions. These reconstructed meteorological data could be used to generate snow water equivalent 
-time series to be compared with the corresponding observed snow depth records. Although both variables quantify the amount of snow within 
-the snowpack, they represent different physical quantities and thus a direct comparison is not possible. A possible solution would be to use a snow 
-model such as $\Delta$Snow, which estimates SWE from HS series by interpreting snow depth increases and drops exceeding a certain $\tau$ as 
-snowfall and snowmelt events. However, integrating $\Delta$Snow into the calibration procedure would also introduce additional uncertainties 
-associated with the assumption and modelling limitations of the snow model itself.
- The chosen approach consisted instead in converting both 
-HS and SWE series into binary ones, labelling as zero the days with \SI{0}{\centi\meter} of snow depth (or \SI{0}{\milli\meter} of SWE), whereas positive 
-values got labelled as ones. The main focus of the calibration was then the temporal allignement of these binary series, with the goal of making them 
-overlap in snow presence prediction as much as possible. The loss function chosen to compare model outputs with snow depth time series is
+The correction of station metadata proved particularly relevant at this stage, as the calibration procedure requires accurate coordinates. 
+Consequently, of the \num{832} stations in the final dataset, only the \num{714} considered reliable were retained for the subsequent analysis. The 
+first step of model calibration was the reconstruction of daily temperature and precipitation series at the exact location of each station over the 
+1951--2023 period. This operation was successful for \num{632} stations, while for the remaining \num{82} the available data were insufficient to 
+obtain reliable results. These reconstructed meteorological data could then be used to simulate snow water equivalent series for comparison with 
+the corresponding snow depth observations. Although both variables reflect the amount of snow on the ground, they represent different physical 
+quantities and cannot be compared directly. A possible solution to this problem would be to use a snow model such as $\Delta$Snow, which converts 
+HS series into SWE records by interpreting snow depth increases and decreases exceeding a certain threshold $\tau$ as snowfall and snowmelt events 
+respectively. However, integrating $\Delta$Snow into the calibration procedure would also introduce additional uncertainties, related to the 
+assumptions and structural limitations of the model itself. To avoid this issue, the calibration was based on snow presence rather than on the 
+absolute values of HS and SWE. Both time series were therefore converted into binary sequences, assigning a value of \num{1} to days with positive 
+snow depth or snow water equivalent, while zeros were left unchanged. The aim of the calibration was then to maximize the temporal overlap between 
+simulated and observed snow covered days. To quantify this agreement, the following loss function was adopted:
 \begin{equation}
     \mathcal{L}\,=\,1\,-\,\text{CSI}, 
     \label{eq:loss_function}
 \end{equation}
-where CSI stands for the Critical Success Index, computed as 
+where CSI stands for Critical Success Index, defined as 
 \begin{equation}
     \text{CSI}\,=\,\frac{\text{TP}}{\text{TP}\,+\,\text{FP}\,+\,\text{FN}}.
     \label{eq:csi}
 \end{equation}
-This means that the loss function effectively focuses on the snow event, disregarding true negative predictions (i.e. zero to zero correspondance in 
-binary series).
+In Equation \eqref{eq:csi} TP, FP and FN denote true positive, false positive and false negatives respectively. This means that the adopted loss 
+function focuses on snow, without considering true negatives, i.e. days in which both series indicate bare ground conditions.
+
+
 
 \subsection{Homogeneous calibration}
 
-The first step of the calibration procedure consisted on focusing on the temperature threshold for phase partitioning $T_\tau$ alone. The melt parameters 
-are instead fixed, while the melt parameters were fixed to the values proposed by \cite{Magnusson_DDF}. In particular, 
+The first calibration attempt focused solely on the temperature threshold for precipitation phase partitioning $T_\tau$. The melt parameters 
+were fixed to the values proposed by \cite{Magnusson_DDF}, which are reported in Table \ref{tab:optimal_parameters}.
 \begin{table}[htbp]
   \centering
   \caption{Model parameters proposed by \cite{Magnusson_DDF}.}
@@ -301,15 +301,32 @@ are instead fixed, while the melt parameters were fixed to the values proposed b
 \end{table}
 Considering that only $T_\tau$ was assumed as free, the optimization approach consisted of uniformly sampling the interval between 0 and 3 degrees, 
 experimentally known as the range where the transition from rain to snow occurs. The temperature step used in this phase was \num{1e-3} 
-\SI{}{\degreeCelsius}, which is already too much given that temperatures are usually measured with a precision of one-tenth of a degree. The least loss 
-value is 
-
+\SI{}{\degreeCelsius}, which is already too much given that temperatures are usually measured with a precision of one-tenth of a degree. The behaviour 
+of the loss function as the temperature varies is shown in panel (a) of Figure \ref{fig:homogenoeus_calib}: a single and clear minimum can be found around 
+one degree Celsius, with the best comparison with snow depth observations happening at \SI{1.073}{\degreeCelsius}. The estimates of snow water equivalent 
+are misaligned, in predicting snow presence on the ground, by approximately \num{7.4} \%, with a slight tendency to overestimate snowpack persistence as 
+illustrated in panel (b) of Figure \ref{fig:homogenoeus_calib}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/homogeneous_calib.png}
-    \caption{}
+    \caption{(a) Loss as a function of temperature. The SWE outputs were generated using \cite{Magnusson_DDF} optimized parameters for snowmelt, whereas 
+    the threshold temperature for phase partitioning was changed with a temperature step of \SI{1e-3}{\degreeCelsius}. (b) Comparison between HS and SWE 
+    series at the best temperature $T_\tau\,=\,\SI{1.073}{\degreeCelsius}$.}
     \label{fig:homogenoeus_calib}
 \end{figure}
+Although full year comparison appear encouraging, it is necessary to examine the details more closely to highlight any shortcomings in the model being 
+optimized. 
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{swe_calibration/homogeneous_calib_monthly_wise.png}
+    \caption{Monthly-wise confusion matrices comparing SWE series and HS observations. The model outputs are generated with $T_\tau\,=\,\SI{1.073}{\degreeCelsius}$ 
+    for precipitation phase partitioning.}
+    \label{fig:homogeneous_calib_monthly_wise}
+\end{figure}
+
+A first analysis that can be made in order to study the model behaviour is to focus on monthly correspondence between simulated SWE and observed HS 
+series. Such a comparison is shown in Figure \ref{fig:homogeneous_calib_monthly_wise}
 
 \begin{figure}[H]
     \centering
@@ -318,11 +335,6 @@ value is
     \label{fig:homogenous_calib_elevation_wise}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{swe_calibration/homogeneous_calib_monthly_wise.png}
-    \caption{}
-    \label{fig:homogeneous_calib_monthly_wise}
-\end{figure}
+
 
 \subsection{Simulated annealing}
