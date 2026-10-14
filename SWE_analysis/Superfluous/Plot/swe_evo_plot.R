@@ -34,8 +34,8 @@ p <- ggplot(df, aes(x = day, y = swe)) +
     expand = expansion(mult = c(0, 0.04))
   ) +
   labs(
-    x = "Date",
-    y = expression(bold("SWE [Gm"^3*"]"))
+    x = NULL,
+    y = expression(plain("SWE [Gm"^3*"]"))
   ) +
   theme_classic(base_size = 12) +
   theme(
@@ -44,8 +44,7 @@ p <- ggplot(df, aes(x = day, y = swe)) +
       colour = "black"
     ),
     axis.title = element_text(
-      size = 22,
-      face = "bold"
+      size = 20,
     ),
     axis.title.x = element_text(
       margin = margin(t = 15)
@@ -54,7 +53,7 @@ p <- ggplot(df, aes(x = day, y = swe)) +
       margin = margin(r = 15)
     ),
     axis.text = element_text(
-      size = 18,
+      size = 15,
       colour = "black"
     ),
     axis.text.x = element_text(

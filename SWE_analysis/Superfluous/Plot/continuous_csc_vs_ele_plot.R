@@ -41,9 +41,9 @@ p1 <- ggplot(df, aes(x = elev, y = yrs)) +
   # stat_summary_bin(fun = mean, bins = 40, geom = "line",
   #                  colour = "#B2182B", linewidth = 0.8) +
   labs(
-    title    = "Cell-wise relationship",
-    x        = "Elevation (m a.s.l.)",
-    y        = "# years CSC"
+    title    = NULL,
+    x        = "Elevation [m a.s.l.]",
+    y        = "# years"
   ) +
   theme_minimal(base_size = 12) +
   theme(panel.grid.minor = element_blank())
@@ -53,15 +53,20 @@ p1 <- ggplot(df, aes(x = elev, y = yrs)) +
 p2 <- ggplot(subset(df, yrs > 0), aes(x = elev)) +
   geom_histogram(binwidth = 100, fill = "#2C7FB8", colour = "white") +
   labs(
-    title    = "Elevation distribution",
-    x        = "Elevation (m a.s.l.)",
-    y        = "Number of grid cells"
+    title    = NULL,
+    x        = "Elevation [m a.s.l.]",
+    y        = "# of cells"
   ) +
   theme_minimal(base_size = 12) +
   theme(panel.grid.minor = element_blank())
 
 
-print(p1 + p2)
+p <- (p1 + p2) &
+    theme(
+      axis.title = element_text(size = 20),
+      axis.text  = element_text(size = 15)
+    )
+print(p)
 
-ggsave("Images/elevation_vs_continuous_snow.png", p1 + p2,
-       width = 11, height = 4.5, dpi = 300, bg = "white")
+# ggsave("Images/elevation_vs_continuous_snow.png", p1 + p2,
+#        width = 11, height = 4.5, dpi = 300, bg = "white")

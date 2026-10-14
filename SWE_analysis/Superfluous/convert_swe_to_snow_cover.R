@@ -50,7 +50,7 @@ for(y in years){
     "sc", "1", list(dim_lon, dim_lat, dim_time), missval = -9999, 
     longname = "Snow cover flag", prec = "short", compression = 5)
   
-  ncout <- nc_create(paste0("Dataset/SC/SC_", y, ".nc"), var_sc, force_v4 = TRUE)
+  ncout <- nc_create(paste0("Dataset/SC/lim_10/SC_", y, ".nc"), var_sc, force_v4 = TRUE)
   ncvar_put(ncout, var_sc, snow_cover)
   if (tcal$hasatt) ncatt_put(ncout, "time", "calendar", tcal$value)
   nc_close(ncout)
