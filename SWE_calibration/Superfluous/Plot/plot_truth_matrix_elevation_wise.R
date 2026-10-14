@@ -95,7 +95,7 @@ p1 <- ggplot(cm_df, aes(x = HS, y = MINE, fill = val)) +
   scale_fill_gradient(low = "#d6eaf8", high = "#1a5276") +
   scale_y_discrete(limits = c("No", "Yes")) +
   labs(
-    title = NULL,
+    title = "0 - 1000 m a.s.l.",
     x     = "HS",
     y     = "Model"
   ) +
@@ -186,7 +186,7 @@ p2 <- ggplot(cm_df, aes(x = HS, y = MINE, fill = val)) +
   scale_fill_gradient(low = "#d6eaf8", high = "#1a5276") +
   scale_y_discrete(limits = c("No", "Yes")) +
   labs(
-    title = NULL,
+    title = "1000 - 2000 m a.s.l.",
     x     = "HS",
     y     = NULL
   ) +
@@ -277,7 +277,7 @@ p3 <- ggplot(cm_df, aes(x = HS, y = MINE, fill = val)) +
   scale_fill_gradient(low = "#d6eaf8", high = "#1a5276") +
   scale_y_discrete(limits = c("No", "Yes")) +
   labs(
-    title = NULL,
+    title = "> 2000 m a.s.l.",
     x     = "HS",
     y     = NULL
   ) +

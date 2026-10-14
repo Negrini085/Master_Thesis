@@ -4,7 +4,7 @@ rm(list = ls())
 gc()
 
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_calibration/")
-fname_loss <- "Runs/Open/loss_evo_1.dat"
+fname_loss <- "Runs/Restricted/loss_evo_1.dat"
 fname_par <- "Runs/Open/param_evo_1.dat"
 
 
@@ -14,6 +14,7 @@ loss <- as.numeric(df$V1)
 
 min_loss <- min(loss, na.rm = TRUE)
 min_idx <- which(loss == min_loss)[1]
+print(min_loss)
 
 
 # Finding parameters that led to this value
