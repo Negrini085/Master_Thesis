@@ -5,7 +5,7 @@
 % Consistency parola carina da usare
 \section{HS data}
 
-The snow depth dataset used to calibrate the degree-day model described in the previous chapter was created through a data rescue activity. It combines 
+The snow depth dataset used to calibrate the degree-day model presented in the previous chapter was generated through a data rescue activity. It combines 
 HS time series from \cite{Matiu_HS} with data provided by national and regional meteorological and hydrological services, including ARPA Piemonte, Centro 
 Funzionale della Valle d'Aosta, Meteoswiss, WSL Institute for Snow and Avalanche Research SLF, ARPA Lombardia, Meteotrentino, ARPA Veneto, and the Austrian 
 Hydrological Service \parencite{hs_data}. The final dataset includes 1052 stations, mostly automatic, distributed across the entire Alpine Arc, as shown 
@@ -21,10 +21,10 @@ onwards.
 
 The original HS dataset, however, presented several issues that needed to be addressed before it could be considered suitable for further analysis. The 
 first reliability check that was done focused on the accuracy of the station metadata, specifically longitude, latitude and elevation. To this end, the 
-ALOS AW3D30 digital elevation model (DEM) was used to compare the reported elevation of each station with the elevation of the DEM pixel nearest to its 
-coordinates. A compatibility threshold of $\SI{12}{\meter}$ was adopted. Although this criterion is relatively strict given the complex topography of the 
-Alpine Arc, it was considered appropriate due to the high spatial resolution of the DEM, namely $\SI{30}{\meter}$. Based on this threshold, more than 
-half of the stations were classified as unreliable, as show in Figure \ref{fig:station_distribution_original}.
+reported elevation of each station was compared with that of the nearest pixel in the ALOS AW3D30 digital elevation model (DEM). A compatibility threshold 
+of $\SI{12}{\meter}$ was adopted. Although this criterion is relatively strict given the complex topography of the Alpine Arc, it was considered 
+appropriate due to the high spatial resolution of the DEM, namely $\SI{30}{\meter}$. Based on this threshold, more than half of the stations were 
+classified as unreliable, as show in Figure \ref{fig:station_distribution_original}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/station_distribution_original.png}
@@ -78,23 +78,23 @@ recording snow free conditions during summer. An example of each of these cases 
 \end{figure}
 
 Clearly, missing values and erroneous summer readings are not mutually exclusive, and more complex numerical anomalies may therefore occur within the same 
-pseudo-hydrological year. Moreover, several HS series are affected by other numerical artifacts, such as spikes or sudden drops in snow depth. Given these 
+pseudo-hydrological year. Moreover, several HS series were affected by other numerical artifacts, such as spikes or sudden drops in snow depth. Given these 
 issues, specific procedures were developed to improve the quality of the snow depth dataset before proceeding with the calibration. The remainder of this 
 section is devoted to describing separately the methods adopted to improve the accuracy of the station metadata and to correct, whenever possible and 
-necessary, the numerical artifacts that initially compromised the reliability of the data.
+necessary, the numerical artifacts that initially compromised the reliability of the snow depth data.
 
 
 
 \subsection{Position correction}
 
-The main issue with the unreliable coordinates was that most of them had been rounded to the nearest arc-minute. In the complex topography of the 
+The main issue affecting the unreliable coordinates was that most of them had been rounded to the nearest arc-minute. In the complex topography of the 
 Alps, this spatial resolution, corresponding to roughly $\SI{2}{\kilo\meter}$, can result in elevation differences of several hundred meters, 
 potentially affecting the representativeness of the reported station location. For this reason, the metadata of each station with unreliable 
 coordinates were manually reviewed to identify its precise position, an important step for ensuring the accuracy of the subsequent model 
 calibration. The review involved consulting the catalogues of the agencies responsible for the different stations. While this process did not lead 
 to any improvement in some cases, such as for ARPA Lombardia, it allowed the retrieval of the exact coordinates of dozen of stations managed by 
 WSL Institute for Snow and Avalanche Research SLF, Meteoswiss, Meteo France and the Austrian Hydrological Service. The updated coordinates were 
-then inspected using Google Earth to visually verify whether the identified sites corresponded to meteorological stations, as illustrated in panel 
+then inspected using Google Earth to visually verify whether the newly proposed sites corresponded to meteorological stations, as illustrated in panel 
 (a) of Figure \ref{fig:station_search}. Panel (b), on the other hand, displays the original locations relative to their true positions, highlighting 
 that most corrections involved shifts of less than $\SI{1}{\kilo\meter}$.
 
@@ -130,14 +130,14 @@ partitioning.
     partitioning. The red shaded areas indicate the summer window to be automatically set to zero.}
     \label{fig:visual_check_example}
 \end{figure}
-Although using model outputs to identify errors in the observations may appear circular, the relatively high temperature threshold adopted for 
-precipitation phase partitioning provides additional confidence in distinguishing numerical issues from actual snowfall events. In particular, 
-when a spike in snow depth, such as the one observed in early September in Figure \ref{fig:visual_check_example}, is not accompanied by a 
-corresponding increase in the simulated SWE, it can reasonably be considered a numerical artifact since with a high temperature threshold the number 
-of snowfall events is overestimated, since even rainfall sometimes meets the requirements for solid precipitation computation. Each comparison plot 
+Although using model outputs to identify errors in the observations may seem circular, the relatively high temperature threshold adopted for 
+precipitation phase partitioning makes this approach more reliable for distinguishing numerical issues from actual snow. Indeed, with such a threshold, 
+the model tends to overestimate the number of snowfall events, as some rainfall may meet the requirements for solid precipitation computation. 
+Consequently, when a spike in snow depth, such as the one observed in early September in Figure \ref{fig:visual_check_example}, is not accompanied by a 
+corresponding increase in simulated SWE, it can reasonably be attributed to a numerical artifact rather than to actual snowfall. Each comparison plot 
 also included a red shaded interval corresponding to a period typically associated with bare ground. HS values within this window were proposed to 
 be automatically set to zero. The duration of this interval varies depending on the elevation of the station as shown in Table \ref{tab:time_window_to_zero}:
-\begin{table}[htbp]
+\begin{table}[H]
   \centering
   \caption{Proposed time windows to be automatically set to zero.}
   \label{tab:time_window_to_zero}
@@ -156,38 +156,37 @@ be automatically set to zero. The duration of this interval varies depending on 
     \bottomrule
   \end{tabular}
 \end{table}
-During the preliminary visual inspection, hydrological years unsuitable for reconstruction were identified and flagged for exclusion. This was 
-necessary when missing values were too numerous to extract meaningful information from the HS series, or when measurement noise could not reliably 
-be distinguished from the actual snow signal. In particular, all series ending before the snow depth had returned to zero, or beginning after snow 
-accumulation had already started, were discarded. In these cases the onset or end of the snow season could not be determined accurately, making a 
-proper reconstruction impossible. This truncation of the HS series led to the exclusion of the majority of stations located in ski areas, where 
-measurements typically did not cover the entire snow cycle. Moreover, the main numerical artifacts for each station were recorded, together with 
-any necessary adjustments to the proposed summer zeroing window. Based on these observations, a set of correction steps was developed and 
-subsequently applied to each station separately. Although this semi-automated approach required substantial manual effort, it was necessary to 
-account for the different types of numerical artifacts affecting individual stations. The denoising and gap-filling procedure consisted of the 
-following steps:
+During the preliminary visual inspection, hydrological years unsuitable for reconstruction were identified and flagged for exclusion. A 
+pseudo-hydrological year was discarded when the HS series contained too many missing values to extract meaningful information, or when measurement noise 
+could not be reliably distinguished from the actual snow signal. This applied in particular to all series beginning after snow accumulation had already 
+started, or ending before snow depth had returned to zero, as the onset or end of the snow season could not be determined accurately. As a result, 
+most stations located in ski areas were deleted from the HS dataset, because their measurements typically did not cover the entire snow cycle. 
+Moreover, the main numerical artifacts for each station were recorded, together with any necessary adjustments to the proposed summer zeroing window. 
+Based on these observations, a set of correction steps was developed and subsequently applied to each station separately. Although this semi-automated 
+approach required considerable manual effort, it was necessary to address the variety of numerical artifacts affecting individual stations. The denoising 
+and gap-filling procedure comprised the following steps:
 \begin{itemize}[label=$\blacktriangleright$]
     \item \textit{series filtering}, which consisted of discarding all pseudo-hydrological year previously flagged as unsuitable for signal 
     reconstruction. In addition, negative HS values were reclassified as missing data, since snow depth must always be bigger or equal to zero.
     \item \textit{summer zeroing}, in which the selected summer window was automatically set to zero. For pseudo-hydrological years characterized 
-    by a ground-level bias over the entire period, as in panel (a) of Figure \ref{fig:hs_series_wrong_summer}, the average HS value was first 
-    computed and subtracted from every daily measurement, and only then was the summer window zeroed. Any values that became negative because of 
+    by a ground-level bias over the entire period, as in panel (a) of Figure \ref{fig:hs_series_wrong_summer}, the summer average HS value was first 
+    computed and subtracted from every daily measurement, and only then was the proposed window zeroed. Any values that became negative because of 
     noise fluctuations were clipped to zero at this stage.
-    \item \textit{spike and drop detection}, aimed at identifying such numerical artifacts and reclassifying them as missing data. ?articular 
-    attention was paid to spiked higher than $\SI{80}{\centi\meter}$ and to drops larger than $\SI{50}{\centi\meter}$.
-    \item \textit{gap filling}, which consisted of linearly interpolating between the endpoints of every gap bounded by two strictly positive values 
-    or by two zeros.  This approach clearly cannot reconstruct the actual snow depth on each day within the gap, but nevertheless makes it possible 
-    to distinguish between bare and snow covered ground. Requiring both endpoints to be positive or zero limits the cases in which the interpolation 
-    assigns positive snow depth values to days when the presence of snow is uncertain.
+    \item \textit{spike and drop detection}, aimed at identifying such numerical artifacts and reclassifying them as missing data. Particular 
+    attention was paid to spikes higher than $\SI{80}{\centi\meter}$ and drops larger than $\SI{50}{\centi\meter}$.
+    \item \textit{gap filling}, which consisted of filling gaps bounded either by two strictly positive values or by two zeros by linearly interpolating 
+    between the endpoints. Although this approach cannot recover the actual daily snow depth within the gaps, it allows snow covered ground to be 
+    distinguished from bare ground. Restricting interpolating to gaps whose endpoints are both positive or both zero limits the cases in which snow depth 
+    values are assigned to days when the presence of snow is uncertain.
     \item \textit{first visual inspection}, carried out to verify that the gaps had been filled correctly and to decide how to proceed. Whenever the 
     gap filling strategy produced faulty reconstructions, it was repeated selecting which gap to fill. 
     \item \textit{gap to zero}, which consisted of replacing all remaining missing values with zeros. Although this may seem somewhat crude, it does 
-    not introduce significant artifacts, because series whose gaps substantially affected the start or the end of the snow season had already been 
-    discarded during series filtering. In the worst case, only a couple of days per pseudo-hydrological year are forced to zero. 
-    \item \textit{zero under threshold}, applied only when the first visual inspection had revealed minor residual noise. In such cases, all days 
-    with HS below a given threshold, typically a couple of centimetres, were set to zero.
-    \item \textit{final visual inspection}, performed to assess the plausibility of the corrected series. Any remaining issues were addressed case 
-    by case.
+    not introduce significant artifacts, because series whose gaps substantially affected the onset or the end of the snow season had already been 
+    discarded during series filtering. In the worst case, only a couple of days per pseudo-hydrological year were erroneously assigned to zero.
+    \item \textit{zero under threshold}, applied only to series in which the first visual inspection had revealed minor residual noise. In such cases, all 
+    HS values below a given threshold, typically a few centimetres, were set to zero.
+    \item \textit{final visual inspection}, performed to assess the plausibility of the corrected series. Any remaining issues were addressed on a case 
+    by case basis.
 \end{itemize}
 Figure \ref{fig:hs_correction_steps} illustrates how a typical HS time series changed throughout the main stages of the correction procedure. 
     \begin{figure}[H]
@@ -201,32 +200,29 @@ Figure \ref{fig:hs_correction_steps} illustrates how a typical HS time series ch
 
 \subsection{Final dataset}
 
-The two quality-control procedures described in the previous subsections led to the removal of \num{220} stations, reducing the network from 
-\num{1052} to \num{832}. The total number of pseudo-hydrological records also decreased from \num{27388} to \num{20248}, corresponding to a reduction 
-of approximately \num{26}\%. Despite these changes, the spatial coverage and distribution of the network remained largely unchanged, as station 
-positions were adjusted by no more than $\SI{1.5}{\kilo\meter}$. The elevation distribution also remained similar, with both the original and 
-corrected networks mainly concentrated between \num{1000} and \SI{2000}{\meter} above sea level. A substantial change was instead observed in the 
-consistency between the reported station elevations and the ALOS AW3D30 DEM, as illustrated in Figure \ref{fig:station_compatibility_before_after_QC}. 
-In fact, following the corrections, \num{714} out of the \num{832} remaining stations passed the reliability check on elevation, and therefore 
-appear green in panel (b). 
+The snow depth denoising and gap filling procedure described in the previous subsection led to the removal of \num{220} stations, reducing the network from 
+\num{1052} to \num{832}. The total number of pseudo-hydrological years also decreased from \num{27388} to \num{20248}, corresponding to a reduction 
+of approximately \num{26}\%. Despite these changes, the spatial coverage and distribution of the network were largely preserved, as the remaining station 
+positions were adjusted by no more than $\SI{1.5}{\kilo\meter}$. The elevation distribution was also similar, with both the original and the corrected 
+networks mainly concentrated between \num{1000} and \SI{2000}{\meter} above sea level. In contrast, the consistency between the reported station elevation 
+and the ALOS AW3D30 DEM improved considerably, as illustrated in Figure \ref{fig:station_compatibility_before_after_QC}. In fact, after the corrections, 
+\num{714} out of the \num{832} remaining stations passed the elevation reliability check and are therefore shown in green in panel (b). 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/station_compatibility_before_after_QC.png}
-    \caption{Compatibility between reported station elevations and the nearest DEM pixel before (a) and after (b) correcting station metadata. In 
+    \caption{Consistency between reported station elevations and the nearest DEM pixel before (a) and after (b) correcting station metadata. In 
     both instances the ALOS AW3D30 global DEM was used. Stations are classified as reliable (OK) if the elevation difference is smaller than 
     $\SI{12}{\meter}$.}
     \label{fig:station_compatibility_before_after_QC}
 \end{figure}
-In addition to the visual inspection, which represented the final step of the denoising and gap filling procedure, the comparison with MODIS 
-observations was repeated to assess whether the corrections had also reduced the discrepancies between the two datasets. The resulting scatter plot, 
-shown in panel (a) of Figure \ref{fig:comparison_HS_MODIS_corrected}, indicates a substantial improvement. In particular, all the data points now 
-cluster around the identity line, suggesting that the issues responsible for the two previously anomalous groups of points have been successfully 
-solved. The slight tendency to SCD overestimation by station measurements is consistent with expectations, considering that MODIS pixels are 
-classified as snow free whenever at least half of their area consists of bare ground. However, a considerable spread in data point remains. To 
-investigate the source of this scatter, a more detailed comparison was conducted revealing that MODIS appear to struggle over highly forested areas, 
-consistently with the findings discussed in Chapter \ref{cap:snow_products}. Indeed, comparing individual HS series with the corresponding MODIS 
-ones often revealed patterns similar to the one shown in Figure \ref{fig:modis_vs_hs}, where the snow covered periods identified by satellite 
-observations (light blue) are noticeably shorter than those indicated by station measurements.
+Moreover, the comparison with MODIS observations was repeated to assess whether the corrections had also reduced the discrepancies between the two 
+datasets. The resulting scatter plot, shown in panel (a) of Figure \ref{fig:comparison_HS_MODIS_corrected}, indicates a substantial improvement. In 
+particular, all the data points now cluster around the identity line, suggesting that the issues responsible for the two previously anomalous groups of 
+points have been successfully solved. However, although the slight tendency of station measurement to overestimate SCD is in line with expectations, a 
+considerable spread in data point remains. To investigate the source of this scatter, a more detailed comparison was conducted revealing that MODIS 
+accuracy decreases substantially over highly forested areas, in agreement with the findings discussed \ref{cap:snow_products}. Indeed, comparing 
+individual HS series with the corresponding MODIS data revealed patterns similar to the one shown in Figure \ref{fig:modis_vs_hs}, where the snow covered 
+periods identified by satellite observations (light blue) are noticeably shorter than those indicated by station measurements.
 
 \begin{figure}[H]
     \centering
@@ -240,7 +236,7 @@ observations (light blue) are noticeably shorter than those indicated by station
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/modis_vs_hs.png}
-    \caption{Comparison between HS and MODIS snow cover time series. Light blue shaded areas indicate periods classified as snow covere by MODIS.}
+    \caption{Comparison between station snow depth and MODIS snow cover time series. Light blue shaded areas indicate the periods classified as snow covered by MODIS.}
     \label{fig:modis_vs_hs}
 \end{figure}
 
@@ -256,18 +252,17 @@ observations (light blue) are noticeably shorter than those indicated by station
 
 \section{Calibration procedure}
 
-The previously performed correction of the station metadata is particularly relevant at this stage, as accurate knowledge of the stations' geographical 
-coordinates is essential to ensure proper calibration. From now on, only the 714 reliable stations of the 832 constituing the corrected dataset were 
-taken into account. For each of their coordinates, a reconstruction of daily temperature and precipitation fields over the 1951--2023 period was attempted. 
-This procedure was successful for only 632 station out of the 714, since in some cases there were too few data to obtain reliable outputs. Having this 
-temperature and precipitation data made it possible to reconstruct SWE series for each of the remaining stations, which could then be compared with the 
-corresponding snow depth series, since both quantify the amount of snow within the snowpack, but through different unit of measurements. However, the 
-conversion from one to another is not straightforward, since it requires the knowledge of the vertical profile of snow density, which in the framework of 
-this thesis remains unknown. This issue can be solved by means of a snow model such as $\Delta$Snow, which makes the conversion from snow depth to 
-snow water equivalent under the assumption that every increase of more than a threshold $\tau$ in snow depth can be interpreted as a snowfall event. This 
-multi layered simulation of the snowpack even predicts snow compaction by mean of a Newtonian approach. Within the framework of this thesis, however, 
-it was decided to not make a direct comparison between model outputs and observational data, given that the usage of $\Delta$Snow during the calibration 
-would have made it susceptible to modelling errors and uncertainties within $\Delta$Snow itself. The chosen approach consisted instead in converting both 
+The correction of metadata described previously is particularly relevant at this stage, as accurate station coordinates are essential for the 
+calibration procedure. In fact, of the \num{832} stations being a part of the corrected dataset, only the \num{714} considered reliable were 
+retained for the subsequent analysis. The first step of model calibration was the reconstruction of daily temperature and precipitation time series 
+at the exact coordinates of each station over the 1951--2023 period. This procedure was successful for \num{632} stations, while the remaining 82 
+had insufficient data to obtain reliable reconstructions. These reconstructed meteorological data could be used to generate snow water equivalent 
+time series to be compared with the corresponding observed snow depth records. Although both variables quantify the amount of snow within 
+the snowpack, they represent different physical quantities and thus a direct comparison is not possible. A possible solution would be to use a snow 
+model such as $\Delta$Snow, which estimates SWE from HS series by interpreting snow depth increases and drops exceeding a certain $\tau$ as 
+snowfall and snowmelt events. However, integrating $\Delta$Snow into the calibration procedure would also introduce additional uncertainties 
+associated with the assumption and modelling limitations of the snow model itself.
+ The chosen approach consisted instead in converting both 
 HS and SWE series into binary ones, labelling as zero the days with \SI{0}{\centi\meter} of snow depth (or \SI{0}{\milli\meter} of SWE), whereas positive 
 values got labelled as ones. The main focus of the calibration was then the temporal allignement of these binary series, with the goal of making them 
 overlap in snow presence prediction as much as possible. The loss function chosen to compare model outputs with snow depth time series is
