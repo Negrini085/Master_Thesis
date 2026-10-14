@@ -324,27 +324,30 @@ Although the comparison over the full year was encouraging, a closer examination
 A first insight into the model behaviour can be gained by examining the monthly agreement between simulated SWE and observed HS series, as shown in Figure 
 \ref{fig:homogeneous_calib_monthly_wise}. In particular, during the first part of the snow season, the model markedly overestimates the presence of snow 
 on the ground compared to the HS series. This mismatch may be partially attributed to the fact that the model does not explicitly account for the 
-individual heat fluxes contributing to the energy balance of the snowpack. Specifically, during 
+individual heat fluxes contributing to the energy balance of the snowpack. Specifically, during the early winter months, the ground releases the heat 
+stored over the summer as it approaches thermal equilibrium. This process limits the persistence of snow on the ground by favouring the melting of newly 
+formed snow cover. In addition, the model appears to predict complete snowmelt too early, suggesting that the DDF parameters proposed by \cite{Magnusson_DDF} 
+may be excessively high for the study area. This second inaccuracy in representing the duration of snow season may also partially explain the overestimation 
+observed at the beginning of the hydrological year. Indeed, minimizing the loss function may favour a certain number of false positives early in the season 
+if this leads to more true positives later on.
 
-
-Ciò che si può osservare è che nella prima parte della stagione nevosa, rispettivamente composta dai mesi di Novembre, Dicembre e Gennaio, il modello 
-sovrastima decisamente la presenza di neve a terra rispetto alle serie di spessore nevoso. Possiamo supporre che questo comportamento sia in parte legato 
-al fatto che il nostro modello non tiene conto dei singoli flussi di calore che vanno a costituire il bilancio energetico del manto nevoso. In particolare, 
-nei primi mesi invernali, il terreno scambia efficacemente il calore immagazzinato durante il periodo estivo con l'esterno, con lo scopo di giungere all'
-equilibrio termico. Chiaramente, tale comportamento inibisce la presenza della neve a terra, facilitando la fusione del manto appena creato. Oltre a 
-questo fenomeno, è possibile anche osservare come la fusione nevosa sia anticipata nel modello, evidenza che sembrerebbe indicare l'utilizzo di DDF 
-eccessivamente elevati. Questa seconda imprecisione nella caratterizzazione della durata della stagione nevosa potrebbe anche essere in parte causa 
-delle sovrastime presenti nella prima parte dell'anno idrologico, dato che per ottenere il valore minimo della loss function potrebbe convenire avere 
-alcuni falsi positivi nella parte iniziale, per avere meno falsi negativi nella seconda.
-
-\begin{figure}[H]
+A second insight could be attained by focusing on the elevation of the snow depth stations being a part of the calibration procedure. For this reason, the 
+HS series were divided in three elevation bands focusing on keeping almost the same amount of stations in each class to produce the confusion matrices 
+shown in Figure \ref{fig:homogeneous_calib_elevation_wise}. Such an analysis highlighted that the model overestimates snow cover persistence on the ground 
+at low to intermediate elevation, whereas this tendency reverses over \SI{2000}{\meter} above sea level. It is plausible that such a behaviour could be 
+partially due to the model inputs.
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/homogeneous_calib_elevation_wise.png}
     \caption{Elevation-wise confusion matrices comparing SWE series and HS observations. The model outputs are generated with $T_\tau\,=\,\SI{1.073}{\degreeCelsius}$ 
     for precipitation phase partitioning.}
     \label{fig:homogeneous_calib_elevation_wise}
 \end{figure}
+Indeed, at high altitudes solid precipitation are typically underestimated as the result of snow under catchment due to unheated rain gauges. Although 
+quality checks have been employed by \cite{precipitation_IHGAR} to exclude clearly biased precipitation series from the gridding procedure, some issues 
+may still be present as the authors pointed out in conclusion of the paper. Moreover, the terrain below \SI{1000}{\meter} above sea level rarely reaches 
+freezing conditions, meaning that ground heat fluxes $G$ could be responsible for the more significant mismatch between observed snow depth series and 
+the simulated ones at low altitudes.
 
 
-
-\subsection{Simulated annealing}
+%\subsection{Simulated annealing}
