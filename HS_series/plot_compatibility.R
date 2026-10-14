@@ -60,7 +60,7 @@ p1 <- ggplot() +
   ) +
   scale_color_manual(
     values = c("OK" = "forestgreen", "NO" = "firebrick1"),
-    name = "Compatibility"
+    name = "Reliability"
   ) +
   coord_sf(xlim = c(3.5, 17), ylim = c(43, 49), expand = FALSE) +
   theme_minimal() +
@@ -77,7 +77,7 @@ p2 <- ggplot() +
   ) +
   scale_color_manual(
     values = c("OK" = "forestgreen", "NO" = "firebrick1"),
-    name = "Compatibility"
+    name = "Reliability"
   ) +
   coord_sf(xlim = c(3.5, 17), ylim = c(43, 49), expand = FALSE) +
   theme_minimal() +
