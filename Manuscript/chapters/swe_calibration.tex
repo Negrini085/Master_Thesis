@@ -77,10 +77,10 @@ recording snow free conditions during summer. An example of each of these cases 
 \end{figure}
 
 Clearly, missing values and erroneous summer readings are not mutually exclusive, and more complex numerical anomalies may therefore occur within the same 
-pseudo-hydrological year. Moreover, several HS series were affected by other numerical artifacts, such as spikes or sudden drops in snow depth. Given these 
+pseudo-hydrological year. Furthermore, several HS series were affected by other numerical artifacts, such as spikes or sudden drops in snow depth. Given these 
 issues, specific procedures were developed to improve the quality of the snow depth dataset before proceeding with the calibration. The remainder of this 
-section is devoted to describing separately the methods adopted to improve the accuracy of the station metadata and to correct, whenever possible and 
-necessary, the numerical artifacts that initially compromised the reliability of the snow depth data.
+section is thus devoted to describing separately the methods adopted to improve the accuracy of the station metadata and to correct, whenever possible 
+and necessary, the numerical issues that initially compromised the reliability of snow depth data.
 
 
 
@@ -107,15 +107,15 @@ that most corrections involved shifts of less than $\SI{1}{\kilo\meter}$.
 \end{figure}
 
 Overall, this procedure allowed the precise coordinates of approximately \num{300} stations to be recovered, increasing the number of stations whose 
-elevations were consistent with the DEM from \num{532} to \num{829}. For the remaining stations, the original coordinates were retained because no 
+elevations were consistent with the DEM from \num{532} to \num{829}. For the remaining ones, the original coordinates were retained because no 
 sufficiently reliable sources were available to support a correction.
 
 
 
 \subsection{HS series correction}
 
-Before applying any corrections to the snow depth time series, the data were visually inspected to identify the main issues and develop suitable 
-correction procedures. For each station, comparison plots were generated for all hydrological years containing at least one non-missing HS value, 
+Before any corrections were applied to the snow depth time series, the data were visually inspected to identify the main issues and develop suitable 
+procedures to address them. For each station, comparison plots were generated for all hydrological years containing at least one non-missing HS value, 
 as illustrated in Figure \ref{fig:visual_check_example}. Each plot consisted of three panels: the first displayed the original HS time series, the 
 second one showed the corresponding snow water equivalent (SWE) obtained using the $\Delta$Snow model, while the third presented the SWE simulated 
 using the melt parameters optimized by \cite{Magnusson_DDF} and a temperature threshold of $\SI{2.5}{\degreeCelsius}$ for precipitation phase 
@@ -134,8 +134,8 @@ precipitation phase partitioning makes this approach more reliable for distingui
 the model tends to overestimate the number of snowfall events, as some rainfall may meet the requirements for solid precipitation computation. 
 Consequently, when a spike in snow depth, such as the one observed in early September in Figure \ref{fig:visual_check_example}, is not accompanied by a 
 corresponding increase in simulated SWE, it can reasonably be attributed to a numerical artifact rather than to actual snowfall. Each comparison plot 
-also included a red shaded interval corresponding to a period typically associated with bare ground. HS values within this window were proposed to 
-be automatically set to zero. The duration of this interval varies depending on the elevation of the station as shown in Table \ref{tab:time_window_to_zero}:
+also included a red shaded interval corresponding to a period typically associated with bare ground conditions. HS values within this window were proposed 
+to be automatically set to zero. The duration of this interval varies depending on the elevation of the station as shown in Table \ref{tab:time_window_to_zero}:
 \begin{table}[H]
   \centering
   \caption{Proposed time windows to be automatically set to zero.}
@@ -156,8 +156,8 @@ be automatically set to zero. The duration of this interval varies depending on 
   \end{tabular}
 \end{table}
 During the preliminary visual inspection, hydrological years unsuitable for reconstruction were identified and flagged for exclusion. A 
-pseudo-hydrological year was discarded when the HS series contained too many missing values to extract meaningful information, or when measurement noise 
-could not be reliably distinguished from the actual snow signal. This applied in particular to all series beginning after snow accumulation had already 
+pseudo-hydrological year was discarded when measurement noise could not be reliably distinguished from the actual snow signal or when the HS series 
+contained too many missing values to extract meaningful information. This applied in particular to all series beginning after snow accumulation had already 
 started, or ending before snow depth had returned to zero, as the onset or end of the snow season could not be determined accurately. As a result, 
 most stations located in ski areas were deleted from the HS dataset, because their measurements typically did not cover the entire snow cycle. 
 Moreover, the main numerical artifacts for each station were recorded, together with any necessary adjustments to the proposed summer zeroing window. 
@@ -166,16 +166,16 @@ approach required considerable manual effort, it was necessary to address the va
 and gap-filling procedure comprised the following steps:
 \begin{itemize}[label=$\blacktriangleright$]
     \item \textit{series filtering}, which consisted of discarding all pseudo-hydrological year previously flagged as unsuitable for signal 
-    reconstruction. In addition, negative HS values were reclassified as missing data, since snow depth must always be bigger or equal to zero.
+    reconstruction. In addition, negative HS values were reclassified as missing data, since snow depth must always be positive or equal to zero.
     \item \textit{summer zeroing}, in which the selected summer window was automatically set to zero. For pseudo-hydrological years characterized 
     by a ground-level bias over the entire period, as in panel (a) of Figure \ref{fig:hs_series_wrong_summer}, the summer average HS value was first 
     computed and subtracted from every daily measurement, and only then was the proposed window zeroed. Any values that became negative because of 
     noise fluctuations were clipped to zero at this stage.
     \item \textit{spike and drop detection}, aimed at identifying such numerical artifacts and reclassifying them as missing data. Particular 
     attention was paid to spikes higher than $\SI{80}{\centi\meter}$ and drops larger than $\SI{50}{\centi\meter}$.
-    \item \textit{gap filling}, which consisted of filling gaps bounded either by two strictly positive values or by two zeros by linearly interpolating 
+    \item \textit{gap filling}, which consisted of filling gaps bounded either by two strictly positive values or by two zeros with a linear interpolation 
     between the endpoints. Although this approach cannot recover the actual daily snow depth within the gaps, it allows snow covered ground to be 
-    distinguished from bare ground. Restricting interpolating to gaps whose endpoints are both positive or both zero limits the cases in which snow depth 
+    distinguished from bare ground. Restricting interpolation to gaps whose endpoints are both positive or both zero limits the cases in which snow depth 
     values are assigned to days when the presence of snow is uncertain.
     \item \textit{first visual inspection}, carried out to verify that the gaps had been filled correctly and to decide how to proceed. Whenever the 
     gap filling strategy produced faulty reconstructions, it was repeated selecting which gap to fill. 
@@ -218,10 +218,11 @@ Moreover, the comparison with MODIS observations was repeated to assess whether 
 datasets. The resulting scatter plot, shown in panel (a) of Figure \ref{fig:comparison_HS_MODIS_corrected}, indicates a substantial improvement. In 
 particular, all the data points now cluster around the identity line, suggesting that the issues responsible for the two previously anomalous groups of 
 points have been successfully solved. However, although the slight tendency of station measurement to overestimate SCD is in line with expectations, a 
-considerable spread in data point remains. To investigate the source of this scatter, a more detailed comparison was conducted revealing that MODIS 
-accuracy decreases substantially over highly forested areas, in agreement with the findings discussed \ref{cap:snow_products}. Indeed, comparing 
-individual HS series with the corresponding MODIS data revealed patterns similar to the one shown in Figure \ref{fig:modis_vs_hs}, where the snow covered 
-periods identified by satellite observations (light blue) are noticeably shorter than those indicated by station measurements.
+considerable spread in data points remains. To investigate the source of this scatter, a more detailed comparison was conducted revealing that MODIS 
+accuracy decreases substantially over highly forested areas, in agreement with the findings discussed in Chapter \ref{cap:snow_products}. Indeed, 
+comparing the HS series with the corresponding MODIS data for the pseudo-hydrological years lying furthest from the identity line revealed patterns 
+similar to that shown in Figure \ref{fig:modis_vs_hs}. In particular, the snow covered periods identified by satellite observations (light blue) are 
+noticeably shorter than the snow depth ones.
 
 \begin{figure}[H]
     \centering
@@ -251,11 +252,11 @@ periods identified by satellite observations (light blue) are noticeably shorter
 
 \section{Calibration procedure}
 
-The correction of station metadata proved particularly relevant at this stage, as the calibration procedure requires accurate coordinates. 
+The correction of station metadata proved particularly relevant at this stage, as the calibration procedure required accurate coordinates. 
 Consequently, of the \num{832} stations in the final dataset, only the \num{714} considered reliable were retained for the subsequent analysis. The 
 first step of model calibration was the reconstruction of daily temperature and precipitation series at the exact location of each station over the 
 1951--2023 period. This operation was successful for \num{632} stations, while for the remaining \num{82} the available data were insufficient to 
-obtain reliable results. These reconstructed meteorological data could then be used to simulate snow water equivalent series for comparison with 
+obtain accurate results. These reconstructed meteorological data could then be used to simulate snow water equivalent series for comparison with 
 the corresponding snow depth observations. Although both variables reflect the amount of snow on the ground, they represent different physical 
 quantities and cannot be compared directly. A possible solution to this problem would be to use a snow model such as $\Delta$Snow, which converts 
 HS series into SWE records by interpreting snow depth increases and decreases exceeding a certain threshold $\tau$ as snowfall and snowmelt events 
@@ -323,19 +324,20 @@ Although the comparison over the full year was encouraging, a closer examination
 \end{figure}
 A first insight into the model behaviour can be gained by examining the monthly agreement between simulated SWE and observed HS series, as shown in Figure 
 \ref{fig:homogeneous_calib_monthly_wise}. In particular, during the first part of the snow season, the model markedly overestimates the presence of snow 
-on the ground compared to the HS series. This mismatch may be partially attributed to the fact that the model does not explicitly account for the 
-individual heat fluxes contributing to the energy balance of the snowpack. Specifically, during the early winter months, the ground releases the heat 
-stored over the summer as it approaches thermal equilibrium. This process limits the persistence of snow on the ground by favouring the melting of newly 
-formed snow cover. In addition, the model appears to predict complete snowmelt too early, suggesting that the DDF parameters proposed by \cite{Magnusson_DDF} 
+on the ground compared to the HS series. This mismatch may be partially attributed to the fact that the model does not account for the individual heat 
+fluxes contributing to the energy balance of the snowpack. Specifically, during the early winter months, the ground releases the heat stored over the 
+summer as it approaches thermal equilibrium limiting the persistence of snow by favouring the melting of newly formed snow layers. Consequently, the 
+observed snow depth drops to zero sooner than the simulated one after an ephemeral snowfall, since this particular source of heat is not considered in 
+the modelling chain. In addition, the model appears to predict complete snowmelt too early, suggesting that the DDF parameters proposed by \cite{Magnusson_DDF} 
 may be excessively high for the study area. This second inaccuracy in representing the duration of snow season may also partially explain the overestimation 
 observed at the beginning of the hydrological year. Indeed, minimizing the loss function may favour a certain number of false positives early in the season 
 if this leads to more true positives later on.
 
-A second insight could be attained by focusing on the elevation of the snow depth stations being a part of the calibration procedure. For this reason, the 
-HS series were divided in three elevation bands focusing on keeping almost the same amount of stations in each class to produce the confusion matrices 
-shown in Figure \ref{fig:homogeneous_calib_elevation_wise}. Such an analysis highlighted that the model overestimates snow cover persistence on the ground 
-at low to intermediate elevation, whereas this tendency reverses over \SI{2000}{\meter} above sea level. It is plausible that such a behaviour could be 
-partially due to the model inputs.
+A second insight could be attained by focusing on the elevation of the snow depth stations used in the calibration procedure. To this end, the 
+HS series were divided into three elevation bands, each containing approximately the same number of stations, and the confusion matrices shown in Figure 
+\ref{fig:homogeneous_calib_elevation_wise} were produced. This analysis highlighted that the model overestimates snow cover persistence at low and 
+intermediate elevation, whereas this tendency reverses above \SI{2000}{\meter} a.s.l. This behaviour may be partially attributable to the model inputs.
+Indeed, at high elevations solid precipitation is typically underestimated because of snow undercatch by unheated rain gauges. 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/homogeneous_calib_elevation_wise.png}
@@ -343,11 +345,9 @@ partially due to the model inputs.
     for precipitation phase partitioning.}
     \label{fig:homogeneous_calib_elevation_wise}
 \end{figure}
-Indeed, at high altitudes solid precipitation are typically underestimated as the result of snow under catchment due to unheated rain gauges. Although 
-quality checks have been employed by \cite{precipitation_IHGAR} to exclude clearly biased precipitation series from the gridding procedure, some issues 
-may still be present as the authors pointed out in conclusion of the paper. Moreover, the terrain below \SI{1000}{\meter} above sea level rarely reaches 
-freezing conditions, meaning that ground heat fluxes $G$ could be responsible for the more significant mismatch between observed snow depth series and 
-the simulated ones at low altitudes.
+Although \cite{precipitation_IHGAR} applied quality checks to exclude clearly biased precipitation series from the generation of the precipitation rasters, 
+some issues may persist. Moreover, below \SI{1000}{\meter} a.s.l. the ground rarely freezes, meaning that ground heat flux $G$ could be responsible for 
+the larger mismatch between observed HS and simulated SWE series.
 
 
 %\subsection{Simulated annealing}

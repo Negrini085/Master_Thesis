@@ -11,7 +11,7 @@ years <- 1951:2023
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_analysis/")
 
 # Importing longitude and latitude
-nc <- nc_open("Dataset/SC/SC_1951.nc")
+nc <- nc_open("Dataset/SC/lim_10/SC_1951.nc")
 lon <- ncvar_get(nc, "lon")
 lat <- ncvar_get(nc, "lat")
 nc_close(nc)
@@ -28,11 +28,11 @@ for(y in years[2:length(years)]){
   
   
   # Selecting snow cover for a given hydrological year
-  nc <- nc_open(paste0("Dataset/SC/SC_", y-1, ".nc"))
+  nc <- nc_open(paste0("Dataset/SC/lim_10/SC_", y-1, ".nc"))
   first_chunk <- ncvar_get(nc, "sc", start = c(1, 1, start), count = c(-1, -1, -1))
   nc_close(nc)
   
-  nc <- nc_open(paste0("Dataset/SC/SC_", y, ".nc"))
+  nc <- nc_open(paste0("Dataset/SC/lim_10/SC_", y, ".nc"))
   second_chunk <- ncvar_get(nc, "sc", start = c(1, 1, 1), count = c(-1, -1, end))
   nc_close(nc)
   
@@ -63,7 +63,7 @@ scd_def <- ncvar_def(
   compression = 5
 )
 
-ncout <- nc_create("Results/SCD/scd_maps_hydro_1952_to_2023.nc", scd_def, force_v4 = TRUE)
+ncout <- nc_create("Results/SCD/scd_maps_hydro_1952_to_2023_lim_10.nc", scd_def, force_v4 = TRUE)
 ncvar_put(ncout, scd_def, scd)
 
 ncatt_put(ncout, "lon", "axis", "X")
