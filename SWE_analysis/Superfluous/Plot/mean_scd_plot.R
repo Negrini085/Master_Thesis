@@ -19,8 +19,8 @@ theme_paper_clean <- function() {
     theme(
       legend.position = "right",
       legend.direction = "horizontal", 
-      legend.title = element_text(face = "bold", size = 25, vjust = 0.5),
-      legend.text = element_text(size = 20),
+      legend.title = element_text(face = "bold", size = 20, vjust = 0.5),
+      legend.text = element_text(size = 15),
       legend.spacing.x = unit(0.3, 'cm'), 
       legend.spacing.y = unit(0.2, 'cm'),
       plot.margin = margin(5, 5, 5, 5)
