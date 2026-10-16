@@ -11,7 +11,7 @@ library(tidyterra)
 library(patchwork)
 
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_analysis/")
-fname <- "Results/SCD/scd_maps_hydro_1952_to_2023.nc"
+fname <- "Results/SCD/scd_maps_hydro_1952_to_2023_lim_15.nc"
 
 # Function to create a clean environment for plot creation
 theme_paper_clean <- function() {
@@ -71,7 +71,7 @@ make_snow_plot <- function(raster_lyr, breaks, labels, palette, legend_name) {
 
 # Importing raster
 snow_metrics <- rast(fname)
-scd_mean <- mean(snow_metrics)
+scd_mean <- mean(snow_metrics[[41:70]])
 names(scd_mean) <- "scd_mean"
 
 
@@ -89,7 +89,7 @@ p1 <- make_snow_plot(
   scd_mean,
   breaks = c(11, 39, 78, 123, 167, 211, 278),
   labels = c("0 - 11", "12 - 39", "40 - 78", "79 - 123", "124 - 167", "168 - 211", "212 - 278", "279 - 365"),
-  palette = custom_palette, "Average SCD \n [days]"
+  palette = custom_palette, "Mean SCD \n 1991-2020 \n [days]"
 )
 
 print(p1)

@@ -64,7 +64,7 @@ for(y in years){
   
   # Importing swe maps and computing over the whole investigated area
   r <- rast(fnames)
-  r <- project(r, overlap_mask, method = "average")
+  r <- project(r, overlap_mask, method = "near")
   r[!overlap_mask] <- NA
   volume <- area * r
   swe_hydro <- global(volume, "sum", na.rm = TRUE)[[1]] * 1e-12
