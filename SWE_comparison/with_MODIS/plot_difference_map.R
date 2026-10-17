@@ -1,0 +1,119 @@
+# The goal of this script is to make a plot to compare SCD results between ITSNOW and MODIS.
+rm(list = ls())
+gc()
+
+library(terra)
+library(ncdf4)
+library(ggplot2)
+library(tidyterra)
+library(patchwork)
+library(scales)
+library(geodata)
+
+
+fname_MODIS  <- "Results/mean_SCD_MODIS.tif"
+fname_model <- "Results/mean_scd_model.tif"
+
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_comparison/with_MODIS/")
+
+
+# Importing files and makng projections
+modis  <- rast(fname_MODIS)
+model <- rast(fname_model)
+compareGeom(model, modis, stopOnError = TRUE)
+
+
+# Making difference
+diff <- modis - model
+names(diff) <- "diff"
+
+
+
+
+
+
+
+
+
+
+# Potting procedure
+val_min <- -100
+val_max <- 100
+
+map_title        <- "SCD difference (MODIS - model)"
+map_legend_title  <- "SCD \n difference \n[Days]"
+col_low   <- "#2166AC"
+col_mid   <- "white"
+col_high  <- "#B2182B"
+map_na_color <- NA
+
+hist_binwidth <- 2
+hist_title  <- "SCD difference distribution"
+hist_xlab   <- "SCD difference [days]"
+hist_ylab   <- "Relative frequency"
+hist_fill   <- "steelblue"
+hist_border <- "white"
+
+size_title        <- 16
+size_axis_title   <- 20
+size_axis_text    <- 15
+size_legend_title <- 20
+size_legend_text  <- 15
+
+world_borders <- geodata::world(resolution = 3, path = "gadm_cache")
+italy_border  <- crop(world_borders, ext(diff))
+
+p_map <- ggplot() +
+  geom_spatraster(data = diff, aes(fill = diff)) +
+  geom_spatvector(data = italy_border, fill = NA, color = "black", linewidth = 0.4) +
+  scale_fill_gradient2(
+    low = col_low, mid = col_mid, high = col_high, midpoint = 0,
+    limits = c(val_min, val_max),
+    oob = scales::squish,
+    na.value = map_na_color,
+    name = map_legend_title
+  ) +
+  labs(title = NULL, x = "Longitude [°E]", y = "Latitude [°N]") +
+  theme_minimal(base_size = size_axis_text) +
+  theme(
+    plot.title      = element_text(size = size_title, face = "bold", hjust = 0.5),
+    axis.text       = element_text(size = size_axis_text),
+    axis.title      = element_text(size = size_axis_title),
+    legend.title    = element_text(size = size_legend_title),
+    legend.text     = element_text(size = size_legend_text),
+    legend.position = "right"
+  ) +
+  coord_sf(expand = FALSE)
+
+vals <- values(diff)[, 1]
+vals <- vals[!is.na(vals)]
+
+df_hist <- data.frame(diff = vals)
+n_tot   <- nrow(df_hist)
+
+df_hist <- df_hist[df_hist$diff >= val_min & df_hist$diff <= val_max, , drop = FALSE]
+n_outliers <- n_tot - nrow(df_hist)
+
+p_hist <- ggplot(df_hist, aes(x = diff)) +
+  geom_histogram(
+    aes(y = after_stat(count / sum(count))),
+    binwidth = hist_binwidth,
+    boundary = 0,
+    fill = hist_fill, color = hist_border
+  ) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "grey30") +
+  scale_x_continuous(limits = c(val_min, val_max)) +
+  labs(title = NULL, x = hist_xlab, y = hist_ylab) +
+  theme_minimal(base_size = size_axis_text) +
+  theme(
+    plot.title = element_text(size = size_title, face = "bold", hjust = 0.5),
+    axis.text  = element_text(size = size_axis_text),
+    axis.title = element_text(size = size_axis_title)
+  )
+
+final_plot <- p_map + p_hist +
+  plot_layout(nrow = 1, widths = c(1.5, 1)) +
+  plot_annotation(tag_levels = "a", tag_prefix = "(", tag_suffix = ")") &
+  theme(plot.tag = element_text(face = "bold", size = 14))
+
+print(final_plot)
