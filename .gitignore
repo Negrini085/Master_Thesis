@@ -33,6 +33,11 @@ SC_studies/Comparison/MODIS_vs_PO/Dataset
 SC_studies/Comparison/PO_vs_ITSNOW/Dataset
 SC_studies/Comparison/PO_vs_ITSNOW/Superfluous/convert_daily_maps_ITSNOW.R
 
+SWE_comparison/Dataset
+SWE_comparison/with_MODIS/Results
+SWE_comparison/with_ITSNOW/Results
+SWE_comparison/with_POBasin/Results
+
 # ---------------------------
 #       HS series datas
 # ---------------------------
