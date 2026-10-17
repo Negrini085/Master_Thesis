@@ -29,7 +29,7 @@ for(y in years){
   
   # Selecting first June date
   dates <- as.Date("1950-01-01") + time
-  idx <- which(dates == as.Date(paste0(y, "-06-01")))
+  idx <- which(dates == as.Date(paste0(y, "-02-01")))
   if (length(idx) != 1) stop("Requested map not found for ", y, "\n")
   
   # Extracting swe map
@@ -39,7 +39,7 @@ for(y in years){
 
   # Saving swe map
   swe[, , which(years == y)] <- appo
-  cat("Extracted swe map for the 1 June of ", y, "!", "\n")
+  cat("Extracted swe map for the 1 February of ", y, "!", "\n")
 }
 
 
@@ -55,12 +55,12 @@ swe_def <- ncvar_def(
   units       = "mm",
   dim         = list(londim, latdim, timedim),
   missval     = -9999,
-  longname    = "Swe 1 June",
+  longname    = "Swe 1 February",
   prec        = "float",
   compression = 5
 )
 
-ncout <- nc_create("Results/SWE/first_june_maps.nc", swe_def, force_v4 = TRUE)
+ncout <- nc_create("Results/SWE/first_february_maps.nc", swe_def, force_v4 = TRUE)
 ncvar_put(ncout, swe_def, swe)
 
 ncatt_put(ncout, "lon", "axis", "X")

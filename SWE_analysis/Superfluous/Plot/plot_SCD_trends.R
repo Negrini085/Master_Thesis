@@ -37,11 +37,10 @@ make_snow_plot <- function(raster_lyr, title, breaks, labels, palette, legend_na
   rcl <- cbind(c(-Inf, breaks), c(breaks, Inf), seq_len(n))
   r   <- classify(raster_lyr, rcl, right = TRUE)
   
-  # TUTTI i livelli, anche quelli senza pixel
   levels(r) <- data.frame(ID = seq_len(n), label = labels)
   
   ggplot() +
-    geom_spatraster(data = r, maxcell = Inf, show.legend = TRUE) +  # forza le chiavi vuote
+    geom_spatraster(data = r, maxcell = Inf, show.legend = TRUE) +
     geom_spatvector(data = italy_border, fill = NA, color = "black", linewidth = 0.3) +
     scale_fill_manual(
       values   = setNames(palette, labels),
@@ -50,7 +49,7 @@ make_snow_plot <- function(raster_lyr, title, breaks, labels, palette, legend_na
       drop     = FALSE,
       name     = legend_name,
       na.value = "transparent",
-      na.translate = FALSE,   # evita una chiave "NA" in legenda
+      na.translate = FALSE,
       guide = guide_legend(
         title.position = "top", ncol = 2, byrow = FALSE, label.position = "right",
         keywidth = unit(0.4, "cm"), keyheight = unit(0.4, "cm")
