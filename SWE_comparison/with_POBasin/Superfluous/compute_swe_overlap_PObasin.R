@@ -28,7 +28,7 @@ compareGeom(po_map, model_map, stopOnError = FALSE)
 
 # Masking procedure
 overlap_mask <- !is.na(model_map) & !is.na(po_map)
-area <- cellSize(po_map, unit = "m")
+area <- cellSize(overlap_mask, unit = "m")
 
 
 # Importing, projecting and cropping dem

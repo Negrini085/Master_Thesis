@@ -5,6 +5,7 @@ gc()
 
 library(terra)
 library(ncdf4)
+library(ggplot2)
 
 years <- 1991:2021
 fname_model_map <- "../Dataset/SWE_1951.nc"
@@ -65,7 +66,6 @@ rm(po_map, model_map, glacier_mask); invisible(gc())
 nc <- nc_open(fname_model_map)
 lon <- ncvar_get(nc, "lon")
 lat <- ncvar_get(nc, "lat")
-model_map <- ncvar_get(nc, "swe", start = c(1, 1, 1), count = c(-1, -1, 1))
 nc_close(nc)
 
 overlap_mask <- raster_to_nc(overlap_mask, lon, lat) == 1
@@ -108,9 +108,10 @@ for(y in years){
   
   stopifnot(identical(dim(overlap_mask), dim(swe)[1:2]))
   stopifnot(identical(dim(elev), dim(swe)[1:2]))
-  swe[!overlap_mask] <- NA
   
+  swe[!overlap_mask] <- NA
   swe_volume <- sweep(swe, c(1, 2), area, `*`)
+  
   for(i in 1:n_bands){
     
     appo <- swe_volume
