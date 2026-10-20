@@ -32,10 +32,6 @@ names(diff) <- "diff"
 
 
 
-
-
-
-
 # Potting procedure
 val_min <- -100
 val_max <- 100
