@@ -11,7 +11,8 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_comparison/with_MODIS/")
 
 # Importing dem and mean_scd to crop the Italian territory
 scd_maps <- rast(fname_scd)
-mean_scd <- mean(scd_maps[[61:72]])
+years_idx <- which(1952:2023 %in% 2001:2023)
+mean_scd <- mean(scd_maps[[min(years_idx):max(years_idx)]])
 
 appo <- rast(fname_mask)
 appo <- project(appo, mean_scd, method = "near")
