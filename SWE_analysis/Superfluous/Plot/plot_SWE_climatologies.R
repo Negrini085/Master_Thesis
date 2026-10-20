@@ -10,7 +10,7 @@ library(ggspatial)
 library(tidyterra)
 library(patchwork)
 
-fname <- "Results/SWE/first_may_maps.nc"
+fname <- "Results/SWE/first_january_maps.nc"
 fname_mask <- "Results/years_continuous_snow.nc"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_analysis/")
 

@@ -5,7 +5,7 @@ gc()
 library(abind)
 library(ncdf4)
 
-years <- 1952:2023
+years <- 1951:2022
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_analysis/")
 
 
@@ -29,7 +29,7 @@ for(y in years){
   
   # Selecting first June date
   dates <- as.Date("1950-01-01") + time
-  idx <- which(dates == as.Date(paste0(y, "-02-01")))
+  idx <- which(dates == as.Date(paste0(y, "-11-01")))
   if (length(idx) != 1) stop("Requested map not found for ", y, "\n")
   
   # Extracting swe map
@@ -39,7 +39,7 @@ for(y in years){
 
   # Saving swe map
   swe[, , which(years == y)] <- appo
-  cat("Extracted swe map for the 1 February of ", y, "!", "\n")
+  cat("Extracted swe map for the 1 November of ", y, "!", "\n")
 }
 
 
@@ -55,17 +55,17 @@ swe_def <- ncvar_def(
   units       = "mm",
   dim         = list(londim, latdim, timedim),
   missval     = -9999,
-  longname    = "Swe 1 February",
+  longname    = "Swe 1 November",
   prec        = "float",
   compression = 5
 )
 
-ncout <- nc_create("Results/SWE/first_february_maps.nc", swe_def, force_v4 = TRUE)
+ncout <- nc_create("Results/SWE/first_november_maps.nc", swe_def, force_v4 = TRUE)
 ncvar_put(ncout, swe_def, swe)
 
 ncatt_put(ncout, "lon", "axis", "X")
 ncatt_put(ncout, "lat", "axis", "Y")
-ncatt_put(ncout, 0, "title", "SWE at 1 June, 1952-2023")
+ncatt_put(ncout, 0, "title", "SWE at 1 November, 1951-2022")
 ncatt_put(ncout, 0, "history", paste("Created on", Sys.time()))
 
 nc_close(ncout)

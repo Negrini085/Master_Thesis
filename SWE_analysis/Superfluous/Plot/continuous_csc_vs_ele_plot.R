@@ -61,11 +61,13 @@ p2 <- ggplot(subset(df, yrs > 0), aes(x = elev)) +
   theme(panel.grid.minor = element_blank())
 
 
-p <- (p1 + p2) &
-    theme(
-      axis.title = element_text(size = 20),
-      axis.text  = element_text(size = 15)
-    )
+p <- (p1 + p2) +
+  plot_annotation(tag_levels = "a") &
+  theme(
+    axis.title = element_text(size = 20),
+    axis.text  = element_text(size = 15),
+    plot.tag   = element_text(size = 20, face = "bold")
+  )
 print(p)
 
 # ggsave("Images/elevation_vs_continuous_snow.png", p1 + p2,
