@@ -14,7 +14,7 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_analysis/")
 # Importing SWE datas
 df <- read.table(fname, header = TRUE)
 dates <- as.Date(df$data)
-swe <- as.numeric(df$third)
+swe <- as.numeric(df$fifth)
 
 
 # Cycle over years
@@ -44,13 +44,12 @@ df_save <- data.frame(
   fap_swe = fap_swe
 )
 # plot(fap_swe)
-
 print("Peak SWE statistics: ")
 sens.slope(max_swe)
 print("First april statistics: ")
 sens.slope(fap_swe)
 print("Climatological peak SWE value:")
-mean(as.numeric(df_save$max_swe)[df_save$years %in% 1952:1980])
+mean(as.numeric(df_save$max_swe)[df_save$years %in% 1991:2020])
 print("Climatological 1 April SWE value:")
-mean(as.numeric(df_save$fap_swe)[df_save$years %in% 1952:1980])
+mean(as.numeric(df_save$fap_swe)[df_save$years %in% 1991:2020])
 # write.table(df_save, "Results/SWE/appo_peak.dat", row.names = FALSE, col.names = TRUE, quote = FALSE)

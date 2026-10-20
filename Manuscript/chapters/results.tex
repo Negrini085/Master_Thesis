@@ -9,18 +9,35 @@
 
 
 
-
+\newpage
 \section{Glaciated areas}
 
-The snow model developed within the framework of this thesis generates snow water equivalent maps over the IH-GAR by means of Equation \ref{eq:swe_swe}. 
-Considering that the SWE maps 
-
+The degree day model developed within the framework of this thesis produces daily snow water equivalent maps according to Equation \ref{eq:swe_swe}. Since 
+the SWE variable is set to zero only at the beginning of the simulation and is not reset thereafter, any snow remaining at the end of the season is carried 
+over to the following year. Consequently, in high elevation alpine catchments where temperature do not allow complete snowmelt, pixels can keep accumulating 
+snow for multiple years. In particular, grid points located above \SI{3500}{\meter} a.s.l. appear to experience continuous snow cover throughout the 
+whole \num{72} years period between \num{1951} and \num{2023}, as illustrated in panel (a) of Figure \ref{fig:csc_vs_ele}. Moreover, a significant share 
+of pixels above \SI{3000}{\meter} a.s.l. appear to experience all year round snow coverage at least once.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/csc_vs_ele.png}
-    \caption{}
+    \caption{(a) Number of years with snow cover all year round as a function of elevation. Each dot is a grid point of the simulated domain. (b) Distribution 
+    of cells with at least one year of continuous snow cover as a function of elevation.}
     \label{fig:csc_vs_ele}
 \end{figure}
+
+Although this phenomenon is completely consistent with snow dynamics in the Alps, as it represents one of the main processes governing glacier ice 
+formation, it requires appropriate handling to avoid incorrect estimates of seasonal snow cover dynamics and trends over the study area. Indeed, 
+since the grid points are independent, snow can accumulate indefinitely at higher elevations, 
+
+
+reaching values of almost \SI{100}{\meter} of water 
+equivalent on the most important mountainous massifs of the IH-GAR. A possible solution to this problem would be to develop a glacier simulation module, to 
+pair with the snow model, in order to keep track of both seasonal snowpack and glacier, but is, however, beyond the scope of this thesis. In order to 
+keep the focus on the seasonal snowpack, it was chosen to exclude from SWE calculations those pixels that remained snow covered for at least half of the 
+investigated period, i.e., \num{36} out of {72} years.
+
+
 
 \begin{figure}[H]
     \centering
@@ -83,16 +100,25 @@ Considering that the SWE maps
     \toprule
     \textbf{Ele. band} & \textbf{Trend slope} & \textbf{P-value} \\
     \midrule
-    \num{0} -- \SI{500}{\meter} & -0.1082404 (1.125051)  & 0.0005281 \\
-    \num{500} -- \SI{1000}{\meter} & -0.08805291 (1.015653) & 0.0008388 \\
-    \num{1000} -- \SI{1500}{\meter} & - 0.1172568 (1.857315) &  0.007835 \\
-    \num{1500} -- \SI{2000}{\meter} & -0.1636932  (2.862675) & 0.01012 \\
-    \num{2000} -- \SI{2500}{\meter} & -0.1728566 (3.278348) & 0.003943 \\
-    Above \SI{2500}{\meter} & -0.08722833 (2.439655) & 0.008788 \\
+    \num{0} -- \SI{500}{\meter} & -8.6 \%/decade  & 0.0005 \\
+    \num{500} -- \SI{1000}{\meter} & -8.7 \%/decade & 0.0008 \\
+    \num{1000} -- \SI{1500}{\meter} & -6.3 \%/decade &  0.0078 \\
+    \num{1500} -- \SI{2000}{\meter} & -5.7 \%/decade & 0.0101 \\
+    \num{2000} -- \SI{2500}{\meter} & -5.2 \%/decade & 0.0039 \\
+    Above \SI{2500}{\meter} & -3.6\%/decade & 0.0087 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
+%-0.1082404 (1.125051) 
+%-0.08805291 (1.015653)
+%-0.1172568 (1.857315)
+%-0.1636932  (2.862675)
+%-0.1728566 (3.278348)
+%-0.08722833 (2.439655)
+
+
+% Manca un datooooooooo!!
 \begin{table}[H]
   \centering
   \caption{Peak SWE trends over the 1951--2023 period.}
@@ -103,15 +129,21 @@ Considering that the SWE maps
     \toprule
     \textbf{Ele. band} & \textbf{Trend slope} & \textbf{P-value} \\
     \midrule
-    \num{0} -- \SI{500}{\meter} & 0 (0.0000102445)  & 0.406 \\
-    \num{500} -- \SI{1000}{\meter} & -0.000956357 (0.03043699) & 0.0009587 \\
-    \num{1000} -- \SI{1500}{\meter} & -0.05391444 (0.7489367) & 0.00166 \\
-    \num{1500} -- \SI{2000}{\meter} & -0.1505534 (2.151537) & 0.01528 \\
-    \num{2000} -- \SI{2500}{\meter} & -0.178926  (2.860095) & 0.004595 \\
-    Above \SI{2500}{\meter} & -0.07271611  (1.989774) & 0.02906 \\
+    \num{0} -- \SI{500}{\meter} & --  & -- \\
+    \num{500} -- \SI{1000}{\meter} &  & 0.0009 \\
+    \num{1000} -- \SI{1500}{\meter} & -7.2 \%/decade & 0.0016 \\
+    \num{1500} -- \SI{2000}{\meter} & -7.0 \%/decade & 0.0152 \\
+    \num{2000} -- \SI{2500}{\meter} & -6.3 \%/decade & 0.0045 \\
+    Above \SI{2500}{\meter} & -3.7 \%/decade & 0.0291 \\
     \bottomrule
   \end{tabular}
 \end{table}
+
+% -0.000956357 (0.03043699)
+% -0.05391444 (0.7489367)
+% -0.1505534 (2.151537)
+% -0.178926  (2.860095)
+% -0.07271611  (1.989774)
 
 \begin{figure}[hp]
     \centering
@@ -124,22 +156,32 @@ Considering that the SWE maps
 \begin{figure}[hp]
     \centering
     \includegraphics[width=\linewidth]{results/swe_clima_trends_mar.png}
-    \caption{}
+    \caption{(a) Climatological 1 March SWE spatial distribution over the 1991--2020 period. (b) Trend slope of 1 March SWE [mm/decade]. (c) Sign 
+    and statistical significance of the trend.}
     \label{fig:swe_clima_trends_mar}
 \end{figure}
 
 \begin{figure}[hp]
     \centering
     \includegraphics[width=\linewidth]{results/swe_clima_trends_apr.png}
-    \caption{}
+    \caption{(a) Climatological 1 April SWE spatial distribution over the 1991--2020 period. (b) Trend slope of 1 April SWE [mm/decade]. (c) Sign 
+    and statistical significance of the trend.}
     \label{fig:swe_clima_trends_apr}
 \end{figure}
 
 \begin{figure}[hp]
     \centering
     \includegraphics[width=\linewidth]{results/swe_clima_trends_may.png}
-    \caption{}
+    \caption{(a) Climatological 1 May SWE spatial distribution over the 1991--2020 period. (b) Trend slope of 1 May SWE [mm/decade]. (c) Sign 
+    and statistical significance of the trend.}
     \label{fig:swe_clima_trends_may}
+\end{figure}
+
+\begin{figure}[hp]
+    \centering
+    \includegraphics[width=\linewidth]{results/trend_by_ele_by_date.png}
+    \caption{}
+    \label{fig:trend_by_ele_by_date}
 \end{figure}
 
 \begin{figure}[hp]
