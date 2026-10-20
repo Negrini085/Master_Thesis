@@ -59,4 +59,14 @@ if (any(failed))
 # Evaluating loss
 totals <- Reduce("+", results)
 loss <- 1 - totals["TP"] / (totals["TP"] + totals["FP"] + totals["FN"])
-write.table(data.frame(loss = loss), "appo_loss.dat",row.names = FALSE, col.names = FALSE, quote = FALSE)
+frequency_bias <- (totals["TP"] + totals["FP"]) / (totals["TP"] + totals["FN"])
+hit_rate <- totals["TP"] / (totals["TP"] + totals["FN"] )
+accuracy <- (totals["TP"] + totals["TN"] ) / (totals["TP"] + totals["TN"] + totals["FP"] + totals["FN"])
+
+df_metrics <- data.frame(
+  loss = loss, 
+  frequency_bias = frequency_bias,
+  hit_rate = hit_rate,
+  accuracy = accuracy
+)
+write.table(df_metrics, "appo_loss.dat",row.names = FALSE, col.names = FALSE, quote = FALSE)

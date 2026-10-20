@@ -65,7 +65,7 @@ compute_ddf <- function(year, ddf_ave, ddf_ampl){
 
 
 # Function to compute degree day in order to model melt.
-compute_degree_days <- function(tmax, tmin, expfact, name){
+compute_degree_days <- function(tmax, tmin, expfact, t_melt, name){
   
   # # Checking dataset quality
   # if(length(tmin) != length(tmax)) stop(paste0("Non compatible length for min and max temperature at ", name))
@@ -75,27 +75,33 @@ compute_degree_days <- function(tmax, tmin, expfact, name){
   m_m <- expfact
   tmean <- (tmin + tmax)/2
   
-  deg_day <- tmean + m_m * log(1 + exp(-(tmean)/m_m))
+  deg_day <- (tmean - t_melt) + m_m * log(1 + exp(-(tmean - t_melt)/m_m))
   return(deg_day)
 }
 
 
 # Function to compute actual swe series for a given station. We will start to 
 # accumulate on the 1st of January in 1950.
-swe_series <- function(name, t_th, ddf_ave, ddf_ampl, expfact){
+swe_series <- function(name, t_th, ddf_ave, ddf_ampl, expfact, t_melt){
   
   # Importing temperature and precipitation series
   df_prec <- read.table(paste0("Dataset/PCPD/DV_", name), header = FALSE)
+  mask_numerical_efficiency <- as.numeric(df_prec$V1) > 1960
+  df_prec <- df_prec[mask_numerical_efficiency, ]
   month <- as.numeric(df_prec$V2)
   prec <- as.numeric(df_prec$V5)
   year <- as.numeric(df_prec$V1)
   day <- as.numeric(df_prec$V3)
   
   df_tmin <- read.table(paste0("Dataset/TMND/DV_", name), header = FALSE)
+  mask_numerical_efficiency <- as.numeric(df_tmin$V1) > 1960
+  df_tmin <- df_tmin[mask_numerical_efficiency, ]
   mask <- as.numeric(df_tmin$V1) %in% unique(year)
   tmin <- as.numeric(df_tmin$V5)[mask]
   
   df_tmax <- read.table(paste0("Dataset/TMXD/DV_", name), header = FALSE)
+  mask_numerical_efficiency <- as.numeric(df_tmax$V1) > 1960
+  df_tmax <- df_tmax[mask_numerical_efficiency, ]
   mask <- as.numeric(df_tmax$V1) %in% unique(year)
   tmax <- as.numeric(df_tmax$V5)[mask]
   
@@ -124,7 +130,7 @@ swe_series <- function(name, t_th, ddf_ave, ddf_ampl, expfact){
   df_precs <- data.frame(year = year, month = month, day = day, value = prec_s)
   # write.table(df_precs, paste0("Results/raw/", sub("HSD", "V_SNW", name)), row.names = FALSE, col.names = FALSE, quote = FALSE)
   
-  degree_day <- compute_degree_days(tmax = tmax, tmin = tmin, expfact = expfact, name = name)
+  degree_day <- compute_degree_days(tmax = tmax, tmin = tmin, expfact = expfact, t_melt = t_melt, name = name)
   df_dd <- data.frame(year = year, value = degree_day)
   
   
@@ -199,6 +205,7 @@ df_in <- read.table(fname_in, header = TRUE)
 ddf_ave <- as.numeric(df_in$ddf_ave)
 ddf_ampl <- as.numeric(df_in$ddf_ampl)
 expfact <- as.numeric(df_in$expfact)
+t_melt <- as.numeric(df_in$tmelt)
 t_th <- as.numeric(df_in$tlim)
 
 if(expfact <= 0) stop(paste0("Expfact parameter should be bigger than zero!"))
@@ -224,7 +231,7 @@ files <- files[mask]
 
 # Actual swe computation
 results <- mclapply(files, function(name) {
-  appo <- swe_series(name  = name, t_th  = t_th, ddf_ave = ddf_ave, ddf_ampl = ddf_ampl, expfact = expfact)
+  appo <- swe_series(name  = name, t_th  = t_th, ddf_ave = ddf_ave, ddf_ampl = ddf_ampl, expfact = expfact, t_melt = t_melt)
   # if (appo == 1) message("Made swe computations for ", name)
   return(appo)
 }, mc.cores = n_cores)
