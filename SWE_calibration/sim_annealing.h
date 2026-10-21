@@ -121,8 +121,10 @@ class SimAnnealing{
                 //Propongo una nuova mossa
                 totali++;
                 do{ appo_th = m_th + m_delta * dis_move(gen); }while(appo_th < -1 || appo_th > 3);
-                do{ appo_ddfav = m_ddfav + m_delta * dis_move(gen); }while(appo_ddfav < 1 || appo_ddfav > 5);
-                do{ appo_ddfam = m_ddfam + m_delta * dis_move(gen); }while(appo_ddfam < 0.5 || appo_ddfam > 3.5);                
+                do{
+                    do{ appo_ddfav = m_ddfav + m_delta * dis_move(gen); }while(appo_ddfav < 1 || appo_ddfav > 5);
+                    do{ appo_ddfam = m_ddfam + m_delta * dis_move(gen); }while(appo_ddfam < 0.5 || appo_ddfam > 3.5);
+                }while(appo_ddfav <= appo_ddfam);
                 do{ appo_expfact = m_expfact + 0.4 * m_delta * dis_move(gen); }while(appo_expfact < 0.2 || appo_expfact > 2);
                 do{ appo_tmelt = m_melt + m_delta * dis_move(gen); }while(appo_tmelt < -2 || appo_tmelt > 4);
 
