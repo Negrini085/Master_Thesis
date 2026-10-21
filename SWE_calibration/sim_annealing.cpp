@@ -12,9 +12,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    string fname = argv[1];
-    double appo_ave, appo_amp;
-    
+    string fname = argv[1];    
     
     // Random generator to start SA procedure
     mt19937 gen(126);
@@ -30,7 +28,7 @@ int main(int argc, char* argv[]) {
     for(int i = 1; i <= 2; i++){
         
         unsigned int sa_seed = gen();
-        SimAnnealing prova(10, 1e-6, 0.5, sa_seed); 
+        SimAnnealing prova(1, 1e-6, 0.5, sa_seed); 
         prova.SA(fname, i, dis_th(gen), dis_ddfav(gen), dis_ddfam(gen), dis_expfact(gen), dis_tmelt(gen));
     }
 

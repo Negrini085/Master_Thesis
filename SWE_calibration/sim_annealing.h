@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <random>
+#include <cstdio>
 #include <array>
 
 using namespace std;
@@ -11,6 +12,12 @@ using namespace std;
 
 #ifndef __SA__
 #define __SA__
+
+
+void runOrDie(const string& cmd) {
+    int ret = system(cmd.c_str());
+    if (ret != 0) { cerr << "Errore: " << cmd << " -> " << ret << endl; exit(1); }
+}
 
 
 
@@ -47,7 +54,7 @@ class SimAnnealing{
 
     public:
     SimAnnealing()
-        : T_in(10), T_fin(1e-6), m_beta(0.0), m_new(0.0), m_old(0.0), m_delta(0.4),
+        : T_in(1), T_fin(1e-6), m_beta(0.0), m_new(0.0), m_old(0.0), m_delta(0.4),
           gen(41), dis_prob(0.0, 1.0), dis_move(-0.5, 0.5), m_th(2.0), m_ddfav(2.2), m_ddfam(1.7), m_expfact(0.5), m_melt(0)
     {}
     SimAnnealing(double tmax, double tmin, double delta, unsigned int seed = 0)
@@ -84,15 +91,15 @@ class SimAnnealing{
         ofstream file_accrate;
         file_loss.open("loss_evo_" + to_string(num_run) + ".dat");
         file_param.open("param_evo_" + to_string(num_run) + ".dat");
-        file_accrate.open("accrate_evo" + to_string(num_run) + ".dat");
+        file_accrate.open("accrate_evo_" + to_string(num_run) + ".dat");
 
 
         // First simulation
         saveInput(m_th, m_ddfav, m_ddfam, m_expfact, m_melt, fname);
-        system("Rscript model.R");
-        system("Rscript convert_swe_to_hydro.R");
-        system("rm Results/raw/*");
-        system("Rscript compute_loss.R");
+        runOrDie("Rscript model.R");
+        runOrDie("Rscript convert_swe_to_hydro.R");
+        system("rm -f Results/raw/*");
+        runOrDie("Rscript compute_loss.R");
 
         // First performance evaluation
         acc_metrics = findCosts("appo_loss.dat");
@@ -123,10 +130,11 @@ class SimAnnealing{
                 saveInput(appo_th, appo_ddfav, appo_ddfam, appo_expfact, appo_tmelt, fname);
 
                 // Making calculations
-                system("Rscript model.R");
-                system("Rscript convert_swe_to_hydro.R");
-                system("rm Results/raw/*");
-                system("Rscript compute_loss.R");
+                std::remove("appo_loss.dat");
+                runOrDie("Rscript model.R");
+                runOrDie("Rscript convert_swe_to_hydro.R");
+                system("rm -f Results/raw/*");
+                runOrDie("Rscript compute_loss.R");
 
                 // First performance evaluation
                 acc_metrics = findCosts("appo_loss.dat");

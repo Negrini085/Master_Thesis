@@ -235,3 +235,13 @@ results <- mclapply(files, function(name) {
   # if (appo == 1) message("Made swe computations for ", name)
   return(appo)
 }, mc.cores = n_cores)
+
+
+
+# Controlling whether all went good
+ok <- sapply(results, function(x) identical(x, 1))
+if (!all(ok)) {
+  message("Not considered stations: ", paste(files[!ok], collapse = ", "))
+  message(paste(unique(unlist(results[!ok])), collapse = "\n"))
+  quit(status = 1)
+}

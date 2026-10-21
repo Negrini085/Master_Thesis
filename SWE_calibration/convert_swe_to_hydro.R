@@ -40,6 +40,7 @@ solar_to_hydro <- function(name){
   # Saving hydro years to file
   df_print <- data.frame(year = appo_year, swe = appo_swe)
   write.table(df_print, paste0("Results/hydro/", name), row.names = FALSE, col.names = FALSE, quote = FALSE)
+  return(1)
 }
 
 
@@ -49,4 +50,10 @@ station_names <- sub("Results/raw/", "", files)
 
 # Parallel evolution
 n_cores <- 8
-invisible(mclapply(station_names, solar_to_hydro, mc.cores = n_cores))
+results <- mclapply(station_names, solar_to_hydro, mc.cores = n_cores)
+ok <- sapply(results, function(x) identical(x, 1))
+if (!all(ok)) {
+  message("Not considered stations: ", paste(station_names[!ok], collapse = ", "))
+  message(paste(unique(unlist(results[!ok])), collapse = "\n"))
+  quit(status = 1)
+}
