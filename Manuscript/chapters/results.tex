@@ -28,29 +28,29 @@ of pixels above \SI{3000}{\meter} a.s.l. appear to experience all year round sno
 
 Although this phenomenon is completely consistent with snow dynamics in the Alps, as it represents one of the main processes governing glacier ice 
 formation, it requires appropriate handling to avoid incorrect estimates of seasonal snow cover dynamics and trends over the study area. Indeed, 
-since the grid points are independent, snow can accumulate indefinitely at higher elevations, 
-
-
-reaching values of almost \SI{100}{\meter} of water 
-equivalent on the most important mountainous massifs of the IH-GAR. A possible solution to this problem would be to develop a glacier simulation module, to 
-pair with the snow model, in order to keep track of both seasonal snowpack and glacier, but is, however, beyond the scope of this thesis. In order to 
-keep the focus on the seasonal snowpack, it was chosen to exclude from SWE calculations those pixels that remained snow covered for at least half of the 
-investigated period, i.e., \num{36} out of {72} years.
-
+since grid points are treated independently, snow can accumulate indefinitely at higher elevations, leading to unrealistically deep snowpacks that persist 
+throughout the simulation. A possible solution to this issue would be to develop a glacier module that simulates the transformation of snow into firn and 
+ice, as well as glacier flow, thereby allowing mass to be transferred downward to milder thermal conditions.  However, this is beyond the scope of this 
+thesis. The adopted solution was instead to exclude from SWE calculations those pixels that remained snow covered for at least half of the investigated 
+period, i.e., \num{36} out of {72} years. These grid points are located on the most important massifs of the Italian Alps, as illustrated in panel (a) of 
+Figure \ref{fig:covered_area_maps}, and roughly resemble the average glacier extent over the 1951--2023 period. The masked area accounts for approximately 
+\SI{423}{\kilo\meter\squared}, representing \num{0.27}\% of the study area.
 
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/covered_area_maps.png}
-    \caption{}
+    \caption{(a) Spatial distribution of grid points that were snow covered all year round at least once. Colours indicate the total number of years with 
+    continuous snow cover. (b) Temporal evolution of the area snow covered all year round over the 1951--2023 period. A nearly linear decrease can be 
+    observed over recent years, suggesting that meteorological conditions are becoming increasingly unfavorable for the persistence of the cryosphere.}
     \label{fig:covered_area_maps}
 \end{figure}
 
 
 
+% Snow Water Equivalent (SWE) for Northern Italy: reconstruction and trend analysis over the 1951--2023 period
 
-
-
+% Snow Water Equivalent (SWE) in the Italian Alps: reconstruction from high-resolution gridded temperature and precipitation data
 
 
 
