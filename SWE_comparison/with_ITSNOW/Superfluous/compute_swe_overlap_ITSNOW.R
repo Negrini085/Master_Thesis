@@ -42,7 +42,7 @@ dem[!overlap_mask] <- NA
 
 m_lower <- ifel(dem > -100 & dem <= 1000, 1, NA)
 m_medium <- ifel(dem > 1000 & dem <= 2000, 1, NA)
-m_higher <- ifel(dem > 2000 & dem <= 3000, 1, NA)
+m_higher <- ifel(dem > 2000 & dem <= 5000, 1, NA)
 cat("Overlap map created successfully!", "\n")
 
 
@@ -67,19 +67,19 @@ for(y in years){
   r <- mask(r, overlap_mask, maskvalues = FALSE)
   volume <- area * r
   swe_hydro <- global(volume, "sum", na.rm = TRUE)[[1]] * 1e-12
-
-
+  
+  
   # Working elevation-wise
   swe_hydro_lower  <- global(mask(volume, m_lower),  "sum", na.rm = TRUE)[[1]] * 1e-12
   swe_hydro_medium <- global(mask(volume, m_medium), "sum", na.rm = TRUE)[[1]] * 1e-12
   swe_hydro_higher <- global(mask(volume, m_higher), "sum", na.rm = TRUE)[[1]] * 1e-12
-
+  
   appo_swe <- c(appo_swe, swe_hydro)
   appo_swe_lower <- c(appo_swe_lower, swe_hydro_lower)
   appo_swe_medium <- c(appo_swe_medium, swe_hydro_medium)
   appo_swe_higher <- c(appo_swe_higher, swe_hydro_higher)
   appo_dates <- c(appo_dates, seq(as.Date(paste0(y-1, "-09-01")), as.Date(paste0(y, "-08-31")), by = "day"))
-
+  
   cat("Taken into account year ", y, "\n")
 }
 

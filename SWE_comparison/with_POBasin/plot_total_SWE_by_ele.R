@@ -14,8 +14,11 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_comparison/with_POBasin/
 
 # Importing both SWE evolution files in order to make a comparison
 po <- read.table(fname_PO, header = TRUE)
+mask <- (as.Date(po$dates) < as.Date("2011-10-01")) | (as.Date(po$dates) > as.Date("2021-09-30"))
+po <- po[!mask, ]
+
 model <- read.table(fname_model, header = TRUE)
-mask <- (as.Date(model$dates) < as.Date("1991-10-01")) | (as.Date(model$dates) > as.Date("2021-09-30"))
+mask <- (as.Date(model$dates) < as.Date("2011-10-01")) | (as.Date(model$dates) > as.Date("2021-09-30"))
 model <- model[!mask, ]
 
 po$dates <- as.Date(po$dates)

@@ -57,6 +57,6 @@ for (m in names(dates)) {
 clim <- do.call(c, unname(clim_list))
 names(clim) <- names(dates)
 
-clim_model <- project(clim, model_template, method = "near")
+clim_model <- project(clim, model_template, method = "average")
 clim_model <- mask(clim_model, overlap_mask, maskvalues = 0)
 writeRaster(clim_model, "Results/swe_climatologies_POBasin.tif", overwrite = TRUE)

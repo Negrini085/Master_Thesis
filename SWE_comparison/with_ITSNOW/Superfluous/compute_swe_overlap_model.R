@@ -43,7 +43,7 @@ rm(template_model); invisible(gc())
 
 m_lower <- ifel(dem > -100 & dem <= 1000, 1, NA)
 m_medium <- ifel(dem > 1000 & dem <= 2000, 1, NA)
-m_higher <- ifel(dem > 2000 & dem <= 3000, 1, NA)
+m_higher <- ifel(dem > 2000 & dem <=5000, 1, NA)
 cat("Overlap map created successfully!", "\n")
 
 

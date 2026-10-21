@@ -4,32 +4,13 @@ rm(list = ls())
 gc()
 
 library(terra)
-library(ncdf4)
-library(ggplot2)
 
 years <- 1991:2021
 fname_model_map <- "../Dataset/SWE_1951.nc"
 fname_dem <- "../../SWE_analysis/DEM/DEM_compatible.tif"
-fname_po <- "../../SC_studies/Po-Basin/Dataset/1992/SWE_1991-10-03.tif"
+fname_po_map <- "../../SC_studies/Po-Basin/Dataset/1992/SWE_1991-10-03.tif"
 fname_glacier_mask <- "../../SWE_analysis/Results/years_continuous_snow.nc"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_comparison/with_POBasin/")
-
-
-# Function to convert from tiff to netCDF format
-raster_to_nc <- function(r, lon, lat) {
-  stopifnot(length(lon) == ncol(r), length(lat) == nrow(r))
-  xr  <- xFromCol(r)
-  yr  <- yFromRow(r)
-  tol <- min(res(r)) / 2
-  ix <- sapply(lon, function(v) which.min(abs(xr - v)))
-  iy <- sapply(lat, function(v) which.min(abs(yr - v)))
-  if (max(abs(xr[ix] - lon)) > tol || max(abs(yr[iy] - lat)) > tol)
-    stop("Grids are not overlapping")
-  m <- as.matrix(r, wide = TRUE)
-  t(m)[ix, iy, drop = FALSE]
-}
-
-
 
 
 
@@ -41,7 +22,7 @@ glacier_mask <- rast(fname_glacier_mask)[[1]]
 model_map <- rast(fname_model_map)[[1]]
 glacier_mask <- glacier_mask > 36
 model_map[glacier_mask] <- NA
-po_map <- rast(fname_po)
+po_map <- rast(fname_po_map)
 
 
 # Projecting po map on model grid map
@@ -62,74 +43,46 @@ dem[!overlap_mask] <- NA
 rm(po_map, model_map, glacier_mask); invisible(gc())
 
 
-# Exporting maps to netcdf format. Importing map to make comparison of coordinates
-nc <- nc_open(fname_model_map)
-lon <- ncvar_get(nc, "lon")
-lat <- ncvar_get(nc, "lat")
-nc_close(nc)
-
-overlap_mask <- raster_to_nc(overlap_mask, lon, lat) == 1
-elev <- raster_to_nc(dem, lon, lat)
-area <- raster_to_nc(area, lon, lat)
+m_lower  <- ifel(dem > -100 & dem <= 1000, 1, NA)
+m_medium <- ifel(dem > 1000 & dem <= 2000, 1, NA)
+m_higher <- ifel(dem > 2000 & dem <= 5000, 1, NA)
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Band elevation limits
-breaks     <- c(-100, 1000, 2000, 5000)
-n_bands    <- length(breaks) - 1
-band_names <- paste0(breaks[-length(breaks)], "-", breaks[-1], "m")
-
-
-
-# Cycle over years
-swe_evo <- rep(list(numeric(0)), n_bands)
+appo_swe <- numeric(0)
+appo_swe_lower <- numeric(0)
+appo_swe_medium <- numeric(0)
+appo_swe_higher <- numeric(0)
+appo_dates <- as.Date(character(0))
 for(y in years){
+  
+  # Selecting filenames
+  r <- rast(paste0("../Dataset/SWE_", y, ".nc"))
+  r[!overlap_mask] <- NA
+  volume <- area * r
+  swe_hydro <- global(volume, "sum", na.rm = TRUE)[[1]] * 1e-12
 
-  
-  # Selecting SWE for a given year
-  nc <- nc_open(paste0("../Dataset/SWE_", y, ".nc"))
-  swe <- ncvar_get(nc, "swe", start = c(1, 1, 1), count = c(-1, -1, -1))
-  nc_close(nc)
-  
-  stopifnot(identical(dim(overlap_mask), dim(swe)[1:2]))
-  stopifnot(identical(dim(elev), dim(swe)[1:2]))
-  
-  swe[!overlap_mask] <- NA
-  swe_volume <- sweep(swe, c(1, 2), area, `*`)
-  
-  for(i in 1:n_bands){
-    
-    appo <- swe_volume
-    mask_ele <- elev > breaks[i] & elev <= breaks[i+1] & !is.na(elev)
-    
-    appo[!mask_ele] <- NA
-    swe_evo[[i]] <- c(swe_evo[[i]], colSums(appo, dims = 2, na.rm = TRUE)*10^-12)
-  }
-  
-  cat("Taken into account year", y, "of our record!", "\n")
+  # Working elevation-wise
+  swe_hydro_lower  <- global(mask(volume, m_lower),  "sum", na.rm = TRUE)[[1]] * 1e-12
+  swe_hydro_medium <- global(mask(volume, m_medium), "sum", na.rm = TRUE)[[1]] * 1e-12
+  swe_hydro_higher <- global(mask(volume, m_higher), "sum", na.rm = TRUE)[[1]] * 1e-12
+
+  appo_swe <- c(appo_swe, swe_hydro)
+  appo_swe_lower <- c(appo_swe_lower, swe_hydro_lower)
+  appo_swe_medium <- c(appo_swe_medium, swe_hydro_medium)
+  appo_swe_higher <- c(appo_swe_higher, swe_hydro_higher)
+  appo_dates <- c(appo_dates, seq(as.Date(paste0(y, "-01-01")), as.Date(paste0(y, "-12-31")), by = "day"))
+
+  cat("Taken into account year ", y, "\n")
 }
 
-
 df <- data.frame(
-  dates = seq(as.Date("1991-01-01"), as.Date("2021-12-31"), by = "day"), 
-  lower = swe_evo[[1]],
-  medium = swe_evo[[2]],
-  higher = swe_evo[[3]],
-  total = swe_evo[[1]] + swe_evo[[2]] + swe_evo[[3]]
+  dates = appo_dates, 
+  swe = appo_swe, 
+  lower = appo_swe_lower,
+  medium = appo_swe_medium,
+  higher = appo_swe_higher
 )
-write.table(df, file = "Results/model_swe_series.dat", row.names = FALSE, col.names = TRUE, quote = FALSE)
+all.equal(df$swe, df$lower + df$medium + df$higher)
+write.table(df, "Results/model_swe_series.dat", col.names = TRUE, row.names = FALSE, quote = FALSE)
