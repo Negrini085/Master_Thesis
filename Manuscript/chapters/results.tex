@@ -57,14 +57,21 @@ Figure \ref{fig:covered_area_maps}, and roughly resemble the average glacier ext
 
 \section{SWE predictions}
 
-The 1991-2020 climatological value of SWE stored within the study area is $7.4 \pm 3.1\,\SI{}{\giga\meter\cubed}$
-
+Once the daily snow water equivalent maps were masked for glacieted regions, the total volume of water stored within the snowpack 
+was reconstructed on a daily basis. This time series, shown in Figure \ref{fig:masked_swe_evolution}, is characterized by 
+substantial interannual variability. Notably, throughout the 1975--1985 decade, the residual SWE volume at the end of the summer 
+season is still significant, as a consequence of reduced summer ablation and enhanced winter accumulation which resulted in the 
+only widespread glacier advance phase of the 20th century in the Italian Alps \parencite{only_advance_italian_alps}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/masked_swe_evolution.png}
-    \caption{}
+    \caption{Daily evolution of the total water volume stored as snow in the IH-GAR from 1 October 1951 to 30 September 2023.}
     \label{fig:masked_swe_evolution}
 \end{figure}
+
+
+The 1991-2020 climatological value of SWE stored within the study area is $7.4 \pm 3.1\,\SI{}{\giga\meter\cubed}$
+
 
 % Peak_SWE_climatological (1991-2020)
 % mean: 7.425618
@@ -111,18 +118,9 @@ The 1991-2020 climatological value of SWE stored within the study area is $7.4 \
   \end{tabular}
 \end{table}
 
-%-0.1082404 (1.125051) 
-%-0.08805291 (1.015653)
-%-0.1172568 (1.857315)
-%-0.1636932  (2.862675)
-%-0.1728566 (3.278348)
-%-0.08722833 (2.439655)
-
-
-% Manca un datooooooooo!!
 \begin{table}[H]
   \centering
-  \caption{Peak SWE trends over the 1951--2023 period.}
+  \caption{1 April SWE trends over the 1951--2023 period.}
   \label{tab:first_april_swe_model_trends}
   \renewcommand{\arraystretch}{1.3}
   \renewcommand{\tabularxcolumn}[1]{m{#1}}
@@ -131,7 +129,7 @@ The 1991-2020 climatological value of SWE stored within the study area is $7.4 \
     \textbf{Ele. band} & \textbf{Trend slope} & \textbf{P-value} \\
     \midrule
     \num{0} -- \SI{500}{\meter} & --  & -- \\
-    \num{500} -- \SI{1000}{\meter} &  & 0.0009 \\
+    \num{500} -- \SI{1000}{\meter} & -- & -- \\
     \num{1000} -- \SI{1500}{\meter} & -7.2 \%/decade & 0.0016 \\
     \num{1500} -- \SI{2000}{\meter} & -7.0 \%/decade & 0.0152 \\
     \num{2000} -- \SI{2500}{\meter} & -6.3 \%/decade & 0.0045 \\
@@ -140,11 +138,6 @@ The 1991-2020 climatological value of SWE stored within the study area is $7.4 \
   \end{tabular}
 \end{table}
 
-% -0.000956357 (0.03043699)
-% -0.05391444 (0.7489367)
-% -0.1505534 (2.151537)
-% -0.178926  (2.860095)
-% -0.07271611  (1.989774)
 
 \begin{figure}[hp]
     \centering
