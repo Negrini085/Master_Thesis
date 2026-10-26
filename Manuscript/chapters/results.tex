@@ -57,46 +57,51 @@ Figure \ref{fig:covered_area_maps}, and roughly resemble the average glacier ext
 
 \section{SWE predictions}
 
-Once the daily snow water equivalent maps were masked for glacieted regions, the total volume of water stored within the snowpack 
-was reconstructed on a daily basis. This time series, shown in Figure \ref{fig:masked_swe_evolution}, is characterized by 
-substantial interannual variability. Notably, throughout the 1975--1985 decade, the residual SWE volume at the end of the summer 
-season is still significant, as a consequence of reduced summer ablation and enhanced winter accumulation which resulted in the 
-only widespread glacier advance phase of the 20th century in the Italian Alps \parencite{only_advance_italian_alps}.
+After masking the daily SWE maps to exclude glacier-covered areas, the total volume of water stored in the 
+snowpack could be estimated on a daily basis. The resulting time series, shown in Figure \ref{fig:masked_swe_evolution}, exhibits 
+substantial interannual variability, reflecting the sensitivity of snow accumulation and persistance to different meteorological 
+patterns. Notably, throughout the 1975--1985 period, a significant amount of SWE persisted untill the end of summer, indicating 
+relatively favorable conditions for the cryosphere. This behavior is also consistent with the glacier advance observed in the 
+Italian Alps during the same period, which was driven by reduced summer ablation and enhanced winter accumulation 
+\parencite{only_advance_italian_alps}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/masked_swe_evolution.png}
     \caption{Daily evolution of the total water volume stored as snow in the IH-GAR from 1 October 1951 to 30 September 2023.}
     \label{fig:masked_swe_evolution}
 \end{figure}
-
-
-The 1991-2020 climatological value of SWE stored within the study area is $7.4 \pm 3.1\,\SI{}{\giga\meter\cubed}$
-
-
-% Peak_SWE_climatological (1991-2020)
-% mean: 7.425618
-% std: 3.092068
-
-% Typical_peak_date_climatological (1991-2020)
-% mean: 
-% std: 
-
-% Maximum_SWE_over_total_period (1952-2023)
-% value: 16.40991
-% year: 1960
-
-% Minimum_SWE_over_total_period (1952-2023)
-% value: 3.028058
-% year: 2002
-
+Even a visual inspection of the time series suggests that markedly below average conditions become more frequent toward the end of 
+the 1951--2023 period: notably, all four snow seasons peaking below $\SI{4}{\giga\meter\cubed}$ occurred since 2000. To investigate 
+this behavior more systematically, both the annual maximum (peak) SWE and the 1 April SWE values were extracted for each 
+hydrological year, providing the basis for both a climatological characterization and a temporal trend assessment. Over the 
+1991--2020 reference period, the mean annual peak SWE in the IH-GAR is $7.4 \pm 3.1\,\SI{}{\giga\meter\cubed}$, 
+typically occuring on -calcolare data picco-. As this date precedes 1 April, the 1 April climatological value is lower than the 
+maximum one as a consequence of the onset of snowmelt, amounting to . As regards the temporal evolution, the presence of monotonic 
+trends in both peak SWE and 1 April SWE was assessed over the 1951--2023 period by means of the Mann--Kendall test, with trend 
+magnitude evaluated thanks to Sen--Theil estimator. Although a substantial spread is present as a consequence of interannual 
+variability, both metrics exhibit statistically significant negative trends ($p\,=\,0.003$ and $p\,=\,0.006$), as shown in Figure 
+\ref{fig:peak_fap_trends}. In particular, peak and 1 April SWE decreased respectively by \SI{0.567}{\giga\meter\cubed}/decade 
+and \SI{0.506}{\giga\meter\cubed}/decade over the investigated period.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/peak_fap_trends.png}
-    \caption{}
+    \caption{(a) Peak annual SWE trend analysis. (b) 1 April SWE trend analysis. Despite substantial interannual variability, 
+    both metrics exhibit statistically significant decreasing trends of roughly \SI{0.5}{\giga\meter\cubed} per decade.}
     \label{fig:peak_fap_trends}
 \end{figure}
+Since the total volume of water stored within the snowpack is an aggregate quantity, its decline do not reveal which 
+regions have experienced the largest losses. As a first step towards a deeper understanding of these trends, the study area was 
+partitioned into six elevation bands: the first five were \SI{500}{\meter} wide, while the sixth one comprised every pixel located 
+above $\SI{2500}{\meter}$. Elevation-wise SWE series were subsequently computed to extract peak SWE and 1 April SWE for each 
+band and each hydrological year on record, enabling for the application of the Mann--Kendall test and the Sen--Theil estimator 
+to assess the role of elevation in the observed decline of snow cover. The results of these analyses are reported in Table 
+\ref{tab:peak_swe_model_trends} and \ref{tab:first_april_swe_model_trends}, with trends expressed as percentage changes per decade 
+relative to the 1952--1981 climatological mean of each band. Although for both metrics the reduction is not confined to a specific 
+altitude range, its relative magnitude decreases with elevation. Such a pattern is consistent with the higher sensitivity of snow 
+cover to rising temperatures where these are closer to the freezing point, since even a modest warming may increase the fraction of 
+precipitation falling as rain, thus reducing accumulation, and may favour earlier snowmelt, as mild conditions occur earlier in 
+the season.
 
-%
 
 \begin{table}[H]
   \centering
@@ -139,7 +144,7 @@ The 1991-2020 climatological value of SWE stored within the study area is $7.4 \
 \end{table}
 
 
-\begin{figure}[hp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/swe_clima_trends_feb.png}
     \caption{(a) Climatological 1 February SWE spatial distribution over the 1991--2020 period. (b) Trend slope of 1 February SWE [mm/decade]. (c) Sign 
@@ -147,7 +152,7 @@ The 1991-2020 climatological value of SWE stored within the study area is $7.4 \
     \label{fig:swe_clima_trends_feb}
 \end{figure}
 
-\begin{figure}[hp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/swe_clima_trends_mar.png}
     \caption{(a) Climatological 1 March SWE spatial distribution over the 1991--2020 period. (b) Trend slope of 1 March SWE [mm/decade]. (c) Sign 
@@ -155,7 +160,7 @@ The 1991-2020 climatological value of SWE stored within the study area is $7.4 \
     \label{fig:swe_clima_trends_mar}
 \end{figure}
 
-\begin{figure}[hp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/swe_clima_trends_apr.png}
     \caption{(a) Climatological 1 April SWE spatial distribution over the 1991--2020 period. (b) Trend slope of 1 April SWE [mm/decade]. (c) Sign 
@@ -163,7 +168,7 @@ The 1991-2020 climatological value of SWE stored within the study area is $7.4 \
     \label{fig:swe_clima_trends_apr}
 \end{figure}
 
-\begin{figure}[hp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/swe_clima_trends_may.png}
     \caption{(a) Climatological 1 May SWE spatial distribution over the 1991--2020 period. (b) Trend slope of 1 May SWE [mm/decade]. (c) Sign 
