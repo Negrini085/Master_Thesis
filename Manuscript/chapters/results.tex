@@ -191,14 +191,21 @@ its magnitude remains considerably smaller than that recorded in the surrounding
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/trend_by_ele_by_date.png}
-    \caption{}
+    \caption{Trend in snow water equivalent, expressed as a percentage of the 1952--1981 climatological mean per decade, shown as 
+    a function of elevation band and date of the year. The dotted regions exhibit statistically significant trends $\left(p\,=\,0.05\right)$. 
+    Only elevation-date combinations whose 1991--2020 climatological mean SWE exceeds \SI{5}{\milli\meter} of water equivalent are 
+    coloured. Grey area fall below this threshold.}
     \label{fig:trend_by_ele_by_date}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/swe_climatologies_by_basin.png}
-    \caption{}
+    \caption{Temporal changes in climatological snow cycle over the four main river basins of the IH-GAR domain: Po (top left), 
+    Adige (top right), Brenta (bottom left) and Piave--Tagliamento (bottom right). Each curve shows the climatological snow 
+    water equivalent (in \SI{}{\giga\meter\cubed}) of the first day of each month. The computations were made using five different 
+    time windows, each shifted from the previous one by ten years. These plots show that widespred loss occured across every 
+    river basin on the study region.}
     \label{fig:swe_climatologies_by_basin}
 \end{figure}
 
@@ -209,14 +216,18 @@ its magnitude remains considerably smaller than that recorded in the surrounding
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/swe_evo_comparison_with_PO_basin.png}
-    \caption{}
+    \caption{Comparison between SWE estimates from the Po River Discrit dataset and the snow model developed during this thesis. 
+    Each panel correspons to an elevation band of \SI{1000}{\meter} in width, whose range is indicated in the panel title.}
     \label{fig:swe_evo_comparison_with_PO_basin}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/clima_ratio_Po_model.png}
-    \caption{}
+    \caption{Spatial distribution of the 1992--2021 climatological ratio between SWE estimates of the Po River District dataset 
+    and of the model developed during this thesis. To investigate the evolution of this ratio throughout the snow cycle, comparison 
+    maps at the beginning of November, January, March and May were generated. The model appear to substantially overestimate snow 
+    coverage on the Northern Apennines, whereas in high elevation Alpine catchments the roles reverse.}
     \label{fig:clima_ratio_Po_model}
 \end{figure}
 
@@ -227,7 +238,8 @@ its magnitude remains considerably smaller than that recorded in the surrounding
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/swe_evo_comparison_with_ITSNOW.png}
-    \caption{}
+    \caption{Comparison between SWE estimates from the IT-SNOW reanalysis and the snow model developed during this thesis. Each 
+    panel correspons to an elevation band of \SI{1000}{\meter} in width, whose range is indicated in the panel title.}
     \label{fig:swe_evo_comparison_with_ITSNOW}
 \end{figure}
 
@@ -242,28 +254,33 @@ its magnitude remains considerably smaller than that recorded in the surrounding
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/clima_scd_map_1991_2020.png}
-    \caption{}
+    \caption{Spatial distribution of the climatological snow cover duration across the investigated domain, computed over the 
+    1991--2020 period. }
     \label{fig:clima_scd_map_1991_2020}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/SCD_trends.png}
-    \caption{}
+    \caption{(a) SCD trend computed by means of the Sen-Theil estimator over the 1951--2023 period. (b) Trend significance resulting 
+    from Mann-Kendall test.}
     \label{fig:SCD_trends}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/SCD_difference_by_ele.png}
-    \caption{}
+    \caption{Spatial distribution of the difference between the 1991--2020 climatological SCD of each pixel and the average SCD per 
+    $\SI{5}{\meter}$ wide elevation band it belongs to.}
     \label{fig:SCD_difference_by_ele}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/snow_cover_fraction_climatologies.png}
-    \caption{}
+    \caption{Climatological snow cover fraction as a function of elevation, expressed as the percentage of snow-covered pixels 
+    within each elevation band. Each panel refers to the 15th of the indicated month (December to March). Each curve corresponds 
+    to a different climatological windows, each shifted from the previous one by ten years.}
     \label{fig:snow_cover_fraction_climatologies}
 \end{figure}
 
@@ -271,9 +288,13 @@ its magnitude remains considerably smaller than that recorded in the surrounding
 
 \subsection{Comparison with MODIS}
 
+
+% Riguardare plot, regioni glacializzate sono un po' sus se permetti
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/scd_comparison_modis_model.png}
-    \caption{}
+    \caption{(a) Spatial distribution of the difference between MODIS and model estimates (MODIS SCD minus model SCD). (b) 
+    Frequency distribution of the differences shown in (a). Both panels refer to the full period of overlap between the two products, 
+    namely the 2001--2023 hydrological years.}
     \label{fig:scd_comparison_modis_model}
 \end{figure}
