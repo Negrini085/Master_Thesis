@@ -297,16 +297,13 @@ is based solely on the daily average temperature, but indirectly as a part of th
 precipitation fields used as model inputs. Looking at east-west trending valleys, it's nevertheless clear that the south-facing 
 slopes experience less snow cover than the north-facing ones. 
 
-
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{results/SCD_trends.png}
-    \caption{(a) SCD trend computed by means of the Sen-Theil estimator over the 1951--2023 period. (b) Trend significance resulting 
-    from Mann-Kendall test.}
-    \label{fig:SCD_trends}
-\end{figure}
-
+The conversion from SWE rasters to snow cover maps also allowed to estimate the influence of climate change on the persistence and 
+extent of the seasonal snowpack. For instance, Figure \ref{fig:snow_cover_fraction_climatologies} shows that the curves of snow 
+covered fraction as a function of elevation shift progressively toward higher elevations over time, indicating a reduction in the 
+number of snow covered pixel at a given elevation for each date taken as reference. This decrease appears to be more accentuated 
+at low to mid elevation, whereas highlands over \SI{2500}{\meter} a.s.l. still experience total snow presence at each of the 
+selected dates. Moreover, a significant rise of the regional snow line, which is the elevation at which \num{50}\% of the 
+pixels are snow covered, can be detected over the over the 1951--2023 period. 
 % RIFARE PRENDENDO IL 15ESIMO GIORNO DEL MESE
 \begin{figure}[H]
     \centering
@@ -316,6 +313,23 @@ slopes experience less snow cover than the north-facing ones.
     to a different climatological windows, each shifted from the previous one by ten years.}
     \label{fig:snow_cover_fraction_climatologies}
 \end{figure}
+Clearly, a reduction in the number of snow covered pixels on a given elevation band at the same date results in a widespread reduction 
+of SCD values. Therefore, the Mann-Kendall test and Sen-Theil estimator were applied to the annual snow cover duration maps to 
+identify which regions have experienced the most pronounced changes over the investigated period. The results of these analyses are 
+illustrated in Figure \ref{fig:SCD_trends}, with the highest losses (expressed as days per decade) observed on the highest peaks 
+of the Northern Appenines and along the slopes of secondary valleys on the Alpine arc, such as in Val di Cogne (Aosta valley) and 
+Valmalenco (Lombardia). On the other hand, almost no positive trends were detected, except for a few isolated pixels located in the 
+Alpine foothills of the province of Biella. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{results/SCD_trends.png}
+    \caption{(a) SCD trend computed by means of the Sen-Theil estimator over the 1951--2023 period. (b) Trend significance resulting 
+    from Mann-Kendall test.}
+    \label{fig:SCD_trends}
+\end{figure}
+As shown in panel (b) of Figure \ref{fig:SCD_trends}, numerous statistically significant negative trends are present on both the 
+mountain ranges and the lowlands of the IH-GAR, suggesting that this widespread reduction in snow cover duration is not driven by 
+interannual variability, but that is strongly linked to anthropogenic global warming.   
 
 
 
