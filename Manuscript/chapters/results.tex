@@ -276,6 +276,28 @@ SWE analysis are consistently associated with snow coverage all year round.
     1991--2020 period. }
     \label{fig:clima_scd_map_1991_2020}
 \end{figure}
+Although the spatial distribution of snow cover duration exhibits a strong dependence on elevation, the influence of other 
+topographical parameters on the snow cycle is only partially captured, as expected from a degree day approach. To further investigate 
+this limitation, Figure \ref{fig:SCD_difference_by_ele} shows the difference between the 1991--2020 climatological SCD of each pixel 
+and the average climatological SCD of the corresponding \SI{5}{\meter}-wide elevation band it belongs to. Positive and negative 
+deviations thus indicate areas characterized by longer or shorter snow cycles respectively compared to locations at similar elevations.
+% ATTENZIONE AD AMPIEZZA DELLA BANDA
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{results/SCD_difference_by_ele.png}
+    \caption{Spatial distribution of the difference between the 1991--2020 climatological SCD of each pixel and the average SCD per 
+    $\SI{5}{\meter}$ wide elevation band it belongs to.}
+    \label{fig:SCD_difference_by_ele}
+\end{figure}
+Notably, the areas exhibiting longer snow seasons relative to the average conditions at their elevation correspond to those 
+receiving higher autumn and winter precipitation, as is evident from a comparison of Figures \ref{fig:seasonal_prec_clima_1991_2020} 
+and \ref{fig:SCD_difference_by_ele}. Aspect, which had a significant role in determining SCD in the MODIS observations, has only a 
+secondary effect in these simulated snow cover maps. Indeed, it is not taken into account directly since the melt parametrization 
+is based solely on the daily average temperature, but indirectly as a part of the LWLR used to spatialize the temperature and 
+precipitation fields used as model inputs. Looking at east-west trending valleys, it's nevertheless clear that the south-facing 
+slopes experience less snow cover than the north-facing ones. 
+
+
 
 \begin{figure}[H]
     \centering
@@ -285,14 +307,7 @@ SWE analysis are consistently associated with snow coverage all year round.
     \label{fig:SCD_trends}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{results/SCD_difference_by_ele.png}
-    \caption{Spatial distribution of the difference between the 1991--2020 climatological SCD of each pixel and the average SCD per 
-    $\SI{5}{\meter}$ wide elevation band it belongs to.}
-    \label{fig:SCD_difference_by_ele}
-\end{figure}
-
+% RIFARE PRENDENDO IL 15ESIMO GIORNO DEL MESE
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/snow_cover_fraction_climatologies.png}
