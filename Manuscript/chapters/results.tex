@@ -251,6 +251,24 @@ its magnitude remains considerably smaller than that recorded in the surrounding
 
 \section{SCD predictions}
 
+Equation \eqref{eq:scf_IT-SNOW} could not be used to directly convert snow water equivalent into snow cover estimates, since snow 
+density isn't tracked by our modelling chain. However, following a similar approach to the one adopted for MODIS, in which every
+pixel with more than half of its area covered by snow is labelled as snow-covered, it was possible to identify a SWE threshold 
+separating bare ground from snowpack presence as
+\begin{equation}
+    \text{SWE}\,=\,5 \times 10^{-2} \rho_s,
+    \label{eq:swe_thresh_scf}
+\end{equation}
+where the snow cover fraction SCF has already been set to 0.5. To attain a numerical estimate of this SWE threshold, assumptions on 
+typical $\rho_s$ values had to be made. Considering that freshly fallen and ripe snow densities are expected to range between 50--250 
+and 350--450 \SI{}{\kilo\gram\per\meter\cubed} respectively depending on both thermal and microphysical conditions, a value of 
+$\SI{300}{\kilo\gram\per\meter\cubed}$ was adopted as representative of bulk snow properties. Substituing this density value into 
+Equation \eqref{eq:swe_thresh_scf} yields a SWE threshold of \SI{15}{\milli\meter}, which was subsequently applied to generate 
+daily snow cover binary maps. This made it possible to evaluate the duration of the snow season across the IH-GAR, revealing 
+substantial spatial variability driven by the complex topography of the study area, with mountainous regions generally exhibiting 
+more favorable conditions for the accurrence of cryospheric processes. This spatial pattern can be clearly identified in Figure 
+\ref{fig:clima_scd_map_1991_2020}, which shows the 1991--2020 climatological SCD. Notably, the areas previously excluded from the 
+SWE analysis are consistently associated with snow coverage all year round.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/clima_scd_map_1991_2020.png}
