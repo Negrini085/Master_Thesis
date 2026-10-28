@@ -58,8 +58,8 @@ Figure \ref{fig:covered_area_maps}, and roughly resemble the average glacier ext
 \section{SWE predictions}
 
 After masking the daily SWE maps to exclude glacier-covered areas, the total volume of water stored in the 
-snowpack could be estimated on a daily basis. The resulting time series, shown in Figure \ref{fig:masked_swe_evolution}, exhibits 
-substantial interannual variability, reflecting the sensitivity of snow accumulation and persistance to different meteorological 
+snowpack was estimated on a daily basis. The resulting time series, shown in Figure \ref{fig:masked_swe_evolution}, exhibits 
+substantial interannual variability, reflecting the sensitivity of snow accumulation and duration to different meteorological 
 patterns. Notably, throughout the 1975--1985 period, a significant amount of SWE persisted untill the end of summer, indicating 
 relatively favorable conditions for the cryosphere. This behavior is also consistent with the glacier advance observed in the 
 Italian Alps during the same period, which was driven by reduced summer ablation and enhanced winter accumulation 
@@ -93,7 +93,7 @@ Since the total volume of water stored within the snowpack is an aggregate quant
 regions have experienced the largest losses. As a first step towards a deeper understanding of these trends, the study area was 
 partitioned into six elevation bands: the first five were \SI{500}{\meter} wide, while the sixth one comprised every pixel located 
 above $\SI{2500}{\meter}$. Elevation-wise SWE series were subsequently computed to extract peak SWE and 1 April SWE for each 
-band and each hydrological year on record, enabling for the application of the Mann--Kendall test and the Sen--Theil estimator 
+band and each hydrological year on record, allowing for the application of the Mann--Kendall test and the Sen--Theil estimator 
 to assess the role of elevation in the observed decline of snow cover. The results of these analyses are reported in Table 
 \ref{tab:peak_swe_model_trends} and \ref{tab:first_april_swe_model_trends}, with trends expressed as percentage changes per decade 
 relative to the 1952--1981 climatological mean of each band. Although for both metrics the reduction is not confined to a specific 
@@ -142,7 +142,7 @@ the season.
   \end{tabular}
 \end{table}
 
-A generalized reduction across all elevation bands, however, does not reveal which areas have been most affected by snow losses. As 
+A generalized reduction across all elevation bands, however, does not reveal which areas have been mostly affected by snow losses. As 
 a second step towards a better understanding of these simulated changes in snowpack properties, SWE maps of the first day of 
 February, March, April and May were extracted for each hydrological year. The corresponding climatological maps computed over the 
 1991--2020 time window, as well as the spatial distributions of trend magnitude and significance resulting from the application of 
@@ -188,6 +188,16 @@ positive trends gradually weaken towards the beginning of April, as increased te
 that progressively counterbalance the positive effects of enhanced snowfall. Nevertheless, once the shift to negative trend occurs, 
 its magnitude remains considerably smaller than that recorded in the surrounding regions. 
 
+Since the absolute magnitude of the SWE trends appears to increase toward the end of the snow cycle, as suggested by the 
+progressive saturation of the color scale in Figures \ref{fig:swe_clima_trends_feb}--\ref{fig:swe_clima_trends_may} as the season 
+goes on, a more systematic analysis was carried out to further investigate this pattern. To this end, the study area was divided 
+into \SI{50}{\meter}-wide elevation bands, and the mean SWE of each band was computed on a daily basis over the 1951--2023 period. 
+This approach allowed for the estimation of trend magnitude for each combination of date and elevation band, yielding the results 
+illustrated in Figure \ref{fig:trend_by_ele_by_date}. Only combinations whose 1991--2020 climatological mean SWE exceeds 
+\SI{5}{\milli\meter} of water equivalent are coloured: grey area fall below this threshold. 
+
+
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/trend_by_ele_by_date.png}
@@ -211,7 +221,9 @@ its magnitude remains considerably smaller than that recorded in the surrounding
 
 
 
-\subsection{Comparison with Po River Dataset}
+\subsection{Comparison with Po River District dataset}
+
+
 
 \begin{figure}[H]
     \centering
