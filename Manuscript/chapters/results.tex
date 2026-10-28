@@ -264,6 +264,43 @@ the agricultural sector.
 
 \subsection{Comparison with Po River District dataset}
 
+The modelling chain "J-snow", used to generate the Po River District dataset, is considerably more sophisticated than the one 
+developed during this thesis, as each term of the energy balance is simulated separately even accounting for the effects associated 
+with the complex terrain morphology of the study area. The simplicity of our approach, which was essential for investigating long 
+term trends, also allowed us to achieve encouraging results in term of agreement between the two models. Indeed, after reprojecting 
+the SWE maps of the Po River District dataset onto the grid used by the degree-day model and masking both for glaciated areas, 
+SWE volumes were computed on a daly basis. Over the 1992--2021 period, within the overlap area, the Po River District dataset 
+suggests a peak SWE value of -CALCOLARE VALORE- typically occuring on -CALCOLARE VALORE-, whereas according to this thesis model 
+this figure accounts for approximately -CALCOLARE VALORE- on -CALCOLARE VALORE-. Furthermore, the peak and 1 April SWE values 
+predicted by the two modelling chain exhibited substantial agreement, as $\text{R}^2\,=\,$, $\text{RMSE}\,=\,$ and $\text{MAE}\,=\,$. 
+
+To investigate a possible role of elevation in the consistency between the two datasets, SWE series were also extracted for three 
+different elevation bands. Their comparison, shown in Figure \ref{fig:swe_evo_comparison_with_PO_basin}, highlighted that this 
+thesis product sistematically overestimates SWE volumes with respect to the Po River District dataset in the lowlands, whereas 
+the roles reverse above \SI{2500}{\meter} a.s.l. The best agreement occurs at medium elevations, as illustrated in Table \ref{tab:stat_estimator_IT-SNOW_PO}
+
+\begin{table}[H]
+  \centering
+\caption{Elevation-wise comparison between Po River Distric and this thesis SWE series.}
+\label{tab:stat_estimator_model_PO}
+\renewcommand{\arraystretch}{1.3}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+\setlength{\tabcolsep}{4pt}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X @{}}
+\toprule
+\textbf{Elevation band} & \textbf{R\textsuperscript{2}} & \textbf{RMSE} & \textbf{MAE} \\
+\midrule
+    \num{0} - $\SI{1000}{\meter}$ & & & \\
+    \num{1000} - $\SI{2000}{\meter}$ & & & \\
+    $>\,\SI{2000}{\meter}$ & & & \\
+\bottomrule
+\end{tabularx}
+\end{table}
+The larger discrepancies detected at higher elevations come as no surprise, since the precipitation dataset used within this thesis 
+tend to underestimate winter precipitations as a consequence of undercatch by unheated rain gauge. On the other hand, in data 
+sparse regions such as the highlands, the Po River District dataset relies on ERA5 precipitation estimates, which are known to 
+be biased towards overestimation. 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/swe_evo_comparison_with_PO_basin.png}
@@ -272,7 +309,12 @@ the agricultural sector.
     \label{fig:swe_evo_comparison_with_PO_basin}
 \end{figure}
 
-\begin{figure}[H]
+To characterize the spatial pattern of the discrepancies between the two models, Po River Distric climatological SWE maps were 
+compared to the ones generated during this thesis, as shown in Figure \ref{fig:clima_ratio_Po_model}. Notably, our model 
+substantially overestimates the amount of water stored within the Northern Apennines, regardless of elevation band or temporal 
+collocation within the hydrological year. On the other hand, the Po River district dataset suggests larger snow accumulations 
+on the highlands across the Alpine Arc, with discrepancies becoming more pronounced as the snow season progresses. 
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{results/clima_ratio_Po_model.png}
     \caption{Spatial distribution of the 1992--2021 climatological ratio between SWE estimates of the Po River District dataset 
@@ -281,6 +323,9 @@ the agricultural sector.
     coverage on the Northern Apennines, whereas in high elevation Alpine catchments the roles reverse.}
     \label{fig:clima_ratio_Po_model}
 \end{figure}
+The opposite occurs at lower elevations, as this thesis product suggest a more significant presence of snow cover. Finally, the 
+Canton of Ticino and the Aosta valley emerge as the regions of the Alpine Arc where the agreement between the two estimates is 
+highest.
 
 
 
