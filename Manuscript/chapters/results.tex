@@ -331,6 +331,14 @@ highest.
 
 \subsection{Comparison with ITSNOW}
 
+Compared to J-snow, the model S3M on which the ITSNOW reanalysis is built, follows a simpler approach, since snowmelt is computed 
+by means of a hydrid temperature index and radiation driven parametrization, disregarding some heat exchanges of the enegy balance 
+such as latent heat fluxes or precipitation heat fluxes. Nevertheless, the architecture of S3M is substantially more complex than 
+that of the snow model developed during this thesis. For instance, S3M tracks the cold content of the snowpack, permitting melt 
+only when the mean temperature of the previous ten days exceeds \SI{1}{\degreeCelsius} and explicitly taking into account the 
+refreezing of meltwater. Within the overlap time window and area, S3M and our model predict a peak SWE volume of -CALCOLARE VALORE- 
+and  -CALCOLARE VALORE- respectively.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/swe_evo_comparison_with_ITSNOW.png}
