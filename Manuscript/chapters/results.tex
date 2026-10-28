@@ -1,6 +1,36 @@
 \chapter{Results}
 \label{cap:results}
 
+The previous two chapters presented the architecture of the degree-day model developed as part of this thesis, as well as 
+the calibration procedure performed by comparing the model outputs against observational snow depth time series measured 
+across the entire Alpine Arc. This chapter, on the other hand, illustrates the main results of this thesis work, obtained 
+by analysing the model outputs reconstructing the evolution of snow water equivalent (SWE) from 1951 to 2023. In 
+particular, the model parameters obtained from homogeneous calibration were used, namely
+\begin{table}[H]
+  \centering
+  \caption{Model parameters used to reconstruct SWE evolution throughout the investigated period.}
+  \label{tab:optimal_parameters}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{@{} >{\raggedright\arraybackslash}m{2.5cm} >{\raggedright\arraybackslash}m{3cm} @{}}
+    \toprule
+    \textbf{Parameter} & \textbf{Value} \\
+    \midrule
+    $T_{\tau}$ & \SI{1.073}{\degreeCelsius} \\
+    $\text{DDF}_{ave}$ & \SI{2.2}{\milli\meter} w.e. \\
+    $\text{DDF}_{amp}$ & \SI{1.7}{\milli\meter} w.e. \\
+    $m_m$ & \SI{0.5}{\degreeCelsius} \\
+    $T_{melt}$ & \SI{0.0}{\degreeCelsius} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+Moreover, a six year spin-up period (1945-1950) was performed to minimize the influence of initial conditions. However, this 
+period was excluded from subsequent analyses due to the lower reliability of the data prior to 1951. 
+
+In the following sections, the issue of glaciated areas, where unrealistically deep snowpacks arise as a consequence of the absence 
+of a glacier simulation module, is properly addressed. The results are then presented in two separate sections, focusing on snow 
+water equivalent and snow cover duration respectively. Comparisons with available snow products are performed to assess the 
+agreement with alternative modelling strategies. Particular attention is devolved to the analysis of temporal trends, with the aim 
+of investigating the influence of the ongoing global warming on snow cover dynamics.
 
 
 
@@ -9,7 +39,8 @@
 
 
 
-\newpage
+
+
 \section{Glaciated areas}
 
 The degree day model developed within the framework of this thesis produces daily snow water equivalent maps according to Equation \ref{eq:swe_swe}. Since 
@@ -214,9 +245,7 @@ Alpine region, which are typical of these months and frequenty linked to cold ai
 
 These reductions in the amount of water stored within the snowpack have significant implications for the hydrological regimes of 
 the major rivers across the study area. As illustrated in Figure \ref{fig:swe_climatologies_by_basin}, all Po, Adige, Brenta and 
-Piave--Tagliamento basins experienced substantial reduction in SWE volumes during the 1951--2023 period, associated with 
-an earliering of approximately one month in the total melt of the seasonal snowpack. This phenomenon may weaken the mitigating 
-effect of seasonal snow cover against the severity of certain droughts, thereby posing major challenges to the agricultural sector.
+Piave--Tagliamento basins experienced substantial reduction in SWE volumes during the 1951--2023 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/swe_climatologies_by_basin.png}
@@ -227,12 +256,13 @@ effect of seasonal snow cover against the severity of certain droughts, thereby 
     river basin on the study region.}
     \label{fig:swe_climatologies_by_basin}
 \end{figure}
+period, associated with an earliering of approximately one month in the total melt of the seasonal snowpack. This phenomenon may 
+weaken the mitigating effect of seasonal snow cover against the severity of certain droughts, thereby posing major challenges to 
+the agricultural sector.
 
 
 
 \subsection{Comparison with Po River District dataset}
-
-
 
 \begin{figure}[H]
     \centering
