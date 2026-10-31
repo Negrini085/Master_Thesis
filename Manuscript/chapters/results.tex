@@ -280,30 +280,31 @@ our approach is far simpler, encouraging results were achieved regarding the agr
 The comparison, to ensure reliable results, was carried out over the largest spatial and temporal overlap. As a first step, the Po River District 
 SWE maps were reprojected onto the grid used by the degree-day model. Subsequently, the common area was identified by excluding grid points falling 
 outside the overlapping region or being part of the glaciated areas described at the beginning of this Chapter. Over the 1992--2021 period, the Po River 
-District dataset suggests a peak SWE value of -CALCOLARE VALORE- typically occuring on -CALCOLARE VALORE-, whereas according to this thesis model 
-this figure accounts for approximately -CALCOLARE VALORE- on -CALCOLARE VALORE-. Furthermore, the peak and 1 April SWE values 
-predicted by the two modelling chain exhibited substantial agreement, as $\text{R}^2\,=\,$, $\text{RMSE}\,=\,$ and $\text{MAE}\,=\,$. 
+District dataset suggests a peak SWE value of $6.5 \pm \SI{2.3}{\giga\meter\cubed}$ typically occurring on 20 March $\pm$ 25 days, whereas according to this 
+thesis model this figure accounts for approximately $4.5 \pm \SI{1.7}{\giga\meter\cubed}$ on 11 March $\pm$ 28 days. Despite this substantial bias, the 
+two time series exhibit a good agreement in reproducing interannual variability: the model and Po River District estimates of peak and 1 April SWE are 
+strongly correlated, with $\text{R}^2\,=0.943\,$ and  $\text{R}^2\,=\,0.916$ respectively.
 
 To investigate a possible role of elevation in the consistency between the two datasets, SWE series were also extracted for three 
 different elevation bands. Their comparison, shown in Figure \ref{fig:swe_evo_comparison_with_PO_basin}, highlighted that this 
-thesis product sistematically overestimates SWE volumes with respect to the Po River District dataset in the lowlands, whereas 
+thesis snow product systematically overestimates SWE volumes with respect to the Po River District dataset in the lowlands, whereas 
 the roles reverse above \SI{2500}{\meter} a.s.l. The best agreement occurs at medium elevations, as illustrated in Table \ref{tab:stat_estimator_IT-SNOW_PO}
 
 \begin{table}[H]
   \centering
-\caption{Elevation-wise comparison between Po River Distric and this thesis SWE series.}
+\caption{Elevation-wise comparison between Po River District and this thesis SWE series.}
 \label{tab:stat_estimator_model_PO}
 \renewcommand{\arraystretch}{1.3}
 \renewcommand{\tabularxcolumn}[1]{m{#1}}
 \setlength{\tabcolsep}{4pt}
 \footnotesize
-\begin{tabularx}{\textwidth}{@{} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X @{}}
+\begin{tabularx}{\textwidth}{@{} >{\raggedright\arraybackslash}p{4.0cm} >{\raggedright\arraybackslash}p{2.5cm} >{\raggedright\arraybackslash}p{2.5cm} >{\raggedright\arraybackslash}p{2.5cm} >{\raggedright\arraybackslash}p{2.5cm} @{}}
 \toprule
-\textbf{Elevation band} & \textbf{R\textsuperscript{2}} & \textbf{RMSE} & \textbf{MAE} \\
+\textbf{Elevation band} & \textbf{Bias} & \textbf{MAE} & \textbf{RMSE} &  \textbf{R\textsuperscript{2}}\\
 \midrule
-    \num{0} - $\SI{1000}{\meter}$ & & & \\
-    \num{1000} - $\SI{2000}{\meter}$ & & & \\
-    $>\,\SI{2000}{\meter}$ & & & \\
+    \num{0} - $\SI{1000}{\meter}$ & -\SI{0.026}{\giga\meter\cubed} & \SI{0.03}{\giga\meter\cubed} & \SI{0.082}{\giga\meter\cubed} & 0.743\\
+    \num{1000} - $\SI{2000}{\meter}$ & \SI{0.284}{\giga\meter\cubed} & \SI{0.289}{\giga\meter\cubed} & \SI{0.431}{\giga\meter\cubed} & 0.925\\
+    $>\,\SI{2000}{\meter}$ & \SI{0.833}{\giga\meter\cubed} & \SI{0.845}{\giga\meter\cubed} & \SI{1.067}{\giga\meter\cubed} & 0.937 \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -339,15 +340,19 @@ highest.
 
 
 
-\subsection{Comparison with ITSNOW}
+\subsection{Comparison with IT-SNOW}
 
-Compared to J-snow, the model S3M on which the ITSNOW reanalysis is built, follows a simpler approach, since snowmelt is computed 
+Compared to J-snow, the model S3M on which the IT-SNOW reanalysis is built, follows a simpler approach, since snowmelt is computed 
 by means of a hydrid temperature index and radiation driven parametrization, disregarding some heat exchanges of the enegy balance 
 such as latent heat fluxes or precipitation heat fluxes. Nevertheless, the architecture of S3M is substantially more complex than 
 that of the snow model developed during this thesis. For instance, S3M tracks the cold content of the snowpack, permitting melt 
 only when the mean temperature of the previous ten days exceeds \SI{1}{\degreeCelsius} and explicitly taking into account the 
-refreezing of meltwater. Within the overlap time window and area, S3M and our model predict a peak SWE volume of -CALCOLARE VALORE- 
-and  -CALCOLARE VALORE- respectively.
+refreezing of meltwater. 
+
+The comparison was carried out over the maximum spatial and temporal overlap, as was previously done for the Po River District product. After 
+reprojecting the IT-SNOW SWE maps onto our model grid, the common area was identified and the glaciated regions were excluded by the analysis.
+Over the 2011--2023 pseudo-hydrological years, IT-SNOW and the degree day model suggested a peak SWE value of $\pm \SI{}{\giga\meter\cubed}$ 
+and $\pm \SI{}{\giga\meter\cubed}$ respectively. 
 
 \begin{figure}[H]
     \centering
