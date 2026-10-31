@@ -1,14 +1,56 @@
 \chapter{Introduction}
 \label{cap:introduction}
 
-Since 2020, the majority of winter season across the Italian territory have been marked by snow drought conditions, which consist 
-in a persistenly below average snowpack resulting from precipitation deficits, warmer thermal regimes or a combination of both.
+In the last few decades, Europe has emerged as a hotspot for snow droughts, i.e. periods of persistently below average snowpack, 
+which have become both more frequent and longer-lasting since the 1990s. In the Italian Alps, for instance, snow water storage 
+reached record lows during both the 2022 and 2023 winters, resulting in a reduction of snowmelt runoff substantially altering 
+the hydrological regime of rivers draining mountainous terrain. To investigate this phenomenon, \cite{snow_drought} analyzed 
+historical snow depth records collected between 1930 and 2023 from \num{15} weather stations distributed across Northern Italy. 
+As shown in Figure \ref{fig:winter_anomalies_colombo}, their study indicated that the incrising frequency and severity of snow 
+droughts since the
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{introduction/winter_anomalies_colombo.png}
-    \caption{}
+    \includegraphics[width=0.8\linewidth]{introduction/winter_anomalies_colombo.png}
+    \caption{Scatterplot between winter precipitation anomalies and temperature anomalies. Each dot represent a hydrological year: 
+    blue indicates above average snowpacks relative to the 1961--1990 climatology, whereas red is associated to below average snow 
+    coverage. Image from \cite{snow_drought}.}
     \label{fig:winter_anomalies_colombo}
 \end{figure}
+1990s are a consequence of warmer and drier winters relative to the 1961--1990 climatological mean. These findings are 
+consistent with the Alpine wide assessment conducted by \cite{Matiu_HS}, based on the analysis of more than 800 snow depth time 
+series, which highlighted a shift toward snow scarce winters starting from the late 1980s. Moreover, a decline in seasonal mean 
+snow depth of 8.4\% per decade between 1971 and 2019 was detected as a consequence of the ongoing global warming. Both studies, 
+however, rely solely on manual station networks, which are typically too sparse and markedly biased toward low to mid elevations, to 
+accurately represent the strong spatial variability of snow cover in complex mountainous terrain. To this end, numerical modelling 
+and remote sensing techniques have been employed to provide spatialized estimates of snowpack properties over a specific study area. 
+At the time of writing, three main snow products are available over Northern Italy, each of them with a spatial resolution of 
+approximately \SI{500}{\meter}: 
+\begin{itemize}[label=$\blacktriangleright$]
+    \item \textit{MODIS}, a snow dataset derived from satellite imagery that provides daily binary maps for the entire Italian peninsula 
+    from 24 February 2000 to 30 September 2025. Specifically, a value of one denotes a snow covered pixel, whereas zero is assigned 
+    to bare ground conditions.
+    \item \textit{IT-SNOW}, a snow reanalysis covering the entire Italian territory. It provides daily maps of snow water equivalent 
+    (i.e. the amount of water stored as snow), snow depth and snow density, spanning the period from 1 September 2010 to 31 August 2025.
+    \item \textit{Po River District dataset}, which focuses on the mountainous areas within the Po River District. It is a 
+    hydrologically oriented reconstruction focusing on the snow season (3 October to 1 July) of each hydrological year between 
+    1992 and 2021.
+\end{itemize}
+Although each of these snow products provides useful insights on snow cover dynamics across the Italian Alps, neither of them is 
+suitable for robust trend estimates, since the spanned periods are too limited to avoid substantial influence by interannual 
+variability. Furthermore, the Po River District modelling chain, which was used to generate the only snow product with climatological 
+coverage (i.e. 30 year time window), integrates as inputs ERA5 precipitations, which are known to overestimate the actual values 
+over mountainous terrain \parencite{ERA5_bias}. 
+
+At the time of writing, these limitations highlight the need for a new spatially distributed dataset with sufficiently long 
+temporal coverage to reliably assess the impacts of climate change on snowpack dynamics in Northern Italy. In 
+particular, only historically recorded data should be used as meteorological forcing, to ensure the accuracy  
+of the reconstruction. This thesis aims to address this gap by developing a modelling chain capable of simulating the seasonal snowpack 
+between 1951 and 2023, providing new insights in snow cover changes and dynamics over the last \num{70} years.
+
+
+
+
+
 
 
 
