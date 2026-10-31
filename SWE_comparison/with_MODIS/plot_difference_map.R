@@ -11,21 +11,36 @@ library(scales)
 library(geodata)
 
 
-fname_MODIS  <- "Results/mean_SCD_MODIS.tif"
 fname_model <- "Results/mean_scd_model.tif"
-
+fname_MODIS  <- "Results/mean_SCD_MODIS.tif"
+fname_glacier_mask <- "../../SWE_analysis/Results/years_continuous_snow.nc"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_comparison/with_MODIS/")
 
 
 # Importing files and makng projections
-modis  <- rast(fname_MODIS)
 model <- rast(fname_model)
+modis <- rast(fname_MODIS)
 compareGeom(model, modis, stopOnError = TRUE)
 
 
 # Making difference
 diff <- modis - model
 names(diff) <- "diff"
+
+
+
+# Computing aspect ratio for plot
+e  <- as.vector(ext(diff))
+dx <- e[["xmax"]] - e[["xmin"]]
+dy <- e[["ymax"]] - e[["ymin"]]
+
+asp_map <- if (is.lonlat(diff)) {
+  dy / dx / cos(mean(c(e[["ymin"]], e[["ymax"]])) * pi / 180)
+} else {
+  dy / dx
+}
+
+width_ratio <- 1.5
 
 
 
@@ -102,13 +117,14 @@ p_hist <- ggplot(df_hist, aes(x = diff)) +
   labs(title = NULL, x = hist_xlab, y = hist_ylab) +
   theme_minimal(base_size = size_axis_text) +
   theme(
-    plot.title = element_text(size = size_title, face = "bold", hjust = 0.5),
-    axis.text  = element_text(size = size_axis_text),
-    axis.title = element_text(size = size_axis_title)
+    plot.title   = element_text(size = size_title, face = "bold", hjust = 0.5),
+    axis.text    = element_text(size = size_axis_text),
+    axis.title   = element_text(size = size_axis_title),
+    aspect.ratio = asp_map * width_ratio
   )
 
 final_plot <- p_map + p_hist +
-  plot_layout(nrow = 1, widths = c(1.5, 1)) +
+  plot_layout(nrow = 1) +
   plot_annotation(tag_levels = "a", tag_prefix = "(", tag_suffix = ")") &
   theme(plot.tag = element_text(face = "bold", size = 14))
 

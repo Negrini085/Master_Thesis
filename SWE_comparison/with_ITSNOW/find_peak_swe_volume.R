@@ -6,9 +6,9 @@ gc()
 
 library(trend)
 
-years <- 1992:2021
-fname <- "Results/po_basin_swe_series.dat"
-setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_comparison/with_POBasin/")
+years <- 2011:2023
+fname <- "Results/model_swe_series.dat"
+setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_comparison/with_ITSNOW/")
 
 
 # Importing SWE datas
@@ -24,7 +24,7 @@ appo_in <- numeric(0)
 for(y in years){
   
   # Selecting datas for a given hydrological year
-  filter_dates <- seq(from = as.Date(paste0(y-1, "-10-01")), to = as.Date(paste0(y, "-09-30")), by = "day")
+  filter_dates <- seq(from = as.Date(paste0(y-1, "-09-01")), to = as.Date(paste0(y, "-08-31")), by = "day")
   mask <- dates %in% filter_dates
   swe_hydro <- swe[mask]
   
@@ -49,9 +49,9 @@ df_save <- data.frame(
 
 print("Climatological peak SWE value:")
 mean(as.numeric(df_save$max_swe))
-sd(as.numeric(df_save$max_swe))
 print("Climatological peak date:")
 mean(appo_in)
+sd(appo_in)
 print("Climatological 1 April SWE value:")
 mean(as.numeric(df_save$fap_swe))
 write.table(df_save, "Results/po_basin_swe_series.dat", row.names = FALSE, col.names = TRUE, quote = FALSE)
