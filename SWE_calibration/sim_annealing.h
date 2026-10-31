@@ -54,7 +54,7 @@ class SimAnnealing{
 
     public:
     SimAnnealing()
-        : T_in(1), T_fin(1e-6), m_beta(0.0), m_new(0.0), m_old(0.0), m_delta(0.4),
+        : T_in(5), T_fin(5e-6), m_beta(0.0), m_new(0.0), m_old(0.0), m_delta(0.4),
           gen(41), dis_prob(0.0, 1.0), dis_move(-0.5, 0.5), m_th(2.0), m_ddfav(2.2), m_ddfam(1.7), m_expfact(0.5), m_melt(0)
     {}
     SimAnnealing(double tmax, double tmin, double delta, unsigned int seed = 0)
@@ -115,18 +115,20 @@ class SimAnnealing{
             totali = 0;
             m_beta = 1/T;   //Calcolo parametro beta
             
-            //Voglio accettare almeno 5 mosse
+            //Voglio accettare almeno 10 mosse
             while(acce < 5){
 
                 //Propongo una nuova mossa
                 totali++;
-                do{ appo_th = m_th + m_delta * dis_move(gen); }while(appo_th < -1 || appo_th > 3);
+                do{ appo_th = m_th + m_delta * dis_move(gen); }while(appo_th < -4 || appo_th > 8);
                 do{
-                    do{ appo_ddfav = m_ddfav + m_delta * dis_move(gen); }while(appo_ddfav < 1 || appo_ddfav > 5);
-                    do{ appo_ddfam = m_ddfam + m_delta * dis_move(gen); }while(appo_ddfam < 0.5 || appo_ddfam > 3.5);
+                    do{ appo_ddfav = m_ddfav + 0.5*m_delta * dis_move(gen); }while(appo_ddfav < 1 || appo_ddfav > 9);
+                    do{ appo_ddfam = m_ddfam + 0.5*m_delta * dis_move(gen); }while(appo_ddfam < 0.5 || appo_ddfam > 7.5);
                 }while(appo_ddfav <= appo_ddfam);
-                do{ appo_expfact = m_expfact + 0.4 * m_delta * dis_move(gen); }while(appo_expfact < 0.2 || appo_expfact > 2);
-                do{ appo_tmelt = m_melt + m_delta * dis_move(gen); }while(appo_tmelt < -2 || appo_tmelt > 4);
+                appo_expfact = m_expfact;
+                appo_tmelt = m_melt;
+                // do{ appo_expfact = m_expfact + m_delta * dis_move(gen); }while(appo_expfact < 0.2 || appo_expfact > 4.2);
+                // do{ appo_tmelt = m_melt + m_delta * dis_move(gen); }while(appo_tmelt < 1 || appo_tmelt > 6);
 
 
                 saveInput(appo_th, appo_ddfav, appo_ddfam, appo_expfact, appo_tmelt, fname);
@@ -160,7 +162,7 @@ class SimAnnealing{
                 }
 
                 if((totali % 200 == 0) && (totali > 0)) m_delta = max(m_delta/2, 1e-5);
-                if(totali == 750) break;
+                if(totali == 500) break;
             }
 
             acc_rate = static_cast<double>(acce)/static_cast<double>(totali) * 100;
@@ -169,16 +171,15 @@ class SimAnnealing{
             cout << "                T = " << T << "                  " << endl;
             cout << "               AR = " << acc_rate << " %         " << endl;
             cout << "            Delta = " << m_delta  << "           " << endl;
-            if(totali == 750)   cout << "            Exceeded 750 attempts" << endl;
+            if(totali == 500)   cout << "            Exceeded 500 attempts" << endl;
             cout << "-------------------------------------------------" << endl;
 
             T = 0.95 * T;
 
             factor = exp(acc_rate/100 - 0.4);
-            factor = max(0.6, min(1.4, factor));
 
             m_delta = m_delta * factor;
-            m_delta = max(1e-5, min(m_delta, 0.5)); 
+            m_delta = max(1e-5, min(m_delta, 2.0)); 
         }
 	
         file_loss.close();

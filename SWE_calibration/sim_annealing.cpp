@@ -15,22 +15,23 @@ int main(int argc, char* argv[]) {
     string fname = argv[1];    
     
     // Random generator to start SA procedure
-    mt19937 gen(126);
-    uniform_real_distribution<double> dis_th(-1.0, 3.0);
-    uniform_real_distribution<double> dis_ddfav(2, 4);
-    uniform_real_distribution<double> dis_ddfam(0.5, 1.5);
-    uniform_real_distribution<double> dis_expfact(0.2, 2);
-    uniform_real_distribution<double> dis_tmelt(-2, 4);
-
+    mt19937 gen(10);
+    uniform_real_distribution<double> dis_th(-4.0, 8.0);
+    uniform_real_distribution<double> dis_ddfav(1, 9);
+    uniform_real_distribution<double> dis_ddfam(0.5, 7.5);
     
     
     // Cycle to have multiple SA runs
-    for(int i = 1; i <= 2; i++){
-        
+    for (int i = 1; i <= 4; i++) {
         unsigned int sa_seed = gen();
-        SimAnnealing prova(1, 1e-6, 0.5, sa_seed); 
-        prova.SA(fname, i, dis_th(gen), dis_ddfav(gen), dis_ddfam(gen), dis_expfact(gen), dis_tmelt(gen));
-    }
+        double th = dis_th(gen), ddfav, ddfam;
+        do { ddfav = dis_ddfav(gen); ddfam = dis_ddfam(gen); } while (ddfav <= ddfam);
+
+        if (i <= 3) continue;
+        
+        SimAnnealing prova(5, 5e-6, 2, sa_seed);
+        prova.SA(fname, i, th, ddfav, ddfam, 0.5, 0);
+   }
 
     return 0;
 }

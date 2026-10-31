@@ -6,49 +6,49 @@ gc()
 library(ggplot2)
 library(tidyr) 
 
-fname_one <- "Runs/Open/loss_evo_1.dat"
-fname_two <- "Runs/Restricted/loss_evo_2.dat"
-fname_tre <- "Runs/Restricted/loss_evo_3.dat"
-fname_open <- "Runs/Open/loss_evo_1.dat"
+fname_one <- "loss_evo_1.dat"
+# fname_two <- "loss_evo_2.dat"
+# fname_tre <- "loss_evo_3.dat"
+# fname_four <- "loss_evo_1.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_calibration/")
 
 
 
 # Importing dataframe
 df_one <- read.table(fname_one, header = FALSE)
-val_one <- as.numeric(df_one$V1[1000:length(df_one$V1)])
+val_one <- as.numeric(df_one$V1)
 
-df_two <- read.table(fname_two, header = FALSE)
-val_two <- as.numeric(df_two$V1[1000:length(df_two$V1)])
- 
-df_tre <- read.table(fname_tre, header = FALSE)
-val_tre <- as.numeric(df_tre$V1[1000:length(df_tre$V1)])
-
-df_open <- read.table(fname_open, header = FALSE)
-val_open <- as.numeric(df_tre$V1[1000:length(df_tre$V1)])
+# df_two <- read.table(fname_two, header = FALSE)
+# val_two <- as.numeric(df_two$V1[1000:length(df_two$V1)])
+#  
+# df_tre <- read.table(fname_tre, header = FALSE)
+# val_tre <- as.numeric(df_tre$V1[1000:length(df_tre$V1)])
+# 
+# df_open <- read.table(fname_open, header = FALSE)
+# val_open <- as.numeric(df_tre$V1[1000:length(df_tre$V1)])
 
 
 
 # Plotting procedure
 plot_df <- data.frame(
   step = seq_along(val_one),
-  val_one = val_one,
-  val_two = val_two,
-  val_tre = val_tre,
-  val_open = val_open
+  val_one = val_one
+  # val_two = val_two,
+  # val_tre = val_tre,
+  # val_open = val_open
 )
 
 plot_df_long <- pivot_longer(
   plot_df,
-  cols = c(val_one, val_two, val_tre, val_open),
+  cols = c(val_one), # val_two, val_tre, val_open),
   names_to = "Run",
   values_to = "LossValue"
 )
 
 plot_df_long$Run <- factor(
   plot_df_long$Run,
-  levels = c("val_one", "val_two", "val_tre", "val_open"),
-  labels = c("Run 1", "Run 2", "Run 3", "Run Open")
+  levels = c("val_one"),# "val_two", "val_tre", "val_open"),
+  labels = c("Run 1"),# "Run 2", "Run 3", "Run Open")
 )
 
 ggplot(plot_df_long, aes(x = step, y = LossValue, color = Run)) +
