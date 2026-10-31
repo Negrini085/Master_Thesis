@@ -10,7 +10,7 @@ library(ggspatial)
 library(tidyterra)
 library(patchwork)
 
-fname <- "Results/SWE/first_january_maps.nc"
+fname <- "Results/SWE/first_may_maps.nc"
 fname_mask <- "Results/years_continuous_snow.nc"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_analysis/")
 
@@ -124,6 +124,7 @@ pval <- ifel(slope <= 0, -1+pval, 1 - pval)
 
 glacier_mask <- rast(fname_mask)
 glacier_mask <- glacier_mask > 36
+swe_normal[glacier_mask] <- NA
 slope[glacier_mask] <- NA
 pval[glacier_mask] <- NA
 
