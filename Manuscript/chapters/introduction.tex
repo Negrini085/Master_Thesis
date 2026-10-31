@@ -1,11 +1,65 @@
 \chapter{Introduction}
+\label{cap:introduction}
 
-Snow plays a critical role in Earth energy balance, 
+In the last few decades, Europe has emerged as a hotspot for snow droughts, i.e. periods of persistently below average snowpack, 
+which have become both more frequent and longer-lasting since the 1990s. In the Italian Alps, for instance, snow water storage 
+reached record lows during both the 2022 and 2023 winters, resulting in a reduction of snowmelt runoff substantially altering 
+the hydrological regime of rivers draining mountainous terrain. To investigate this phenomenon, \cite{snow_drought} analyzed 
+historical snow depth records collected between 1930 and 2023 from \num{15} weather stations distributed across Northern Italy. 
+As shown in Figure \ref{fig:winter_anomalies_colombo}, their study indicated that the incrising frequency and severity of snow 
+droughts since the
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{introduction/winter_anomalies_colombo.png}
+    \caption{Scatterplot between winter precipitation anomalies and temperature anomalies. Each dot represent a hydrological year: 
+    blue indicates above average snowpacks relative to the 1961--1990 climatology, whereas red is associated to below average snow 
+    coverage. Image from \cite{snow_drought}.}
+    \label{fig:winter_anomalies_colombo}
+\end{figure}
+1990s are a consequence of warmer and drier winters relative to the 1961--1990 climatological mean. These findings are 
+consistent with the Alpine wide assessment conducted by \cite{Matiu_HS}, based on the analysis of more than 800 snow depth time 
+series, which highlighted a shift toward snow scarce winters starting from the late 1980s. Moreover, a decline in seasonal mean 
+snow depth of 8.4\% per decade between 1971 and 2019 was detected as a consequence of the ongoing global warming. Both studies, 
+however, rely solely on manual station networks, which are typically too sparse and markedly biased toward low to mid elevations, to 
+accurately represent the strong spatial variability of snow cover in complex mountainous terrain. To this end, numerical modelling 
+and remote sensing techniques have been employed to provide spatialized estimates of snowpack properties over a specific study area. 
+At the time of writing, three main snow products are available over Northern Italy, each of them with a spatial resolution of 
+approximately \SI{500}{\meter}: 
+\begin{itemize}[label=$\blacktriangleright$]
+    \item \textit{MODIS}, a snow dataset derived from satellite imagery that provides daily binary maps for the entire Italian peninsula 
+    from 24 February 2000 to 30 September 2025. Specifically, a value of one denotes a snow covered pixel, whereas zero is assigned 
+    to bare ground conditions \parencite{MODIS_ITA}.
+    \item \textit{IT-SNOW}, a snow reanalysis covering the entire Italian territory. It provides daily maps of snow water equivalent 
+    (i.e. the amount of water stored as snow), snow depth and snow density, spanning the period from 1 September 2010 to 31 August 
+    2025 \parencite{IT-SNOW}.
+    \item \textit{Po River District dataset}, which focuses on the mountainous areas within the Po River District. It is a 
+    hydrologically oriented reconstruction focusing on the snow season (3 October to 1 July) of each hydrological year between 
+    1992 and 2021 \parencite{Po_River_District_dataset}.
+\end{itemize}
+Although each of these snow products provides useful insights on snow cover dynamics across the Italian Alps, neither of them is 
+suitable for robust trend estimates, since the spanned periods are too limited to avoid substantial influence by interannual 
+variability. Furthermore, the Po River District modelling chain, which was used to generate the only snow product with climatological 
+coverage (i.e. 30 year time window), integrates as inputs ERA5 precipitations, which are known to overestimate the actual values 
+over mountainous terrain \parencite{ERA5_bias}. 
+
+At the time of writing, these limitations highlight the need for a new spatially distributed dataset with sufficiently long 
+temporal coverage to reliably assess the impacts of climate change on snowpack dynamics in Northern Italy. In 
+particular, only historically recorded data should be used as meteorological forcing, to ensure the accuracy  
+of the reconstruction. This thesis aims to address this gap by developing a modelling chain capable of simulating the seasonal snowpack 
+between 1951 and 2023, providing new insights in snow cover changes and dynamics over the last \num{70} years.
+
+
+
+
+
+
+
 
 \section{Thesis outline}
 
 This thesis is structured as follows:
 \begin{itemize}[label=$\blacktriangleright$]
+    \item \textit{Chapter \ref{cap:introduction}} introduces the physical problem under investigation and the context in which it arises.
     \item \textit{Chapter \ref{cap:snow_basics}} provides the theoretical background needed to understand the work presented in this thesis. The 
     first part focuses on snow physics. It begins with the nucleation of ice crystals in cold clouds and follows the snowflakes down to the 
     ground, where they accumulate to form a new layer. It then describes snow metamorphism and the energy balance of the snowpack, and finally 
@@ -27,4 +81,11 @@ This thesis is structured as follows:
     procedure applied to station metadata and HS time series to improve data reliability. The chapter then introduces the calibration methodology, 
     including the underlying assumptions and the definition of the loss function. Finally, the calibration results are presented and discussed, with 
     particular attention to model performance across different months and elevation ranges.
+    \item \textit{Chapter \ref{cap:results}} illustrates the main results of this thesis, focusing on both snow water equivalent (SWE) and snow 
+    cover duration (SCD) metrics. The chapter opens with a discussion on glaciated areas, which must be masked to make reliable estimates 
+    of seasonal snowpack properties. The second section deals with the amount of water stored as snow within the study area, making both temporal 
+    trend estimates and comparisons with the available snow products. The last section describes a method to convert snow water equivalent maps into 
+    binary snow cover ones, allowing for the evaluation of changes in the lenght of the snow season.
+    \item \textit{Chapter \ref{cap:conclusions}} provides a summary of the main findings and discusses the limitations of this work, as well as 
+    potential directions for future research.  
 \end{itemize}

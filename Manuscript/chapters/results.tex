@@ -1,6 +1,36 @@
 \chapter{Results}
 \label{cap:results}
 
+The previous two chapters presented the architecture of the degree-day model developed as part of this thesis, as well as 
+the calibration procedure performed by comparing the model outputs against observational snow depth time series measured 
+across the entire Alpine Arc. This chapter, on the other hand, illustrates the main results of this thesis work, obtained 
+by analysing the model outputs reconstructing the evolution of snow water equivalent (SWE) from 1951 to 2023. In 
+particular, the model parameters obtained from homogeneous calibration were used, namely
+\begin{table}[H]
+  \centering
+  \caption{Model parameters used to reconstruct SWE evolution throughout the investigated period.}
+  \label{tab:optimal_parameters}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{@{} >{\raggedright\arraybackslash}m{2.5cm} >{\raggedright\arraybackslash}m{3cm} @{}}
+    \toprule
+    \textbf{Parameter} & \textbf{Value} \\
+    \midrule
+    $T_{\tau}$ & \SI{1.073}{\degreeCelsius} \\
+    $\text{DDF}_{ave}$ & \SI{2.2}{\milli\meter} w.e. \\
+    $\text{DDF}_{amp}$ & \SI{1.7}{\milli\meter} w.e. \\
+    $m_m$ & \SI{0.5}{\degreeCelsius} \\
+    $T_{melt}$ & \SI{0.0}{\degreeCelsius} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+Moreover, a six year spin-up period (1945-1950) was performed to minimize the influence of initial conditions. However, this 
+period was excluded from subsequent analyses due to the lower reliability of the data prior to 1951. 
+
+In the following sections, the issue of glaciated areas, where unrealistically deep snowpacks arise as a consequence of the absence 
+of a glacier simulation module, is properly addressed. The results are then presented in two separate sections, focusing on snow 
+water equivalent and snow cover duration respectively. Comparisons with available snow products are performed to assess the 
+agreement with alternative modelling strategies. Particular attention is devolved to the analysis of temporal trends, with the aim 
+of investigating the influence of the ongoing global warming on snow cover dynamics.
 
 
 
@@ -9,7 +39,8 @@
 
 
 
-\newpage
+
+
 \section{Glaciated areas}
 
 The degree day model developed within the framework of this thesis produces daily snow water equivalent maps according to Equation \ref{eq:swe_swe}. Since 
@@ -57,39 +88,50 @@ Figure \ref{fig:covered_area_maps}, and roughly resemble the average glacier ext
 
 \section{SWE predictions}
 
-The 1991-2020 climatological value of SWE stored within the study area is $7.4 \pm 3.1\,\SI{}{\giga\meter\cubed}$
-
+After masking the daily SWE maps to exclude glacier-covered areas, the total volume of water stored in the 
+snowpack was estimated on a daily basis. The resulting time series, shown in Figure \ref{fig:masked_swe_evolution}, exhibits 
+substantial interannual variability, reflecting the sensitivity of snow accumulation and duration to different meteorological 
+patterns. Notably, throughout the 1975--1985 period, a significant amount of SWE persisted untill the end of summer, indicating 
+relatively favorable conditions for the cryosphere. This behavior is also consistent with the glacier advance observed in the 
+Italian Alps during the same period, which was driven by reduced summer ablation and enhanced winter accumulation 
+\parencite{only_advance_italian_alps}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/masked_swe_evolution.png}
-    \caption{}
+    \caption{Daily evolution of the total water volume stored as snow in the IH-GAR from 1 October 1951 to 30 September 2023.}
     \label{fig:masked_swe_evolution}
 \end{figure}
-
-% Peak_SWE_climatological (1991-2020)
-% mean: 7.425618
-% std: 3.092068
-
-% Typical_peak_date_climatological (1991-2020)
-% mean: 
-% std: 
-
-% Maximum_SWE_over_total_period (1952-2023)
-% value: 16.40991
-% year: 1960
-
-% Minimum_SWE_over_total_period (1952-2023)
-% value: 3.028058
-% year: 2002
-
+Even a visual inspection of the time series suggests that markedly below average conditions become more frequent toward the end of 
+the 1951--2023 period: notably, all four snow seasons peaking below $\SI{4}{\giga\meter\cubed}$ occurred since 2000. To investigate 
+this behavior more systematically, both the annual maximum (peak) SWE and the 1 April SWE values were extracted for each 
+hydrological year, providing the basis for both a climatological characterization and a temporal trend assessment. Over the 
+1991--2020 reference period, the mean annual peak SWE in the IH-GAR is $7.4 \pm 3.1\,\SI{}{\giga\meter\cubed}$, 
+typically occuring on -calcolare data picco-. As this date precedes 1 April, the 1 April climatological value is lower than the 
+maximum one as a consequence of the onset of snowmelt, amounting to . As regards the temporal evolution, the presence of monotonic 
+trends in both peak SWE and 1 April SWE was assessed over the 1951--2023 period by means of the Mann--Kendall test, with trend 
+magnitude evaluated thanks to Sen--Theil estimator. Although a substantial spread is present as a consequence of interannual 
+variability, both metrics exhibit statistically significant negative trends ($p\,=\,0.003$ and $p\,=\,0.006$), as shown in Figure 
+\ref{fig:peak_fap_trends}. In particular, peak and 1 April SWE decreased respectively by \SI{0.567}{\giga\meter\cubed}/decade 
+and \SI{0.506}{\giga\meter\cubed}/decade over the investigated period.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/peak_fap_trends.png}
-    \caption{}
+    \caption{(a) Peak annual SWE trend analysis. (b) 1 April SWE trend analysis. Despite substantial interannual variability, 
+    both metrics exhibit statistically significant decreasing trends of roughly \SI{0.5}{\giga\meter\cubed} per decade.}
     \label{fig:peak_fap_trends}
 \end{figure}
-
-%
+Since the total volume of water stored within the snowpack is an aggregate quantity, its decline do not reveal which 
+regions have experienced the largest losses. As a first step towards a deeper understanding of these trends, the study area was 
+partitioned into six elevation bands: the first five were \SI{500}{\meter} wide, while the sixth one comprised every pixel located 
+above $\SI{2500}{\meter}$. Elevation-wise SWE series were subsequently computed to extract peak SWE and 1 April SWE for each 
+band and each hydrological year on record, allowing for the application of the Mann--Kendall test and the Sen--Theil estimator 
+to assess the role of elevation in the observed decline of snow cover. The results of these analyses are reported in Table 
+\ref{tab:peak_swe_model_trends} and \ref{tab:first_april_swe_model_trends}, with trends expressed as percentage changes per decade 
+relative to the 1952--1981 climatological mean of each band. Although for both metrics the reduction is not confined to a specific 
+altitude range, its relative magnitude decreases with elevation. Such a pattern is consistent with the higher sensitivity of snow 
+cover to rising temperatures where these are closer to the freezing point, since even a modest warming may increase the fraction of 
+precipitation falling as rain, thus reducing accumulation, and may favour earlier snowmelt, as mild conditions occur earlier in 
+the season.
 
 \begin{table}[H]
   \centering
@@ -111,18 +153,9 @@ The 1991-2020 climatological value of SWE stored within the study area is $7.4 \
   \end{tabular}
 \end{table}
 
-%-0.1082404 (1.125051) 
-%-0.08805291 (1.015653)
-%-0.1172568 (1.857315)
-%-0.1636932  (2.862675)
-%-0.1728566 (3.278348)
-%-0.08722833 (2.439655)
-
-
-% Manca un datooooooooo!!
 \begin{table}[H]
   \centering
-  \caption{Peak SWE trends over the 1951--2023 period.}
+  \caption{1 April SWE trends over the 1951--2023 period.}
   \label{tab:first_april_swe_model_trends}
   \renewcommand{\arraystretch}{1.3}
   \renewcommand{\tabularxcolumn}[1]{m{#1}}
@@ -131,7 +164,7 @@ The 1991-2020 climatological value of SWE stored within the study area is $7.4 \
     \textbf{Ele. band} & \textbf{Trend slope} & \textbf{P-value} \\
     \midrule
     \num{0} -- \SI{500}{\meter} & --  & -- \\
-    \num{500} -- \SI{1000}{\meter} &  & 0.0009 \\
+    \num{500} -- \SI{1000}{\meter} & -- & -- \\
     \num{1000} -- \SI{1500}{\meter} & -7.2 \%/decade & 0.0016 \\
     \num{1500} -- \SI{2000}{\meter} & -7.0 \%/decade & 0.0152 \\
     \num{2000} -- \SI{2500}{\meter} & -6.3 \%/decade & 0.0045 \\
@@ -140,13 +173,15 @@ The 1991-2020 climatological value of SWE stored within the study area is $7.4 \
   \end{tabular}
 \end{table}
 
-% -0.000956357 (0.03043699)
-% -0.05391444 (0.7489367)
-% -0.1505534 (2.151537)
-% -0.178926  (2.860095)
-% -0.07271611  (1.989774)
+A generalized reduction across all elevation bands, however, does not reveal which areas have been mostly affected by snow losses. As 
+a second step towards a better understanding of these simulated changes in snowpack properties, SWE maps of the first day of 
+February, March, April and May were extracted for each hydrological year. The corresponding climatological maps computed over the 
+1991--2020 time window, as well as the spatial distributions of trend magnitude and significance resulting from the application of 
+the Mann--Kendall test and the Sen--Theil estimator, are shown in Figures \ref{fig:swe_clima_trends_feb}--\ref{fig:swe_clima_trends_may}. 
+Notably, the mountainous massifs of Adamello and Ortles-Cevedale, along with the highest peaks of Val Venosta, experienced an 
+increase in SWE values throughout the study period, as shown by both the 1 February and 1 March maps.
 
-\begin{figure}[hp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/swe_clima_trends_feb.png}
     \caption{(a) Climatological 1 February SWE spatial distribution over the 1991--2020 period. (b) Trend slope of 1 February SWE [mm/decade]. (c) Sign 
@@ -154,7 +189,7 @@ The 1991-2020 climatological value of SWE stored within the study area is $7.4 \
     \label{fig:swe_clima_trends_feb}
 \end{figure}
 
-\begin{figure}[hp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/swe_clima_trends_mar.png}
     \caption{(a) Climatological 1 March SWE spatial distribution over the 1991--2020 period. (b) Trend slope of 1 March SWE [mm/decade]. (c) Sign 
@@ -162,7 +197,7 @@ The 1991-2020 climatological value of SWE stored within the study area is $7.4 \
     \label{fig:swe_clima_trends_mar}
 \end{figure}
 
-\begin{figure}[hp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/swe_clima_trends_apr.png}
     \caption{(a) Climatological 1 April SWE spatial distribution over the 1991--2020 period. (b) Trend slope of 1 April SWE [mm/decade]. (c) Sign 
@@ -170,7 +205,7 @@ The 1991-2020 climatological value of SWE stored within the study area is $7.4 \
     \label{fig:swe_clima_trends_apr}
 \end{figure}
 
-\begin{figure}[hp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/swe_clima_trends_may.png}
     \caption{(a) Climatological 1 May SWE spatial distribution over the 1991--2020 period. (b) Trend slope of 1 May SWE [mm/decade]. (c) Sign 
@@ -178,46 +213,137 @@ The 1991-2020 climatological value of SWE stored within the study area is $7.4 \
     \label{fig:swe_clima_trends_may}
 \end{figure}
 
-\begin{figure}[hp]
+The presence of this positive trends in February and March is thought to be related to an increase in snow accumulation, as global 
+warming allows air to hold more water vapour, which may result in locally-enhanced precipitations during winter. However, this 
+positive trends gradually weaken towards the beginning of April, as increased temperatures also cause an earlier onset of snowmelt 
+that progressively counterbalance the positive effects of enhanced snowfall. Nevertheless, once the shift to negative trend occurs, 
+its magnitude remains considerably smaller than that recorded in the surrounding regions. 
+
+Since the absolute magnitude of the SWE trends appears to increase toward the end of the snow cycle, as suggested by the 
+progressive saturation of the color scale in Figures \ref{fig:swe_clima_trends_feb}--\ref{fig:swe_clima_trends_may} as the season 
+goes on, a more systematic analysis was carried out to further investigate this pattern. To this end, the study area was divided 
+into \SI{50}{\meter}-wide elevation bands, and the mean SWE of each band was computed on a daily basis over the 1951--2023 period. 
+This approach allowed for the estimation of trend magnitude for each combination of date and elevation band, yielding the results 
+illustrated in Figure \ref{fig:trend_by_ele_by_date}. Only combinations whose 1991--2020 climatological mean SWE exceeds 
+\SI{5}{\milli\meter} of water equivalent are coloured: grey area fall below this threshold. 
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/trend_by_ele_by_date.png}
-    \caption{}
+    \caption{Trend in snow water equivalent, expressed as a percentage of the 1952--1981 climatological mean per decade, shown as 
+    a function of elevation band and date of the year. The dotted regions exhibit statistically significant trends $\left(p\,=\,0.05\right)$. 
+    Only elevation-date combinations whose 1991--2020 climatological mean SWE exceeds \SI{5}{\milli\meter} of water equivalent are 
+    coloured. Grey area fall below this threshold.}
     \label{fig:trend_by_ele_by_date}
 \end{figure}
 
-\begin{figure}[hp]
+Notably, only negative trends are detected over the 1951--2023 period. Moreover, relative losses are less pronounced in the central 
+portion of the snow season than at its beginning and end. However, these two phases differ from each another: in spring, losses are 
+widespread across all elevation bands, whereas in autumn some vertical stripes of systematically weaker decline can be identified. 
+These features are likely to reflect statistical fluctuations associated with the occurrence of snowfall events across much of the 
+Alpine region, which are typical of these months and frequenty linked to cold air outbreaks. 
+
+These reductions in the amount of water stored within the snowpack have significant implications for the hydrological regimes of 
+the major rivers across the study area. As illustrated in Figure \ref{fig:swe_climatologies_by_basin}, all Po, Adige, Brenta and 
+Piave--Tagliamento basins experienced substantial reduction in SWE volumes during the 1951--2023 
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/swe_climatologies_by_basin.png}
-    \caption{}
+    \caption{Temporal changes in climatological snow cycle over the four main river basins of the IH-GAR domain: Po (top left), 
+    Adige (top right), Brenta (bottom left) and Piave--Tagliamento (bottom right). Each curve shows the climatological snow 
+    water equivalent (in \SI{}{\giga\meter\cubed}) of the first day of each month. The computations were made using five different 
+    time windows, each shifted from the previous one by ten years. These plots show that widespred loss occured across every 
+    river basin on the study region.}
     \label{fig:swe_climatologies_by_basin}
 \end{figure}
+period, associated with an earliering of approximately one month in the total melt of the seasonal snowpack. This phenomenon may 
+weaken the mitigating effect of seasonal snow cover against the severity of certain droughts, thereby posing major challenges to 
+the agricultural sector.
 
 
 
-\subsection{Comparison with Po River Dataset}
+\subsection{Comparison with Po River District dataset}
 
+The modelling chain "J-snow", used to generate the Po River District dataset, is considerably more sophisticated than the one 
+developed during this thesis, as each term of the energy balance is simulated separately even accounting for the effects associated 
+with the complex terrain morphology of the study area. The simplicity of our approach, which was essential for investigating long 
+term trends, also allowed us to achieve encouraging results in term of agreement between the two models. Indeed, after reprojecting 
+the SWE maps of the Po River District dataset onto the grid used by the degree-day model and masking both for glaciated areas, 
+SWE volumes were computed on a daly basis. Over the 1992--2021 period, within the overlap area, the Po River District dataset 
+suggests a peak SWE value of -CALCOLARE VALORE- typically occuring on -CALCOLARE VALORE-, whereas according to this thesis model 
+this figure accounts for approximately -CALCOLARE VALORE- on -CALCOLARE VALORE-. Furthermore, the peak and 1 April SWE values 
+predicted by the two modelling chain exhibited substantial agreement, as $\text{R}^2\,=\,$, $\text{RMSE}\,=\,$ and $\text{MAE}\,=\,$. 
+
+To investigate a possible role of elevation in the consistency between the two datasets, SWE series were also extracted for three 
+different elevation bands. Their comparison, shown in Figure \ref{fig:swe_evo_comparison_with_PO_basin}, highlighted that this 
+thesis product sistematically overestimates SWE volumes with respect to the Po River District dataset in the lowlands, whereas 
+the roles reverse above \SI{2500}{\meter} a.s.l. The best agreement occurs at medium elevations, as illustrated in Table \ref{tab:stat_estimator_IT-SNOW_PO}
+
+\begin{table}[H]
+  \centering
+\caption{Elevation-wise comparison between Po River Distric and this thesis SWE series.}
+\label{tab:stat_estimator_model_PO}
+\renewcommand{\arraystretch}{1.3}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+\setlength{\tabcolsep}{4pt}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X @{}}
+\toprule
+\textbf{Elevation band} & \textbf{R\textsuperscript{2}} & \textbf{RMSE} & \textbf{MAE} \\
+\midrule
+    \num{0} - $\SI{1000}{\meter}$ & & & \\
+    \num{1000} - $\SI{2000}{\meter}$ & & & \\
+    $>\,\SI{2000}{\meter}$ & & & \\
+\bottomrule
+\end{tabularx}
+\end{table}
+The larger discrepancies detected at higher elevations come as no surprise, since the precipitation dataset used within this thesis 
+tend to underestimate winter precipitations as a consequence of undercatch by unheated rain gauge. On the other hand, in data 
+sparse regions such as the highlands, the Po River District dataset relies on ERA5 precipitation estimates, which are known to 
+be biased towards overestimation. 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/swe_evo_comparison_with_PO_basin.png}
-    \caption{}
+    \caption{Comparison between SWE estimates from the Po River Discrit dataset and the snow model developed during this thesis. 
+    Each panel correspons to an elevation band of \SI{1000}{\meter} in width, whose range is indicated in the panel title.}
     \label{fig:swe_evo_comparison_with_PO_basin}
 \end{figure}
 
-\begin{figure}[H]
+To characterize the spatial pattern of the discrepancies between the two models, Po River Distric climatological SWE maps were 
+compared to the ones generated during this thesis, as shown in Figure \ref{fig:clima_ratio_Po_model}. Notably, our model 
+substantially overestimates the amount of water stored within the Northern Apennines, regardless of elevation band or temporal 
+collocation within the hydrological year. On the other hand, the Po River district dataset suggests larger snow accumulations 
+on the highlands across the Alpine Arc, with discrepancies becoming more pronounced as the snow season progresses. 
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{results/clima_ratio_Po_model.png}
-    \caption{}
+    \caption{Spatial distribution of the 1992--2021 climatological ratio between SWE estimates of the Po River District dataset 
+    and of the model developed during this thesis. To investigate the evolution of this ratio throughout the snow cycle, comparison 
+    maps at the beginning of November, January, March and May were generated. The model appear to substantially overestimate snow 
+    coverage on the Northern Apennines, whereas in high elevation Alpine catchments the roles reverse.}
     \label{fig:clima_ratio_Po_model}
 \end{figure}
+The opposite occurs at lower elevations, as this thesis product suggest a more significant presence of snow cover. Finally, the 
+Canton of Ticino and the Aosta valley emerge as the regions of the Alpine Arc where the agreement between the two estimates is 
+highest.
 
 
 
 \subsection{Comparison with ITSNOW}
 
+Compared to J-snow, the model S3M on which the ITSNOW reanalysis is built, follows a simpler approach, since snowmelt is computed 
+by means of a hydrid temperature index and radiation driven parametrization, disregarding some heat exchanges of the enegy balance 
+such as latent heat fluxes or precipitation heat fluxes. Nevertheless, the architecture of S3M is substantially more complex than 
+that of the snow model developed during this thesis. For instance, S3M tracks the cold content of the snowpack, permitting melt 
+only when the mean temperature of the previous ten days exceeds \SI{1}{\degreeCelsius} and explicitly taking into account the 
+refreezing of meltwater. Within the overlap time window and area, S3M and our model predict a peak SWE volume of -CALCOLARE VALORE- 
+and  -CALCOLARE VALORE- respectively.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/swe_evo_comparison_with_ITSNOW.png}
-    \caption{}
+    \caption{Comparison between SWE estimates from the IT-SNOW reanalysis and the snow model developed during this thesis. Each 
+    panel correspons to an elevation band of \SI{1000}{\meter} in width, whose range is indicated in the panel title.}
     \label{fig:swe_evo_comparison_with_ITSNOW}
 \end{figure}
 
@@ -229,41 +355,99 @@ The 1991-2020 climatological value of SWE stored within the study area is $7.4 \
 
 \section{SCD predictions}
 
+Equation \eqref{eq:scf_IT-SNOW} could not be used to directly convert snow water equivalent into snow cover estimates, since snow 
+density isn't tracked by our modelling chain. However, following a similar approach to the one adopted for MODIS, in which every
+pixel with more than half of its area covered by snow is labelled as snow-covered, it was possible to identify a SWE threshold 
+separating bare ground from snowpack presence as
+\begin{equation}
+    \text{SWE}\,=\,5 \times 10^{-2} \rho_s,
+    \label{eq:swe_thresh_scf}
+\end{equation}
+where the snow cover fraction SCF has already been set to 0.5. To attain a numerical estimate of this SWE threshold, assumptions on 
+typical $\rho_s$ values had to be made. Considering that freshly fallen and ripe snow densities are expected to range between 50--250 
+and 350--450 \SI{}{\kilo\gram\per\meter\cubed} respectively depending on both thermal and microphysical conditions, a value of 
+$\SI{300}{\kilo\gram\per\meter\cubed}$ was adopted as representative of bulk snow properties. Substituing this density value into 
+Equation \eqref{eq:swe_thresh_scf} yields a SWE threshold of \SI{15}{\milli\meter}, which was subsequently applied to generate 
+daily snow cover binary maps. This made it possible to evaluate the duration of the snow season across the IH-GAR, revealing 
+substantial spatial variability driven by the complex topography of the study area, with mountainous regions generally exhibiting 
+more favorable conditions for the accurrence of cryospheric processes. This spatial pattern can be clearly identified in Figure 
+\ref{fig:clima_scd_map_1991_2020}, which shows the 1991--2020 climatological SCD. Notably, the areas previously excluded from the 
+SWE analysis are consistently associated with snow coverage all year round.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/clima_scd_map_1991_2020.png}
-    \caption{}
+    \caption{Spatial distribution of the climatological snow cover duration across the investigated domain, computed over the 
+    1991--2020 period. }
     \label{fig:clima_scd_map_1991_2020}
 \end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{results/SCD_trends.png}
-    \caption{}
-    \label{fig:SCD_trends}
-\end{figure}
-
+Although the spatial distribution of snow cover duration exhibits a strong dependence on elevation, the influence of other 
+topographical parameters on the snow cycle is only partially captured, as expected from a degree day approach. To further investigate 
+this limitation, Figure \ref{fig:SCD_difference_by_ele} shows the difference between the 1991--2020 climatological SCD of each pixel 
+and the average climatological SCD of the corresponding \SI{5}{\meter}-wide elevation band it belongs to. Positive and negative 
+deviations thus indicate areas characterized by longer or shorter snow cycles respectively compared to locations at similar elevations.
+% ATTENZIONE AD AMPIEZZA DELLA BANDA
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/SCD_difference_by_ele.png}
-    \caption{}
+    \caption{Spatial distribution of the difference between the 1991--2020 climatological SCD of each pixel and the average SCD per 
+    $\SI{5}{\meter}$ wide elevation band it belongs to.}
     \label{fig:SCD_difference_by_ele}
 \end{figure}
+Notably, the areas exhibiting longer snow seasons relative to the average conditions at their elevation correspond to those 
+receiving higher autumn and winter precipitation, as is evident from a comparison of Figures \ref{fig:seasonal_prec_clima_1991_2020} 
+and \ref{fig:SCD_difference_by_ele}. Aspect, which had a significant role in determining SCD in the MODIS observations, has only a 
+secondary effect in these simulated snow cover maps. Indeed, it is not taken into account directly since the melt parametrization 
+is based solely on the daily average temperature, but indirectly as a part of the LWLR used to spatialize the temperature and 
+precipitation fields used as model inputs. Looking at east-west trending valleys, it's nevertheless clear that the south-facing 
+slopes experience less snow cover than the north-facing ones. 
 
+The conversion from SWE rasters to snow cover maps also allowed to estimate the influence of climate change on the persistence and 
+extent of the seasonal snowpack. For instance, Figure \ref{fig:snow_cover_fraction_climatologies} shows that the curves of snow 
+covered fraction as a function of elevation shift progressively toward higher elevations over time, indicating a reduction in the 
+number of snow covered pixel at a given elevation for each date taken as reference. This decrease appears to be more accentuated 
+at low to mid elevation, whereas highlands over \SI{2500}{\meter} a.s.l. still experience total snow presence at each of the 
+selected dates. Moreover, a significant rise of the regional snow line, which is the elevation at which \num{50}\% of the 
+pixels are snow covered, can be detected over the over the 1951--2023 period. 
+% RIFARE PRENDENDO IL 15ESIMO GIORNO DEL MESE
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/snow_cover_fraction_climatologies.png}
-    \caption{}
+    \caption{Climatological snow cover fraction as a function of elevation, expressed as the percentage of snow-covered pixels 
+    within each elevation band. Each panel refers to the 15th of the indicated month (December to March). Each curve corresponds 
+    to a different climatological windows, each shifted from the previous one by ten years.}
     \label{fig:snow_cover_fraction_climatologies}
 \end{figure}
+Clearly, a reduction in the number of snow covered pixels on a given elevation band at the same date results in a widespread reduction 
+of SCD values. Therefore, the Mann-Kendall test and Sen-Theil estimator were applied to the annual snow cover duration maps to 
+identify which regions have experienced the most pronounced changes over the investigated period. The results of these analyses are 
+illustrated in Figure \ref{fig:SCD_trends}, with the highest losses (expressed as days per decade) observed on the highest peaks 
+of the Northern Appenines and along the slopes of secondary valleys on the Alpine arc, such as in Val di Cogne (Aosta valley) and 
+Valmalenco (Lombardia). On the other hand, almost no positive trends were detected, except for a few isolated pixels located in the 
+Alpine foothills of the province of Biella. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{results/SCD_trends.png}
+    \caption{(a) SCD trend computed by means of the Sen-Theil estimator over the 1951--2023 period. (b) Trend significance resulting 
+    from Mann-Kendall test.}
+    \label{fig:SCD_trends}
+\end{figure}
+As shown in panel (b) of Figure \ref{fig:SCD_trends}, numerous statistically significant negative trends are present on both the 
+mountain ranges and the lowlands of the IH-GAR, suggesting that this widespread reduction in snow cover duration is not driven by 
+interannual variability, but that is strongly linked to anthropogenic global warming.   
 
 
 
 \subsection{Comparison with MODIS}
 
+Although the procedure adopted to derive daily snow cover maps from the SWE fields simulated by the model is relatively simplified, 
+a comparison with direct observations from satellite imagery is nevertheless valuable.
+
+% Riguardare plot, regioni glacializzate sono un po' sus se permetti
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/scd_comparison_modis_model.png}
-    \caption{}
+    \caption{(a) Spatial distribution of the difference between MODIS and model estimates (MODIS SCD minus model SCD). (b) 
+    Frequency distribution of the differences shown in (a). Both panels refer to the full period of overlap between the two products, 
+    namely the 2001--2023 hydrological years.}
     \label{fig:scd_comparison_modis_model}
 \end{figure}

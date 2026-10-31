@@ -119,8 +119,8 @@
   linkcolor  = black,
   citecolor  = blue!60!black,
   urlcolor   = blue!70!black,
-  pdftitle   = {Master Thesis in Physics},
-  pdfauthor  = {Your Name},
+  pdftitle   = {Master Thesis},
+  pdfauthor  = {Filippo Negrini},
   pdfsubject = {Physics}
 ]{hyperref}
 \usepackage{bookmark}
@@ -161,6 +161,9 @@
   \input{frontmatter/titlepage}
   \input{frontmatter/abstract}
   \tableofcontents
+  \clearpage
+  \thispagestyle{empty}\null\clearpage
+  \thispagestyle{empty}\null\clearpage
 
 \mainmatter
   \input{chapters/introduction}
@@ -169,6 +172,7 @@
   \input{chapters/swe_model}
   \input{chapters/swe_calibration}
   \input{chapters/results}
+  \input{chapters/conclusions}
 
 
 \appendix
