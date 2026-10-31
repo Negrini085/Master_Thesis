@@ -55,4 +55,4 @@ for(y in years){
 }
 
 sc_fractions <- sc_fractions/(length(years)-1)
-write.table(data.frame(value = sc_fractions), "Results/snow_cover_fraction_clima_per_day.dat", row.names = FALSE, col.names = FALSE, quote = FALSE)
+write.table(data.frame(value = as.vector(sc_fractions)), "Results/snow_cover_fraction_clima_per_day.dat", row.names = FALSE, col.names = FALSE, quote = FALSE)
