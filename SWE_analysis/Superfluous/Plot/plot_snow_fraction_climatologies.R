@@ -69,7 +69,7 @@ plot_snow_fraction <- function(
 
 
 # Selecting dates to plot (file tag = panel title)
-dates <- c("dec" = "December", "jan" = "January", "feb" = "February", "mar" = "March")
+dates <- c("dec" = "15 December", "jan" = "15 January", "feb" = "15 February", "mar" = "15 March")
 
 
 # Reading data (same DEM for all dates -> common elevation range)

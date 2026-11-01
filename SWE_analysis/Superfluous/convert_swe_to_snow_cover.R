@@ -5,7 +5,7 @@ gc()
 
 library(ncdf4)
 
-years <- 1951:2023
+years <- 2000:2023
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_analysis/")
 
 
@@ -34,10 +34,10 @@ for(y in years){
   # Masking pixels to assess snow cover
   stopifnot(identical(dim(swe), c(length(lon), length(lat), length(tvals))))
   
-  mask <- swe > 10 & !is.na(swe)
+  mask <- swe > 0 & !is.na(swe)
   snow_cover[mask] <- 1
   
-  mask <- swe <= 10 & !is.na(swe)
+  mask <- swe <= 0 & !is.na(swe)
   snow_cover[mask] <- 0
   
   
@@ -50,7 +50,7 @@ for(y in years){
     "sc", "1", list(dim_lon, dim_lat, dim_time), missval = -9999, 
     longname = "Snow cover flag", prec = "short", compression = 5)
   
-  ncout <- nc_create(paste0("Dataset/SC/lim_10/SC_", y, ".nc"), var_sc, force_v4 = TRUE)
+  ncout <- nc_create(paste0("Dataset/SC/lim_0/SC_", y, ".nc"), var_sc, force_v4 = TRUE)
   ncvar_put(ncout, var_sc, snow_cover)
   if (tcal$hasatt) ncatt_put(ncout, "time", "calendar", tcal$value)
   nc_close(ncout)

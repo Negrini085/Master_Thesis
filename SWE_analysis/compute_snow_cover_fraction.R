@@ -9,8 +9,7 @@ lim_inf <- seq(1952, 1992, by = 10)
 lim_sup <- seq(1981, 2021, by = 10)
 fname_dem <- "DEM/DEM_compatible.tif"
 month_out <- c("dec", "jan", "feb", "mar")
-required_dates <- c("-12-01", "-01-01", "-02-01", "-03-01")
-lim_sup_dates <- c("-12-31", "-01-31", "-02-28", "-03-31")
+required_dates <- c("-12-15", "-01-15", "-02-15", "-03-15")
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_analysis/")
 
 
@@ -62,10 +61,10 @@ for(date in required_dates){
       
       # Selecting which julian year to consider
       appo_y <- y
-      if(date == "-12-01") appo_y <- appo_y - 1
+      if(date == "-12-15") appo_y <- appo_y - 1
       
       # Selecting map index
-      idx <- which(seq(as.Date(paste0(appo_y, "-01-01")), as.Date(paste0(appo_y, "-12-31")), by = "day") %in% seq(as.Date(paste0(appo_y, date)), as.Date(paste0(appo_y, lim_sup_dates[k])), by = "day"))
+      idx <- which(seq(as.Date(paste0(appo_y, "-01-01")), as.Date(paste0(appo_y, "-12-31")), by = "day") %in% as.Date(paste0(appo_y, date)))
       fnames <- paste0("Dataset/SC/lim_15/SC_", appo_y ,".nc")
       scd_maps <- rast(fnames)[[idx]]
       
