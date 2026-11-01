@@ -213,17 +213,17 @@ p_loss <- ggplot(loss_df, aes(x = AcceptedMove, y = Loss, colour = Run)) +
     lineend   = "round"
   ) +
   scale_colour_manual(values = pal) +
-  # scale_x_continuous(
-  #   limits   = x_lim_move,
-  #   breaks   = x_breaks_move,
-  #   expand   = expansion(0),
-  #   sec.axis = sec_axis(
-  #     ~ .,
-  #     name   = "Temperature",
-  #     breaks = cool_grid_mov,
-  #     labels = cool_labels
-  #   )
-  # ) +
+  scale_x_continuous(
+    limits   = x_lim_move,
+    breaks   = x_breaks_move,
+    expand   = expansion(0),
+    # sec.axis = sec_axis(
+    #   ~ .,
+    #   name   = "Temperature",
+    #   breaks = cool_grid_mov,
+    #   labels = cool_labels
+    # )
+  ) +
   scale_y_continuous(
     expand = expansion(mult = c(0.04, 0.06))
   ) +
