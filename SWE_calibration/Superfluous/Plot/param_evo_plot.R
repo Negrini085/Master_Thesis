@@ -5,90 +5,136 @@ gc()
 
 library(ggplot2)
 library(tidyr)
+library(dplyr)
 
-fname_one <- "Runs/ddf_param/param_evo_1.dat"
-fname_two <- "Runs/ddf_param/param_evo_2.dat"
-fname_tre <- "Runs/ddf_param/param_evo_3.dat"
-fname_four <- "Runs/ddf_param/param_evo_4.dat"
+fnames <- sprintf("Runs/ddf_param/param_evo_%d.dat", 1:5)
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_calibration/")
 
 
+# Importing dataframes (one per run) and stacking them
+read_run <- function(i) {
+  df <- read.table(fnames[i], header = FALSE)
+  data.frame(
+    AcceptedMove = seq_len(nrow(df)),
+    t_th         = as.numeric(df$V1),
+    ddfave       = as.numeric(df$V2),
+    ddfamp       = as.numeric(df$V3),
+    Run          = paste("Run", i)
+  )
+}
 
-# Importing dataframes
-df_one <- read.table(fname_one, header = FALSE)
-df_two <- read.table(fname_two, header = FALSE)
-df_tre <- read.table(fname_tre, header = FALSE)
-df_four <- read.table(fname_four, header = FALSE)
+plot_df <- do.call(rbind, lapply(seq_along(fnames), read_run))
 
-# df_one <- df_one[200:nrow(df_one), ]
-# df_two <- df_two[200:nrow(df_two), ]
+# Labels are plotmath expressions, parsed in facet_wrap via label_parsed
+plot_df_long <- plot_df %>%
+  tidyr::pivot_longer(
+    cols      = c(t_th, ddfave, ddfamp),
+    names_to  = "Parameter",
+    values_to = "Value"
+  ) %>%
+  dplyr::mutate(
+    Parameter = factor(
+      Parameter,
+      levels = c("t_th", "ddfave", "ddfamp"),
+      labels = c("bold(T[tau])", "bold(DDF[ave])", "bold(DDF[amp])")
+    ),
+    Run = factor(Run, levels = paste("Run", seq_along(fnames)))
+  )
 
 
-
+pal <- c(
+  "Run 1" = "#004488",
+  "Run 2" = "#DDAA33",
+  "Run 3" = "#BB5566",
+  "Run 4" = "#44AA99",
+  "Run 5" = "#AA4499"
+)
 
 
 # Plotting procedure
-plot_df_one <- data.frame(
-  AcceptedMove = seq_len(nrow(df_one)),
-  t_th = as.numeric(df_one$V1),
-  ddfm = as.numeric(df_one$V2),
-  ddfM = as.numeric(df_one$V3),
-  Run = "Run 1"
-)
-
-plot_df_two <- data.frame(
-  AcceptedMove = seq_len(nrow(df_two)),
-  t_th = as.numeric(df_two$V1),
-  ddfm = as.numeric(df_two$V2),
-  ddfM = as.numeric(df_two$V3),
-  Run = "Run 2"
-)
-
-plot_df_tre <- data.frame(
-  AcceptedMove = seq_len(nrow(df_tre)),
-  t_th = as.numeric(df_tre$V1),
-  ddfm = as.numeric(df_tre$V2),
-  ddfM = as.numeric(df_tre$V3),
-  Run = "Run 3"
-)
-
-plot_df_four <- data.frame(
-  AcceptedMove = seq_len(nrow(df_four)),
-  t_th = as.numeric(df_four$V1),
-  ddfm = as.numeric(df_four$V2),
-  ddfM = as.numeric(df_four$V3),
-  Run = "Run 4"
-)
-
-plot_df <- rbind(plot_df_one, plot_df_two, plot_df_tre, plot_df_four)
-
-plot_df_long <- pivot_longer(
-  plot_df,
-  cols = c(t_th, ddfm, ddfM),
-  names_to = "Parameter",
-  values_to = "Value"
-)
-
-
-ggplot(plot_df_long, aes(x = AcceptedMove, y = Value, color = Run)) +
-  geom_line(linewidth = 0.9) +
-  scale_color_manual(values = c("Run 1" = "#004488", "Run 2" = "#DDAA33", "Run 3" = "#BB5566", "Run 4" = "#44AA99")) +
-  facet_wrap(
-    ~Parameter, ncol = 1, scales = "free_y",
-    labeller = as_labeller(c(t_th = "Threshold Temperature", ddfm = "DDF min", ddfM = "DDF max"))) +
-  labs(
-    title = "Evolution of Model Parameters",
-    subtitle = "Simulated Annealing Accepted Moves",
-    x = "Accepted Move",
-    y = "Parameter Value",
-    color = NULL
+p_param <- ggplot(plot_df_long, aes(x = AcceptedMove, y = Value, colour = Run)) +
+  geom_line(
+    linewidth = 0.9,
+    lineend   = "round"
   ) +
-  theme_minimal(base_size = 14) +
+  facet_wrap(
+    ~ Parameter,
+    ncol     = 1,
+    scales   = "free_y",
+    labeller = label_parsed
+  ) +
+  scale_colour_manual(values = pal) +
+  scale_x_continuous(
+    expand = expansion(mult = c(0.005, 0.01))
+  ) +
+  scale_y_continuous(
+    expand = expansion(mult = c(0.04, 0.06))
+  ) +
+  labs(
+    x      = "Accepted Move",
+    y      = "Parameter value",
+    colour = NULL
+  ) +
+  guides(
+    colour = guide_legend(nrow = 1, override.aes = list(linewidth = 2))
+  ) +
+  theme_classic(base_size = 12) +
   theme(
-    plot.title = element_text(face = "bold", size = 18, hjust = 0.5),
-    plot.subtitle = element_text(size = 12, hjust = 0.5),
-    axis.title = element_text(face = "bold"),
-    strip.text = element_text(face = "bold"),
+    text = element_text(
+      family = "sans",
+      colour = "black"
+    ),
+    axis.title = element_text(
+      size = 20,
+      face = "plain"
+    ),
+    axis.title.x = element_text(
+      margin = margin(t = 12)
+    ),
+    axis.title.y = element_text(
+      face   = "plain",
+      margin = margin(r = 12)
+    ),
+    axis.text = element_text(
+      size   = 15,
+      colour = "black"
+    ),
+    axis.line = element_line(
+      linewidth = 0.6,
+      colour    = "black"
+    ),
+    axis.ticks = element_line(
+      linewidth = 0.5,
+      colour    = "black"
+    ),
+    axis.ticks.length = unit(0.15, "cm"),
+    panel.grid.major.x = element_line(
+      colour    = "grey80",
+      linewidth = 0.35
+    ),
+    panel.grid.major.y = element_line(
+      colour    = "grey80",
+      linewidth = 0.35
+    ),
     panel.grid.minor = element_blank(),
-    legend.position = "top"
+    panel.spacing    = unit(1.4, "lines"),
+    strip.background = element_blank(),
+    strip.text = element_text(
+      size   = 17,
+      hjust  = 0,
+      margin = margin(b = 6)
+    ),
+    legend.position   = "top",
+    legend.direction  = "horizontal",
+    legend.text       = element_text(size = 16),
+    legend.key.width  = unit(1.6, "cm"),
+    legend.margin     = margin(b = 8),
+    plot.margin = margin(
+      t = 5,
+      r = 10,
+      b = 5,
+      l = 5
+    )
   )
+
+print(p_param)

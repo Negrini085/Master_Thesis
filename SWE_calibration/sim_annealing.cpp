@@ -22,12 +22,12 @@ int main(int argc, char* argv[]) {
     
     
     // Cycle to have multiple SA runs
-    for (int i = 1; i <= 4; i++) {
+    for (int i = 1; i <= 5; i++) {
         unsigned int sa_seed = gen();
         double th = dis_th(gen), ddfav, ddfam;
         do { ddfav = dis_ddfav(gen); ddfam = dis_ddfam(gen); } while (ddfav <= ddfam);
 
-        if (i <= 3) continue;
+        if (i <= 4) continue;
         
         SimAnnealing prova(5, 5e-6, 2, sa_seed);
         prova.SA(fname, i, th, ddfav, ddfam, 0.5, 0);
