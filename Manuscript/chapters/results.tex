@@ -415,7 +415,7 @@ snow cover in those areas where thermal regimes are closer to freezing, thereby 
 Secondly, S3M, i.e. the snow model used to generate the IT-SNOW reanalysis, was calibrated exclusively using data from the Aosta Valley, whereas the 
 resulting snow maps where produced for the entire Italian territory. Clearly, this limitation raises some questions on the reliability of IT-SNOW 
 estimates outside the calibration area, since parameter transferability is not assured and linked to potential faulty reconstructions. Moreover, S3M 
-calibration focus primarily on the snowmelt parametrization, which seems to be the major factor of disagreement between the two snow prducts.
+calibration focus primarily on the snowmelt parametrization, which seems to be the major factor of disagreement between the two snow products.
 
 
 
@@ -426,24 +426,29 @@ calibration focus primarily on the snowmelt parametrization, which seems to be t
 
 \section{SCD estimates and trends}
 
-Equation \eqref{eq:scf_IT-SNOW} could not be used to directly convert snow water equivalent into snow cover estimates, since snow 
-density isn't tracked by our modelling chain. However, following a similar approach to the one adopted for MODIS, in which every
-pixel with more than half of its area covered by snow is labelled as snow-covered, it was possible to identify a SWE threshold 
-separating bare ground from snowpack presence as
+In order to assess snow cover duration across the study area, a procedure to convert snow water equivalent maps into binary snow cover rasters was 
+developed. Clearly, Equation \eqref{eq:scf_IT-SNOW} could not be applied directly, as snow density is not tracked by our modelling chain. 
+However, if pixels were classified as snow covered only when snow occupied more than half of their area, Equation \eqref{eq:scf_IT-SNOW} would 
+provide a SWE threshold distinguishing bare ground and snow covered conditions as a function of snow density. Indeed, this snow water equivalent boundary 
+value is 
 \begin{equation}
     \text{SWE}\,=\,5 \times 10^{-2} \rho_s,
     \label{eq:swe_thresh_scf}
 \end{equation}
-where the snow cover fraction SCF has already been set to 0.5. To attain a numerical estimate of this SWE threshold, assumptions on 
+where the snow cover fraction SCF has already been set to 0.5. To attain a numerical estimate of the SWE threshold, assumptions on 
 typical $\rho_s$ values had to be made. Considering that freshly fallen and ripe snow densities are expected to range between 50--250 
 and 350--450 \SI{}{\kilo\gram\per\meter\cubed} respectively depending on both thermal and microphysical conditions, a value of 
 $\SI{300}{\kilo\gram\per\meter\cubed}$ was adopted as representative of bulk snow properties. Substituting this density value into 
-Equation \eqref{eq:swe_thresh_scf} yields a SWE threshold of \SI{15}{\milli\meter}, which was subsequently applied to generate 
-daily snow cover binary maps. This made it possible to evaluate the duration of the snow season across the IH-GAR, revealing 
-substantial spatial variability driven by the complex topography of the study area, with mountainous regions generally exhibiting 
-more favorable conditions for the accurrence of cryospheric processes. This spatial pattern can be clearly identified in Figure 
-\ref{fig:clima_scd_map_1991_2020}, which shows the 1991--2020 climatological SCD. Notably, the areas previously excluded from the 
-SWE analysis are consistently associated with snow coverage all year round.
+Equation \eqref{eq:swe_thresh_scf} yields a SWE threshold of \SI{15}{\milli\meter}, which was subsequently applied to convert model outputs into 
+daily snow cover binary maps. Clearly, this assumption has substantial trade-offs, since $\rho_s$ varies markedly both in space and throughout the snow 
+cycle. Indeed, ephemeral snowfall in the first phases of autumn accumulation will be completely overlooked, as well as the majority of snow covered days 
+on the lowlands, since there the snowpacks rarely exceed \SI{20}{\centi\meter} in depth. On the other hand, the consequences of this approach on the 
+latter stages of the snow season is definitely more limited, as SWE declines more rapidly toward bare ground conditions.
+
+This procedure enabled the evaluation of the snow cover duration across the IH-GAR, which revealed substantial spatial variability mainly driven by the 
+complex topography of the study area. This spatial pattern can be clearly identified in the 1991--2020 SCD climatology, shown in Figure 
+\ref{fig:clima_scd_map_1991_2020}, as mountain ranges generally exhibit more favourable conditions for snowpack persistence. Notably, the areas 
+previously excluded from the SWE analysis are consistently associated with snow coverage all year round.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/clima_scd_map_1991_2020.png}
@@ -452,11 +457,9 @@ SWE analysis are consistently associated with snow coverage all year round.
     \label{fig:clima_scd_map_1991_2020}
 \end{figure}
 Although the spatial distribution of snow cover duration exhibits a strong dependence on elevation, the influence of other 
-topographical parameters on the snow cycle is only partially captured, as expected from a degree day approach. To further investigate 
-this limitation, Figure \ref{fig:SCD_difference_by_ele} shows the difference between the 1991--2020 climatological SCD of each pixel 
-and the average climatological SCD of the corresponding \SI{5}{\meter}-wide elevation band it belongs to. Positive and negative 
-deviations thus indicate areas characterized by longer or shorter snow cycles respectively compared to locations at similar elevations.
-% ATTENZIONE AD AMPIEZZA DELLA BANDA
+topographical parameters on the snow cycle is only partially captured, as expected for a degree day approach. This becomes evident when comparing the 
+average SCD of each pixel with that of the \SI{25}{\meter}-wide elevation band it belongs to, as shown in Figure \ref{fig:SCD_difference_by_ele}. 
+Positive and negative deviations indicate areas characterized by longer or shorter snow cycles compared to locations at similar elevations.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/SCD_difference_by_ele.png}
@@ -464,22 +467,18 @@ deviations thus indicate areas characterized by longer or shorter snow cycles re
     $\SI{5}{\meter}$ wide elevation band it belongs to.}
     \label{fig:SCD_difference_by_ele}
 \end{figure}
-Notably, the areas exhibiting longer snow seasons relative to the average conditions at their elevation correspond to those 
-receiving higher autumn and winter precipitation, as is evident from a comparison of Figures \ref{fig:seasonal_prec_clima_1991_2020} 
-and \ref{fig:SCD_difference_by_ele}. Aspect, which had a significant role in determining SCD in the MODIS observations, has only a 
-secondary effect in these simulated snow cover maps. Indeed, it is not taken into account directly since the melt parametrization 
-is based solely on the daily average temperature, but indirectly as a part of the LWLR used to spatialize the temperature and 
-precipitation fields used as model inputs. Looking at east-west trending valleys, it's nevertheless clear that the south-facing 
-slopes experience less snow cover than the north-facing ones. 
+Notably, the areas exhibiting longer snow seasons relative to their elevation band correspond to those receiving higher autumn and winter precipitation, 
+as it emerges from comparing Figures \ref{fig:seasonal_prec_clima_1991_2020} and \ref{fig:SCD_difference_by_ele}. The model inability to account for the 
+influence of some topographic parameters, such as aspect, on SCD is attributable to its simplicity. Indeed, these parameters are only indirectly incorporated 
+in the modelling chain through the weights assigned by the Locally Weighted Linear Regression (LWLR) used to spatialize the temperature and precipitation 
+fields used as inputs.
 
 The conversion from SWE rasters to snow cover maps also allowed to estimate the influence of climate change on the persistence and 
-extent of the seasonal snowpack. For instance, Figure \ref{fig:snow_cover_fraction_climatologies} shows that the curves of snow 
-covered fraction as a function of elevation shift progressively toward higher elevations over time, indicating a reduction in the 
-number of snow covered pixel at a given elevation for each date taken as reference. This decrease appears to be more accentuated 
-at low to mid elevation, whereas highlands over \SI{2500}{\meter} a.s.l. still experience total snow presence at each of the 
+extent of the seasonal snowpack. For instance, Figure \ref{fig:snow_cover_fraction_climatologies} shows that the elevation-wise distribution of snow 
+covered pixel has shifted progressively toward higher elevations over the 1951--2023 period. The decrease in snow coverage appears to be more accentuated 
+at low to mid-elevation, whereas highlands over \SI{2500}{\meter} a.s.l. still experience total snow presence at each of the 
 selected dates. Moreover, a significant rise of the regional snow line, which is the elevation at which \num{50}\% of the 
-pixels are snow covered, can be detected over the 1951--2023 period. 
-% RIFARE PRENDENDO IL 15ESIMO GIORNO DEL MESE
+pixels are snow covered, can be detected.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/snow_cover_fraction_climatologies.png}
@@ -488,23 +487,22 @@ pixels are snow covered, can be detected over the 1951--2023 period.
     to a different climatological window, each shifted from the previous one by ten years.}
     \label{fig:snow_cover_fraction_climatologies}
 \end{figure}
-Clearly, a reduction in the number of snow covered pixels on a given elevation band at the same date results in a widespread reduction 
-of SCD values. Therefore, the Mann-Kendall test and Sen-Theil estimator were applied to the annual snow cover duration maps to 
+Clearly, a reduction in the number of snow covered pixels within a given elevation band results in a widespread reduction of snow cover duration values. 
+Consequently, the Mann-Kendall test and Sen-Theil estimator were applied to the annual snow cover duration maps to 
 identify which regions have experienced the most pronounced changes over the investigated period. The results of these analyses are 
 illustrated in Figure \ref{fig:SCD_trends}, with the highest losses (expressed as days per decade) observed on the highest peaks 
 of the Northern Apennines and along the slopes of secondary valleys on the Alpine arc, such as in Val di Cogne (Aosta valley) and 
 Valmalenco (Lombardia). On the other hand, almost no positive trends were detected, except for a few isolated pixels located in the 
-Alpine foothills of the province of Biella. 
-\begin{figure}[H]
+Alpine foothills of the province of Biella. As shown in panel (b) of Figure \ref{fig:SCD_trends}, 
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{results/SCD_trends.png}
     \caption{(a) SCD trend computed by means of the Sen-Theil estimator over the 1951--2023 period. (b) Trend significance resulting 
     from Mann-Kendall test.}
     \label{fig:SCD_trends}
 \end{figure}
-As shown in panel (b) of Figure \ref{fig:SCD_trends}, numerous statistically significant negative trends are present on both the 
-mountain ranges and the lowlands of the IH-GAR, suggesting that this widespread reduction in snow cover duration is not driven by 
-interannual variability, but that is strongly linked to anthropogenic global warming.   
+numerous statistically significant negative trends are present on both the mountain ranges and the lowlands of the IH-GAR, suggesting that the 
+anthropogenic global warming is causing widespread reductions in SCD across the entire study area.
 
 
 
@@ -512,10 +510,18 @@ interannual variability, but that is strongly linked to anthropogenic global war
 
 \subsection{Comparison with MODIS}
 
-Although the procedure adopted to derive daily snow cover maps from the SWE fields simulated by the model is relatively simplified, 
-a comparison with direct observations from satellite imagery is nevertheless valuable.
+Although the procedure adopted to derive daily snow cover maps from the degree-day model SWE fields involves significant trade-offs, a comparison with 
+direct satellite observations remains valuable for highlighting the limitations of both approaches. Once the MODIS snow cover maps were reprojected onto 
+our grid, the agreement between the two datasets was tested over the maximum spatial and temporal overlap, namely Northern Italy and the 2001--2023 
+hydrological years.
 
-% Riguardare plot, regioni glacializzate sono un po' sus se permetti
+As a first step, the difference between satellite and our snow cover duration estimates was computed to identify which regions exhibited the largest discrepancies, 
+as shown in Figure \ref{fig:scd_comparison_modis_model}. Notably, the degree day model appears to substantially overestimate the length of the snow season 
+relative to MODIS readings over the Northern Apennines and the Eastern Pre-Alps, whereas the opposite seems to occur on the lowlands. This latter 
+behaviour could indicate that the SWE threshold used to distinguish between bare ground and snow presence is too strict. Indeed, snowpacks on the Po plain 
+rarely exceed \SI{15}{\milli\meter} of snow water equivalent. This suggestion is further strengthened by the fact that the Po Plain has almost no 
+vegetation cover, thus facilitating the satellite detection, as forested terrain alters the NDSI value often leading to faulty snow free readings. 
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/scd_comparison_modis_model.png}
@@ -525,9 +531,22 @@ a comparison with direct observations from satellite imagery is nevertheless val
     \label{fig:scd_comparison_modis_model}
 \end{figure}
 
+Moreover, the distribution of SCD differences, illustrated in panel (b) of Figure \ref{fig:scd_comparison_modis_model}, reveals that no significant 
+bias toward one snow product can be detected. The same holds for the snow cover extent (SCE) estimated by the two products, as shown in Figure 
+\ref{fig:covered_area_model_MODIS}.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/covered_area_model_MODIS.png}
-    \caption{}
+    \caption{Comparison between average snow cover extent over the 2001--2023 hydrological years. }
     \label{fig:covered_area_model_MODIS}
 \end{figure}
+
+This seemingly close agreement between MODIS and our approach comes to no surprise. Indeed, during the calibration procedure, the modelling chain appeared 
+to slightly overestimate the snow persistence on the ground relative to the observational HS series used to test model performances (see Figure 
+\ref{fig:homogenoeus_calib}). Furthermore, the same snow depth records used for calibration systematically yield higher SCD values than the corresponding 
+MODIS ones (see \ref{fig:comparison_HS_MODIS_corrected}). This would suggest that our model should appreciably overestimate MODIS snow cover duration 
+predictions: however, the adoption of such a strict SWE threshold of \SI{15}{\milli\meter} w.e. prevents this from occurring, as several days of snow cover 
+are excluded from SCD calculations. This means that the remarkably close agreement of the two previous results it's just the fortuitous outcome of the 
+combined influence of several issues and uncertainties affecting both datasets. Neither MODIS nor our snow cover maps reliably represent the snow cover 
+extent throughout the hydrological year, but rather provide a rough estimate.
