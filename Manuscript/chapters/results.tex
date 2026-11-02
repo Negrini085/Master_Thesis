@@ -346,27 +346,76 @@ Canton of Ticino and the Aosta Valley emerge as the regions of the Alpine Arc sh
 
 \subsection{Comparison with IT-SNOW}
 
-Compared to J-snow, the model S3M on which the IT-SNOW reanalysis is built, follows a simpler approach, since snowmelt is computed 
-by means of a hydrid temperature index and radiation driven parametrization, disregarding some heat exchanges of the enegy balance 
-such as latent heat fluxes or precipitation heat fluxes. Nevertheless, the architecture of S3M is substantially more complex than 
-that of the snow model developed during this thesis. For instance, S3M tracks the cold content of the snowpack, permitting melt 
-only when the mean temperature of the previous ten days exceeds \SI{1}{\degreeCelsius} and explicitly taking into account the 
-refreezing of meltwater. 
+Compared to J-snow, the model S3M on which the IT-SNOW reanalysis is built, follows a simpler approach. Indeed, snowmelt is computed by means of a hybrid 
+temperature index and radiation driven parametrization, disregarding some heat fluxes such as the latent heat and ground ones. Nevertheless, the 
+architecture of S3M is substantially more complex than that of the snow model developed during this thesis. For instance, S3M tracks the cold content of 
+the snowpack, permitting melt only when the mean temperature of the previous ten days exceeds \SI{1}{\degreeCelsius} and explicitly taking into account 
+the refreezing of meltwater. Furthermore, S3M assimilates real-time satellite and AWS measures to correct model outputs, with the aim of being an useful 
+tool in real-time flood forecasting frameworks.
 
-The comparison was carried out over the maximum spatial and temporal overlap, as was previously done for the Po River District product. After 
-reprojecting the IT-SNOW SWE maps onto our model grid, the common area was identified and the glaciated regions were excluded by the analysis.
-Over the 2011--2023 pseudo-hydrological years, IT-SNOW and the degree day model suggested a peak SWE value of $10.7 \pm \SI{5.2}{\giga\meter\cubed}$ 
-and $6.4 \pm \SI{2.9}{\giga\meter\cubed}$ respectively. ITSNOW: 184 pm 17 Po Model: 167 pm 29
+As previously done for the Po River District product, this comparison was conducted over the maximum spatial and temporal overlap between IT-SNOW and 
+this thesis snow product. After reprojecting the IT-SNOW SWE maps onto our model grid, the common area was identified and the glaciated regions were 
+excluded from the analysis. Over the 2011--2023 period, IT-SNOW and the degree day model suggested a peak SWE value of $10.7 \pm \SI{5.2}{\giga\meter\cubed}$ 
+and $6.4 \pm \SI{2.9}{\giga\meter\cubed}$ respectively. Although this systematic underestimation is marked in both the central part and the latter stages 
+of the snow season, as shown in Figure \ref{fig:swe_comparison_itsnow_model_total} where the complete snow water equivalent time series are reported, 
+the two snow products substantially agree on the accumulation phase at the beginning of the snow cycle. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{results/swe_comparison_itsnow_model_total.png}
+    \caption{Comparison between SWE time series from the IT-SNOW reanalysis and the snow product developed during this thesis.}
+    \label{fig:swe_comparison_itsnow_model_total}
+\end{figure}
+Moreover, the two datasets compatibly reproduce the interannual variability of snow cover: both identify 2014 as the snowiest year within the investigated 
+period, whereas 2017, 2022 and 2023 correctly emerge as the least snowy ones. Additionally, the timing of the main snowfall events is consistent between 
+the two estimates. 
 
+Repeating the same analysis with the overlap region partitioned into three elevation bands yields results consistent with those previously found. Indeed, 
+as illustrated in Figure \ref{fig:swe_evo_comparison_with_ITSNOW}, IT-SNOW overestimates SWE compared to our model across all elevation bands and the two snow 
+products exhibit their highest level of agreement during the earlier portion of the snow season regardless of elevation. 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/swe_evo_comparison_with_ITSNOW.png}
-    \caption{Comparison between SWE estimates from the IT-SNOW reanalysis and the snow model developed during this thesis. Each 
+    \caption{Comparison between SWE estimates from the IT-SNOW reanalysis and the snow product developed during this thesis. Each 
     panel corresponds to an elevation band of \SI{1000}{\meter} in width, whose range is indicated in the panel title.}
     \label{fig:swe_evo_comparison_with_ITSNOW}
 \end{figure}
+Nevertheless, Figure \ref{fig:swe_evo_comparison_with_ITSNOW} also shows that IT-SNOW appears to systematic underestimate snowmelt at the highest 
+elevations, whereas below \SI{2000}{\meter} a.s.l. the main difference between the two datasets seems to regard the amount of SWE, rather than the 
+timing of complete meltout. Overall, the comparison is worse than the one with Po River District dataset, as shown by Table \ref{tab:stat_estimator_model_itsnow}.
+\begin{table}[H]
+  \centering
+\caption{Elevation-wise comparison with IT-SNOW.}
+\label{tab:stat_estimator_model_itsnow}
+\renewcommand{\arraystretch}{1.3}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+\setlength{\tabcolsep}{4pt}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{} >{\raggedright\arraybackslash}p{4.0cm} >{\raggedright\arraybackslash}p{2.5cm} >{\raggedright\arraybackslash}p{2.5cm} >{\raggedright\arraybackslash}p{2.5cm} >{\raggedright\arraybackslash}p{2.5cm} @{}}
+\toprule
+\textbf{Elevation band} & \textbf{Bias} & \textbf{MAE} & \textbf{RMSE} &  \textbf{R\textsuperscript{2}}\\
+\midrule
+    \num{0} - $\SI{1000}{\meter}$ & -\SI{0.178}{\giga\meter\cubed} & \SI{0.181}{\giga\meter\cubed} & \SI{0.399}{\giga\meter\cubed} & 0.693 \\
+    \num{1000} - $\SI{2000}{\meter}$ & -\SI{0.570}{\giga\meter\cubed} & \SI{0.574}{\giga\meter\cubed} & \SI{1.052}{\giga\meter\cubed}  & 0.883 \\
+    $>\,\SI{2000}{\meter}$ & -\SI{0.725}{\giga\meter\cubed} & \SI{0.768}{\giga\meter\cubed} & \SI{1.120}{\giga\meter\cubed} & 0.838 \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
+These observed differences suggest that the main discrepancies between the two modelling chains could be closely related to snowmelt parametrization, as well as 
+to an inadequate representation of higher elevations. 
 
+Firstly, the lack of cold content tracking in our modelling chain may be causing to some extent the 
+underestimation of SWE in the central part of the snow season. Indeed, before producing any runoff, the snowpack should first reach an isothermal 
+\SI{0}{\degreeCelsius} vertical profile. This process causes a time lag, which is not tracked by our model, between the onset of snowmelt favourable 
+thermal conditions and the actual reduction of snow water equivalent, since warming a sub-freezing snowpack requires significant amounts of energy. 
+On the other hand, the IT-SNOW criteria for the onset of snowmelt seems somewhat too restrictive, as snowmelt occurs only when both the current air 
+temperature and the mean temperature of the previous 10 days exceed $\SI{1}{\degreeCelsius}$. This condition may be responsible for a longer stay of 
+snow cover in those areas where thermal regimes are closer to freezing, thereby resulting in a SWE overestimation relative to model predictions. 
+
+Secondly, S3M, i.e. the snow model used to generate the IT-SNOW reanalysis, was calibrated exclusively using data from the Aosta Valley, whereas the 
+resulting snow maps where produced for the entire Italian territory. Clearly, this limitation raises some questions on the reliability of IT-SNOW 
+estimates outside the calibration area, since parameter transferability is not assured and linked to potential faulty reconstructions. Moreover, S3M 
+calibration focus primarily on the snowmelt parametrization, which seems to be the major factor of disagreement between the two snow prducts.
 
 
 
