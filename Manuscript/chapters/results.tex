@@ -105,8 +105,8 @@ Even a visual inspection of the time series suggests that markedly below average
 the 1951--2023 period: notably, all four snow seasons peaking below $\SI{4}{\giga\meter\cubed}$ occurred since 2000. To investigate 
 this behaviour more systematically, both the annual maximum (peak) SWE and the 1 April SWE values were extracted for each 
 hydrological year, providing the basis for both a climatological characterization and a temporal trend assessment. Over the 
-1991--2020 reference period, the mean annual peak SWE in the IH-GAR is $7.4 \pm 3.1\,\SI{}{\giga\meter\cubed}$, 
-typically occurring on 2 March $\pm$ 26 days. As this date precedes 1 April, the 1 April climatological value is lower than the 
+1991--2020 reference period, the mean annual peak SWE in the IH-GAR was $7.4 \pm 3.1\,\SI{}{\giga\meter\cubed}$, 
+typically occurring on 2 March $\pm$ 26 days. As this date precedes 1 April, the 1 April climatological value  lower than the 
 maximum one as a consequence of the onset of snowmelt, amounting to $5.2 \pm 2.9\,\SI{}{\giga\meter\cubed}$. As regards the temporal evolution, 
 the presence of monotonic 
 trends in both peak SWE and 1 April SWE was assessed over the 1951--2023 period by means of the Mann--Kendall test, with trend 
@@ -175,12 +175,12 @@ the season.
 \end{table}
 
 A generalized reduction across all elevation bands, however, does not reveal which areas have been mostly affected by snow losses. As 
-a second step towards a better understanding of these simulated changes in snowpack properties, SWE maps of the first day of 
-February, March, April and May were extracted for each hydrological year. The corresponding climatological maps computed over the 
+a second step towards a better understanding of these simulated changes in snowpack properties, SWE maps of the first day of months from January 
+to May were extracted for each hydrological year. The corresponding climatological maps computed over the 
 1991--2020 time window, as well as the spatial distributions of trend magnitude and significance resulting from the application of 
-the Mann--Kendall test and the Sen--Theil estimator, are shown in Figures \ref{fig:swe_clima_trends_feb}--\ref{fig:swe_clima_trends_may}. 
-Notably, the mountainous massifs of Adamello and Ortles-Cevedale, along with the highest peaks of Val Venosta, experienced an 
-increase in SWE values throughout the study period, as shown by both the 1 February and 1 March maps.
+the Mann--Kendall test and the Sen--Theil estimator, are shown in Figures \ref{fig:swe_clima_trends_jan}--\ref{fig:swe_clima_trends_may}. 
+Notably, the mountainous massifs of Adamello and Ortles-Cevedale, along with the highest peaks of Val Venosta, experienced an increase in SWE values 
+throughout the study period, as shown by both the 1 February and 1 March maps.
 
 \begin{figure}[H]
     \centering
@@ -221,15 +221,14 @@ increase in SWE values throughout the study period, as shown by both the 1 Febru
     and statistical significance of the trend.}
     \label{fig:swe_clima_trends_may}
 \end{figure}
-
-The presence of this positive trends in February and March is thought to be related to an increase in snow accumulation, as global 
-warming allows air to hold more water vapour, which may result in locally-enhanced precipitations during winter. However, this 
+The presence of these positive trends in the first part of the snow season is thought to be related to an increase in snow accumulation, as global 
+warming allows air to hold more water vapour, which may result in locally-enhanced precipitations during winter. However, these 
 positive trends gradually weaken towards the beginning of April, as increased temperatures also cause an earlier onset of snowmelt 
 that progressively counterbalance the positive effects of additional snowfall. Nevertheless, once the shift to negative trends occur, 
 their magnitudes remain considerably smaller than that recorded in the surrounding regions. 
 
 Since the absolute magnitude of the SWE trends appears to increase toward the end of the snow cycle, as suggested by the 
-progressive saturation of the colour scale in Figures \ref{fig:swe_clima_trends_feb}--\ref{fig:swe_clima_trends_may}, a more systematic analysis 
+progressive saturation of the colour scale in Figures \ref{fig:swe_clima_trends_jan}--\ref{fig:swe_clima_trends_may}, a more systematic analysis 
 was carried out to further investigate this pattern. To this end, the study area was divided 
 into \SI{50}{\meter}-wide elevation bands, and the mean SWE of each band was computed on a daily basis over the 1951--2023 period. 
 This approach allowed for the estimation of trend magnitude for each combination of date and elevation band, yielding the results 
@@ -262,11 +261,13 @@ Piave--Tagliamento basins experienced substantial losses in SWE volumes during t
     Adige (top right), Brenta (bottom left) and Piave--Tagliamento (bottom right). Each curve shows the climatological snow 
     water equivalent (in \SI{}{\giga\meter\cubed}) of the first day of each month. The computations were made using five different 
     time windows, each shifted from the previous one by ten years. These plots show that widespread loss occurred across every 
-    river basin on the study region.}
+    river basin on IH-GAR.}
     \label{fig:swe_climatologies_by_basin}
 \end{figure}
 period, associated with a shift of approximately one month toward earlier melt-out dates. This phenomenon may weaken the mitigating effect 
 of seasonal snow cover against the severity of certain droughts, thereby posing major challenges to the agricultural sector.
+
+
 
 
 
@@ -277,18 +278,19 @@ as each term of the energy balance is simulated separately accounting for the in
 our approach is far simpler, encouraging results were achieved regarding the agreement between the two models.
 
 
-The comparison, to ensure reliable results, was carried out over the largest spatial and temporal overlap. As a first step, the Po River District 
-SWE maps were reprojected onto the grid used by the degree-day model. Subsequently, the common area was identified by excluding grid points falling 
-outside the overlapping region or being part of the glaciated areas described at the beginning of this Chapter. Over the 1992--2021 period, the Po River 
-District dataset suggests a peak SWE value of $6.5 \pm \SI{2.3}{\giga\meter\cubed}$ typically occurring on 20 March $\pm$ 25 days, whereas according to this 
-thesis model this figure accounts for approximately $4.5 \pm \SI{1.7}{\giga\meter\cubed}$ on 11 March $\pm$ 28 days. Despite this substantial bias, the 
-two time series exhibit a good agreement in reproducing interannual variability: the model and Po River District estimates of peak and 1 April SWE are 
+To ensure reliable results, the comparison was carried out over the largest spatial and temporal overlap of the two snow products. As a first step, the Po 
+River District SWE maps were reprojected onto the grid used by the degree-day model. Subsequently, the common area was identified by excluding grid points 
+falling outside the overlapping region or being part of the glaciated areas described at the beginning of this Chapter. Over the 1992--2021 period, the Po 
+River District dataset suggests a peak SWE value of $6.5 \pm \SI{2.3}{\giga\meter\cubed}$ typically occurring on 20 March $\pm$ 25 days, whereas according 
+to this thesis model this figure accounts for approximately $4.5 \pm \SI{1.7}{\giga\meter\cubed}$ on 11 March $\pm$ 28 days. Despite this substantial bias, 
+the two time series exhibit a good agreement in reproducing interannual variability: the model and Po River District estimates of peak and 1 April SWE are 
 strongly correlated, with $\text{R}^2\,=0.943\,$ and  $\text{R}^2\,=\,0.916$ respectively.
 
 To investigate a possible role of elevation in the consistency between the two datasets, SWE series were also extracted for three 
 different elevation bands. Their comparison, shown in Figure \ref{fig:swe_evo_comparison_with_PO_basin}, highlighted that this 
 thesis snow product systematically overestimates SWE volumes with respect to the Po River District dataset in the lowlands, whereas 
-the roles reverse above \SI{2500}{\meter} a.s.l. The best agreement occurs at medium elevations, as illustrated in Table \ref{tab:stat_estimator_IT-SNOW_PO}
+the roles reverse above \SI{2500}{\meter} a.s.l. This is further confirmed in Table \ref{tab:stat_estimator_IT-SNOW_PO}, where an elevation-wise comparison 
+of the two snow products is carried out.
 
 \begin{table}[H]
   \centering
@@ -311,7 +313,8 @@ the roles reverse above \SI{2500}{\meter} a.s.l. The best agreement occurs at me
 The larger discrepancies detected at higher elevations come as no surprise, since the precipitation dataset used within this thesis 
 tend to underestimate winter precipitations as a consequence of undercatch by unheated rain gauge. On the other hand, in data 
 sparse regions such as the highlands, the Po River District dataset relies on ERA5 precipitation estimates, which are known to 
-be biased towards overestimation. 
+be biased towards overestimation. Furthermore, our model does not account for refreezing whenever thermal conditions are favourable. As a result, 
+meltwater can leave the snowpack even when it would physically be retained, thereby resulting in lower SWE volumes.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/swe_evo_comparison_with_PO_basin.png}
@@ -320,7 +323,7 @@ be biased towards overestimation.
     \label{fig:swe_evo_comparison_with_PO_basin}
 \end{figure}
 
-To characterize the spatial pattern of the discrepancies between the two models, Po River Distric climatological SWE maps were 
+To characterize the spatial distribution of the discrepancies between the two models, Po River Distric climatological SWE maps were 
 compared to the ones generated during this thesis, as shown in Figure \ref{fig:clima_ratio_Po_model}. Notably, our model 
 substantially overestimates the amount of water stored within the Northern Apennines, regardless of elevation band or temporal 
 collocation within the hydrological year. On the other hand, the Po River district dataset suggests larger snow accumulations 
@@ -334,9 +337,10 @@ on the highlands across the Alpine Arc, with discrepancies becoming more pronoun
     coverage on the Northern Apennines, whereas in high elevation Alpine catchments the roles reverse.}
     \label{fig:clima_ratio_Po_model}
 \end{figure}
-The opposite occurs at lower elevations, as this thesis product suggest a more significant presence of snow cover. Finally, the 
-Canton of Ticino and the Aosta Valley emerge as the regions of the Alpine Arc where the agreement between the two estimates is 
-highest.
+The opposite occurs at lower elevations, as this thesis model suggest a more significant presence of snow cover. Finally, the 
+Canton of Ticino and the Aosta Valley emerge as the regions of the Alpine Arc showing the best agreement between the two snow products.
+
+
 
 
 
@@ -361,6 +365,9 @@ and $6.4 \pm \SI{2.9}{\giga\meter\cubed}$ respectively. ITSNOW: 184 pm 17 Po Mod
     panel corresponds to an elevation band of \SI{1000}{\meter} in width, whose range is indicated in the panel title.}
     \label{fig:swe_evo_comparison_with_ITSNOW}
 \end{figure}
+
+
+
 
 
 
@@ -449,6 +456,8 @@ Alpine foothills of the province of Biella.
 As shown in panel (b) of Figure \ref{fig:SCD_trends}, numerous statistically significant negative trends are present on both the 
 mountain ranges and the lowlands of the IH-GAR, suggesting that this widespread reduction in snow cover duration is not driven by 
 interannual variability, but that is strongly linked to anthropogenic global warming.   
+
+
 
 
 
