@@ -27,11 +27,11 @@ by comparing model outputs to observational snow depth time series, is addressed
 \section{Model inputs}
 
 The gridded temperature and precipitation datasets, used as model inputs, have both a spatial resolution of \num{30} arc-seconds. They were developed 
-by the Department of Environmental Science and Policy of the University of Milan, building on earlier work aimed at rescuing new station records and 
-improving the quality of existing ones. The numerical procedure chain used to generate these rasters is based on the anomaly method \parencite{precipitation_IHGAR}, 
-which assumes that the spatio-temporal structure of a meteorological signal can be described as the superposition of two fields, namely the 
-climatological normals over a reference period of thirty years and the departures from them. In the following, only the precipitation version is presented. 
-For temperature, the only difference is that are used additive anomalies rather than multiplicative ones.
+as part of a collaboration between the Department of Environmental Science and Policy of the University of Milan and ISAC/CNR, building on earlier work 
+aimed at rescuing new station records and improving the quality of existing ones. The numerical procedure chain used to generate these rasters is based on 
+the anomaly method \parencite{precipitation_IHGAR}, which assumes that the spatio-temporal structure of a meteorological signal can be described as the 
+superposition of two fields, namely the climatological normals over a reference period of thirty years and the departures from them. In the following, 
+only the precipitation version is presented. For temperature, the only difference is that are used additive anomalies rather than multiplicative ones.
 
 
 
@@ -70,30 +70,30 @@ propagating into the gridded fields. This method is composed of three main steps
     of the estimates, the LWLR was performed \num{30} times removing a single station at each iteration. If the difference between the lowest and highest 
     estimates exceeded \num{30} \% of the weighted mean obtained using all 30 stations, the $c^{par}$ were relaxed by \num{10} \% to prevent individual 
     stations from dictating the normal values \parencite{precipitation_IHGAR}.
-    \item \textit{computation of monthly precipitation maps}, which relies on monthly anomaly maps to reconstruct the actual monthly totals over the 
-    entire investigated period as 
+    \item \textit{computation of monthly precipitation maps}, which relies on monthly anomaly maps to reconstruct the actual monthly totals for each year 
+    as 
     \begin{equation}
-        P_{month}\left(x,\,y\right)\,=\,P_{clima}\left(x,\,y\right) \cdot A_{month}\left(x,\,y\right),
+        P_{month}\left(x,\,y,\,t_{year}\right)\,=\,P_{clima}\left(x,\,y,\,t_{year}\right) \cdot A_{month}\left(x,\,y,\,t_{year}\right),
         \label{eq:monthly_precipitation_gridding}
     \end{equation}
-    where $ P_{month}$ and $A_{month}$ are, respectively, the total precipitation and the multiplicative anomaly for a given month at the grid point 
-    $\left(x,\,y\right)$. To generate the anomaly maps, all station series were converted into anomaly series relative to the 1991--2020 monthly normals. 
-    The departures from the climatologies were then computed at each grid point as a weighted mean of the values from the \num{10} nearest stations 
-    \parencite{precipitation_IHGAR}. The weights accounted for distance, elevation difference, and the angular distribution of the stations around the 
-    grid point being reconstructed. The distance weight, which had a Gaussian form as in Equation \eqref{eq:gaussian_form_weight}, was halved at the 
-    distance of the third closest station. The elevation one, on the other hand, got halved at an elevation difference of \num{800} meters for grid 
+    where $ P_{month}$ and $A_{month}$ are, respectively, the total precipitation and the multiplicative anomaly for a specific month of the year $t_{year}$ 
+    at the grid point $\left(x,\,y\right)$. To generate the anomaly maps, all station series were converted into anomaly series relative to the 1991--2020 
+    monthly normals. The departures from the climatologies were then computed at each grid point as a weighted mean of the values from the \num{10} 
+    nearest stations \parencite{precipitation_IHGAR}. The weights accounted for distance, elevation difference, and the angular distribution of the stations 
+    around the grid point being reconstructed. The distance weight, which had a Gaussian form as in Equation \eqref{eq:gaussian_form_weight}, was halved at 
+    the distance of the third closest station. The elevation one, on the other hand, got halved at an elevation difference of \num{800} meters for grid 
     points below $\SI{1600}{\meter}$ a.s.l. or at half the elevation of the grid point otherwise \parencite{precipitation_IHGAR}. This adaptive scaling 
     scheme allowed the weights to decrease more gradually in areas with a lower station density, while limiting the influence of less compatible stations 
     whenever there was high data availability.
-    \item \textit{estimation of daily precipitation values}, which, at a given location $\left(x,\,y\right)$, were computed as 
+    \item \textit{estimation of daily precipitation values}, which, at a given location $\left(x,\,y\right)$ during the year $t_{year}$, were computed as 
     \begin{equation}
-        P\left(x,\,y\right)\,=\,P_{month}\left(x,\,y\right) \cdot F_{day}\left(x,\,y\right),
+        P\left(x,\,y\right)\,=\,P_{month}\left(x,\,y,\,t_{year}\right) \cdot F_{day}\left(x,\,y\right),
         \label{eq:daily_precipitation_gridding}
     \end{equation}
-    where $P$ denotes the daily precipitation value and $F_{day}\left(x,\,y\right)$ is the ratio between the daily precipitation and the corresponding 
-    monthly total. To obtain $F_{day}\left(x,\,y\right)$ at each grid point, the station time series were first converted into daily precipitation 
-    fractions by dividing each daily value by the corresponding monthly one. The resulting fractions were then interpolated over the 
-    spatial grid using the same method described in the previous bullet point \parencite{precipitation_IHGAR}.
+    where $P$ denotes the daily precipitation value and $F_{day}\left(x,\,y\right)$ is the ratio between the daily precipitation and the corresponding monthly 
+    total. To obtain $F_{day}$ at each grid point, the station series were first converted into daily precipitation fractions by dividing each daily value 
+    by the corresponding monthly one. The resulting fractions were then interpolated over the spatial grid using the same method described in the previous 
+    bullet point \parencite{precipitation_IHGAR}.
 \end{itemize}
 
 
@@ -103,9 +103,9 @@ propagating into the gridded fields. This method is composed of three main steps
 The gridded precipitation dataset used as model input in this thesis is publicly available through the \href{https://dataverse.unimi.it/dataset.xhtml?persistentId=doi:10.13130/RD_UNIMI/CSYYAP}{UNIMI Dataverse}.
 Over the IH-GAR, the dataset indicates an average annual precipitation of $1090\,\pm\,190\,\SI{}{\milli\meter}$ for the 1991--2020 period. This spatially 
 aggregated value, however, masks substantial heterogeneity in the annual precipitation climatology, as shown in Figure \ref{fig:annual_prec_clima_1991_2020}. 
-\begin{figure}[htbp]
+\begin{figure}[htpb]
     \centering
-    \includegraphics[width=\linewidth]{swe_model/annual_prec_clima_1991_2020.png}
+    \includegraphics[width=0.9\linewidth]{swe_model/annual_prec_clima_1991_2020.png}
     \caption{Annual precipitation climatology for the Italian Hydrological part of the Greater Alpine Arc (IH-GAR), computed over the 1991--2020 
     period at a spatial resolution of 30 arc-seconds. The highest totals occur along the Alpine foothills, where air masses undergo orographic 
     lifting.}
@@ -149,7 +149,6 @@ where precipitation patterns are typically dominated by interannual variability 
 The paper describing the generation of these temperature rasters is currently under review: the data will be made publicly available through the Unimi 
 Dataverse once the study has been accepted for publication. Three temperature fields were reconstructed on a daily basis, namely mean, minimum and maximum 
 temperature. 
-
 As expected, the temperature dataset indicates that the IH-GAR has experienced marked changes in response to global warming. However, this trend is not 
 characterized by a steady increase over the 1951--2023 period, but rather by a pronounced shift in behaviour in the late 1970s, as shown in Figure 
 \ref{fig:mean_temperature_trend}. This is consistent with the broader European climate evolution: until the mid-70s, most temperature related indices 
@@ -253,7 +252,7 @@ according to
     \text{DDF}_{t}\,=\,\text{DDF}_{ave}\,+\,\text{DDF}_{amp}\cdot\sin\left[\frac{2\pi \left(t\,-\,81\right)}{366}\right],
     \label{eq:swe_ddf}
 \end{equation}
-where $t$ is the day of the solar year, $\text{DDF}_{ave}$ is the mean degree day factor, whereas $\text{DDF}_{amp}$ is the amplitude of its oscillation. 
+where $t$ is the Julian day, $\text{DDF}_{ave}$ is the mean degree day factor, whereas $\text{DDF}_{amp}$ is the amplitude of its oscillation. 
 With this formulation, the DDF peaks on summer solstice, in qualitative agreement with the seasonal evolution of incoming solar radiation. Moreover, 
 during non-leap years, the DDF value corresponding to 29 February is neglected.
 

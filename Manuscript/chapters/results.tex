@@ -447,7 +447,7 @@ latter stages of the snow season is definitely more limited, as SWE declines mor
 
 This procedure enabled the evaluation of the snow cover duration across the IH-GAR, which revealed substantial spatial variability mainly driven by the 
 complex topography of the study area. This spatial pattern can be clearly identified in the 1991--2020 SCD climatology, shown in Figure 
-\ref{fig:clima_scd_map_1991_2020}, as mountain ranges generally exhibit more favourable conditions for snowpack persistence. Notably, the areas 
+\ref{fig:clima_scd_map_1991_2020}, as mountain ranges generally exhibit more favourable conditions for snowpack persistence. Notably, the glaciated areas 
 previously excluded from the SWE analysis are consistently associated with snow coverage all year round.
 \begin{figure}[H]
     \centering
@@ -457,9 +457,12 @@ previously excluded from the SWE analysis are consistently associated with snow 
     \label{fig:clima_scd_map_1991_2020}
 \end{figure}
 Although the spatial distribution of snow cover duration exhibits a strong dependence on elevation, the influence of other 
-topographical parameters on the snow cycle is only partially captured, as expected for a degree day approach. This becomes evident when comparing the 
-average SCD of each pixel with that of the \SI{25}{\meter}-wide elevation band it belongs to, as shown in Figure \ref{fig:SCD_difference_by_ele}. 
-Positive and negative deviations indicate areas characterized by longer or shorter snow cycles compared to locations at similar elevations.
+topographical parameters on the snow cycle is only partially captured, as expected for a degree day approach. Indeed, the model inability to account 
+for the role of additional topographic variables, such as aspect, is attributable to its simplicity: these parameters are only indirectly 
+incorporated in the modelling chain through the weights assigned by the Locally Weighted Linear Regression (LWLR) used to spatialize the temperature 
+and precipitation fields used as inputs. This becomes evident when comparing the average SCD of each pixel with that of the \SI{25}{\meter}-wide 
+elevation band it belongs to, as shown in Figure \ref{fig:SCD_difference_by_ele}. Positive and negative deviations indicate areas characterized by 
+longer or shorter snow cycles compared to locations at similar elevations.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/SCD_difference_by_ele.png}
@@ -468,10 +471,7 @@ Positive and negative deviations indicate areas characterized by longer or short
     \label{fig:SCD_difference_by_ele}
 \end{figure}
 Notably, the areas exhibiting longer snow seasons relative to their elevation band correspond to those receiving higher autumn and winter precipitation, 
-as it emerges from comparing Figures \ref{fig:seasonal_prec_clima_1991_2020} and \ref{fig:SCD_difference_by_ele}. The model inability to account for the 
-influence of some topographic parameters, such as aspect, on SCD is attributable to its simplicity. Indeed, these parameters are only indirectly incorporated 
-in the modelling chain through the weights assigned by the Locally Weighted Linear Regression (LWLR) used to spatialize the temperature and precipitation 
-fields used as inputs.
+as it emerges from comparing Figures \ref{fig:seasonal_prec_clima_1991_2020} and \ref{fig:SCD_difference_by_ele}. 
 
 The conversion from SWE rasters to snow cover maps also allowed to estimate the influence of climate change on the persistence and 
 extent of the seasonal snowpack. For instance, Figure \ref{fig:snow_cover_fraction_climatologies} shows that the elevation-wise distribution of snow 
@@ -491,7 +491,7 @@ Clearly, a reduction in the number of snow covered pixels within a given elevati
 Consequently, the Mann-Kendall test and Sen-Theil estimator were applied to the annual snow cover duration maps to 
 identify which regions have experienced the most pronounced changes over the investigated period. The results of these analyses are 
 illustrated in Figure \ref{fig:SCD_trends}, with the highest losses (expressed as days per decade) observed on the highest peaks 
-of the Northern Apennines and along the slopes of secondary valleys on the Alpine arc, such as in Val di Cogne (Aosta valley) and 
+of the Northern Apennines and along the slopes of secondary valleys on the Alpine arc, such as in Val di Cogne (Aosta Valley) and 
 Valmalenco (Lombardia). On the other hand, almost no positive trends were detected, except for a few isolated pixels located in the 
 Alpine foothills of the province of Biella. As shown in panel (b) of Figure \ref{fig:SCD_trends}, 
 \begin{figure}[ht]
@@ -518,9 +518,9 @@ hydrological years.
 As a first step, the difference between satellite and our snow cover duration estimates was computed to identify which regions exhibited the largest discrepancies, 
 as shown in Figure \ref{fig:scd_comparison_modis_model}. Notably, the degree day model appears to substantially overestimate the length of the snow season 
 relative to MODIS readings over the Northern Apennines and the Eastern Pre-Alps, whereas the opposite seems to occur on the lowlands. This latter 
-behaviour could indicate that the SWE threshold used to distinguish between bare ground and snow presence is too strict. Indeed, snowpacks on the Po plain 
+behaviour could indicate that the SWE threshold used to distinguish between bare ground and snow presence is too strict, as snowpacks on the Po plain 
 rarely exceed \SI{15}{\milli\meter} of snow water equivalent. This suggestion is further strengthened by the fact that the Po Plain has almost no 
-vegetation cover, thus facilitating the satellite detection, as forested terrain alters the NDSI value often leading to faulty snow free readings. 
+vegetation, thus facilitating satellite detection of snow cover.
 
 \begin{figure}[H]
     \centering
@@ -531,9 +531,9 @@ vegetation cover, thus facilitating the satellite detection, as forested terrain
     \label{fig:scd_comparison_modis_model}
 \end{figure}
 
-Moreover, the distribution of SCD differences, illustrated in panel (b) of Figure \ref{fig:scd_comparison_modis_model}, reveals that no significant 
-bias toward one snow product can be detected. The same holds for the snow cover extent (SCE) estimated by the two products, as shown in Figure 
-\ref{fig:covered_area_model_MODIS}.
+Secondly, the frequency distribution of SCD differences was analyzed, revealing that no significant bias toward one snow product could be detected, 
+as illustrated in panel (b) of Figure \ref{fig:scd_comparison_modis_model}. The same holds for the snow cover extent (SCE) estimated by the two 
+products, shown in Figure \ref{fig:covered_area_model_MODIS}.
 
 \begin{figure}[H]
     \centering
@@ -542,11 +542,36 @@ bias toward one snow product can be detected. The same holds for the snow cover 
     \label{fig:covered_area_model_MODIS}
 \end{figure}
 
-This seemingly close agreement between MODIS and our approach comes to no surprise. Indeed, during the calibration procedure, the modelling chain appeared 
-to slightly overestimate the snow persistence on the ground relative to the observational HS series used to test model performances (see Figure 
+This seemingly close agreement between MODIS and our approach comes as no surprise. Indeed, during the calibration procedure, the degree day model appeared 
+to slightly overestimate snow persistence on the ground relative to the observed HS time series employed to evaluate model performances (see Figure 
 \ref{fig:homogenoeus_calib}). Furthermore, the same snow depth records used for calibration systematically yield higher SCD values than the corresponding 
-MODIS ones (see \ref{fig:comparison_HS_MODIS_corrected}). This would suggest that our model should appreciably overestimate MODIS snow cover duration 
-predictions: however, the adoption of such a strict SWE threshold of \SI{15}{\milli\meter} w.e. prevents this from occurring, as several days of snow cover 
-are excluded from SCD calculations. This means that the remarkably close agreement of the two previous results it's just the fortuitous outcome of the 
-combined influence of several issues and uncertainties affecting both datasets. Neither MODIS nor our snow cover maps reliably represent the snow cover 
-extent throughout the hydrological year, but rather provide a rough estimate.
+MODIS estimates (see \ref{fig:comparison_HS_MODIS_corrected}). These findings would suggest that our model should appreciably overestimate MODIS-derived 
+snow cover duration: however, the adoption of such a strict SWE threshold of \SI{15}{\milli\meter} w.e. prevents this from occurring, as several days are 
+excluded from SCD calculations. Nevertheless, neither MODIS nor our snow cover maps should be regarded as an accurate representation of the actual snow 
+cover extent across the study area, but rather as rough estimates, as both datasets are subject to several issues and potential limitations. 
+
+For instance, MODIS appear to struggle over forested areas, given that as snow falls from tree canopies the NDSI value of the pixel decreases, making the 
+determination of snow presence or absence rather ambiguous. This behaviour is evident in Figure \ref{fig:modis_vs_hs_res}, as the spaceborne sensors 
+indicate snow cover only when spikes in snow depth (i.e. snowfall events) are recorded. A possible solution to this MODIS bias could be to use a 
+position-dependent NDSI threshold for the conversion of MODIS readings into snow cover estimates, directly accounting for forested areas as regions 
+where even NDSI values smaller than 0.4 could be accepted.
+
+On the other hand, snow cover predictions by our model could be improved by allowing the SWE threshold to vary along the snow season. A plausible dependence 
+could be a periodic oscillation, such as
+\begin{equation}
+    \text{SWE}\left(t\right)\,=\,\frac{\text{SWE}_{max}\,+\,\text{SWE}_{min}}{2}\,+\,\frac{\text{SWE}_{max}\,-\,\text{SWE}_{min}}{2} \sin{\left[\frac{2\pi\left(t-45\right)}{n_{days}}\right]}, 
+    \label{eq:SWE_thresh_time_dep}
+\end{equation}
+where $n_{days}$ is the number of days in a given year. In Equation \eqref{eq:SWE_thresh_time_dep}, $\text{SWE}_{min}$ is the snow water equivalent 
+threshold corresponding to a snow density of \SI{100}{\kilo\gram\per\meter\cubed} (namely \SI{5}{\milli\meter}), whereas $\text{SWE}_{max}$ to a snow 
+density of \SI{400}{\kilo\gram\per\meter\cubed} (namely \SI{20}{\milli\meter}). Such a formulation could lead to a more accurate representation of 
+transient snowfall events during autumn and winter, particularly in the lowland areas, while leaving the treatment of late-spring conditions largely 
+unchanged, since the periodic oscillation peaks around 15 May and reaches its minimum around 15 November.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{results/modis_vs_hs.png}
+    \caption{Comparison between station snow depth and MODIS snow cover time series. Light blue shaded areas indicate the periods classified as snow 
+    covered by MODIS.}
+    \label{fig:modis_vs_hs_res}
+\end{figure}

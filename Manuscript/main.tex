@@ -127,13 +127,15 @@
 
 
 \usepackage[
-  backend    = biber,
-  style      = authoryear,
-% sorting    = none,
-  maxnames   = 2,
-  minnames   = 1,
-  doi        = true,
-  url        = true
+  backend        = biber,
+  style          = authoryear,
+  maxcitenames   = 1,
+  mincitenames   = 1,
+  maxbibnames    = 15,
+  uniquelist     = false,
+  uniquename     = false,
+  doi            = true,
+  url            = true
 ]{biblatex}
 \addbibresource{bibliography.bib}
 \AtBeginBibliography{\singlespacing}
@@ -181,7 +183,5 @@
 
 \backmatter
   \printbibliography[heading=bibintoc, title={Bibliography}]
-  \clearpage
-  \thispagestyle{empty}\null\clearpage
 
 \end{document}

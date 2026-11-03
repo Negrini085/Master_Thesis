@@ -6,3 +6,6 @@ Brenta
 reprojected
 reprojecting
 Valmalenco
+Aosta
+Cogne
+analyzed
