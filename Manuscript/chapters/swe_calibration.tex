@@ -78,8 +78,8 @@ and the period covered by \cite{MODIS_ITA}. For each station in this subset, the
 data were converted into binary snow cover series using a threshold of $\SI{0}{\centi\meter}$: positive snow depth values were assigned a value of one, 
 whereas zeros remained unchanged. Both time series were then organized in pseudo-hydrological years, extending from 1 September of a given year to 31 
 August of the following one, to allow for a direct comparison. A perfect match was not expected, as station measurements are collected in-situ, whereas 
-MODIS provides spatially distributed observations with pixels classified as snow free if the snow cover fraction does not exceed \num{0.5}. Nevertheless, 
-the comparison shown in Figure \ref{fig:comparison_HS_MODIS_original} revealed substantial discrepancies between the two datasets.
+MODIS provides spatially distributed observations in which each pixel is classified as snow free whenever snow covers less than half of its area. 
+Nevertheless, the comparison shown in Figure \ref{fig:comparison_HS_MODIS_original} revealed substantial discrepancies between the two datasets.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/comparison_HS_MODIS_original.png}
@@ -271,7 +271,7 @@ comparing the HS series with the corresponding MODIS data for the pseudo-hydrolo
 similar to that shown in Figure \ref{fig:modis_vs_hs}. In particular, the snow covered periods identified by satellite observations (light blue) are 
 noticeably shorter than the snow depth ones.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/comparison_HS_MODIS_corrected.png}
     \caption{(a) Comparison between SCD values computed from corrected HS series and MODIS data. Each dot represents a pseudo-hydrological year. 
@@ -280,7 +280,7 @@ noticeably shorter than the snow depth ones.
     \label{fig:comparison_HS_MODIS_corrected}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/modis_vs_hs.png}
     \caption{Comparison between station snow depth and MODIS snow cover time series. Light blue shaded areas indicate the periods classified as snow covered by MODIS.}
@@ -296,13 +296,16 @@ noticeably shorter than the snow depth ones.
 
 
 
+\newpage
 \section{Calibration procedure}
 
 The correction of station metadata proved particularly relevant at this stage, as the calibration procedure required accurate coordinates. 
-Consequently, of the \num{832} stations in the final dataset, only the \num{714} considered reliable were retained for the subsequent analysis. The 
+Consequently, of the \num{832} stations in the final dataset, only the \num{714} with reliable metadata were retained for the subsequent analysis. The 
 first step of model calibration was the reconstruction of daily temperature and precipitation series at the exact location of each station over the 
 1951--2023 period. This operation was successful for \num{632} stations, while for the remaining \num{82} the available data were insufficient to 
-obtain accurate results. These reconstructed meteorological data could then be used to simulate snow water equivalent series for comparison with 
+obtain accurate results. 
+
+These reconstructed meteorological records could then be used to simulate snow water equivalent series for comparison against 
 the corresponding snow depth observations. Although both variables reflect the amount of snow on the ground, they represent different physical 
 quantities and cannot be compared directly. A possible solution to this problem would be to use a snow model such as $\Delta$Snow, which converts 
 HS series into SWE records by interpreting snow depth increases and decreases exceeding a certain threshold $\tau$ as snowfall and snowmelt events 
@@ -320,8 +323,30 @@ where CSI stands for Critical Success Index, defined as
     \text{CSI}\,=\,\frac{\text{TP}}{\text{TP}\,+\,\text{FP}\,+\,\text{FN}}.
     \label{eq:csi}
 \end{equation}
-In Equation \eqref{eq:csi} TP, FP and FN denote true positive, false positive and false negatives respectively. This means that the adopted loss 
-function focuses on snow, without considering true negatives, i.e. days in which both series indicate bare ground conditions.
+In Equation \eqref{eq:csi} TP, FP and FN denote true positives, false positives and false negatives respectively, pooled across all stations of the HS 
+dataset. This means that the adopted loss function focuses on snow presence, without considering true negatives, i.e. days in which both series indicate 
+bare ground conditions.
+
+The proposed calibration process essentially consists of maximizing the CSI, which is achieved by making the two terms of the fraction in Equation \ref{eq:csi} 
+as similar as possible. Clearly, this requirement is met by reducing the weight of $\text{FP}\,+\,\text{FN}$ relative to $\text{TP}$, regardless of any 
+model bias toward over or underestimation, since $\text{FP}$ and $\text{FN}$ can vary freely. To this end, other performance metrics such as 
+
+\begin{equation}
+    \text{Frequency Bias}\,=\,\frac{\text{TP}\,+\,\text{FP}}{\text{TP}\,+\,\text{FN}}
+    \label{eq:freq_bias}
+\end{equation}
+
+\begin{equation}
+    \text{Recall}\,=\,\frac{\text{TP}}{\text{TP}\,+\,\text{FN}}
+    \label{eq:recall}
+\end{equation}
+
+\begin{equation}
+    \text{Accuracy}\,=\,\frac{\text{TP}\,+\,\text{TN}}{\text{TP}\,+\,\text{FP}\,+\,\text{FN}\,+\,\text{TN}}
+    \label{eq:accuracy}
+\end{equation}
+
+\noindent were monitored throughout the calibration procedure to inspect the quality of model predictions.
 
 
 
@@ -353,7 +378,8 @@ With $T_\tau$ as the only free parameter, the optimization was carried out by ev
 loss function is shown in panel (a) of Figure \ref{fig:homogenoeus_calib}. A single, well-defined minimum occurs near \SI{1}{\degreeCelsius}, with the 
 best agreement between model estimates and snow depth observations obtained at $T_\tau\,=\,\SI{1.073}{\degreeCelsius}$. At the best temperature, the 
 simulated snow water equivalent and observed HS are misaligned for approximately \num{7.4} \% of the estimates. The model also shows a slight tendency 
-to overestimate snowpack persistence, as illustrated in panel (b) of the same picture.
+to overestimate snowpack persistence, as illustrated in Table \ref{tab:perf_metr_homo}. Overall, the investigated metrics indicate that the model performs 
+well in reproducing the observed snow dynamics.  
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/homogeneous_calib.png}
@@ -362,6 +388,24 @@ to overestimate snowpack persistence, as illustrated in panel (b) of the same pi
     series at the optimal $T_\tau\,=\,\SI{1.073}{\degreeCelsius}$.}
     \label{fig:homogenoeus_calib}
 \end{figure}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Performance metrics for $T_\tau\,=\,\SI{1.073}{\degreeCelsius}$}
+  \label{tab:perf_metr_homo}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{@{} >{\raggedright\arraybackslash}m{2.5cm} >{\raggedright\arraybackslash}m{3cm} @{}}
+    \toprule
+    \textbf{Parameter} & \textbf{Value} \\
+    \midrule
+    CSI & 0.821 \\
+    Freq. bias & 1.036 \\
+    Recall & 0.917 \\
+    Accuracy & 0.926 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
 Although the comparison over the full year was encouraging, a closer examination was needed to identify potential limitations of the calibrated model.
 \begin{figure}[htbp]
     \centering
@@ -376,10 +420,11 @@ on the ground compared to the HS series. This mismatch may be partially attribut
 fluxes contributing to the energy balance of the snowpack. Specifically, during the late autumn months, the ground releases the heat stored over the 
 summer as it approaches thermal equilibrium limiting the persistence of snow by favouring the melting of newly formed snow layers. Consequently, the 
 observed snow depth drops to zero sooner than the simulated one after an ephemeral snowfall, since this particular source of heat is not considered in 
-the modelling chain. In addition, the model appears to predict complete snowmelt too early, suggesting that the DDF parameters proposed by \cite{Magnusson_DDF} 
-may be excessively high for the study area. This second inaccuracy in representing the duration of snow season may also partially explain the overestimation 
-observed at the beginning of the hydrological year. Indeed, minimizing the loss function may favour a certain number of false positives early in the season 
-if this leads to more true positives later on.
+the modelling chain. In addition, the model appears to predict complete snowmelt too early, potentially suggesting that the DDF parameters proposed by \cite{Magnusson_DDF} 
+may be excessively high for the study area. However, the degree day approach adopted in this thesis does not track the cold content of the snowpack 
+throughout the snow cycle, nor does it account for refreezing events: both processes can delay runoff, consequently prolonging snow cover duration later 
+in the season. Clearly, these limitations should be addressed to provide a more accurate representation of snowpack physical processes, and may be 
+considered in future developments of this work. 
 
 A second insight could be attained by focusing on the elevation of the snow depth stations used in the calibration procedure. To this end, the 
 HS series were divided into three elevation bands, each containing approximately the same number of stations, and the confusion matrices shown in Figure 
@@ -389,7 +434,7 @@ Indeed, at high elevations solid precipitation is typically underestimated becau
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/homogeneous_calib_elevation_wise.png}
-    \caption{Elevation-wise confusion matrices comparing SWE series and HS observations. The model outputs are generated with $T_\tau\,=\,\SI{1.073}{\degreeCelsius}$ 
+    \caption{Elevation-wise confusion matrices comparing SWE series and HS observations. The model outputs were generated with $T_\tau\,=\,\SI{1.073}{\degreeCelsius}$ 
     for precipitation phase partitioning.}
     \label{fig:homogeneous_calib_elevation_wise}
 \end{figure}
@@ -403,8 +448,8 @@ the larger mismatch between observed HS and simulated SWE series.
 
 \subsection{Simulated annealing}
 
-The results of the homogeneous calibration highlighted some limitations in the model ability to accurately reproduce the evolution 
-of seasonal snow cover. In particular, a widespread underestimation of snow cover persistence during spring months suggested that 
+Despite the overall satisfactory performance, the homogeneous calibration highlighted some limitations in the model ability to accurately reproduce the 
+evolution of seasonal snow cover. In particular, a widespread underestimation of snow cover persistence during spring months suggested that 
 the snowmelt parameters proposed by \cite{Magnusson_DDF} might not be optimal for the study area and could be partially responsible 
 for the observed discrepancies. Consequently, a second calibration was performed, in which the optimization was extended to 
 the complete set $\left(T_{\tau},\,T_{melt},\,\text{DDF}_{ave},\,\text{DDF}_{amp},\,m_m \right)$. To explore this multidimensional 
@@ -467,7 +512,7 @@ $k \leftarrow k + 1$
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/loss_accrate_SA.png}
-    \caption{}
+    \caption{Loss evolution as a function of the accepted move, and acceptance rate and $\delta$ as a function of the annealing temperature.}
     \label{fig:loss_accrate_SA}
 \end{figure}
 
@@ -475,30 +520,51 @@ $k \leftarrow k + 1$
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/param_evo_SA.png}
-    \caption{}
+    \caption{Evolution of $T_\tau$, $\text{DDF}_{ave}$ and $\text{DDF}_{amp}$ throughout the simulated annealing procedure as a function of the 
+    accepted move. The five runs start from randomly selected positions in parameter space and evolve according to different pseudo-random number 
+    sequences.}
     \label{fig:param_evo_SA}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/performance_evo_SA.png}
-    \caption{}
+    \caption{Evolution of the investigated performance metrics throughout the simulated annealing procedure as a function of the accepted move. The five 
+    runs start from randomly selected positions in parameter space and evolve according to different pseudo-random number sequences.}
     \label{fig:performance_evo_SA}
 \end{figure}
 
 %0.294628 1.48411 0.958745
-%1-0.169512330852277 1.04913841815942 0.92968896613798 0.930251891815677
+
+\begin{table}[htbp]
+  \centering
+  \caption{Performance metrics for best simulated annealing parameters.}
+  \label{tab:perf_metr_}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{@{} >{\raggedright\arraybackslash}m{2.5cm} >{\raggedright\arraybackslash}m{2.5cm} @{}}
+    \toprule
+    \textbf{Metric} & \textbf{Value} \\
+    \midrule
+    CSI & 0.830 \\
+    Freq. bias & 1.049 \\
+    Recall & 0.930 \\
+    Accuracy & 0.930 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/truth_monthly_wise_SA.png}
-    \caption{}
+    \caption{Monthly-wise confusion matrices comparing SWE series and HS observations. The model outputs were generated using the best parameters found 
+    by means of a simulated annealing scheme.}
     \label{fig:truth_monthly_wise_SA}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/truth_elevation_wise_SA.png}
-    \caption{}
+    \caption{Elevation-wise confusion matrices comparing SWE series and HS observations. The model outputs were generated using the best parameters found 
+    by means of a simulated annealing scheme.}
     \label{fig:truth_elevation_wise_SA}
 \end{figure}
