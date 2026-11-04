@@ -1,7 +1,47 @@
 \chapter{Model calibration}
 \label{cap:swe_calibration}
 
-\newpage
+The degree-day model described in the previous chapter simulates the evolution of snow water equivalent using only precipitation and temperature as 
+meteorological forcing. However, the snow accumulation and snowmelt parametrizations still need to be properly calibrated before the model can be deployed 
+operationally. To this end, a snow depth dataset including data from more than a thousand stations distributed across the entire Alpine Arc was generated, 
+and its major numerical issues were identified and properly addressed. The actual calibration procedure consisted of comparing the simulated SWE time 
+series with the observed HS ones, aiming to maximize their temporal overlap. The first calibration attempt focused solely on the temperature threshold 
+for phase partitioning $T_\tau$, while the melt-related parameters were held constant at the values proposed by \cite{Magnusson_DDF}, namely 
+
+\begin{table}[H]
+  \centering
+  \caption{Melt parameters proposed by \cite{Magnusson_DDF}.}
+  \label{tab:magn_param}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{@{} >{\raggedright\arraybackslash}m{3.0cm} >{\raggedright\arraybackslash}m{3.5cm} @{}}
+    \toprule
+    \textbf{Parameter} & \textbf{Value} \\
+    \midrule
+    $\text{DDF}_{ave}$ & \SI{2.2}{\milli\meter\per\degreeCelsius\per\day}\\
+    $\text{DDF}_{amp}$ & \SI{1.7}{\milli\meter\per\degreeCelsius\per\day}\\
+    $m_m$ & \SI{0.5}{\degreeCelsius} \\
+    $T_{melt}$ & \SI{0.0}{\degreeCelsius} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\noindent Additionally, a simulated annealing procedure was developed to assess whether modifying additional parameters could significantly improve the 
+model predictions.
+
+The calibration chapter is organized as follows. It opens with a description of the quality control checks and correction procedures applied to the snow 
+depth time series for improving the HS dataset reliability. The following section focuses on the calibration itself, including the underlying assumptions 
+such as the definition of the loss function. Finally, the calibration results are presented and discussed, with particular attention to model performance 
+across different months and elevation ranges.
+
+
+
+
+
+
+
+
+
+
 \section{HS data}
 
 The snow depth dataset used to calibrate the degree-day model presented in the previous chapter was generated through a data rescue activity. It combines 
@@ -84,6 +124,8 @@ and necessary, the numerical issues that initially compromised the reliability o
 
 
 
+
+
 \subsection{Position correction}
 
 The main issue affecting the unreliable coordinates was that most of them had been rounded to the nearest arc-minute. In the complex topography of the 
@@ -109,6 +151,8 @@ that most corrections involved shifts of less than $\SI{1}{\kilo\meter}$.
 Overall, this procedure allowed the precise coordinates of approximately \num{300} stations to be recovered, increasing the number of stations whose 
 elevations were consistent with the DEM from \num{532} to \num{829}. For the remaining ones, the original coordinates were retained because no 
 sufficiently reliable sources were available to support a correction.
+
+
 
 
 
@@ -197,6 +241,9 @@ Figure \ref{fig:hs_correction_steps} illustrates how a typical HS time series ch
 \end{figure}
 
 
+
+
+
 \subsection{Final dataset}
 
 The snow depth denoising and gap filling procedure described in the previous subsection led to the removal of \num{220} stations, reducing the network from 
@@ -249,7 +296,6 @@ noticeably shorter than the snow depth ones.
 
 
 
-
 \section{Calibration procedure}
 
 The correction of station metadata proved particularly relevant at this stage, as the calibration procedure required accurate coordinates. 
@@ -276,6 +322,8 @@ where CSI stands for Critical Success Index, defined as
 \end{equation}
 In Equation \eqref{eq:csi} TP, FP and FN denote true positive, false positive and false negatives respectively. This means that the adopted loss 
 function focuses on snow, without considering true negatives, i.e. days in which both series indicate bare ground conditions.
+
+
 
 
 
@@ -325,7 +373,7 @@ Although the comparison over the full year was encouraging, a closer examination
 A first insight into the model behaviour can be gained by examining the monthly agreement between simulated SWE and observed HS series, as shown in Figure 
 \ref{fig:homogeneous_calib_monthly_wise}. In particular, during the first part of the snow season, the model markedly overestimates the presence of snow 
 on the ground compared to the HS series. This mismatch may be partially attributed to the fact that the model does not account for the individual heat 
-fluxes contributing to the energy balance of the snowpack. Specifically, during the early winter months, the ground releases the heat stored over the 
+fluxes contributing to the energy balance of the snowpack. Specifically, during the late autumn months, the ground releases the heat stored over the 
 summer as it approaches thermal equilibrium limiting the persistence of snow by favouring the melting of newly formed snow layers. Consequently, the 
 observed snow depth drops to zero sooner than the simulated one after an ephemeral snowfall, since this particular source of heat is not considered in 
 the modelling chain. In addition, the model appears to predict complete snowmelt too early, suggesting that the DDF parameters proposed by \cite{Magnusson_DDF} 
@@ -348,6 +396,8 @@ Indeed, at high elevations solid precipitation is typically underestimated becau
 Although \cite{precipitation_IHGAR} applied quality checks to exclude clearly biased precipitation series from the generation of the precipitation rasters, 
 some issues may persist. Moreover, below \SI{1000}{\meter} a.s.l. the ground rarely freezes, meaning that ground heat flux $G$ could be responsible for 
 the larger mismatch between observed HS and simulated SWE series.
+
+
 
 
 
@@ -386,7 +436,7 @@ The initial temperature $T_0$ should be sufficiently larger than the typical los
 random search within the admissible parameter space $\Omega$. Indeed, at the beginning of the simulated annealing, approximately 
 all proposed moves are accepted, sometimes resulting in a temporary increase in loss function value. Although this behaviour may 
 appear counterproductive at first, it constitutes one of the key strengths of simulated annealing, as it allows the algorithm to 
-excape local minima, explore alternative region of the space parameter, and potentially converge towards a solution with a lower 
+escape local minima, explore alternative region of the space parameter, and potentially converge towards a solution with a lower 
 loss function value. Furthermore, as the system cools, the Boltzmann distribution becomes increasingly concentrated around the 
 global minima of $\mathcal{L} \left(x\right)$, thus allowing for the identification of the optimal parameter values. Within this 
 framework, the choice of the cooling rate is critical, as it involves significant tradeoffs between solution quality and computational 
