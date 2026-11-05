@@ -305,7 +305,7 @@ first step of model calibration was the reconstruction of daily temperature and 
 1951--2023 period. This operation was successful for \num{632} stations, while for the remaining \num{82} the available data were insufficient to 
 obtain accurate results. 
 
-These reconstructed meteorological records could then be used to simulate snow water equivalent series for comparison against 
+These reconstructed meteorological records were then used to simulate snow water equivalent series for comparison against 
 the corresponding snow depth observations. Although both variables reflect the amount of snow on the ground, they represent different physical 
 quantities and cannot be compared directly. A possible solution to this problem would be to use a snow model such as $\Delta$Snow, which converts 
 HS series into SWE records by interpreting snow depth increases and decreases exceeding a certain threshold $\tau$ as snowfall and snowmelt events 
@@ -429,7 +429,7 @@ considered in future developments of this work.
 A second insight could be attained by focusing on the elevation of the snow depth stations used in the calibration procedure. To this end, the 
 HS series were divided into three elevation bands, each containing approximately the same number of stations, and the confusion matrices shown in Figure 
 \ref{fig:homogeneous_calib_elevation_wise} were produced. This analysis highlighted that the model overestimates snow cover persistence at low and 
-intermediate elevation, whereas this tendency reverses above \SI{2000}{\meter} a.s.l. This behaviour may be partially attributable to the model inputs.
+intermediate elevations, whereas this tendency reverses above \SI{2000}{\meter} a.s.l. This behaviour may be partially attributable to the model inputs.
 Indeed, at high elevations solid precipitation is typically underestimated because of snow undercatch by unheated rain gauges. 
 \begin{figure}[htbp]
     \centering
@@ -439,8 +439,8 @@ Indeed, at high elevations solid precipitation is typically underestimated becau
     \label{fig:homogeneous_calib_elevation_wise}
 \end{figure}
 Although \cite{precipitation_IHGAR} applied quality checks to exclude clearly biased precipitation series from the generation of the precipitation rasters, 
-some issues may persist. Moreover, below \SI{1000}{\meter} a.s.l. the ground rarely freezes, meaning that ground heat flux $G$ could be responsible for 
-the larger mismatch between observed HS and simulated SWE series.
+some issues may persist. Moreover, below \SI{1000}{\meter} a.s.l. the ground rarely freezes, meaning that the ground heat flux $G$ could be 
+responsible for an earlier meltout of the observed snow depth series.
 
 
 
@@ -448,13 +448,16 @@ the larger mismatch between observed HS and simulated SWE series.
 
 \subsection{Simulated annealing}
 
-Despite the overall satisfactory performance, the homogeneous calibration highlighted some limitations in the model ability to accurately reproduce the 
-evolution of seasonal snow cover. In particular, a widespread underestimation of snow cover persistence during spring months suggested that 
-the snowmelt parameters proposed by \cite{Magnusson_DDF} might not be optimal for the study area and could be partially responsible 
-for the observed discrepancies. Consequently, a second calibration was performed, in which the optimization was extended to 
-the complete set $\left(T_{\tau},\,T_{melt},\,\text{DDF}_{ave},\,\text{DDF}_{amp},\,m_m \right)$. To explore this multidimensional 
-parameter space, a simulated annealing approach was adopted. This stochastic optimization technique is inspired by the physical 
-annealing itself, in which a material is heated and subsequently cooled at a sufficiently slow rate to allow its internal structure 
+Despite the overall satisfactory performance, the homogeneous calibration revealed some limitations in the model ability to accurately reproduce the 
+seasonal evolution of snowpacks. Consequently, a second calibration procedure was conducted, extending the optimization to $\text{DDF}_{ave}$ and 
+$\text{DDF}_{amp}$, aiming to assess whether adjustments to the degree day factor could, at least partially, mitigate the widespread underestimation of 
+snow cover persistence during the spring months. The remaining parameters $T_{melt}$ and $m_m$, by contrast, were kept fixed at the values proposed by 
+\cite{Magnusson_DDF}, namely \SI{0}{\degreeCelsius} and \SI{0.5}{\degreeCelsius} respectively. This choice is motivated by the absence, in our modelling 
+chain, of cold content tracking and refreezing processes: under these circumstances, it was considered safer to keep the reference values from literature 
+rather than calibrating $T_{melt}$ and $m_m$ without a sufficiently accurate description of the processes involved.
+
+To explore the three-dimensional parameter space, a simulated annealing scheme was adopted. This stochastic optimization technique is inspired by the 
+physical annealing itself, in which a material is heated and subsequently cooled at a sufficiently slow rate to allow its internal structure 
 to approach the ground state, i.e. the lowest possible energy \parencite{SA_1}. The fundamental assumption of this algorithm is to 
 interpret the cost function $\mathcal{L}\left(x\right)$ as the energy of a fictitious statistical-mechanics system, whose Boltzmann 
 distribution is given by
