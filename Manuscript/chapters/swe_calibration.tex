@@ -377,7 +377,7 @@ With $T_\tau$ as the only free parameter, the optimization was carried out by ev
 \SI{1e-3}{\degreeCelsius} was used, considerably finer than the \SI{0.1}{\degreeCelsius} resolution of temperature series. The resulting 
 loss function is shown in panel (a) of Figure \ref{fig:homogenoeus_calib}. A single, well-defined minimum occurs near \SI{1}{\degreeCelsius}, with the 
 best agreement between model estimates and snow depth observations obtained at $T_\tau\,=\,\SI{1.073}{\degreeCelsius}$. At the best temperature, the 
-simulated snow water equivalent and observed HS are misaligned for approximately \num{7.4} \% of the estimates. The model also shows a slight tendency 
+simulated snow water equivalent and observed HS are misaligned for approximately \num{7.3} \% of the estimates. The model also shows a slight tendency 
 to overestimate snowpack persistence, as illustrated in Table \ref{tab:perf_metr_homo}. Overall, the investigated metrics indicate that the model performs 
 well in reproducing the observed snow dynamics.  
 \begin{figure}[H]
@@ -454,7 +454,7 @@ $\text{DDF}_{amp}$, aiming to assess whether adjustments to the degree day facto
 snow cover persistence during the spring months. The remaining parameters $T_{melt}$ and $m_m$, by contrast, were kept fixed at the values proposed by 
 \cite{Magnusson_DDF}, namely \SI{0}{\degreeCelsius} and \SI{0.5}{\degreeCelsius} respectively. This choice is motivated by the absence, in our modelling 
 chain, of cold content tracking and refreezing processes: under these circumstances, it was considered safer to keep the reference values from literature 
-rather than calibrating $T_{melt}$ and $m_m$ without a sufficiently accurate description of the processes involved.
+rather than calibrating $T_{melt}$ and $m_m$ without a sufficiently accurate description of the underlying physical mechanisms.
 
 To explore the three-dimensional parameter space, a simulated annealing scheme was adopted. This stochastic optimization technique is inspired by the 
 physical annealing itself, in which a material is heated and subsequently cooled at a sufficiently slow rate to allow its internal structure 
@@ -470,7 +470,7 @@ no physical meaning in this context, but acts as a control parameter. The optimi
 in the parameter space based on their actual probability, given by Equation \eqref{eq:boltzmann_dis_SA}, while also allowing for a 
 gentle decrease in temperature T from high values toward zero. Sampling from the distribution at a given temperature is performed 
 using the Metropolis algorithm \parencite{Metropolis}. Starting from a configuration $x$, a candidate one $x'$ is generated in 
-the neighborhood $N$ of $x$ by randomly perturbating the parameters and is accepted with probability 
+the neighbourhood $N$ of $x$ by randomly perturbating the parameters and is accepted with probability 
 \begin{equation}
     P_{\mathrm{acc}} = \min\left\{1,\; \exp\left(-\frac{\Delta_{x',x}}{T}\right)\right\},
     \qquad \Delta_{x',x} = \mathcal{L}(x') - \mathcal{L}(x).
@@ -490,15 +490,16 @@ global minima of $\mathcal{L} \left(x\right)$, thus allowing for the identificat
 framework, the choice of the cooling rate is critical, as it involves significant tradeoffs between solution quality and computational 
 cost: an abrupt transition from high to low temperatures may cause the stochastic search to become trapped in a suboptimal local 
 minimum, whereas an excessively slow schedule requires a prohibitive number of loss evaluations, resulting in impractical 
-computational times. The typical structure of the Simulated Annealing (SA) algorithm is therefore:
-% Fare la citazione dove necessario
+computational times. 
+
+The typical structure of the Simulated Annealing (SA) algorithm is therefore:
 \begin{lstlisting}[
     mathescape=true, escapeinside={(*@}{@*)}, caption={Pseudocode structure of the simulated annealing algorithm.}, label={lst:sim_ann_approach}]
 
 Select an initial solution $x\,\in\,\Omega$
 Select an initial temperature $T\,=\,T_0$
 Select a cooling scheme $\left\{\left(T_0,\,M_0\right),\,\left(T_1,\,M_1\right),\,\dots\right\}$
-Select temperature index k
+Set temperature counter $k\,=\,0$
 
 (*@\textit{Repeat}@*)
 Set repetition counter $m\,=\,0$
@@ -512,13 +513,62 @@ Set repetition counter $m\,=\,0$
 $k \leftarrow k + 1$
 \end{lstlisting}
 
-\begin{figure}[htbp]
+The simulated annealing approach employed during this thesis was adapted to the specific requirements of the calibration problem, even introducing some 
+modifications to the general procedure outlined in Listing \ref{lst:sim_ann_approach}. In particular, the algorithm was configured as follows: 
+\begin{itemize}
+    \item the initial position of each run was randomly selected within the allowed parameter space. Indeed, the optimization was confined to a specific 
+    region $\Omega$ of the parameter space, so that throughout the entire annealing procedure $T_\tau \in \left(-4,\,8\right)$, $\text{DDF}_{ave} \in \left(1,\,9\right)$ 
+    and $\text{DDF}_{amp} \in \left(0.5,\,7.5\right)$. This choice ensured that the search remained within a physically meaningful domain while still 
+    allowing for the exploration of substantially different combinations.
+    \item at each iteration of the cycle, a new set of parameters was randomly proposed in a neighbourhood of the last accepted one. In particular, 
+    denoting by $x = \left(x_1,\, x_2,\, x_3\right) = \left(T_\tau,\, \text{DDF}_{ave},\, \text{DDF}_{amp}\right)$ the current configuration, each 
+    component of the candidate $x'$ was sampled independently from a uniform distribution centred on its current value, namely 
+    \begin{equation}
+        x'_i \sim \mathcal{U}\left(x_i - \delta_i\,, x_i + \delta_i\right), \qquad i = 1,\,2,\,3.
+        \label{eq:proposed_move_SA}
+    \end{equation}
+    In Equation \ref{eq:proposed_move_SA}, $\delta_i$ represents the half-width of the sampling interval.  In particular, $\delta_1$ was chosen to be 
+    twice the size of $\delta_2$ and $\delta_3$, to account for the broader interval of admissible $T_\tau$ values relative to $\text{DDF}_{ave}$ and $\text{DDF}_{amp}$. 
+    The half-width $\delta_1$ was initialized to one, and in the following will be referenced as $\delta$. Different SA trials used different 
+    pseudorandom sequences, meaning that the paths in the parameter space differ substantially from each other.
+    \item a geometric cooling schedule was chosen, with the temperature at the $k$-th step given by 
+    \begin{equation}
+        T_k\,=\,\alpha^k T_0,
+        \label{eq:cooling_schedule_SA}
+    \end{equation}
+    where $\alpha = 0.95$ ensured a gradual decrease of $T$ and the initial temperature of the SA algorithm was set to $T_0\,=\,5$. Each optimization run 
+    terminated as soon as $T_k$ fell below $5 \cdot 10^{-6}$, namely after 270 temperature steps.
+    \item the simulated temperature was updated from $T_k$ to $T_{k+1}$ whenever five proposed moves were accepted at temperature $T_{k}$ or a maximum of 
+    500 attempts at the same temperature was reached. To prevent the acceptance rate (AR) from collapsing towards the end of the procedure, an adaptive 
+    scheme for the half-width $\delta$ was developed in order to keep the AR at approximately $40 \%$ at low temperatures, as follows:
+    \begin{equation}
+        \delta\,=\,\min\left[1,\,\max\left(\delta \cdot e^{\text{AR}/100\,-\,0.4}, 10^{-5}\right)\right].
+        \label{eq:adaptive_delta_SA}
+    \end{equation}
+    In Equation \eqref{eq:adaptive_delta_SA}, $\text{AR}$ is evaluated at each temperature step as the ratio between accepted and proposed moves. As a 
+    result, the 500-move stopping criterion was never triggered, meaning that each SA run consists of 1350 accepted moves (i.e. 270 $T_{k}$ steps times 
+    5 accepted moves at each $T_{k}$).  
+\end{itemize}
+
+The actual calibration attempt consisted of 5 independent simulated annealing runs to ensure convergence to the same parameters and loss values. Although 
+the number of trials is quite limited, the main reason is the computational cost of each evaluation of the loss function, which requires a complete 
+simulation of snow water equivalent time series for more than 600 stations. Indeed, each SA run required approximately 15 hours of computation on a 
+personal computer equipped with a modern, high-performance AMD Ryzen AI 7 processor, with computations parallelized across 8 CPU cores. In Figure 
+\ref{fig:loss_accrate_SA}, the loss function evolution is shown for each simulated annealing trial, together with the acceptance rate and the half 
+width $\delta$.
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/loss_accrate_SA.png}
     \caption{Loss evolution as a function of the accepted move, and acceptance rate and $\delta$ as a function of the annealing temperature.}
     \label{fig:loss_accrate_SA}
 \end{figure}
-
+Notably, the first phase of each run is associated with the highest loss values and almost every proposed move is accepted: for a few hundred 
+iterations the algorithm is actually performing a random search within the allowed parameter space $\Omega$. As the fictitious statistical mechanics 
+system cools, the acceptance rate starts to drop as the most deteriorating moves are progressively discarded until the 40\% threshold is reached. Indeed, 
+the last phase of each trial is characterized by a continuous reduction of $\delta$, while the AR remains roughly constant. This trend corresponds to 
+a local refinement phase, where the search focuses on the neighbourhood of the best solution identified so far, thereby improving the estimate of the 
+optimal parameters. Such a behaviour is also clearly observed in Figure \ref{fig:param_evo_SA}, where the values of $\text{T}_{\tau}$, $\text{DDF}_{ave}$, and 
+$\text{DDF}_{amp}$ assumed throughout each run are shown as a function of the accepted move.  
 
 \begin{figure}[htbp]
     \centering
@@ -529,45 +579,55 @@ $k \leftarrow k + 1$
     \label{fig:param_evo_SA}
 \end{figure}
 
-\begin{figure}[htbp]
+Moreover, all performance metrics tend to converge towards stable values by the end of each trial, in contrast with the marked fluctuations observed 
+during the initial stages of the simulation as illustrated in Figure \ref{fig:performance_evo_SA}. 
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{swe_calibration/performance_evo_SA.png}
     \caption{Evolution of the investigated performance metrics throughout the simulated annealing procedure as a function of the accepted move. The five 
     runs start from randomly selected positions in parameter space and evolve according to different pseudo-random number sequences.}
     \label{fig:performance_evo_SA}
 \end{figure}
-
-%0.294628 1.48411 0.958745
-
-\begin{table}[htbp]
+Given the deterministic nature of the adopted loss function, the optimal parameter configuration was selected as the one yielding the lowest value of 
+$\mathcal{L}\left(x\right)$ across the five runs. The best estimate is reported in Table \ref{tab:optimal_parameters_SA}.
+\begin{table}[H]
   \centering
-  \caption{Performance metrics for best simulated annealing parameters.}
-  \label{tab:perf_metr_}
+  \caption{Model parameters resulting from the simulated annealing calibration.}
+  \label{tab:optimal_parameters_SA}
   \renewcommand{\arraystretch}{1.3}
-  \begin{tabular}{@{} >{\raggedright\arraybackslash}m{2.5cm} >{\raggedright\arraybackslash}m{2.5cm} @{}}
+  \begin{tabular}{@{} >{\raggedright\arraybackslash}m{2.5cm} >{\raggedright\arraybackslash}m{3cm} @{}}
     \toprule
-    \textbf{Metric} & \textbf{Value} \\
+    \textbf{Parameter} & \textbf{Value} \\
     \midrule
-    CSI & 0.830 \\
-    Freq. bias & 1.049 \\
-    Recall & 0.930 \\
-    Accuracy & 0.930 \\
+    $T_\tau$ & \SI{0.295}{\degreeCelsius} \\
+    $\text{DDF}_{ave}$ & \SI{1.484}{\milli\meter} w.e. \\
+    $\text{DDF}_{amp}$ & \SI{0.959}{\milli\meter} w.e. \\
+    $m_m$ & \SI{0.5}{\degreeCelsius} \\
+    $T_{melt}$ & \SI{0.0}{\degreeCelsius} \\
     \bottomrule
   \end{tabular}
 \end{table}
+Notably, $T_\tau$, $\text{DDF}_{ave}$, and $\text{DDF}_{amp}$ are all consistently lower than their counterparts in the best estimate from the first 
+calibration attempt. Consequently, less snow water equivalent is accumulated throughout the hydrological year as the conditions required for solid 
+precipitation to occur are stricter. At the same time, the snowmelt parametrization allows for a more gradual decline in snow cover during the latter 
+stages of the snow cycle. Indeed, these newly proposed DDF parameters primarily result in a substantial reduction of the maximum values of Equation 
+\eqref{eq:swe_ddf}, whereas the winter minimum is left almost unchanged following the simulated annealing procedure, at approximately 
+\SI{0.5}{\milli\meter} w.e. 
 
-\begin{figure}[htbp]
+The comparison with the HS dataset, shown in Figure \ref{fig:truth_SA}, reveals smaller discrepancies than those obtained with the homogeneous 
+calibration. Indeed, the 
+\begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{swe_calibration/truth_monthly_wise_SA.png}
-    \caption{Monthly-wise confusion matrices comparing SWE series and HS observations. The model outputs were generated using the best parameters found 
-    by means of a simulated annealing scheme.}
-    \label{fig:truth_monthly_wise_SA}
+    \includegraphics[width=\linewidth]{swe_calibration/truth_SA.png}
+    \caption{Comparison between model outputs (generated with parameters shown in Table \ref{tab:optimal_parameters_SA}) with the observed snow depth 
+    series.}
+    \label{fig:truth_SA}
 \end{figure}
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=\linewidth]{swe_calibration/truth_elevation_wise_SA.png}
-    \caption{Elevation-wise confusion matrices comparing SWE series and HS observations. The model outputs were generated using the best parameters found 
-    by means of a simulated annealing scheme.}
-    \label{fig:truth_elevation_wise_SA}
-\end{figure}
+\noindent simulated snow water equivalent and observed snow depth time 
+series are misaligned for approximately 7 \% of the estimates, rather than the 7.3\% previously recorded. It should be noted, though, that a difference 
+of just 0.3 percentage points remains within the variability range expected from observational and modelling errors, meaning it cannot be regarded as 
+clear evidence that the simulated annealing calibration outperforms the first attempt. Moreover, although a slight improvement in both accuracy and 
+critical success index can be detected, the model exhibits a more marked bias towards false positive under this new parameter configuration. For these 
+reasons, and also to ensure greater consistency with existing results already available in literature, the snow water equivalent daily maps (presented 
+in the following Chapter) were generated using the parameter set derived from the homogeneous calibration. Consequently, simulated annealing should 
+be regarded as an unsuccessful attempt to investigate whether any alternative parameter configuration existed capable of yielding substantial improvements.
