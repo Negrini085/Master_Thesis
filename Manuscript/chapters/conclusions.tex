@@ -7,19 +7,16 @@ Through the analyses presented in this thesis, it was possible to evaluate the i
 over the 1951--2023 period. However, some limitations highlighted by the calibration procedure suggest that the modelling approach could be further 
 refined to ensure a more accurate representation of snowpack physical processes. In particular, three potential improvements to the snow model can be 
 identified:
-
 \begin{itemize}[label=$\blacktriangleright$]
     \item the cold content of snow cover could be monitored throughout the snow cycle to account for the time lag between the onset of favourable 
     conditions for snowmelt and the beginning of actual runoff. As a first parametrization attempt, an approach similar to that of IT-SNOW could be 
     adopted, based on the mean air temperature computed over a time window of several days preceding the potential melt event. Additionally, 
     \item the modelling chain should allow refreezing to occur
     \item an alternative parametrization of precipitation phase partitioning could be considered, with $T_\tau$ as a time dependent parameter defined 
-    either as a periodically oscillating value over the entire hydrological year or as a step function over the different phases of the snow season. Such 
-    an approach could enable a more accurate modelling of the atmospheric processes leading to snowfall events thought the year.
+    either as a periodically varying function over the entire hydrological year or as a step function representing different stages of the snow season. 
+    Such an approach could account for seasonal variations in atmospheric conditions influencing precipitation phase. In particular, in Alpine regions, 
+    the vertical atmospheric temperature gradient is typically less pronounced during winter than in spring. This implies that, to reach a location 
+    where the near-surface air temperature exceeds \SI{0}{\degreeCelsius}, snowflakes in winter must fall through a considerably deeper above-freezing 
+    atmospheric layer rather than in spring, thereby increasing the likelihood of rainfall to occur. This phenomenon is responsible for the increased 
+    frequency of snowfall events at 2/3 \SI{}{\degreeCelsius} during spring, while almost none are recorded during winter.
 \end{itemize}
-
-% refreezing
-% cold content
-% temperatura di soglia time dependent
-
-
