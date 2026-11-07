@@ -8,11 +8,14 @@ over the 1951--2023 period. However, some limitations highlighted by the calibra
 refined to ensure a more accurate representation of snowpack physical processes. In particular, three potential improvements to the snow model can be 
 identified:
 \begin{itemize}[label=$\blacktriangleright$]
-    \item the cold content of snow cover could be monitored throughout the snow cycle to account for the time lag between the onset of favourable 
+    \item the cold content of snow cover may be monitored throughout the snow cycle to account for the time lag between the onset of favourable 
     conditions for snowmelt and the beginning of actual runoff. As a first parametrization attempt, an approach similar to that of IT-SNOW could be 
-    adopted, based on the mean air temperature computed over a time window of several days preceding the potential melt event. Additionally, 
-    \item the modelling chain should allow refreezing to occur
-    \item an alternative parametrization of precipitation phase partitioning could be considered, with $T_\tau$ as a time dependent parameter defined 
+    adopted, based on the mean air temperature computed over a time window of several days preceding the potential melt event. Additionally, the width 
+    of the time window could be adjusted as a function of snow water equivalent in an attempt to consider into the modelling chain the longer time 
+    required for snowpacks to ripen. 
+    \item refreezing processes could also be taken into account, particularly in deeper snowpacks, where subfreezing layers may still persist even when 
+    the upper layers are undergoing wet metamorphism and water percolation. 
+    \item an alternative parametrization of precipitation phase partitioning may be considered, with $T_\tau$ as a time dependent parameter defined 
     either as a periodically varying function over the entire hydrological year or as a step function representing different stages of the snow season. 
     Such an approach could account for seasonal variations in atmospheric conditions influencing precipitation phase. In particular, in Alpine regions, 
     the vertical atmospheric temperature gradient is typically less pronounced during winter than in spring. This implies that, to reach a location 
@@ -20,3 +23,6 @@ identified:
     atmospheric layer rather than in spring, thereby increasing the likelihood of rainfall to occur. This phenomenon is responsible for the increased 
     frequency of snowfall events at 2/3 \SI{}{\degreeCelsius} during spring, while almost none are recorded during winter.
 \end{itemize}
+Moreover, the modelling framework developed in this thesis could be employed to investigate future changes in snow cover under different emission 
+scenarios. The required meteorological forcing data are currently being downscaled thanks to a collaboration between the Department of Environmental 
+Science and Policy of the University of Milan and ISAC/CNR.
