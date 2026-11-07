@@ -515,7 +515,7 @@ $k \leftarrow k + 1$
 
 The simulated annealing approach employed during this thesis was adapted to the specific requirements of the calibration problem, even introducing some 
 modifications to the general procedure outlined in Listing \ref{lst:sim_ann_approach}. In particular, the algorithm was configured as follows: 
-\begin{itemize}
+\begin{itemize}[label=$\blacktriangleright$]
     \item the initial position of each run was randomly selected within the allowed parameter space. Indeed, the optimization was confined to a specific 
     region $\Omega$ of the parameter space, so that throughout the entire annealing procedure $T_\tau \in \left(-4,\,8\right)$, $\text{DDF}_{ave} \in \left(1,\,9\right)$ 
     and $\text{DDF}_{amp} \in \left(0.5,\,7.5\right)$. This choice ensured that the search remained within a physically meaningful domain while still 
