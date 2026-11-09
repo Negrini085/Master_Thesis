@@ -6,12 +6,12 @@ which have become both more frequent and longer-lasting since the 1990s. In the 
 reached record lows during both the 2022 and 2023 winters, resulting in a reduction of snowmelt runoff substantially altering 
 the hydrological regime of rivers draining mountainous terrain. To investigate this phenomenon, \cite{snow_drought} analyzed 
 historical snow depth records collected between 1930 and 2023 from \num{15} weather stations distributed across Northern Italy. 
-As shown in Figure \ref{fig:winter_anomalies_colombo}, their study indicated that the incrising frequency and severity of snow 
+As shown in Figure \ref{fig:winter_anomalies_colombo}, their study indicated that the increasing frequency and severity of snow 
 droughts since the
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{introduction/winter_anomalies_colombo.png}
-    \caption{Scatterplot between winter precipitation anomalies and temperature anomalies. Each dot represent a hydrological year: 
+    \caption{Scatter plot between winter precipitation anomalies and temperature anomalies. Each dot represent a hydrological year: 
     blue indicates above average snowpacks relative to the 1961--1990 climatology, whereas red is associated to below average snow 
     coverage. Image from \cite{snow_drought}.}
     \label{fig:winter_anomalies_colombo}
@@ -20,7 +20,7 @@ droughts since the
 consistent with the Alpine wide assessment conducted by \cite{Matiu_HS}, based on the analysis of more than 800 snow depth time 
 series, which highlighted a shift toward snow scarce winters starting from the late 1980s. Moreover, a decline in seasonal mean 
 snow depth of 8.4\% per decade between 1971 and 2019 was detected as a consequence of the ongoing global warming. Both studies, 
-however, rely solely on manual station networks, which are typically too sparse and markedly biased toward low to mid elevations, to 
+however, rely solely on manual station networks, which are typically too sparse and markedly biased toward low to mid-elevations, to 
 accurately represent the strong spatial variability of snow cover in complex mountainous terrain. To this end, numerical modelling 
 and remote sensing techniques have been employed to provide spatialized estimates of snowpack properties over a specific study area. 
 At the time of writing, three main snow products are available over Northern Italy, each of them with a spatial resolution of 
@@ -32,7 +32,7 @@ approximately \SI{500}{\meter}:
     \item \textit{IT-SNOW}, a snow reanalysis covering the entire Italian territory. It provides daily maps of snow water equivalent 
     (i.e. the amount of water stored as snow), snow depth and snow density, spanning the period from 1 September 2010 to 31 August 
     2025 \parencite{IT-SNOW}.
-    \item \textit{Po River District dataset}, which focuses on the mountainous areas within the Po River District. It is a 
+    \item \textit{Po River District dataset}, which focuses on the mountainous portion of the Po River District. It is a 
     hydrologically oriented reconstruction focusing on the snow season (3 October to 1 July) of each hydrological year between 
     1992 and 2021 \parencite{Po_River_District_dataset}.
 \end{itemize}
@@ -62,28 +62,28 @@ This thesis is structured as follows:
     \item \textit{Chapter \ref{cap:introduction}} introduces the physical problem under investigation and the context in which it arises.
     \item \textit{Chapter \ref{cap:snow_basics}} provides the theoretical background needed to understand the work presented in this thesis. The 
     first part focuses on snow physics. It begins with the nucleation of ice crystals in cold clouds and follows the snowflakes down to the 
-    ground, where they accumulate to form a new layer. It then describes snow metamorphism and the energy balance of the snowpack, and finally 
+    ground, where they accumulate to form a new snow layer. It then describes snow metamorphism and the energy balance of the snowpack, and finally 
     liquid water percolation and runoff generation. The second part reviews snow measurement techniques, distinguishing between manual observations, 
     automatic monitoring networks and remote sensing, and discussing the strengths and limitations of each approach. The third part examines how 
     climate change is affecting snow cover, outlining the current state of snow dynamics worldwide.
     \item \textit{Chapter \ref{cap:snow_products}} introduces the study area and the three main snow products that cover it. It opens with a 
-    description of the Italian hydrological portion of the Greater Alpine Region (GAR), which encompasses the Italian Alps and the Northern Apennines. 
+    description of the Italian Hydrological portion of the Greater Alpine Region (IH-GAR), which encompasses the Italian Alps and the Northern Apennines. 
     Each dataset is examined in turn, with particular attention to how it is generated and the estimates it provides over Italy. The chapter closes 
     with a comparison of the three snow products, highlighting the discrepancies between their estimates and thereby motivating the need for a new 
     approach to snow monitoring at the national scale.
     \item \textit{Chapter \ref{cap:swe_model}} describes the model used to generate the snow water equivalent (SWE) dataset. The chapter is 
     structured to closely follow the modelling workflow. First, the precipitation and air temperature datasets used as model inputs are introduced, 
-    focusing on the numerical methods employed to generate them and discussing some preliminary results, as they may significantly influence the 
-    spatial and temporal distribution of snow cover. The precipitation phase partitioning scheme and the approach used to estimate snowmelt are then 
+    focusing on the numerical methods employed to generate them. Moreover, some preliminary results are discussed, as they may significantly influence 
+    the spatial and temporal distribution of snow cover. The precipitation phase partitioning scheme and the approach used to estimate snowmelt are then 
     described. The chapter closes with the description of the procedure used to generate the SWE maps.
     \item \textit{Chapter \ref{cap:swe_calibration}} focuses on the calibration of the degree-day snow model using snow depth (HS) observations 
-    collected from meteorological stations distributed across the Alps. The first section describes the quality control assessments and correction 
-    procedure applied to station metadata and HS time series to improve data reliability. The chapter then introduces the calibration methodology, 
+    collected from meteorological stations distributed across the Alps. The first section describes the quality checks and correction 
+    procedures applied to station metadata and HS time series to improve data reliability. The chapter then introduces the calibration methodology, 
     including the underlying assumptions and the definition of the loss function. Finally, the calibration results are presented and discussed, with 
     particular attention to model performance across different months and elevation ranges.
     \item \textit{Chapter \ref{cap:results}} illustrates the main results of this thesis, focusing on both snow water equivalent (SWE) and snow 
     cover duration (SCD) metrics. The chapter opens with a discussion on glaciated areas, which must be masked to make reliable estimates 
-    of seasonal snowpack properties. The second section deals with the amount of water stored as snow within the study area, making both temporal 
+    of seasonal snowpack properties. The second section deals with the amount of water stored as snow within the study area, illustrating both temporal 
     trend estimates and comparisons with the available snow products. The last section describes a method to convert snow water equivalent maps into 
     binary snow cover ones, allowing for the evaluation of changes in the lenght of the snow season.
     \item \textit{Chapter \ref{cap:conclusions}} provides a summary of the main findings and discusses the limitations of this work, as well as 
