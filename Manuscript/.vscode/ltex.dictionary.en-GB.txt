@@ -9,3 +9,6 @@ Valmalenco
 Aosta
 Cogne
 analyzed
+Venosta
+Biella
+downscaled

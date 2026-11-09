@@ -106,7 +106,7 @@ the 1951--2023 period: notably, all four snow seasons peaking below $\SI{4}{\gig
 this behaviour more systematically, both the annual maximum (peak) SWE and the 1 April SWE values were extracted for each 
 hydrological year, providing the basis for both a climatological characterization and a temporal trend assessment. Over the 
 1991--2020 reference period, the mean annual peak SWE in the IH-GAR was $7.4 \pm 3.1\,\SI{}{\giga\meter\cubed}$, 
-typically occurring on 2 March $\pm$ 26 days. As this date precedes 1 April, the 1 April climatological value  lower than the 
+typically occurring on 2 March $\pm$ 26 days. As this date precedes 1 April, the 1 April climatological value is lower than the 
 maximum one as a consequence of the onset of snowmelt, amounting to $5.2 \pm 2.9\,\SI{}{\giga\meter\cubed}$. As regards the temporal evolution, 
 the presence of monotonic 
 trends in both peak SWE and 1 April SWE was assessed over the 1951--2023 period by means of the Mann--Kendall test, with trend 
@@ -221,9 +221,8 @@ throughout the study period, as shown by both the 1 February and 1 March maps.
     and statistical significance of the trend.}
     \label{fig:swe_clima_trends_may}
 \end{figure}
-The presence of these positive trends in the first part of the snow season is thought to be related to an increase in snow accumulation, as global 
-warming allows air to hold more water vapour, which may result in locally-enhanced precipitations during winter. However, these 
-positive trends gradually weaken towards the beginning of April, as increased temperatures also cause an earlier onset of snowmelt 
+The presence of these positive trends in the first part of the snow season is thought to be related to an increase in snow accumulation. However, 
+these positive trends gradually weaken towards the beginning of April, as increased temperatures also cause an earlier onset of snowmelt 
 that progressively counterbalance the positive effects of additional snowfall. Nevertheless, once the shift to negative trends occur, 
 their magnitudes remain considerably smaller than that recorded in the surrounding regions. 
 
@@ -264,7 +263,7 @@ Piave--Tagliamento basins experienced substantial losses in SWE volumes during t
     river basin on IH-GAR.}
     \label{fig:swe_climatologies_by_basin}
 \end{figure}
-period, associated with a shift of approximately one month toward earlier melt-out dates. This phenomenon may weaken the mitigating effect 
+\noindent period, associated with a shift of approximately one month toward earlier melt-out dates. This phenomenon may weaken the mitigating effect 
 of seasonal snow cover against the severity of certain droughts, thereby posing major challenges to the agricultural sector.
 
 
@@ -294,7 +293,8 @@ of the two snow products is carried out.
 
 \begin{table}[H]
   \centering
-\caption{Elevation-wise comparison between Po River District and this thesis SWE series.}
+\caption{Elevation-wise comparison between Po River District and this thesis SWE series. The comparison is performed considering all the days in 
+which the products are available (October $3^{rd}$ -- July $1^{st}$).}
 \label{tab:stat_estimator_model_PO}
 \renewcommand{\arraystretch}{1.3}
 \renewcommand{\tabularxcolumn}[1]{m{#1}}
@@ -311,15 +311,15 @@ of the two snow products is carried out.
 \end{tabularx}
 \end{table}
 The larger discrepancies detected at higher elevations come as no surprise, since the precipitation dataset used within this thesis 
-tend to underestimate winter precipitations as a consequence of undercatch by unheated rain gauge. On the other hand, in data 
+tend to underestimate winter precipitations as a consequence of wind-induced undercatch by rain gauges. On the other hand, in data 
 sparse regions such as the highlands, the Po River District dataset relies on ERA5 precipitation estimates, which are known to 
 be biased towards overestimation. Furthermore, our model does not account for refreezing whenever thermal conditions are favourable. As a result, 
 meltwater can leave the snowpack even when it would physically be retained, thereby resulting in lower SWE volumes.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{results/swe_evo_comparison_with_PO_basin.png}
-    \caption{Comparison between SWE estimates from the Po River Discrit dataset and the snow model developed during this thesis. 
-    Each panel correspons to an elevation band of \SI{1000}{\meter} in width, whose range is indicated in the panel title.}
+    \caption{Comparison between SWE estimates from the Po River District dataset and the snow model developed during this thesis. 
+    Each panel corresponds to an elevation band of \SI{1000}{\meter} in width, whose range is indicated in the panel title.}
     \label{fig:swe_evo_comparison_with_PO_basin}
 \end{figure}
 
@@ -381,10 +381,10 @@ products exhibit their highest level of agreement during the earlier portion of 
 \end{figure}
 Nevertheless, Figure \ref{fig:swe_evo_comparison_with_ITSNOW} also shows that IT-SNOW appears to systematic underestimate snowmelt at the highest 
 elevations, whereas below \SI{2000}{\meter} a.s.l. the main difference between the two datasets seems to regard the amount of SWE, rather than the 
-timing of complete meltout. Overall, the comparison is worse than the one with Po River District dataset, as shown by Table \ref{tab:stat_estimator_model_itsnow}.
+timing of complete melt-out. Overall, the comparison is worse than the one with Po River District dataset, as shown by Table \ref{tab:stat_estimator_model_itsnow}.
 \begin{table}[H]
   \centering
-\caption{Elevation-wise comparison with IT-SNOW.}
+\caption{Elevation-wise comparison with IT-SNOW daily SWE series.}
 \label{tab:stat_estimator_model_itsnow}
 \renewcommand{\arraystretch}{1.3}
 \renewcommand{\tabularxcolumn}[1]{m{#1}}
@@ -394,9 +394,9 @@ timing of complete meltout. Overall, the comparison is worse than the one with P
 \toprule
 \textbf{Elevation band} & \textbf{Bias} & \textbf{MAE} & \textbf{RMSE} &  \textbf{R\textsuperscript{2}}\\
 \midrule
-    \num{0} - $\SI{1000}{\meter}$ & -\SI{0.178}{\giga\meter\cubed} & \SI{0.181}{\giga\meter\cubed} & \SI{0.399}{\giga\meter\cubed} & 0.693 \\
-    \num{1000} - $\SI{2000}{\meter}$ & -\SI{0.570}{\giga\meter\cubed} & \SI{0.574}{\giga\meter\cubed} & \SI{1.052}{\giga\meter\cubed}  & 0.883 \\
-    $>\,\SI{2000}{\meter}$ & -\SI{0.725}{\giga\meter\cubed} & \SI{0.768}{\giga\meter\cubed} & \SI{1.120}{\giga\meter\cubed} & 0.838 \\
+    \num{0} - $\SI{1000}{\meter}$ & \SI{0.178}{\giga\meter\cubed} & \SI{0.180}{\giga\meter\cubed} & \SI{0.399}{\giga\meter\cubed} & 0.693 \\
+    \num{1000} - $\SI{2000}{\meter}$ & \SI{0.570}{\giga\meter\cubed} & \SI{0.574}{\giga\meter\cubed} & \SI{1.052}{\giga\meter\cubed}  & 0.883 \\
+    $>\,\SI{2000}{\meter}$ & \SI{0.725}{\giga\meter\cubed} & \SI{0.768}{\giga\meter\cubed} & \SI{1.120}{\giga\meter\cubed} & 0.838 \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -415,7 +415,7 @@ snow cover in those areas where thermal regimes are closer to freezing, thereby 
 Secondly, S3M, i.e. the snow model used to generate the IT-SNOW reanalysis, was calibrated exclusively using data from the Aosta Valley, whereas the 
 resulting snow maps where produced for the entire Italian territory. Clearly, this limitation raises some questions on the reliability of IT-SNOW 
 estimates outside the calibration area, since parameter transferability is not assured and linked to potential faulty reconstructions. Moreover, S3M 
-calibration focus primarily on the snowmelt parametrization, which seems to be the major factor of disagreement between the two snow products.
+calibration focuses primarily on the snowmelt parametrization, which seems to be the major factor of disagreement between the two snow products.
 
 
 
@@ -429,20 +429,20 @@ calibration focus primarily on the snowmelt parametrization, which seems to be t
 In order to assess snow cover duration across the study area, a procedure to convert snow water equivalent maps into binary snow cover rasters was 
 developed. Clearly, Equation \eqref{eq:scf_IT-SNOW} could not be applied directly, as snow density is not tracked by our modelling chain. 
 However, if pixels were classified as snow covered only when snow occupied more than half of their area, Equation \eqref{eq:scf_IT-SNOW} would 
-provide a SWE threshold distinguishing bare ground and snow covered conditions as a function of snow density. Indeed, this snow water equivalent boundary 
-value is 
+provide a SWE threshold ($\text{SWE}_{th}$) distinguishing bare ground and snow covered conditions as a function of snow density. Indeed, this snow water 
+equivalent boundary value is 
 \begin{equation}
-    \text{SWE}\,=\,5 \times 10^{-2} \rho_s,
+    \text{SWE}_{th}\,=\,5 \times 10^{-2} \rho_s,
     \label{eq:swe_thresh_scf}
 \end{equation}
 where the snow cover fraction SCF has already been set to 0.5. To attain a numerical estimate of the SWE threshold, assumptions on 
 typical $\rho_s$ values had to be made. Considering that freshly fallen and ripe snow densities are expected to range between 50--250 
 and 350--450 \SI{}{\kilo\gram\per\meter\cubed} respectively depending on both thermal and microphysical conditions, a value of 
 $\SI{300}{\kilo\gram\per\meter\cubed}$ was adopted as representative of bulk snow properties. Substituting this density value into 
-Equation \eqref{eq:swe_thresh_scf} yields a SWE threshold of \SI{15}{\milli\meter}, which was subsequently applied to convert model outputs into 
+Equation \eqref{eq:swe_thresh_scf} yields a $\text{SWE}_{th}$ of \SI{15}{\milli\meter}, which was subsequently applied to convert model outputs into 
 daily snow cover binary maps. Clearly, this assumption has substantial trade-offs, since $\rho_s$ varies markedly both in space and throughout the snow 
 cycle. Indeed, ephemeral snowfall in the first phases of autumn accumulation will be completely overlooked, as well as the majority of snow covered days 
-on the lowlands, since there the snowpacks rarely exceed \SI{20}{\centi\meter} in depth. On the other hand, the consequences of this approach on the 
+on the lowlands, since there the snowpacks rarely exceed 10--\SI{20}{\centi\meter} in depth. On the other hand, the consequences of this approach on the 
 latter stages of the snow season is definitely more limited, as SWE declines more rapidly toward bare ground conditions.
 
 This procedure enabled the evaluation of the snow cover duration across the IH-GAR, which revealed substantial spatial variability mainly driven by the 
@@ -501,7 +501,7 @@ Alpine foothills of the province of Biella. As shown in panel (b) of Figure \ref
     from Mann-Kendall test.}
     \label{fig:SCD_trends}
 \end{figure}
-numerous statistically significant negative trends are present on both the mountain ranges and the lowlands of the IH-GAR, suggesting that the 
+\noindent numerous statistically significant negative trends are present on both the mountain ranges and the lowlands of the IH-GAR, suggesting that the 
 anthropogenic global warming is causing widespread reductions in SCD across the entire study area.
 
 
@@ -558,17 +558,16 @@ where even NDSI values smaller than 0.4 could be accepted.
 
 On the other hand, snow cover predictions by our model could be improved by allowing the SWE threshold to vary along the snow season. A plausible dependence 
 could be a periodic oscillation, such as
-\begin{equation}
-    \text{SWE}\left(t\right)\,=\,\frac{\text{SWE}_{max}\,+\,\text{SWE}_{min}}{2}\,+\,\frac{\text{SWE}_{max}\,-\,\text{SWE}_{min}}{2} \sin{\left[\frac{2\pi\left(t-45\right)}{n_{days}}\right]}, 
-    \label{eq:SWE_thresh_time_dep}
-\end{equation}
-where $n_{days}$ is the number of days in a given year. In Equation \eqref{eq:SWE_thresh_time_dep}, $\text{SWE}_{min}$ is the snow water equivalent 
-threshold corresponding to a snow density of \SI{100}{\kilo\gram\per\meter\cubed} (namely \SI{5}{\milli\meter}), whereas $\text{SWE}_{max}$ to a snow 
-density of \SI{400}{\kilo\gram\per\meter\cubed} (namely \SI{20}{\milli\meter}). Such a formulation could lead to a more accurate representation of 
-transient snowfall events during autumn and winter, particularly in the lowland areas, while leaving the treatment of late-spring conditions largely 
-unchanged, since the periodic oscillation peaks around 15 May and reaches its minimum around 15 November.
+$$
+\text{SWE}_{th}\left(t\right)=\frac{\text{SWE}_{th,max}+\text{SWE}_{th,min}}{2}\,+\,\frac{\text{SWE}_{th,max}-\text{SWE}_{th,min}}{2} \sin{\left[\frac{2\pi\left(t-45\right)}{n_{days}}\right]}, 
+$$
+where $n_{days}$ is the number of days in a given year and $t$ is the Julian day. In the previous Equation, $\text{SWE}_{th,min}$ is the snow water 
+equivalent threshold corresponding to a snow density of \SI{100}{\kilo\gram\per\meter\cubed} (namely \SI{5}{\milli\meter}), whereas $\text{SWE}_{th,max}$ 
+to a snow density of \SI{400}{\kilo\gram\per\meter\cubed} (namely \SI{20}{\milli\meter}). Such a formulation could lead to a more accurate representation 
+of transient snowfall events during autumn and winter, particularly in the lowland areas, while leaving the treatment of late-spring conditions largely 
+unchanged, since the periodic oscillation peaks around day 135 (15 May) and reaches its minimum around day 320 (15 November).
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{results/modis_vs_hs.png}
     \caption{Comparison between station snow depth and MODIS snow cover time series. Light blue shaded areas indicate the periods classified as snow 
