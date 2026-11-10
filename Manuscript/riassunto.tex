@@ -1,0 +1,96 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian, english]{babel}  % the last one is the main language
+\usepackage{lmodern}
+\usepackage[top=3cm, bottom=3cm]{geometry}
+\usepackage{microtype}
+
+\usepackage{amsmath, amssymb}
+\usepackage{siunitx}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{csquotes}
+
+\usepackage[
+  backend      = biber,
+  style        = authoryear,
+  maxcitenames = 2,
+  maxbibnames  = 15,
+  uniquelist   = false,
+  uniquename   = false
+]{biblatex}
+\addbibresource{bibliography.bib}
+\setlength{\bibitemsep}{0.5\baselineskip}
+
+\usepackage[
+  colorlinks = true,
+  linkcolor  = black,
+  citecolor  = blue!60!black,
+  urlcolor   = blue!70!black
+]{hyperref}
+
+\begin{document}
+
+\begin{center}
+  {\large\bfseries Snow Water Equivalent in the Italian Alps: reconstruction from high-resolution 
+  gridded temperature and precipitation datasets}
+\end{center}
+
+The seasonal snowpack acts as a natural water reservoir, storing solid winter precipitation and gradually releasing it as meltwater during the spring 
+and summer months. In Northern Italy, snowmelt plays a crucial role in sustaining river discharge, accounting for approximately 50\% of the annual 
+streamflow of the main rivers draining the Italian Alps \parencite{snow_drought}. However, snow cover is highly vulnerable to the ongoing global 
+warming, as rising temperatures result in less snowfall and simultaneously enhance melt related processes: a widespread decline in snow depth (HS) 
+has already been observed at in-situ station across the entire Alpine Arc \parencite{Matiu_HS}. Although station networks provide useful insights 
+on snowpack dynamics, they are typically too sparse to accurately represent the marked spatial variability of snow cover. To this end, numerical 
+modelling and remote sensing techniques have been developed to provide spatialized estimates. However, at the time of writing no available snow 
+product allows for a reliable reconstruction of multi-decadal changes in snow water storage over Northern Italy. Indeed, dei tre dataset disponibili 
+per le alpi italiane, ossia
+
+
+By contrast, snow water equivalent (SWE), i.e. the 
+amount of water stored within the snowpack, is measured far more sparsely, as its evaluation 
+
+
+
+ Infatti, la misura dello snow water equivalent (SWE), ossia ..., 
+viene fatta con cadenza nettamente inferiore rispetto a quella dello spessore nevoso, poichè richiede di scavare una trincea nivale. Questo fa sì 
+che le uniche stime disponibili siano il risultato di modelli fisicamente basati, che simulano su delle griglie l'evoluzione del manto nevoso sotto 
+meteorological forcing. Purtroppo per le alti italiane limitazioni principalmente legate all'ampiezza della finsestra temporale considerata rendono 
+di poca utilità le due snow reanalisi incentrate sull'idrologia, IT-SNOW e Po River District, presenti per il nord italia.  
+
+è time 
+consuming perchè consiste nel Dato che misurare lo SWE, ossia ..., sono disponibile
+
+Snow Water Equivalent (SWE)
+
+the vast majority of available studies rely solely on manual station networks, which 
+are too sparse to accurately represent the marked spatial variability of snow cover. At the time of writing, only three snow products 
+providing spatialized estimates are available for the Italian Alps, namely MODIS, IT-SNOW and the Po River District dataset. However, any of these 
+gridded datasets is suitable for reliably assessing the changes in 
+
+
+con le perdite maggiori nei mesi primaverili. Furthermore, snow droghts, i.e. periods of 
+persistently below average snowpack, have become both more frequent and longer-lasting since the 1990s. 
+
+Alcuni effetti di 
+
+In the last few decades, Europe has emerged as a hotspot for snow droughts, as periods of persistently below average snowpack have become both more 
+frequent and longer-lasting since the 1990s. This trend appears to have intensified recently, with particularly severe snow deficits affecting 
+European mountain ranges during the 2020s. In the Italian Alps, for instance, snow water storage reached record lows during both the 2022 and 2023 
+winters, substantially altering the hydrological regime of Northern Italy as a consequence of reduced snowmelt runoff \parencite{snow_drought}.
+
+Therefore, this thesis aims to address this gap by developing a modelling chain capable of simulating the seasonal snowpack between 1951 and 2023, 
+providing new insights in snow cover changes across the Italian Hydrological portion of the Greater Alpine Range (IH-GAR).
+
+
+The model presented in this thesis adopts a substantially minimalist approach, since a limited number of meteorological input is available over a 
+period as long as 1951--2023. Indeed, only precipitation and temperature are required by our degree-day modelling chain.
+
+The degree-day model was calibrated against in-situ snow depth records 
+
+This study reveal a widespread
+\printbibliography
+
+\end{document}
