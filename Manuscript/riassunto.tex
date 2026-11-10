@@ -40,45 +40,22 @@
 
 The seasonal snowpack acts as a natural water reservoir, storing solid winter precipitation and gradually releasing it as meltwater during the spring 
 and summer months. This buffering effect is particularly relevant in Northern Italy, where snowmelt accounts for approximately 50\% of the annual 
-streamflow of the main rivers draining the Alps \parencite{snow_drought}. La quantificazione della risorsa idrica immagazzinata sotto forma di neve in 
-una determinata regione rappresenta una sfida complessa, a causa dell'elevata variabilità spaziale e temporale del manto nevoso. In questo contesto, le 
-misure in-situ sono infatti di scarsa utilità, dato che si concentrano principalemente sullo spessore nevoso, che non è la quantità di maggior interesse 
-dal punto di vista idrologico. Per questo motivo, sono state sviluppate negli ultimi decenni delle numerical modelling and remote sensing techniques per 
-fornire delle stime spazialmente distribuite di Snow Water Equivalent (SWE), ossia della quantità d'acqua immagazzinata nel manto nevoso.
-
-
-
-
-
-Snow cover is, however, highly vulnerable to ongoing global warming, as rising 
-temperatures may shift precipitation from snow to rain and enhance melt-related processes. Indeed, a widespread decline in snow depth (HS) has 
-already been observed at manual stations across the entire Alpine Arc \parencite{Matiu_HS}. Although station networks provide valuable insights 
-into snowpack dynamics, they are typically too sparse to accurately represent the marked spatial variability of snow cover. To overcome this 
-limitation, numerical modelling and remote sensing techniques have been developed to provide spatially distributed estimates. However, at the time 
-of writing, no available snow product allows for an accurate reconstruction of multi-decadal snow cover changes over Northern Italy. Therefore, this 
-thesis aims to address this gap by developing a modelling chain capable of simulating the seasonal snowpack across the Italian Hydrological 
-portion of the Greater Alpine Range (IH-GAR) for the 1951--2023 period, thus enabling reliable trend analyses.
+streamflow of the main rivers draining the Alps \parencite{snow_drought}. Quantifying the water resources stored as snow within a given domain represents 
+a complex challenge, due to the high spatial and temporal variability of the snowpack. In this context, in-situ measurements are of limited utility, as 
+they primarily focus on snow depth (HS), which is not relevant from a hydrological perspective. To overcome this limitation, numerical modelling and 
+remote sensing techniques have been developed to provide spatially distributed estimates of Snow Water Equivalent (SWE), i.e. the amount of water stored 
+within the snowpack. At the time of writing, two high-resolution (\SI{500}{\meter}) SWE datasets based on snow modelling, namely IT-SNOW and the Po 
+River District dataset, are already available for Northern Italy. Additionally, a third gridded dataset derived from MODIS satellite imagery provides binary 
+rasters of snow cover extent alone, with no direct Hydrological information. Although each of these snow products provides useful insights on snow cover 
+dynamics across the Italian Alps, neither of them is suitable for an accurate reconstruction of multi-decadal snow water resources changes over Northern 
+Italy as a consequence of global warming. Therefore, this thesis aims to address this gap by developing a modelling chain capable of simulating the 
+seasonal snowpack across the Italian Hydrological portion of the Greater Alpine Range (IH-GAR) for the 1951--2023 period, thus enabling reliable trend 
+analyses.
 
 The model developed in this thesis adopts a degree-day approach, in which daily precipitation and temperature values are the only meteorological 
 inputs used to simulate snow accumulation and melt. Although considerably simpler than that of other snow products available for the study area, 
 this deliberately minimalist architecture is precisely what makes it possible to generate daily snow water equivalent (SWE) maps spanning 70 years. 
 
-
-
-The seasonal snowpack acts as a natural water reservoir, storing solid winter precipitation and gradually releasing it as meltwater during the spring 
-and summer months. In Northern Italy, snowmelt plays a crucial role in sustaining river discharge, accounting for approximately 50\% of the annual 
-streamflow of the main rivers draining the Italian Alps \parencite{snow_drought}. However, snow cover is highly vulnerable to ongoing global 
-warming, as rising temperatures result in less snowfall and simultaneously enhance melt-related processes: a widespread decline in snow depth (HS) 
-has already been observed at in-situ stations across the entire Alpine Arc \parencite{Matiu_HS}. Although station networks provide useful insights 
-into snowpack dynamics, they are typically too sparse to accurately represent the marked spatial variability of snow cover. To overcome this 
-limitation, numerical modelling and remote sensing techniques have been developed to provide spatially distributed estimates. However, at the time 
-of writing no available snow product allows for a reliable reconstruction of multi-decadal changes in snow water storage over Northern Italy. Indeed, 
-of the three gridded dataset available for the Italian Alps, namely MODIS, IT-SNOW and Po River District dataset, only the latter two provide maps 
-of Snow Water Equivalent (SWE), i.e. the amount of water stored within the snowpack, but their temporal coverage is too limited. Therefore, this 
-thesis aims to address this gap by developing a modelling chain capable of simulating the seasonal snowpack between 1951 and 2023, providing a 
-new basis for investigating multi-decadal changes in snow cover across the Italian Hydrological portion of the Greater Alpine Range (IH-GAR).
-
-This study reveal a widespread
 \printbibliography
 
 \end{document}
