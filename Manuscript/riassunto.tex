@@ -39,6 +39,33 @@
 \end{center}
 
 The seasonal snowpack acts as a natural water reservoir, storing solid winter precipitation and gradually releasing it as meltwater during the spring 
+and summer months. This buffering effect is particularly relevant in Northern Italy, where snowmelt accounts for approximately 50\% of the annual 
+streamflow of the main rivers draining the Alps \parencite{snow_drought}. La quantificazione della risorsa idrica immagazzinata sotto forma di neve in 
+una determinata regione rappresenta una sfida complessa, a causa dell'elevata variabilità spaziale e temporale del manto nevoso. In questo contesto, le 
+misure in-situ sono infatti di scarsa utilità, dato che si concentrano principalemente sullo spessore nevoso, che non è la quantità di maggior interesse 
+dal punto di vista idrologico. Per questo motivo, sono state sviluppate negli ultimi decenni delle numerical modelling and remote sensing techniques per 
+fornire delle stime spazialmente distribuite di Snow Water Equivalent (SWE), ossia della quantità d'acqua immagazzinata nel manto nevoso.
+
+
+
+
+
+Snow cover is, however, highly vulnerable to ongoing global warming, as rising 
+temperatures may shift precipitation from snow to rain and enhance melt-related processes. Indeed, a widespread decline in snow depth (HS) has 
+already been observed at manual stations across the entire Alpine Arc \parencite{Matiu_HS}. Although station networks provide valuable insights 
+into snowpack dynamics, they are typically too sparse to accurately represent the marked spatial variability of snow cover. To overcome this 
+limitation, numerical modelling and remote sensing techniques have been developed to provide spatially distributed estimates. However, at the time 
+of writing, no available snow product allows for an accurate reconstruction of multi-decadal snow cover changes over Northern Italy. Therefore, this 
+thesis aims to address this gap by developing a modelling chain capable of simulating the seasonal snowpack across the Italian Hydrological 
+portion of the Greater Alpine Range (IH-GAR) for the 1951--2023 period, thus enabling reliable trend analyses.
+
+The model developed in this thesis adopts a degree-day approach, in which daily precipitation and temperature values are the only meteorological 
+inputs used to simulate snow accumulation and melt. Although considerably simpler than that of other snow products available for the study area, 
+this deliberately minimalist architecture is precisely what makes it possible to generate daily snow water equivalent (SWE) maps spanning 70 years. 
+
+
+
+The seasonal snowpack acts as a natural water reservoir, storing solid winter precipitation and gradually releasing it as meltwater during the spring 
 and summer months. In Northern Italy, snowmelt plays a crucial role in sustaining river discharge, accounting for approximately 50\% of the annual 
 streamflow of the main rivers draining the Italian Alps \parencite{snow_drought}. However, snow cover is highly vulnerable to ongoing global 
 warming, as rising temperatures result in less snowfall and simultaneously enhance melt-related processes: a widespread decline in snow depth (HS) 
@@ -50,12 +77,6 @@ of the three gridded dataset available for the Italian Alps, namely MODIS, IT-SN
 of Snow Water Equivalent (SWE), i.e. the amount of water stored within the snowpack, but their temporal coverage is too limited. Therefore, this 
 thesis aims to address this gap by developing a modelling chain capable of simulating the seasonal snowpack between 1951 and 2023, providing a 
 new basis for investigating multi-decadal changes in snow cover across the Italian Hydrological portion of the Greater Alpine Range (IH-GAR).
-
-
-The model presented in this thesis adopts a substantially minimalist approach, since a limited number of meteorological input is available over a 
-period as long as 1951--2023. Indeed, only precipitation and temperature are required by our degree-day modelling chain.
-
-The degree-day model was calibrated against in-situ snow depth records 
 
 This study reveal a widespread
 \printbibliography
