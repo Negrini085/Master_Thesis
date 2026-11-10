@@ -2,10 +2,10 @@
 \label{cap:snow_basics}
 
 Snow is a fundamental component of the cryosphere, which encompasses all regions of the Earth where water exists in solid form. 
-Alongside sea ice, glaciers, ice caps and ice sheets, snow cover plays an essential role in regulating Earth's climate by reflecting a significant 
-fraction of the incoming solar radiation, consequently reducing the amount of energy absorbed by the ground. In addition, snow also acts as a thermal 
+Alongside sea ice, glaciers, ice caps and ice sheets, snow cover plays an essential role in regulating Earth's climate by reflecting the vast 
+majority of the incoming solar radiation, consequently reducing the amount of energy absorbed by the ground. In addition, snow also acts as a thermal 
 insulator due to its low thermal conductivity, protecting the soil and the ecosystem from  the abrupt temperature fluctuations typical of winter. Snow 
-is also a key factor in the hydrological cycle: water stored in solid form during winter is gradually released into streamflow through spring and summer, 
+is also a key factor in the hydrological cycle: water stored in solid form during winter is gradually released into streamflow throughout spring and summer, 
 ensuring a continuous water supply and mitigating the severity of certain droughts. At the same time, snow has considerable implications for human 
 activities. For instance, it plays a vital role in the economy of the Alpine region by supporting winter tourism through skiing and other winter sports. 
 Its contribution to runoff is equally important, as it supports irrigation and provides a source of drinking water. Meltwater also provides a 
@@ -49,7 +49,7 @@ occurs through two different mechanisms:
     insoluble in water and have a crystallographic structure similar to ice.  
 \end{itemize}
 
-Once nucleated, the ice particle grows through further microphysical processes, whose relative dominance determines its final shape and size. The three 
+Once nucleated, the ice particle grows by means of further microphysical processes, whose relative dominance determines its final shape and size. The three 
 main crystal growth mechanisms are:
 \begin{itemize}[label=$\blacktriangleright$]
     \item \textit{vapor deposition}, which occurs whenever the air is supersaturated with respect to ice. For example, in mixed-phase clouds dominated by 
@@ -61,7 +61,7 @@ main crystal growth mechanisms are:
     \item \textit{riming}, which occurs exclusively in mixed-phase clouds. Whenever an ice crystal collides with a supercooled droplet, the latter may 
     freeze onto the former, resulting in an increase in ice mass. The collision frequency depends on cloud density and composition, but typically 
     numerous riming events take place, sometimes producing a graupel, namely an ice particle in which the original ice crystal can no longer be identified. 
-    Riming can also lead to the formation of hailstones, which typically range from a few millimeters to several centimetres in diameter.
+    Riming can also lead to the formation of hailstones, which typically range from a few millimetres to several centimetres in diameter.
     \item \textit{aggregation}, caused by collisions between ice particles. The probability of adhesion is strongly linked to crystal shapes and increases 
     with increasing temperature, reaching a maximum at around $\SI{-5}{\degreeCelsius}$, where ice surfaces become particularly "sticky".
 \end{itemize}
@@ -70,8 +70,8 @@ main crystal growth mechanisms are:
     \centering
     \includegraphics[width=0.8\linewidth]{snow_basics/snow_flakes.png}
     \caption{The Nakaya diagram illustrates the morphology of ice crystals growing via vapor deposition as a function of cloud's thermodynamic state. 
-    Crystal shape is primarily governed by temperature, which determines whether it develops in a planar or columnar structure, while the degree of 
-    supersaturation with respect to ice modulates the complexity of the resulting form, with higher supersaturations generally linked to more 
+    Crystal shape is primarily governed by temperature, which determines whether it develops in a planar or columnar structure. On the other hand, the 
+    degree of supersaturation with respect to ice modulates the complexity of the resulting form, with higher supersaturations generally linked to more 
     complex structures. Image taken from \cite{snow_crystals}.}
     \label{fig:snow_flakes}
 \end{figure}
@@ -232,9 +232,9 @@ The interplay between thermal conditioning, liquid water retention, and preferen
 snowmelt runoff entering local stream networks. 
 
 In high elevation alpine catchments, or at high latitudes, some snow may survive melting through summer. If accumulation persists over multiple years, 
-continued densification ultimately leads to the formation of firn, an intermediate stage between snow and ice characterized by densities ranging 
+continued densification ultimately leads to the formation of firn, an intermediate stage between snow and glacier ice characterized by densities ranging 
 from $\SI{400}{\kilo\gram\per\meter\cubed}$ to $\SI{830}{\kilo\gram\per\meter\cubed}$ and by a porous structure that still permits water percolation. 
-As compaction proceeds further, most pores become sealed, marking the transition to glacier ice proper. The rate of this transformation depends on 
+As compaction proceeds further, most pores become sealed, marking the transition to actual glacier ice. The rate of this transformation depends on 
 both accumulation amounts and temperature, since colder climates results in slower crystal evolution. This process directly links seasonal snow cover 
 to the longer lived components of the cryosphere, such as glaciers and ice sheets \parencite{snow_to_ice}. 
 
@@ -250,7 +250,7 @@ to the longer lived components of the cryosphere, such as glaciers and ice sheet
 \section{Snow observation and measurement}
 A detailed knowledge of the snow cover and of its physical properties is a prerequisite for studying snowpack dynamics and for issuing reliable avalanche 
 forecasts. Among the quantities routinely collected during snow measurement campaigns, snow depth (HS) plays a central role: it is defined as the vertical 
-distance between the top of the snowpack and a reference surface, which for seasonal snowpacks is normally the ground. HS should not be confused with snow 
+distance between the top of the snowpack and a reference surface, which for seasonal snow cover is normally the ground. HS should not be confused with snow 
 thickness (DS), which is conventionally the perpendicular distance to the same reference surface. Provided that the slope angle $\phi$ of the measurement 
 site is known, the two quantities are related by 
 \begin{equation}
@@ -268,8 +268,7 @@ to the
 \end{figure}
 nearest integer.
 While these metrics describe only the geometrical extent of the snowpack, other quantities provide deeper insight into its physical state. The most 
-hydrologically relevant of these is snow water equivalent (SWE), namely the amount of water stored within the snowpack. Being closely related to snow 
-density, it can be expressed as 
+hydrologically relevant is snow water equivalent (SWE), namely the amount of water stored within the snowpack. SWE is defined as 
 \begin{equation}
     \text{SWE}\,=\,\int_{0}^{\text{HS}}\rho_{s}\left(z\right) dz, 
     \label{eq:swe_density_link}
@@ -300,13 +299,13 @@ snow accumulation driven by local wind patterns \parencite{snow_instrument}.
 
 \subsection{Manual snow measurements}
 
-Manual snow depth (HS) records are an effective tool for assessing long-term trends, as they can span several decades. Their longevity is 
+Manual snow depth (HS) records are an effective tool for assessing long-term temporal trends, as they can span several decades. Their longevity is 
 due to a straightforward measuring procedure, requiring only a stake or an extendible graduated rod. The snow stake should be vertical, painted 
 white to minimize melt and fixed to the ground before accumulation begins. Snow depth observations should be made from a sufficient distance to 
-avoid any deformation of the snowpack. Because the stake acts as an obstacle to wind and snow redistribution, localized mounds can form around it. 
-Under such circumstances, operator must visually estimate the undisturbed snow surface to recover the actual HS value. For a non-fixed observation 
+avoid any deformation of the snowpack. Because the stake acts as an obstacle to wind-induced snow redistribution, localized mounds can form around it. 
+Under such circumstances, the operator must visually estimate the undisturbed snow surface to recover the actual HS value. For a non-fixed observation 
 carried out with a graduated rod, the snow depth should be evaluated at the same location each time. The observer needs to ensure that the device, 
-manually inserted into the snowpack, reaches the base surface without penetrating the soil, which would result in an overestimate of the actual HS. 
+manually inserted into the snowpack, reaches the base surface without penetrating the soil, which would result in an overestimation of the actual HS. 
 The rod must be vertical, and an estimate of the slope angle should be paired with every measurement.
 
 Closely linked to snow depth is snowfall depth (HN), which can only be obtained manually. To avoid wind-induced bias this measurement should 
@@ -314,7 +313,7 @@ be carried out in a sheltered location, so that snow accumulates undisturbed on 
 Just before clearing the surface, thereby starting the next observation period, a ruler is inserted vertically into the freshly formed layer to 
 obtain a depth measurement.
 
-Although HS and HN define the vertical extension of the snowpack, hydrological applications rely mainly on the snow water equivalent (SWE): the 
+Although HS and HN define the vertical extent of the snowpack, hydrological applications mainly rely on the snow water equivalent (SWE): the 
 two most common methods for manual measurement are snow pits and snow tubes. A snow pit consists of a hole manually dug into the snowpack down to a 
 reference surface, usually the ground. Initially, the observer performs a stratigraphic analysis to gain deeper insight into the internal structure 
 of the snowpack. The actual SWE measurement is conducted by inserting a sampler of known volume into the exposed snow face; the sample 
@@ -340,23 +339,24 @@ of sensors, such as:
 \begin{itemize}[label=$\blacktriangleright$]
     \item \textit{anemometer}, which measures wind speed. The blowing wind causes a small windmill, or a structure consisting of three cups mounted 
     on a spindle, to rotate at a rate proportional to wind intensity. This quantity is particularly important, as empirical relations link it to 
-    turbulent heat fluxes, thus playing a significant role in energy balance considerations.
+    turbulent heat fluxes, thus playing a significant role in energy balance.
     \item \textit{wind wane}, typically coupled with the anemometer to assess wind direction. It consists of a horizontal arm bearing a flat vertical 
     vane at one end. Incoming wind gusts push against the vain, causing the arm to rotate freely until it aligns with the wind direction.
     \item \textit{pyranometer}, which measures shortwave solar radiation. An AWS is typically equipped with both and upward and a downward facing 
     pyranometer, in order to quantity incoming and outgoing SW radiation, thus enabling albedo estimates.
     \item \textit{pyrgeometer}, which measures the longwave (infrared) radiation. Pyrgeometers likewise come in oppositely facing pairs, so that, 
-    combined with a pair of pyranometers, an evaluation of the net radiation balance of the surface is possible.
+    combined with a pair of pyranometers, an evaluation of the net radiative flux is possible.
     \item \textit{barometer}, used to evaluate the atmospheric pressure, a fundamental quantity for characterizing the dynamical state of the atmosphere.
     \item \textit{thermo-hygrometer}, designed to simultaneously measure both air temperature and relative humidity at a given height above 
     the ground (typically two meters).
     \item \textit{rain gauge}, consisting of a circular collector and a funnel that channels the collected precipitation into a measuring device. In 
-    regions where solid precipitation is possible, the rain gauge may be heated in order to also evaluate the water equivalent of snowfall.
+    regions where solid precipitation is possible, the rain gauge may be heated in order to also evaluate the water equivalent of snowfall. However, owing 
+    to the low fall velocity of snowflakes, wind can still cause significant undercatch by the sensor.
 \end{itemize}
 
 In alpine catchments and at high latitudes, these sensors are typically complemented by additional instruments specifically dedicated to snow monitoring.
 Mounted together on the same tripod or mounting structure, as shown in Figure \ref{fig:station_close_up}, they constitute what is referred to as an 
-alpine automatic weather station, a key tool for the study of snow related dynamics.
+alpine automatic weather station, a key tool for
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{snow_basics/aws.png}
@@ -366,6 +366,7 @@ alpine automatic weather station, a key tool for the study of snow related dynam
     (11) ground temperature sensor. Image adapted from \cite{image_aws}.}
     \label{fig:station_close_up}
 \end{figure}
+\noindent the study of snow related dynamics.
 Automated HS measurements can be performed using instruments based on either sonic or optical (laser) technology. Sonic sensors transmit an 
 ultrasonic pulse towards the snow surface and detect the returning echo. Since the speed of sound depends on meteorological conditions, a concurrent 
 temperature reading is required to ensure accuracy. Laser instruments, by contrast, determine the distance to the target surface through 
@@ -383,7 +384,7 @@ measurement artefacts. For this reason, HS sensors are typically mounted on a ho
 area sufficiently far from the mounting structure.
 
 SWE monitoring can likewise be automated, with the most common technique relying on snow pillows. This device consists of a rubber bladder filled with 
-an antifreeze liquid mixture and connected to a pressure transducer, which yields the SWE estimate. The pillow is installed flush with the ground 
+an antifreeze liquid mixture and connected to a pressure transducer. The pillow is installed flush with the ground 
 surface, so that it supports the full weight of the overlying snowpack. As snow accumulates, the resulting increase in hydrostatic pressure is 
 transduced into snow water equivalent values. Snow pillows were first introduced in the late 1960s, and have proved to be a valuable 
 tool for SWE measurements \parencite{SnowPillow_Hood}. However, they are now being progressively replaced by snow scales due to the toxicity of the 
@@ -393,7 +394,7 @@ antifreeze fluid, which poses an environmental hazard to the installation site.
 
 \subsection{Remote sensing}
 
-Satellite remote sensing (SRS) serves as a useful tool to fill critical gaps in current knowledge regarding climatic variables, enabling researchers 
+Satellite remote sensing (SRS) serves as a useful tool to fill critical gaps in current knowledge of climatic variables, enabling researchers 
 to monitor, usually on a daily basis, even remote locations that would otherwise be inaccessible to a human operator. Furthermore, SRS data substantially 
 improve meteorological reanalysis products, which constitute a cornerstone of contemporary climate change research. Earth observing satellites can be 
 classified into two distinct categories based on their orbital characteristics:
@@ -402,13 +403,13 @@ classified into two distinct categories based on their orbital characteristics:
     \item Polar orbit satellites, which travel roughly from north to south over the poles, targeting a specific longitudinal strip per pass. The 
     entire globe is thus mapped over consecutive orbits. These satellites typically operate at an altitude of approximately 700 km, completing a full 
     revolution in under two hours.
-    \item Geostationary satellites, which occupy a geosynchronous orbit, thereby allowing for real-time meteorological monitoring on a specific target 
-    area. Their altitude of approximately 36000 km above Earth's equator results in a significantly lower spatial resolution than that of 
-    polar orbit satellites.
+    \item Geostationary satellites, which occupy a geosynchronous orbit, thereby allowing for real-time meteorological monitoring over a specific target 
+    area. Their altitude of approximately 36000 km above Earth's equator results in a significantly lower spatial resolution than that of polar orbit 
+    satellites.
 \end{itemize}
 
-The choice of orbit is strictly driven by observational priorities. Consequently, satellites dedicated to cryospheric research favor polar orbit, as
-maximizing spatial resolution is essential to capture the highly variable distribution of snow coverage across complex terrains. 
+The choice of orbit is strictly driven by observational priorities. Consequently, satellites dedicated to cryospheric research favour polar orbit, as
+maximizing spatial resolution is essential to capture the highly heterogeneous distribution of snow coverage across complex terrains. 
 
 Satellite-based observations of snow cover extent (SCE) began in 1967, through the efforts of National Oceanic and Atmospheric Administration (NOAA). 
 This monitoring program focused on the Northern Hemisphere, where most of the world's terrestrial snow cover is found, with observations conducted 
@@ -416,14 +417,14 @@ on a weekly basis. Despite the preliminary nature of this work, it highlighted t
 the way for more comprehensive analyses. One of the main limitations of these early observations was their coarse spatial resolution of 
 $\sim \SI{200}{\km}$, which was insufficient to adequately characterize snow cover in many mountainous regions \parencite{NOAA_first_SRS}. 
 A significant advance in sensor technology came with the introduction of the Advanced Very High Resolution Radiometer (AVHRR), which measures Earth 
-radiance in five spectral bands to derive information on temperature, albedo and cloud coverage distribution. The first tests of a spaceborne sensor 
+radiance in five spectral bands to derive information on temperature, albedo and cloud coverage distribution. The first test of a spaceborne sensor 
 took place in 1978, but reliable snow cover data have only been available since 1981. This product has been used to estimate snow cover duration 
 and trends since the mid-eighties in various mountainous regions such as the Alps, where SRS data reveal significantly negative trends throughout 
 the 1990s, followed by a partial recovery at the beginning of the new millennium \parencite{AVHRR_example}. Although AVHRR offers a substantial  
 improvement in spatial resolution, with pixels of $\sim \SI{1}{km}$, its data reliability is limited by the presence of only one thermal channel 
 for snow-cloud discrimination \parencite{MODIS_GAR}.
 To overcome these limitations, the Moderate Resolution Imaging Spectroradiometer (MODIS) was launched in 1999 aboard the Terra satellite, followed by 
-a second unit aboard Aqua in 2002. Both instruments operate in polar orbit, jointly covering the entire globe every one to two days. MODIS is a 
+a second unit aboard Aqua (i.e. a second satellite) in 2002. Both instruments operate in polar orbit, jointly covering the entire globe. MODIS is a 
 36-band spectral sensor spanning from the visible ($\SI{0.41}{\micro m}$) to the long-wave infrared ($\SI{14.4}{\micro m}$), with a spatial resolution 
 of $\SI{500}{m}$. To detect the presence of snow on the ground, the Normalized Difference Snow Index (NDSI) is used, defined as
 \begin{equation}
@@ -443,19 +444,19 @@ spaceborne techniques have been developed:
     \item \textit{passive microwave radiometry (PMW)}, which is by far the most common method to remotely evaluate SWE. Since the snowpack attenuates 
     the microwaves emitted by the Earth, comparing signal intensities between two frequencies ($\sim \SI{18}{\giga\hertz}$, and $\sim \SI{37}{\giga\hertz}$) 
     makes it possible to estimate snow water equivalent. This is the only spaceborne technique that allows for long term studies, as global daily 
-    maps have been available since the launch, in 1978, of NASA's Scanning Multichannel Microwave Radiometer (SMMR) \parencite{remote_SWE}. Altough  
+    maps have been available since the launch, in 1978, of NASA's Scanning Multichannel Microwave Radiometer (SMMR) \parencite{remote_SWE}. Although  
     the temporal coverage of these series is considerably better than that of other available sources, several factors affect data reliability, 
     such as signal saturation caused by a deep snowpack.
-    \item \textit{gravimetric methods}, which offer a different approach focusing on mass changes. The accumulation of snow on the Earth's surface 
+    \item \textit{gravimetric methods}, which offer a different approach focusing on mass changes. The accumulation of snow on Earth's surface 
     causes variations in its gravitational field, which can be converted into SWE estimates. This approach is mainly employed by the Gravity Recovery 
     and Climate Experiment (GRACE) mission. Owing to its global coverage, this SWE dataset features a coarse spatial resolution of roughly 
     $\SI{300}{\kilo\meter}$, which nonetheless remains useful for continental scale hydrological studies \parencite{remote_SWE}.
-    \item \textit{Synthetic Aperture Radar (SAR)}, which consists in the transmission of electromagnetic waves towards Earth and the analyses of the 
-    backscattered echoes from the Earth's surface. SAR can penetrate cloud cover and acquire data under all weather conditions. Snowpack properties, 
+    \item \textit{Synthetic Aperture Radar (SAR)}, which consists of transmitting electromagnetic waves towards Earth to investigate the 
+    backscattered echoes from Earth's surface. SAR can penetrate cloud cover and acquire data under all weather conditions. Snowpack properties, 
     such as SWE and snow grain size can be estimated remotely, as longer SAR wavelengths are even capable to penetrate into the snowpack. Furthermore, 
     the phase information recorded by SAR can be exploited to monitor ground deformation and assess the stability of terrain features. Although SAR 
-    provides a spatial resolution on the order of tens of metres, its temporal resolution is significantly lower than that of PMW and gravimetric methods, 
-    as the revisit time of a specific location is typically five days \parencite{remote_SAR}.
+    provides a spatial resolution in the order of tens of metres, its temporal resolution is significantly lower than that of PMW and gravimetric methods, 
+    as the revisit time for a specific location is typically five days \parencite{remote_SAR}.
 
 \end{itemize}
 
@@ -472,7 +473,7 @@ spaceborne techniques have been developed:
 % Citare UNFCCC
 Climate change is conventionally defined as an alteration of the climate that can be attributed, directly or indirectly, to human activities that modify 
 the composition of the global atmosphere. This phenomenon causes shifts in the mean and/or in the variability of temperatures and weather patterns, which 
-can be identified through statistical tests and persist over an extended period of time, generally of at least thirty years. Since the anthropogenic 
+can be identified through statistical tests and persist over an extended period of time, generally of at least thirty years. Since this anthropogenic 
 signal is superimposed on the natural variability of the climate system, it must be disentangled from a background of spontaneous fluctuations. Over the 
 past few million years, such natural fluctuations have produced a cyclic alternation between glacial periods, lasting roughly \num{100000} years, and 
 warmer interglacial conditions. These climatic oscillations were primarily driven by periodic variations in the orbital parameters governing Earth's 
@@ -486,11 +487,11 @@ the longwave radiation emitted by Earth's surface and re-emit it in all directio
 of escaping to space, resulting in an increase in near-surface air temperature. Since the Industrial Revolution the atmospheric $\text{CO}_2$ 
 concentration has risen steadily, from about \num{278} part per million (ppm) in pre-industrial times to $\SI{422.8}{ppm}$ in 2024 \parencite{co2_conce}. 
 During the last 60 years, atmospheric $\text{CO}_2$ has risen nearly 100 times faster than during previous natural increases, and present day 
-concentrations exceed those preserved in the ice core records of the last 800000 years, as shown in Figure \ref{fig:co2_800k}. 
+concentrations exceed those preserved in the ice core records of the last \num{800000} years, as shown in Figure \ref{fig:co2_800k}. 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{snow_basics/co2_800k.png}
-    \caption{Evolution of $\text{CO}_2$ concentration in the atmosphere over the last 800000 years. Image adapted from \cite{co2_800k}.}
+    \caption{Evolution of $\text{CO}_2$ concentration in the atmosphere over the last \num{800000} years. Image adapted from \cite{co2_800k}.}
     \label{fig:co2_800k}
 \end{figure}
 
@@ -528,7 +529,7 @@ southernmost regions of the Arctic, as shown in Figure \ref{fig:sea_ice_season}.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{snow_basics/sea_ice_season.png}
-    \caption{Comparison between the sea ice seasons in 1979 and 2021. Image adapted from \cite{sea_ice_extent}.}
+    \caption{Comparison between the sea ice duration in 1979 and 2021. Image adapted from \cite{sea_ice_extent}.}
     \label{fig:sea_ice_season}
 \end{figure}
 Nowadays, the shores of Siberia remain ice-free for up to three months during summer, and comparable conditions are observed along the coasts of 
@@ -538,9 +539,9 @@ Ice loss has also picked up in Greenland and Antarctic ice sheets, as the rate o
 $\SI{105}{\giga\tonne}\,\text{year}^{-1}$ between \num{1992} and \num{1996} to $\SI{372}{\giga\tonne}\,\text{year}^{-1}$ between \num{2016} and \num{2020}
 \parencite{ice_loss_ice_sheets}. A similar figure emerges for mass loss of glaciers worldwide, which between 2000 and 2023 lost on average 
 $273\pm16\,\SI{}{\giga\tonne}$ annually \parencite{ice_loss_glaciers}. Mountain glaciers are particularly vulnerable to global warning, as rates of 
-environmental change are typically enhanced by elevation. On a global scale, the differences between mountain and lowland trends are $\SI{0.21}{\degreeCelsius}$ 
-per century for temperature and $\SI{-11.5}{\milli\meter}$ per century for total precipitation \parencite{mountain_enhanced}, implying that seasonal 
-snowpacks and glacier ice in these regions will be further affected by a warming climate. 
+environmental change are typically enhanced by elevation. Indeed, on the global scale, the differences between mountain and lowland trends are 
+$\SI{0.21}{\degreeCelsius}$ per century for temperature and $\SI{-11.5}{\milli\meter}$ per century for total precipitation \parencite{mountain_enhanced}.
+This means that seasonal snowpacks and glacier ice in these regions will be further affected by a warming climate. 
 
 
 
@@ -569,16 +570,16 @@ driven by climatic forcing may still occur, as visible in Figure \ref{fig:scd_tr
     95\% confidence level. Image adapted from \cite{scd_trend_mountains}.}
     \label{fig:scd_trend_mountainous_globe}
 \end{figure}
-For instance, the snow cover duration across the Pamir range has been increasing up to \num{27.4} days between 1982 and 2020 as a result of changes in the 
-winter westerly disturbance, whereas the neighboring Himalayas experienced significant losses \parencite{scd_trend_mountains}. 
+For instance, the snow cover duration across the Pamir range increased by up to \num{27.4} days between 1982 and 2020 as a result of changes in the 
+winter westerly disturbance, whereas the neighbouring Himalayas experienced significant losses \parencite{scd_trend_mountains}. 
 
 Within this heterogeneous picture the European Alps emerge as a particularly critical region. This vulnerability arises from the combined effects of 
 their mid-latitude location and relatively modest elevations, which cause a substantial fraction of the snowpack to remain close to the melting point 
 throughout the snow season. Under such conditions, even a slight increase in air temperature can lead to sudden changes in snowfall and snow ablation 
-patterns. This is documented by the Swiss meteorological network, whose records show a clearly decreasing trend in the ratio of snowfall days to 
-precipitation days between 1961 and 2008. In particular, present day values for December, January, and February are similar to those observed in 
+patterns. This sensitivity to global warming is evident in records from the Swiss meteorological network, which show a marked decrease in the ratio of 
+snowfall days over precipitation ones between 1961 and 2008. In particular, present day values for December, January, and February are similar to those observed in 
 November and March during the 1960s, and the decline is more pronounced below $\SI{1400}{\meter}$ a.s.l., where winter temperatures are already 
-close to $\SI{0}{\degreeCelsius}$ \parencite{snow_days_ratio}. The same elevation dependence is found in snow depth across the entire European Alps: 
+close to $\SI{0}{\degreeCelsius}$ \parencite{snow_days_ratio}. The same elevation dependence is found in snow depth reduction across the entire European Alps: 
 below $\SI{1000}{\meter}$ a.s.l. the average HS over November-May decreased by up to \num{10} \% per decade between 1971 and 2019, whereas above 
 $\SI{2000}{\meter}$ a.s.l. the reduction was only about \num{2.4} \% every ten years. This asymmetry is reflected in the duration of snow cover, which over the 
 same period shortened on average by \num{6.5} \% per decade below $\SI{1000}{\meter}$ a.s.l. and just by \num{0.5} \% per decade above 

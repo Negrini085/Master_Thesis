@@ -12,3 +12,7 @@ analyzed
 Venosta
 Biella
 downscaled
+vapor
+supercooled
+graupel
+updraft
