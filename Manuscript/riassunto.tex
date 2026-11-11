@@ -51,18 +51,50 @@ snowpack. To overcome this limitation, numerical modelling and remote sensing te
 estimates of Snow Water Equivalent (SWE), i.e. the amount of water stored as snow. At the time of writing, two high-resolution (\SI{500}{\meter}) 
 SWE datasets derived from physically based snow models are already available for Northern Italy, namely IT-SNOW and the Po River District dataset. 
 Additionally, a third gridded dataset, based on MODIS satellite imagery, provides only binary maps of snow cover extent, with no direct information 
-on snow water equivalent. Although each of these snow products provides useful insights into snow distribution across the Italian Alps, neither of 
+on snow water equivalent. Although each of these snow products provides useful insights into snow distribution across the Italian Alps, none of 
 them is suitable for an accurate reconstruction of multi-decadal snowpack changes, as their temporal coverage is too limited. 
 
 To extend the reconstruction further back in time, the snow model developed during this thesis adopts a degree-day approach, a deliberately minimalist 
 architecture requiring only daily precipitation and temperatures as meteorological forcing. The gridded inputs consist of daily maps covering the 
-IH-GAR region at a spatial resolution of \num{30} arc-seconds over the 1951--2023 period, resulting from the spatial interpolation of historically 
-recorded meteorological data \parencite{precipitation_IHGAR}. Snow accumulation is evaluated by comparing a temperature threshold $T_\tau$ to the 
-minimum and maximum daily temperatures in order to distinguish between solid and liquid precipitation. By contrast, the mean daily temperature is 
-used as a proxy for snowmelt. Specifically, the model adopts the melt formulation proposed by \cite{Magnusson_DDF}, which indirectly accounts for 
-the annual variability in solar radiation by prescribing a periodic oscillation of the degree day factor. The temporal evolution of SWE is simulated 
-by accumulating, on a daily basis, the difference between solid precipitation and snowmelt.
+IH-GAR region at a spatial resolution of \num{30} arc-seconds, resulting from the spatial interpolation of historically recorded meteorological data 
+\parencite{precipitation_IHGAR}. Snow accumulation is evaluated by comparing a temperature threshold $T_\tau$ to the minimum and maximum daily 
+temperatures in order to distinguish between solid and liquid precipitation. By contrast, the mean daily temperature is used as a proxy for snowmelt. 
+Specifically, the model adopts the melt formulation proposed by \cite{Magnusson_DDF}, which indirectly accounts for the annual variability in solar 
+radiation by prescribing a periodic oscillation of the degree day factor. The temporal evolution of SWE is simulated by accumulating, on a daily 
+basis, the difference between solid precipitation and snowmelt. 
 
+To calibrate the model against observational data, a snow depth dataset including more than a thousand stations was assembled. Moreover, numerical 
+techniques were developed to address its main issues, such as unreliable station metadata or missing values, thereby ensuring the quality of the HS 
+record. The actual calibration procedure focused on $T_\tau$, aiming to maximize the temporal overlap between the simulated SWE series and the 
+observed snow depth ones. The temperature threshold for phase partitioning converged to $T_\tau \approx \SI{1.1}{\degreeCelsius}$, whereas the melt 
+related parameters were fixed to the values proposed by \cite{Magnusson_DDF}. Additionally, a simulated annealing scheme was employed to investigate 
+whether jointly varying more than one parameter could further enhance model performance. However, no alternative parameter configurations capable of 
+yielding substantial improvements was found. The calibrated model was then run over the 1951--2023 period, producing daily SWE maps of the IH-GAR 
+region. 
+
+The results reveal a widespread and significant decline in snow cover across most of the study area, primarily attributed to global warming, as 
+temperatures in the IH-GAR rose by approximately \SI{2}{\degreeCelsius} over the investigated period. The magnitude of these changes is particularly 
+evident in the annual peak SWE time series, which exhibits a statistically significant negative trend of \SI{-0.567}{\giga\meter\cubed} per decade 
+between 1951 and 2023, corresponding to an average reduction of approximately 35-40\% in maximum annual SWE over a time span of just 70 years. A 
+comparable decrease of \SI{-0.506}{\giga\meter\cubed} per decade affects the 1 April SWE, indicating that a progressively smaller amount of water 
+is stored within the snowpack at the beginning at the melting season. This shift has substantial implications for the hydrological regime of the 
+IH-GAR. However, the decline of snow water equivalent is not uniform across the study area, but varies markedly with elevation and throughout the 
+snow cycle. In particular, the most pronounced negative SWE trends, accompanied by higher levels of statistical significance, were detected during 
+spring months in the highlands and below \SI{1000}{\meter} a.s.l. almost all year round. This behavior is consistent with the findings of \cite{Matiu_HS}, 
+which suggest that global warming has the strongest impact on elevation-date combinations where the transition from snow-covered to snow free 
+conditions typically occurs. Indeed, during this process, air temperature remains close to \SI{0}{\degreeCelsius}, meaning that even a slight 
+warming could lead to a marked shift in snow accumulation and melt patterns. In contrast, weak positive trends emerge in some localized areas, 
+such as Val Venosta or the Brenta Dolomites, solely at high elevations and during winter, when temperatures remain well below freezing. These 
+statistically non-significant exceptions are thought to be related to a local increase in winter precipitation. However, they tend to shift toward 
+negative trends later in the season, suggesting that even enhanced snowfall is insufficient to counterbalance the effects of global warming. 
+
+In conclusion, this thesis has shown that a degree day approach is a suitable choice for reconstructing multi-decadal snowpack dynamics. Indeed, the snow 
+product developed during this study is consistent, in terms of interannual variability, with datasets based on more complex physical modelling such as 
+IT-SNOW and the Po River District dataset. Nevertheless, a substantial underestimation relative to both reference dataset was identified at elevations 
+above 2000 \SI{}{\meter}, particularly during the middle and latter stages of the snow season. This systematic bias requires further investigation, as it 
+could be related to the absence of cold content tracking and refreezing processes in our model, as well as to potential inaccuracies in precipitation 
+parametrizations adopted in the IT-SNOW and Po River District modelling frameworks. Future research should therefore prioritize refining the degree-day 
+model, before moving on to other topics such as future SWE changes under different emission scenario.
 \printbibliography
 
 \end{document}
