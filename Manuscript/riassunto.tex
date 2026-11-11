@@ -38,23 +38,30 @@
   gridded temperature and precipitation datasets}
 \end{center}
 
+This thesis aims to develop a modelling framework to reconstruct snow water equivalent (SWE) across the Italian Hydrological portion of the Greater Alpine 
+Region (IH-GAR) using high-resolution temperature and precipitation data. The resulting dataset is intended to provide a reliable basis for investigating 
+the impact of climate change on snow cover across Northern Italy.
+
 The seasonal snowpack acts as a natural water reservoir, storing solid winter precipitation and gradually releasing it as meltwater during the spring 
 and summer months. This buffering effect is particularly relevant in Northern Italy, where snowmelt accounts for approximately 50\% of the annual 
-streamflow of the main rivers draining the Alps \parencite{snow_drought}. Quantifying the water resources stored as snow within a given domain represents 
+streamflow of the main rivers draining the Alps \parencite{snow_drought}. However, quantifying the water resources stored as snow within a given domain represents 
 a complex challenge, due to the high spatial and temporal variability of the snowpack. In this context, in-situ measurements are of limited utility, as 
-they primarily focus on snow depth (HS), which is not relevant from a hydrological perspective. To overcome this limitation, numerical modelling and 
-remote sensing techniques have been developed to provide spatially distributed estimates of Snow Water Equivalent (SWE), i.e. the amount of water stored 
-within the snowpack. At the time of writing, two high-resolution (\SI{500}{\meter}) SWE datasets based on snow modelling, namely IT-SNOW and the Po 
-River District dataset, are already available for Northern Italy. Additionally, a third gridded dataset derived from MODIS satellite imagery provides binary 
-rasters of snow cover extent alone, with no direct Hydrological information. Although each of these snow products provides useful insights on snow cover 
-dynamics across the Italian Alps, neither of them is suitable for an accurate reconstruction of multi-decadal snow water resources changes over Northern 
-Italy as a consequence of global warming. Therefore, this thesis aims to address this gap by developing a modelling chain capable of simulating the 
-seasonal snowpack across the Italian Hydrological portion of the Greater Alpine Range (IH-GAR) for the 1951--2023 period, thus enabling reliable trend 
-analyses.
+they primarily focus on snow depth (HS), which cannot yield hydrological information without knowledge of the vertical density profile of the 
+snowpack. To overcome this limitation, numerical modelling and remote sensing techniques have been developed to provide spatially distributed 
+estimates of Snow Water Equivalent (SWE), i.e. the amount of water stored as snow. At the time of writing, two high-resolution (\SI{500}{\meter}) 
+SWE datasets derived from physically based snow models are already available for Northern Italy, namely IT-SNOW and the Po River District dataset. 
+Additionally, a third gridded dataset, based on MODIS satellite imagery, provides only binary maps of snow cover extent, with no direct information 
+on snow water equivalent. Although each of these snow products provides useful insights into snow distribution across the Italian Alps, neither of 
+them is suitable for an accurate reconstruction of multi-decadal snowpack changes, as their temporal coverage is too limited. 
 
-The model developed in this thesis adopts a degree-day approach, in which daily precipitation and temperature values are the only meteorological 
-inputs used to simulate snow accumulation and melt. Although considerably simpler than that of other snow products available for the study area, 
-this deliberately minimalist architecture is precisely what makes it possible to generate daily snow water equivalent (SWE) maps spanning 70 years. 
+To extend the reconstruction further back in time, the snow model developed during this thesis adopts a degree-day approach, a deliberately minimalist 
+architecture requiring only daily precipitation and temperatures as meteorological forcing. The gridded inputs consist of daily maps covering the 
+IH-GAR region at a spatial resolution of \num{30} arc-seconds over the 1951--2023 period, resulting from the spatial interpolation of historically 
+recorded meteorological data \parencite{precipitation_IHGAR}. Snow accumulation is evaluated by comparing a temperature threshold $T_\tau$ to the 
+minimum and maximum daily temperatures in order to distinguish between solid and liquid precipitation. By contrast, the mean daily temperature is 
+used as a proxy for snowmelt. Specifically, the model adopts the melt formulation proposed by \cite{Magnusson_DDF}, which indirectly accounts for 
+the annual variability in solar radiation by prescribing a periodic oscillation of the degree day factor. The temporal evolution of SWE is simulated 
+by accumulating, on a daily basis, the difference between solid precipitation and snowmelt.
 
 \printbibliography
 
