@@ -27,21 +27,22 @@ by comparing model outputs to observational snow depth time series, is addressed
 \section{Model inputs}
 
 The gridded temperature and precipitation datasets, used as model inputs, have both a spatial resolution of \num{30} arc-seconds. They were developed 
-as part of a collaboration between the Department of Environmental Science and Policy of the University of Milan and ISAC/CNR, building on earlier work 
-aimed at rescuing new station records and improving the quality of existing ones. The numerical procedure chain used to generate these rasters is based on 
-the anomaly method \parencite{precipitation_IHGAR}, which assumes that the spatio-temporal structure of a meteorological signal can be described as the 
-superposition of two fields, namely the climatological normals over a reference period of thirty years and the departures from them. In the following, 
-only the precipitation version is presented. For temperature, the only difference is that are used additive anomalies rather than multiplicative ones.
+through a joint effort of the Department of Environmental Science and Policy of the University of Milan and ISAC/CNR, building on earlier work 
+aimed at rescuing new station records and improving the quality of existing ones. Daily maps are available from 1881 onwards. However, the station 
+network is considerably denser after 1951, making the data more reliable: for this reason, this thesis focuses on the 1951--2023 period. The numerical 
+procedure used to generate these maps is based on the anomaly method \parencite{precipitation_IHGAR}, which assumes that the spatio-temporal structure 
+of a meteorological signal can be described as the superposition of two fields, namely the climatological normals and the departures from them. In the 
+following, only the precipitation version is presented. For temperature, the only difference is that the anomalies are additive rather than multiplicative.
 
 
 
 \subsection{Gridding procedure}
 
-The gridding procedure used to produce daily precipitation maps requires a spatially dense and temporally continuous dataset of station observations, 
+The gridding procedure used to generate daily precipitation maps requires a spatially dense and temporally continuous dataset of station observations, 
 which has undergone rigorous quality checks to identify spikes and missing values. Such control is essential for preventing systematic errors from 
 propagating into the gridded fields. This method is composed of three main steps, namely:
 \begin{itemize}[label=$\blacktriangleright$]
-    \item \textit{calculation of high-resolution monthly climatologies}, which are required as a reference for the reconstruction of daily series. 
+    \item \textit{calculation of high-resolution monthly climatologies}, which are necessary as a reference for the reconstruction of daily series. 
     The first step in deriving the gridded climatologies consisted of computing the 1991--2020 precipitation monthly normals for each station of the 
     dataset. The method used to generate the climatology rasters is the Local Weighted Linear Regression (LWLR) of precipitation against elevation, 
     which had already proven to be a robust approach for reconstructing gridded fields \parencite{LWLR_Crespi}. At a specific location 
@@ -73,7 +74,7 @@ propagating into the gridded fields. This method is composed of three main steps
     \item \textit{computation of monthly precipitation maps}, which relies on monthly anomaly maps to reconstruct the actual monthly totals for each year 
     as 
     \begin{equation}
-        P_{month}\left(x,\,y,\,t_{year}\right)\,=\,P_{clima}\left(x,\,y,\,t_{year}\right) \cdot A_{month}\left(x,\,y,\,t_{year}\right),
+        P_{month}\left(x,\,y,\,t_{year}\right)\,=\,P_{clima}\left(x,\,y\right) \cdot A_{month}\left(x,\,y,\,t_{year}\right),
         \label{eq:monthly_precipitation_gridding}
     \end{equation}
     where $ P_{month}$ and $A_{month}$ are, respectively, the total precipitation and the multiplicative anomaly for a specific month of the year $t_{year}$ 
@@ -92,7 +93,7 @@ propagating into the gridded fields. This method is composed of three main steps
     \end{equation}
     where $P$ denotes the daily precipitation value and $F_{day}\left(x,\,y\right)$ is the ratio between the daily precipitation and the corresponding monthly 
     total. To obtain $F_{day}$ at each grid point, the station series were first converted into daily precipitation fractions by dividing each daily value 
-    by the corresponding monthly one. The resulting fractions were then interpolated over the spatial grid using the same method described in the previous 
+    by the corresponding monthly total. The resulting fractions were then interpolated over the spatial grid using the same method described in the previous 
     bullet point \parencite{precipitation_IHGAR}.
 \end{itemize}
 
@@ -234,13 +235,13 @@ method, accounting for both air temperature and shortwave radiation. Neither met
 1951--2023 period, as both require input variables that are not continuously available throughout the entire study period.
 
 The modelling approach adopted is therefore a canonical degree-day method, in which mean air temperature is used as a proxy for the various energy fluxes 
-affecting the energy state of the snowpack. In particular, the model follows the formulation proposed by \cite{Magnusson_DDF}, whereby the daily snowmelt 
+affecting the energy state of the snowpack. In particular, the model follows the formulation proposed by \textcite{Magnusson_DDF}, whereby the daily snowmelt 
 at each grid point is computed as 
 \begin{equation}
-    \text{M}\,=\,\text{DDF}\left\{\left(T_{mean}\,-\,T_{melt}\right)\,+\,m_m \cdot \ln\left[1\,+\,\exp\left(-\frac{T_{mean}\,-\,T_{melt}}{m_m}\right)\right]\right\},
+    \text{M}\,=\,\text{DDF}\left\{\left(T_{mean}\,-\,T_{melt}\right)\,+\,m_m \cdot \ln\left[1\,+\,\exp\left(-\frac{T_{mean}\,-\,T_{melt}}{m_m}\right)\right]\right\}.
     \label{eq:swe_melt}
 \end{equation}
-where $T_{mean}$ is the mean daily temperature, computed as the average between the maximum and minimum ones, $T_{melt}$ is the threshold snowmelt 
+where $T_{mean}$ is the mean daily temperature, computed as the average between the maximum and minimum ones, $T_{melt}$ is the melt-related threshold 
 temperature, and $m_m$ is a smoothing parameter measured in $\SI{}{\degreeCelsius}$. The term enclosed in curly brackets can be interpreted as an effective 
 melt temperature: the logarithmic contribution ensures a smooth transition between melting and freezing conditions around $T_{melt}$.
 
@@ -252,7 +253,7 @@ according to
     \text{DDF}_{t}\,=\,\text{DDF}_{ave}\,+\,\text{DDF}_{amp}\cdot\sin\left[\frac{2\pi \left(t\,-\,81\right)}{366}\right],
     \label{eq:swe_ddf}
 \end{equation}
-where $t$ is the Julian day, $\text{DDF}_{ave}$ is the mean degree day factor, whereas $\text{DDF}_{amp}$ is the amplitude of its oscillation. 
+where $t$ is the Julian day, $\text{DDF}_{ave}$ is the mean degree day factor, whereas $\text{DDF}_{amp}$ is the half-amplitude of its oscillation. 
 With this formulation, the DDF peaks on summer solstice, in qualitative agreement with the seasonal evolution of incoming solar radiation. Moreover, 
 during non-leap years, the DDF value corresponding to 29 February is neglected.
 
