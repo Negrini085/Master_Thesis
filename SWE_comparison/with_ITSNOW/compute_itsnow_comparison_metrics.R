@@ -19,15 +19,15 @@ df_to_compare <- df_to_compare[match(common_dates, df_to_compare$dates), ]
 
 
 # Extracting time series
-swe_model <- as.numeric(df_model$higher)
-swe_to_compare <- as.numeric(df_to_compare$higher)
+swe_model <- as.numeric(df_model$lower)
+swe_to_compare <- as.numeric(df_to_compare$lower)
 
 
 
 # Making statistical analysis
 ok  <- complete.cases(swe_to_compare, swe_model)
 swe_to_compare <- swe_to_compare[ok]; swe_model <- swe_model[ok]
-err <- swe_model - swe_to_compare
+err <- swe_to_compare - swe_model
 
 n <- length(swe_to_compare)
 bias <- mean(err)

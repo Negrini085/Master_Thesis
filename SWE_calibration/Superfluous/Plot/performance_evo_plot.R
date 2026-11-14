@@ -36,7 +36,7 @@ plot_df_long <- plot_df %>%
     Performance = factor(
       Performance,
       levels = c("csi", "freq_bias", "hit_rate", "accuracy"),
-      labels = c("CSI", "Frequency Bias", "Hit Rate", "Accuracy")
+      labels = c("CSI", "Frequency Bias", "Recall", "Accuracy")
     ),
     Run = factor(Run, levels = paste("Run", seq_along(fnames)))
   )

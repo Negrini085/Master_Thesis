@@ -15,7 +15,7 @@ setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_comparison/with_ITSNOW/"
 # Importing both SWE evolution files in order to make a comparison
 itsnow <- read.table(fname_itsnow, header = TRUE)
 model <- read.table(fname_model, header = TRUE)
-mask <- (as.Date(model$dates) < as.Date("2010-10-01")) | (as.Date(model$dates) > as.Date("2023-09-30"))
+mask <- (as.Date(model$dates) < as.Date("2010-09-01")) | (as.Date(model$dates) > as.Date("2023-08-31"))
 model <- model[!mask, ]
 
 itsnow$dates <- as.Date(itsnow$dates)

@@ -12,6 +12,8 @@ matr_titles <- c(
   )
 month_start <- c(1, 31, 62, 92, 123, 154, 182, 213, 243, 274, 304, 335)
 month_end <- c(30, 61, 91, 122, 153, 181, 212, 242, 273, 303, 334, 365)
+month_start_bis <- c(1, 31, 62, 92, 123, 154, 183, 214, 244, 275, 305, 336)
+month_end_bis <- c(30, 61, 91, 122, 153, 182, 213, 243, 274, 304, 335, 366)
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_calibration/")
 
 
@@ -50,11 +52,20 @@ for(i in seq_along(month_start)){
       # Selecting SWE and HS series
       mask <- as.numeric(df_MINE$V1) == y
       appo_MINE <- as.numeric(df_MINE$V2)[mask]
-      appo_MINE <- appo_MINE[month_start[i]:month_end[i]]
       
       mask <- as.numeric(df_HS$V1) == y
       appo_HS <- as.numeric(df_HS$V2)[mask]
-      appo_HS <- appo_HS[month_start[i]:month_end[i]]
+      
+      if(y %% 4 != 0){
+        appo_MINE <- appo_MINE[month_start[i]:month_end[i]]
+        appo_HS <- appo_HS[month_start[i]:month_end[i]]
+      }
+      
+      if(y %% 4 == 0){
+        appo_MINE <- appo_MINE[month_start_bis[i]:month_end_bis[i]]
+        appo_HS <- appo_HS[month_start_bis[i]:month_end_bis[i]]
+      }
+      
       
       if(length(appo_MINE) != length(appo_HS)) stop(paste0("No compatible length for SWE & HS series at ", name, " during ", y))
       

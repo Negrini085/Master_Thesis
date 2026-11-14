@@ -7,7 +7,7 @@ gc()
 library(trend)
 
 years <- 2011:2023
-fname <- "Results/model_swe_series.dat"
+fname <- "Results/itsnow_swe_series.dat"
 setwd("/home/filippo/Desktop/Codicini/Master_Thesis/SWE_comparison/with_ITSNOW/")
 
 
@@ -54,4 +54,4 @@ mean(appo_in)
 sd(appo_in)
 print("Climatological 1 April SWE value:")
 mean(as.numeric(df_save$fap_swe))
-write.table(df_save, "Results/po_basin_swe_series.dat", row.names = FALSE, col.names = TRUE, quote = FALSE)
+#write.table(df_save, "Results/po_basin_swe_series.dat", row.names = FALSE, col.names = TRUE, quote = FALSE)

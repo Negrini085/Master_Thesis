@@ -4,8 +4,9 @@ rm(list = ls())
 gc()
 
 library(terra)
-library(tidyterra)
+library(geodata)
 library(ggplot2)
+library(tidyterra)
 
 fname_dem <- "DEM/DEM_compatible.tif"
 fname_ave_los <- "Results/SCD/scd_maps_hydro_1952_to_2023_lim_15.nc"
@@ -22,7 +23,7 @@ dem_masked <- mask(dem, scd_mean)
 
 
 # Classifying DEM pixels based on their elevation
-ele_step <- 5
+ele_step <- 25
 lims <- c(seq(from = -5, to = 4000, by = ele_step), 4700)
 class_dem <- classify(dem_masked, rcl = lims, include.lowest = TRUE)
 
@@ -50,7 +51,7 @@ world_borders <- vect(lapply(
 ))
 italy_cropped <- crop(world_borders, ext(scd_mean))
 
-legend_title <- paste0("Mean SCD - mean \n SCD in 5m elevation \n bins [days]")
+legend_title <- paste0("Mean SCD - mean \n SCD in 25m elevation \n bins [days]")
 
 p <- ggplot() +
   geom_spatraster(data = los_class, maxcell = Inf) +

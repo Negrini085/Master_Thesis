@@ -36,14 +36,14 @@ df <- na.omit(df)
 
 
 # Left panel: cell-wise scatter plot
-p1 <- ggplot(df, aes(x = elev, y = yrs)) +
+p1 <- ggplot(df, aes(x = elev, y = yrs/max(yrs, na.rm = TRUE))) +
   geom_point(colour = "#2C7FB8", alpha = 0.20, size = 0.5) +
   # stat_summary_bin(fun = mean, bins = 40, geom = "line",
   #                  colour = "#B2182B", linewidth = 0.8) +
   labs(
     title    = NULL,
     x        = "Elevation [m a.s.l.]",
-    y        = "# years"
+    y        = "% years "
   ) +
   theme_minimal(base_size = 12) +
   theme(panel.grid.minor = element_blank())

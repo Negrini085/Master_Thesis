@@ -14,6 +14,7 @@ trend_pixel <- function(x) {
   if (any(is.na(x))) return(c(NA_real_, NA_real_))
   res <- tryCatch(sens.slope(x), error = function(e) NULL)
   if (is.null(res)) return(c(NA_real_, NA_real_))
+  if(sum(x==0, na.rm = TRUE) > 20) return(c(unname(res$estimates), 1))
   c(unname(res$estimates), res$p.value)
 }
 
