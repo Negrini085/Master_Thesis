@@ -1,0 +1,13 @@
+rm *aux
+rm *bbl
+rm *log
+rm *nav
+rm *out
+rm *run.xml
+rm *snm
+rm *toc
+rm *bcf
+rm *fdb_latexmk
+rm *blg
+rm *fls
+rm *.gz
