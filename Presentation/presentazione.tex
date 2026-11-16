@@ -22,15 +22,29 @@
 \IDnumber{Matricola: 47127A}
 \date{}
 
+\renewcommand{\backmatter}{
+  \begingroup
+  \themecolor{main}
+  \begin{frame}[c]
+    \centering
+    \usebeamercolor[fg]{normal text}%
+    \Huge Grazie per l'attenzione
+  \end{frame}
+  \endgroup
+}
+
+
+
 
 
 \begin{document}
-\maketitle
-
+{\setbeamercolor{title}{bg=}\maketitle}
 
 \input{sections/introduzione}
+\input{sections/modello}
+\input{sections/calibrazione}
+
+\backmatter
 \input{sections/backup}
-
-
 
 \end{document}
