@@ -1,0 +1,50 @@
+\section{Conclusioni}
+
+% Richiede \usepackage{tikz} nel preambolo (come la slide del modello)
+\providecommand{\bul}{\leavevmode{\usebeamercolor[fg]{itemize item}\usebeamertemplate{itemize item}}\ }
+
+\begin{frame}{Conclusioni e sviluppi}
+  \usebeamercolor{structure}
+  \pgfmathsetlengthmacro{\W}{\textwidth}
+
+  \centering
+  \begin{tikzpicture}[
+      card/.style={fill=structure.fg!8, draw=structure.fg!40, rounded corners=3pt,
+                   text width={0.31*\W-8pt}, minimum height=2.3cm, inner sep=4pt,
+                   align=center, anchor=north},
+      box/.style={draw=structure.fg!40, rounded corners=3pt,
+                  text width={0.475*\W-14pt}, minimum height=2.1cm, inner sep=7pt,
+                  align=left, anchor=north, font=\small},
+    ]
+
+    \node[card] at ({0.16*\W},0) {
+      {\usebeamercolor[fg]{structure}\LARGE\bfseries 1951--2023\par}\vspace{6pt}
+      {\footnotesize SWE giornaliero\\ da sole $T$ e $P$\par}};
+
+    \node[card] at ({0.50*\W},0) {
+      {\usebeamercolor[fg]{structure}\LARGE\bfseries $-$35/40\%\par}\vspace{6pt}
+      {\footnotesize del picco di SWE\\ $-0.57$\,Gm$^3$/decennio\par}};
+
+    \node[card] at ({0.84*\W},0) {
+      {\usebeamercolor[fg]{structure}\LARGE\bfseries $\approx$\,1 mese\par}\vspace{6pt}
+      {\footnotesize di anticipo\\ nella fusione\par}};
+
+    \node[text width={\W-20pt}, align=center, font=\small] at ({0.5*\W},-2.85) {
+      Perdite massime dove la neve è vicina a $0\,^\circ$C:\\
+      sotto i 1000\,m tutto l'anno, in quota in primavera};
+
+    \node[box] at ({0.2425*\W},-3.55) {
+      {\usebeamercolor[fg]{structure}\bfseries Migliorare il modello\par}\vspace{3pt}
+      \bul cold content del manto\\
+      \bul rigelo dell'acqua di fusione\\
+      \bul $T_\tau$ variabile nella stagione\par\vspace{3pt}
+      {\footnotesize\itshape per ridurre la sottostima in quota\par}};
+
+    \node[box] at ({0.7575*\W},-3.55) {
+      {\usebeamercolor[fg]{structure}\bfseries Guardare al futuro\par}\vspace{3pt}
+      \bul scenari di emissione futuri\\
+      \bul forzanti in downscaling\\
+      \phantom{\bul x}\par\vspace{3pt}
+      {\footnotesize\itshape con UniMi -- ISAC-CNR\par}};
+  \end{tikzpicture}
+\end{frame}
