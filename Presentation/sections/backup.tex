@@ -6,6 +6,7 @@
   \end{figure}
 \end{frame}
 
+
 % SLIDE TREND TEMPERATURA MEDIA ANNUALE
 \begin{frame}{Trend temperatura media annuale}
   \begin{figure}
@@ -13,6 +14,57 @@
     \includegraphics[height=\textheight]{images/backup/annual_mean_trend.png}
   \end{figure}
 \end{frame}
+
+
+% EVOLUZIONE LOSS IN SIMULATED ANNEALING
+\begin{frame}{Evoluzione loss SA}
+  \begin{columns}[c]
+    \begin{column}{0.65\textwidth}
+      \centering
+      \includegraphics[width=\linewidth,height=0.8\textheight,keepaspectratio]{images/calibration/loss_accrate_SA.png}
+    \end{column}
+
+    \begin{column}{0.30\textwidth}
+      \begin{itemize}[label=$\blacktriangleright$, itemsep=1em]
+        \item AR $\approx$ 40\% a basse temperature
+        \item Schema adattivo per delta
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+% EVOLUZIONE PARAMETRI IN SIMULATED ANNEALING
+\begin{frame}{Evoluzione parametri SA}
+  \begin{columns}[c]
+    \begin{column}{0.6\textwidth}
+      \centering
+      \includegraphics[width=\linewidth,height=0.9\textheight,keepaspectratio]{images/calibration/param_evo_SA.png}
+      {\par\footnotesize Evoluzione parametri durante SA.}
+    \end{column}
+
+    \begin{column}{0.4\textwidth}
+      \centering
+      {\usebeamercolor[fg]{structure}\small\bfseries Parametri ottimizzati\par}
+      \smallskip
+      \footnotesize
+      \renewcommand{\arraystretch}{1.2}
+      \setlength{\tabcolsep}{5pt}
+      \resizebox{0.68\linewidth}{!}{%
+        \begin{tabular}{cc}
+          \toprule
+          Parametro & Valore \\
+          \midrule
+          $T_\tau$ & \SI{0.295}{\degreeCelsius} \\
+          $\text{DDF}_{ave}$ & \SI{1.484}{\milli\meter\per\degreeCelsius\per\day} \\
+          $\text{DDF}_{amp}$ & \SI{0.959}{\milli\meter\per\degreeCelsius\per\day} \\
+          \bottomrule
+        \end{tabular}%
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
 
 % SLIDE AREE GLACIALI
 \begin{frame}{Aree glaciali}
@@ -34,6 +86,7 @@
     
   \end{columns}
 \end{frame}
+
 
 % SLIDE TREND SWE PRIMO APRILE
 \begin{frame}{1 April SWE trend}
@@ -73,4 +126,20 @@
     \centering
     {\usebeamercolor[fg]{structure}\large\bfseries\boldmath $-$45\%\par}
     {\footnotesize risorsa nivale primaverile\par}
+\end{frame}
+
+
+% SLIDE CONFRONTO TREND
+\begin{frame}{Trend positivi SWE in inverno}
+  \begin{center}
+    \includegraphics[width=\textwidth,height=0.65\textheight,keepaspectratio]{images/backup/swe_trends_comparison.png}\\[0.5ex]
+  \end{center}
+
+  \begin{center}
+    {\usebeamercolor[fg]{structure}\large\bfseries\boldmath Val Venosta $-$ Cevedale\par}
+  \end{center}
+  {\centering\footnotesize
+   trend invernali positivi \quad$\longrightarrow$\quad negativi in primavera\par}
+
+  \vfill
 \end{frame}
