@@ -1,7 +1,9 @@
 \documentclass{beamer}
+\usepackage{booktabs}
 \usepackage{siunitx}
 \usepackage{amsfonts,amsmath,oldgerm}
 \usepackage{style/beamertheme_statale}
+\usepackage{graphicx}
 \usefonttheme[onlymath]{serif}
 
 \usepackage{enumitem}
@@ -10,6 +12,7 @@
 
 \addbibresource{bibliografia.bib}
 
+\newcommand{\smallleq}{\raisebox{0.2ex}{\scalebox{0.75}{\boldmath$\leq$}}}
 \newcommand{\testcolor}[1]{\colorbox{#1}{\textcolor{#1}{test}}~\texttt{#1}}
 \newcommand{\hrefcol}[2]{\textcolor{cyan}{\href{#1}{#2}}}
 \titlebackground*{style/assets/background}

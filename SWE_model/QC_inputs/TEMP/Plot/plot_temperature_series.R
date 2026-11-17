@@ -319,7 +319,7 @@ scale_y_continuous(
 # ----------------------------------------------------------
 
 labs(
-  x = NULL,
+  x = "Years",
   y = "Temperature Anomaly [°C]"
 ) +
   
@@ -343,6 +343,12 @@ theme_classic(
       size = 25,
       colour = "black",
       margin = margin(r = 12)
+    ),
+    
+    axis.title.x = element_text(
+      size = 25,
+      colour = "black",
+      margin = margin(t = 12)
     ),
     
     # Black axes

@@ -6,6 +6,14 @@
   \end{figure}
 \end{frame}
 
+% SLIDE TREND TEMPERATURA MEDIA ANNUALE
+\begin{frame}{Trend temperatura media annuale}
+  \begin{figure}
+    \centering
+    \includegraphics[height=\textheight]{images/backup/annual_mean_trend.png}
+  \end{figure}
+\end{frame}
+
 % SLIDE AREE GLACIALI
 \begin{frame}{Aree glaciali}
   \begin{columns}[c]
@@ -27,10 +35,42 @@
   \end{columns}
 \end{frame}
 
-% SLIDE TREND TEMPERATURA MEDIA ANNUALE
-\begin{frame}{Trend temperatura media annuale}
-  \begin{figure}
+% SLIDE TREND SWE PRIMO APRILE
+\begin{frame}{1 April SWE trend}
+
+  \begin{columns}[c, onlytextwidth]
+
+    \begin{column}{0.52\textwidth}
+      \centering
+      \includegraphics[width=\linewidth, height=0.8\textheight, keepaspectratio]{images/results/trend_1April_SWE.png}\\[2pt]
+    \end{column}
+
+    \begin{column}{0.45\textwidth}
+      \centering
+      {\usebeamercolor[fg]{structure}\small\bfseries Elevation-wise trend\par}
+      \smallskip
+      \footnotesize
+      \renewcommand{\arraystretch}{1.2}
+      \setlength{\tabcolsep}{5pt}   % spazio tra le colonne: riducilo se la tabella è troppo larga
+      \begin{tabular}{@{}cc@{}}
+        \toprule
+        Quota [m]   & Trend [\%/decade] \\
+        \midrule
+        0--500      & -- \\
+        500--1000   & -- \\
+        1000--1500  & $-7.2$ \\
+        1500--2000  & $-7.0$ \\
+        2000--2500  & $-6.3$ \\
+        $>$2500     & $-3.7$ \\
+        \bottomrule
+      \end{tabular}\\[6pt]
+    \end{column}
+
+  \end{columns}
+
+
+  \vspace{0.5cm}
     \centering
-    \includegraphics[height=\textheight]{images/backup/annual_mean_trend.png}
-  \end{figure}
+    {\usebeamercolor[fg]{structure}\large\bfseries\boldmath $-$45\%\par}
+    {\footnotesize risorsa nivale primaverile\par}
 \end{frame}

@@ -23,7 +23,8 @@ make_trend_plot <- function(df, lab_points, lab_y){
   b <- unname(ss$estimates)
   a <- median(df$swe - b * df$years)
   df$trend <- a + b * df$years
-  
+  print(df$trend[1])
+  print(df$trend[length(df$trend)])
   
   # Labels
   p_txt <- if (mk$p.value < 0.001) "p < 0.001" else sprintf("p = %.3f", mk$p.value)
@@ -78,15 +79,15 @@ df_peak <- data.frame(years = as.numeric(df$years), swe = as.numeric(df$max_swe)
 
 # Making first plot
 lab_y <- "SWE [Gm³]"
-lab_points <- "Peak annual SWE"
-p1 <- make_trend_plot(df = df_peak, lab_points = lab_points, lab_y = lab_y)
+lab_points <- "1 April SWE"
+p1 <- make_trend_plot(df = df_fap, lab_points = lab_points, lab_y = lab_y)
 
 
 # Making second plot
 #lab_y <- "1 April SWE [Gm³]"
 lab_y <- NULL
-lab_points <- "1 April SWE"
-p2 <- make_trend_plot(df = df_fap, lab_points = lab_points, lab_y = lab_y)
+lab_points <- "Peak annual SWE"
+p2 <- make_trend_plot(df = df_peak, lab_points = lab_points, lab_y = lab_y)
 
 
 p1 + p2
