@@ -1,8 +1,8 @@
 \section{Calibrazione}
 
 
-
-\begin{frame}{Snow depth dataset}
+% DATASET DI SPESSORE NEVOSO
+\begin{frame}{Dataset di spessore nevoso}
 
     \vspace{5pt}
     \centering
@@ -38,4 +38,115 @@
     \end{columns}
 
     \vfill
+\end{frame}
+
+
+% CORREZIONE DATASET
+\begin{frame}{Revisione del dataset}
+
+    \vspace{4pt}
+    \begin{columns}[T,onlytextwidth]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Correzione dei metadati}
+                \begin{itemize}[label=$\blacktriangleright$, itemsep=1pt]\footnotesize
+                    \item coordinate dai cataloghi degli enti
+                    \item verifica satellitare (Google Earth)
+                    \item $\approx 300$ stazioni ricollocate
+                \end{itemize}
+                \vspace{2pt}
+                \parbox[c][0.38\textheight][c]{\linewidth}{\centering
+                    \includegraphics[width=\linewidth,height=0.38\textheight,keepaspectratio]%
+                        {images/calibration/station_compatibility_before_after_QC.png}}
+            \end{block}
+        \end{column}
+
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Correzione delle serie HS}
+                \begin{itemize}[label=$\blacktriangleright$, itemsep=1pt]\footnotesize
+                    \item scarto delle annate non ricostruibili
+                    \item azzeramento estivo
+                    \item gap filling lineare
+                \end{itemize}
+                \vspace{2pt}
+                \parbox[c][0.38\textheight][c]{\linewidth}{\centering
+                    \includegraphics[width=\linewidth,height=0.38\textheight,keepaspectratio]%
+                        {images/calibration/hs_correction.png}}
+            \end{block}
+        \end{column}
+    \end{columns}
+
+  \vspace{0.75cm} 
+  \begin{columns}[T, onlytextwidth]
+    \begin{column}{0.31\textwidth}
+      \centering
+      {\usebeamercolor[fg]{structure}\large\bfseries\boldmath 220\par}
+      {\footnotesize stazioni scartate (832 rimanenti)\par}
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      \centering
+      {\usebeamercolor[fg]{structure}\large\bfseries\boldmath 714\par}
+      {\footnotesize stazioni con quota-coordinate compatibili\par}
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      \centering
+      {\usebeamercolor[fg]{structure}\large\bfseries -26\% annate\par}
+      {\footnotesize 20248 annate ricostruite \par}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+% SCHEMA CALIBRAZIONE
+\begin{frame}{Procedura di calibrazione}
+  \usebeamercolor{structure}\colorlet{acc}{structure.fg}
+  \centering
+  \begin{tikzpicture}[
+      font=\small,
+      blk/.style={draw=acc, line width=0.8pt, rounded corners=4pt, fill=acc!6,
+                  minimum width=3.0cm, minimum height=2.7cm,
+                  text width=2.9cm, align=center, inner sep=2pt},
+      res/.style={blk, fill=acc, text=white},
+      obs/.style={blk, minimum width=3.4cm, text width=3.2cm,
+                  minimum height=1.1cm, fill=white},
+      num/.style={circle, fill=acc, draw=white, line width=1pt, text=white,
+                  font=\scriptsize\bfseries, minimum size=15pt, inner sep=0pt},
+      arr/.style={-{Stealth[length=6pt,width=5pt]}, line width=1pt, acc},
+      tag/.style={draw=acc, line width=0.5pt, fill=white, rounded corners=2pt,
+                  inner xsep=6pt, inner ysep=2pt, font=\footnotesize\bfseries,
+                  text=acc},
+    ]
+    \node[blk] (B1) at (0,0)
+      {{\rule{0pt}{13pt}\bfseries\color{acc}Forzanti meteo}\\[6pt]
+       $P(t)$,\ $T(t)$\\[3pt]
+       {\footnotesize 632 stazioni\\ 1951--2023}};
+    \node[blk] (B2) at (3.55,0)
+      {{\rule{0pt}{13pt}\bfseries\color{acc}Simulazione SWE}\\[3pt]
+        $\text{SWE}(\mathbf{x})$\\[3pt]
+        {\footnotesize $\mathbf{x}$: parametri del modello}};
+    \node[blk] (B3) at (7.1,0)
+      {{\rule{0pt}{13pt}\bfseries\color{acc}Confronto con osservativo}\\[4pt]
+       $s=\begin{cases}1 & X>0\\ 0 & X=0\end{cases}$\\[3pt]
+       {\footnotesize $X=\text{SWE},\,\text{HS}$}};
+    \node[blk] (B4) at (10.65,0)
+      {{\rule{0pt}{13pt}\bfseries\color{acc}Calcolo della loss}\\[5pt]
+       $\mathcal{L} = 1-\text{CSI}$\\[6pt]
+       {\footnotesize$\text{CSI}=\dfrac{\text{TP}}{\text{TP}+\text{FP}+\text{FN}}$}};
+    \node[res, minimum height=1.1cm, below=0.8cm of B4] (R)
+      {{\large\bfseries Miglior stima}};
+    \foreach \b/\n in {B1/1, B2/2, B3/3, B4/4}
+      \node[num] at (\b.north west) {\n};
+    \draw[arr] (B1) -- (B2);
+    \draw[arr] (B2) -- (B3);
+    \draw[arr] (B3) -- (B4);
+    \draw[arr, dashed] (B4) -- (R)
+      node[midway, right, font=\footnotesize, text=black!75] {$\min\mathcal{L}$};
+      
+    \draw[arr] (B4.north) -- ++(0,1.0) -| (B2.north)
+      node[pos=0.25, tag] (mod) {Modifica parametri};
+    % Serie HS
+    \node[obs, below=0.8cm of B3] (HS)
+      {{\bfseries\color{acc}Serie HS osservate}\\[1pt]
+       {\footnotesize dataset corretto}};
+    \draw[arr] (HS) -- (B3);
+  \end{tikzpicture}
 \end{frame}

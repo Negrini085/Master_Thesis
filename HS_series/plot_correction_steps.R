@@ -189,7 +189,7 @@ series_ixd <- unique(as.numeric(df_to_plot$V1))
 for(i in series_ixd){
   mask <- as.numeric(df_to_plot$V1) %in% series_ixd[i]
   hs_series <- as.numeric(df_to_plot$V2)[mask]
-  if(i == 1)  p[[i]] <- plot_swe_comparison_gap_tit(hs_series, "HSD_TAA_TN_PASSO_PIAN_DELLE_FUGAZZE", 2014)
+  if(i == 1)  p[[i]] <- plot_swe_comparison_gap(hs_series, "HSD_TAA_TN_PASSO_PIAN_DELLE_FUGAZZE", 2014)
   else if(i == 4)   p[[i]] <- plot_swe_comparison_gap_mon(hs_series, "HSD_TAA_TN_PASSO_PIAN_DELLE_FUGAZZE", 2014)
   else   p[[i]] <- plot_swe_comparison_gap(hs_series, "HSD_TAA_TN_PASSO_PIAN_DELLE_FUGAZZE", 2014)
 }
@@ -203,4 +203,12 @@ p <- (p[[1]] / p[[2]] / p[[3]] / p[[4]]) +
     plot.tag.position = c(0.99, 0.98)
   )
 
+print(p)
+
+p <- (p[[1]] / p[[4]]) +
+  plot_layout(axis_titles = "collect_y") +
+  theme(
+    plot.tag = element_text(size = 18, face = "bold"),
+    plot.tag.position = c(0.99, 0.98)
+  )
 print(p)

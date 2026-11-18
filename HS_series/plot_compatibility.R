@@ -64,7 +64,7 @@ p1 <- ggplot() +
   ) +
   coord_sf(xlim = c(3.5, 17), ylim = c(43, 49), expand = FALSE) +
   theme_minimal() +
-  labs(title = NULL, x = "Longitude [°E]", y = "Latitude [°N]") +
+  labs(title = NULL, x = NULL, y = NULL) +
   theme(panel.background = element_rect(fill = "aliceblue"))
 
 
@@ -81,13 +81,16 @@ p2 <- ggplot() +
   ) +
   coord_sf(xlim = c(3.5, 17), ylim = c(43, 49), expand = FALSE) +
   theme_minimal() +
-  labs(title = NULL, x = "Longitude [°E]", y = "") +
-  theme(panel.background = element_rect(fill = "aliceblue"))
+  labs(title = NULL, x = NULL, y = NULL) +
+  theme(
+    panel.background = element_rect(fill = "aliceblue"),
+    axis.text.y  = element_blank(),
+    axis.ticks.y = element_blank()
+  )
 
 
 p <- (p1 | p2) +
-  plot_layout(guides = "collect") +
-  plot_annotation(tag_levels = "A") &
+  plot_layout(guides = "collect") &
   theme_fonts &
   theme(
     legend.position = "bottom",
