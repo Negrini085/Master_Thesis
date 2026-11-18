@@ -1,11 +1,13 @@
 \section{Modello}
 
+
+% INPUT DEL MODELLO
 \begin{frame}{Dati di precipitazione e temperatura}
 
   \begin{itemize}[label=$\blacktriangleright$]
+    \item uniche forzanti meteorologiche
     \item mappe giornaliere (periodo 1881--2023)
     \item risoluzione spaziale 30 arco-secondi
-    \item ricostruzione con metodo delle anomalie
   \end{itemize}
 
   \vfill
@@ -28,5 +30,55 @@
       {\footnotesize Evoluzione temperatura media su IH-GAR}
     \end{column}
   \end{columns}
+
+\end{frame}
+
+
+% STRUTTURA DEL MODELLO
+\begin{frame}{Struttura del modello}
+
+  \vfill
+  \begin{columns}[c, onlytextwidth]
+    \begin{column}{0.45\textwidth}
+      \begin{block}{Caratteristiche principali}
+          \begin{itemize}[label=$\blacktriangleright$, itemsep = 1pt]
+            \item pixel indipendenti
+            \item griglia delle forzanti
+            \item mappe giornaliere
+        \end{itemize}
+      \end{block}
+      \vspace{15pt}
+      \begin{block}{Aggiornamento SWE}
+        \centering
+        $\begin{aligned}
+          \text{SWE}(t) &= \text{SWE}(t-1) + S_f(t) - M(t)
+        \end{aligned}$\\[4pt]
+        {\footnotesize con $\text{SWE} \geq 0$, passo giornaliero}
+      \end{block}
+    \end{column}
+    \begin{column}{0.55\textwidth}
+      \centering
+      \begin{tikzpicture}[
+          font=\normalsize,
+          inbox/.style={draw, rounded corners=2pt, fill=gray!12, minimum width=2.5cm, minimum height=0.85cm, align=center},
+          proc/.style={draw, rounded corners=2pt, minimum width=2.5cm, minimum height=1.05cm, align=center},
+          swebox/.style={draw, thick, rounded corners=2pt, fill=blue!10, minimum width=2.5cm, minimum height=1cm, align=center},
+          arr/.style={-{Stealth}, thick},
+        ]
+        \node[inbox] (P)   at (-1.55, 3.8) {$P$};
+        \node[inbox] (T)   at ( 1.55, 3.8) {$T_{\min},\,T_{\max}$};
+        \node[proc, fill=blue!20]   (acc) at (-1.55, 1.9) {Accumulo\\$S_f$};
+        \node[proc, fill=orange!30] (mel) at ( 1.55, 1.9) {Fusione\\$M$};
+        \node[swebox] (swe) at (0, 0) {$\text{SWE}(t)$};
+        \draw[arr] (P) -- (acc);
+        \draw[arr] (T) -- (mel);
+        \draw[arr] (T.south west) -- (acc.north east);
+        \draw[arr] (acc.south) -- node[left, pos=0.5] {$+$} (swe.north -| -0.6,0);
+        \draw[arr] (mel.south) -- node[right, pos=0.5] {$-$} (swe.north -| 0.6,0);
+        \node[font=\footnotesize, text=gray] at (0, 4.75) {per ogni punto di griglia};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+  \vfill
 
 \end{frame}
