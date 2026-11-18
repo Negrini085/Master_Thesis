@@ -48,7 +48,7 @@
         \end{itemize}
       \end{block}
       \vspace{15pt}
-      \begin{block}{Aggiornamento SWE}
+      \begin{block}{Simulazione SWE}
         \centering
         $\begin{aligned}
           \text{SWE}(t) &= \text{SWE}(t-1) + S_f(t) - M(t)
@@ -80,5 +80,53 @@
     \end{column}
   \end{columns}
   \vfill
+
+\end{frame}
+
+% ACCUMULO NEVE
+\begin{frame}{Accumulo SWE} 
+  \begin{center}
+    \begin{minipage}{0.6\textwidth}
+      \begin{block}{Precipitazioni solide}
+        \begin{itemize}[label=$\blacktriangleright$, itemsep = 1pt]
+          \item range temperatura giornaliero
+          \item soglia singola $T_\tau$
+        \end{itemize}
+      \end{block}
+    \end{minipage}
+  \end{center}
+
+  \vspace{10pt}
+
+\begin{columns}[c, onlytextwidth]
+\begin{column}{0.55\textwidth}
+\[
+S_f =
+\begin{cases}
+P & T_{\max} < T_\tau \\[4pt]
+P \, \dfrac{T_\tau - T_{\min}}{T_{\max} - T_{\min}} & T_{\min} < T_\tau < T_{\max} \\[8pt]
+0 & T_{\min} > T_\tau
+\end{cases}
+\]
+\end{column}
+\begin{column}{0.42\textwidth}
+\centering
+\begin{tikzpicture}[font=\sffamily\small]
+  % le due parti della barra
+  \fill[blue!20]  (0,0)   rectangle (2.4,0.55);
+  \fill[gray!15]  (2.0,0) rectangle (5,0.55);
+  \draw[gray]     (0,0)   rectangle (5,0.55);
+  % testo dentro la barra
+  \node at (1.0,0.275) {neve};
+  \node at (3.4,0.275) {pioggia};
+  % soglia
+  \draw[red, thick] (2.0,-0.25) -- (2.0,0.8)
+    node[above, font=\normalsize] {$T_\tau$};
+  % estremi
+  \node[below, font=\normalsize] at (0,-0.1) {$T_{\min}$};
+  \node[below, font=\normalsize] at (5,-0.1) {$T_{\max}$};
+\end{tikzpicture}
+\end{column}
+\end{columns}
 
 \end{frame}
