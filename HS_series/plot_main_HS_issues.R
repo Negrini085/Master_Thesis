@@ -80,7 +80,7 @@ plot_hs_issues <- function(hs_first, hs_second, station_names, years, max_hs_val
   p2 <- ggplot(df_hs, aes(x = date)) +
     geom_area(aes(y = value), fill = "grey40", alpha = 0.2) +
     geom_line(aes(y = value), color = "grey40", linewidth = 0.7) +
-    coord_cartesian(ylim = c(0, 90)) +
+    coord_cartesian(ylim = c(0, 280)) +
     scale_x_date(date_breaks = "1 month", date_labels = "%b") +
     labs(title = paste0(station_names[2], "  -  ", years[2] - 1, " to ", years[2]), x = NULL, y = "HS [cm]") +
     theme_minimal() +
@@ -94,7 +94,7 @@ plot_hs_issues <- function(hs_first, hs_second, station_names, years, max_hs_val
   
   # Combine plots
   # p1 / plot_spacer() / p3
-  p1 / p2
+  p2# p1 / p2
 }
 
 
@@ -141,4 +141,5 @@ for(i in seq_along(station_names)){
 }
 
 
-plot_hs_issues(hs_to_print[[1]], hs_to_print[[2]], station_names, years, max_hs_vals)
+# plot_hs_issues(hs_to_print[[1]], hs_to_print[[2]], station_names, years, max_hs_vals)
+plot_hs_issues(hs_to_print[[2]], hs_to_print[[1]], station_names, years, max_hs_vals)

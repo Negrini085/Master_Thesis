@@ -70,21 +70,11 @@ ylim_common <- NULL
 if(same_y) ylim_common <- c(0, max(sapply(clima_list, function(d) max(d$swe, na.rm = TRUE))))
 
 
-seasons <- years[-1]
-swe_season <- array(NA_real_, dim = c(365, n_bands, length(seasons)), dimnames = list(day_hydro = 1:365, band = band_labels, season = seasons))
-for (k in seq_along(seasons)) {
-  swe_season[1:92,   , k] <- swe_band_mean[274:365, , k]
-  swe_season[93:365, , k] <- swe_band_mean[1:273,   , k + 1]
-}
-
-
-
-
 # Building the 4 subplots
 plots <- lapply(seq_along(basins), function(k) {
   plot_swe_clima(clima_list[[k]],
                  title        = basins[[k]],
-                 show_x       = k > 2,
+                 show_x       = k < 2,
                  show_y_title = k %% 2 == 1,
                  show_y_text  = !same_y || k %% 2 == 1,
                  ylim         = ylim_common)
@@ -95,3 +85,40 @@ p <- wrap_plots(plots, nrow = 2, ncol = 2) +
   theme(legend.position = "bottom")
 
 print(p)
+
+
+
+
+
+
+
+
+
+# Legenda "a mano": 3 voci sopra, 2 sotto centrate
+periods <- levels(clima_list[[1]]$period)
+n  <- length(periods)
+n1 <- ceiling(n / 2)          # voci nella prima riga
+n2 <- n - n1                  # voci nella seconda riga
+
+dx <- 1.3   # distanza fra voci adiacenti  -> aumenta per allargarle
+dy <- 1.5   # distanza fra le due righe    -> aumenta per staccarle
+
+leg_df <- data.frame(
+  period = factor(periods, levels = periods),
+  x = c(seq_len(n1), seq_len(n2) + (n1 - n2) / 2) * dx,
+  y = c(rep(dy, n1), rep(0, n2))
+)
+xc <- mean(range(leg_df$x)) + 0.3   # centro della legenda
+
+legend_plot <- ggplot(leg_df, aes(colour = period)) +
+  geom_segment(aes(x = x - 0.25, xend = x - 0.05, y = y, yend = y), linewidth = 1.5) +
+  geom_point(aes(x = x - 0.15, y = y), size = 3) +
+  geom_text(aes(x = x, y = y, label = period), hjust = 0, size = 15 / .pt, colour = "black") +
+  scale_colour_viridis_d(option = "plasma", end = 0.92, guide = "none") +
+  coord_cartesian(xlim = xc + c(-2, 2), ylim = c(-0.6, 2.1), clip = "off") +
+  theme_void()
+
+# Singolo plot
+p1 <- (plots[[1]] + theme(legend.position = "none")) / legend_plot +
+  plot_layout(heights = c(1, 0.15))
+print(p1)

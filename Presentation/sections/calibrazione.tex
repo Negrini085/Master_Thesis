@@ -1,1 +1,41 @@
 \section{Calibrazione}
+
+
+
+\begin{frame}{Snow depth dataset}
+
+    \vspace{5pt}
+    \centering
+    {\usebeamercolor[fg]{structure}\large\bfseries\boldmath $1052$ stazioni $\rightarrow\,27388$ annate\par}
+    {\footnotesize qualità da verificare\par}
+
+    \vspace{15pt}
+    \begin{columns}[T,onlytextwidth]
+        \begin{column}{0.45\textwidth}
+            {\textbf{Affidabilità metadati}}\\
+            \begin{itemize}\setlength\itemsep{1pt}\footnotesize
+                \item coordinate arrotondate al secondo d'arco 
+                \item $>$50\% delle stazioni non compatibili con DEM ALOS AW3D30 (soglia 12 metri)
+            \end{itemize}
+            
+            \centering
+            \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]%
+            {images/calibration/station_reliability_original.png}\\[1pt]
+        \end{column}
+
+        \begin{column}{0.45\textwidth}
+            {\textbf{Problematiche numeriche}}\\
+            \begin{itemize}\setlength\itemsep{1pt}\footnotesize
+                \item dati mancanti, ground-level bias, spikes e drops nello spessore nevoso
+            \end{itemize}
+
+            \centering
+            \includegraphics[width=\linewidth,height=0.25\textheight,keepaspectratio]%
+                {images/calibration/hs_series_with_gap.png}\\  
+            \includegraphics[width=\linewidth,height=0.25\textheight,keepaspectratio]%
+                {images/calibration/hs_series_faulty_summer.png}\\
+        \end{column}
+    \end{columns}
+
+    \vfill
+\end{frame}

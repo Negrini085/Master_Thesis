@@ -25,11 +25,18 @@ europe <- ne_countries(continent = "Europe", scale = 10, returnclass = "sf")
 ggplot() +
   geom_sf(data = europe, fill = "antiquewhite1", color = "grey70") +
   geom_point(data = df_plot, aes(x = lon, y = lat, color = status), size = 1.5, alpha = 0.9) +
-  scale_color_manual(values = c("OK" = "forestgreen", "NO" = "firebrick1"), name = "Compatibility") +
-  coord_sf(xlim = c(3.5, 17), ylim = c(43, 49), expand = FALSE) +
+  scale_color_manual(values = c("OK" = "forestgreen", "NO" = "firebrick1"), name = "Reliability") +
+  coord_sf(xlim = c(3.5, 17), ylim = c(43, 48.2), expand = FALSE) +
+  guides(color = guide_legend(override.aes = list(size = 4))) +
   theme_minimal() +
-  labs(
-    title = "AWS Station compatibility: before QC", 
-    subtitle = "Threshold: 12m on a 30m DEM",
-    x = "Longitude", y = "Latitude") +
-  theme(panel.background = element_rect(fill = "aliceblue"), legend.position = "bottom")
+  labs(title = NULL, x = NULL, y = NULL) +
+  theme(
+    panel.background = element_rect(fill = "aliceblue"),
+    legend.position  = "bottom",
+    axis.text        = element_text(size = 15),
+    axis.ticks       = element_line(linewidth = 0.6),
+    axis.ticks.length = unit(0.25, "cm"),
+    legend.text      = element_text(size = 20),
+    legend.title     = element_text(size = 20),
+    legend.key.size  = unit(0.8, "cm")
+  )
