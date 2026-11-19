@@ -150,3 +150,98 @@
     \draw[arr] (HS) -- (B3);
   \end{tikzpicture}
 \end{frame}
+
+
+% CALIBRAZIONE OMOGENEA
+\begin{frame}{Calibrazione $\Ttau$}
+\begin{columns}[T,onlytextwidth]
+  % ------------------------------------------------ method
+  \begin{column}{0.47\textwidth}
+    \small
+    \textbf{HS and SWE are different quantities}\\
+    $\Rightarrow$ compare \emph{snow presence}, not amounts
+    (no $\Delta$Snow conversion and its uncertainties)
+    \begin{itemize}\setlength\itemsep{2pt}
+      \item binary series: 1 if HS (SWE) $>0$, else 0
+      \item loss on snow-covered days, pooled over all stations:
+    \end{itemize}
+    \vspace{-4pt}
+    \[
+      \mathcal{L} = 1-\text{CSI},\qquad
+      \text{CSI}=\frac{\text{TP}}{\text{TP}+\text{FP}+\text{FN}}
+    \]
+ 
+    \textbf{Setup}
+    \begin{itemize}\setlength\itemsep{2pt}
+      \item melt parameters fixed (Magnusson et al.):\\
+            {\footnotesize $\DDFave=\SI{2.2}{\ddfunit}$, $\DDFamp=\SI{1.7}{\ddfunit}$,\\
+            $m_m=\SI{0.5}{\degreeCelsius}$, $T_{melt}=\SI{0}{\degreeCelsius}$}
+      \item grid search: $\Ttau\in[0,3]\,\si{\degreeCelsius}$,
+            step $\SI{e-3}{\degreeCelsius}$
+    \end{itemize}
+  \end{column}
+  % ------------------------------------------------ results
+  \begin{column}{0.50\textwidth}
+    \centering
+    \includegraphics[width=\linewidth,height=0.42\textheight,keepaspectratio]%
+      {swe_calibration/homogeneous_calib.png}
+ 
+    \medskip
+    \begin{block}{Optimum: $\Ttau=\SI{1.073}{\degreeCelsius}$}
+      \centering\small
+      \begin{tabular}{cccc}
+        CSI & Freq.\ bias & Recall & Accuracy\\
+        \midrule
+        0.821 & 1.036 & 0.917 & 0.926\\
+      \end{tabular}\\[3pt]
+      \footnotesize single well-defined minimum $\cdot$ $\approx$7.3\% of days
+      misclassified $\cdot$ slight overestimation of snow persistence
+    \end{block}
+  \end{column}
+\end{columns}
+\end{frame}
+
+
+% =====================================================================
+%  SLIDE 3 — Model limitations and final choice
+% =====================================================================
+\begin{frame}{Model limitations and final parameter set}
+\begin{columns}[T,onlytextwidth]
+  % ------------------------------------------------ monthly
+  \begin{column}{0.48\textwidth}
+    \centering
+    {\small\textbf{By month}}\\[2pt]
+    \parbox[c][0.3\textheight][c]{\linewidth}{\centering% fixed box: bullets stay aligned
+      \includegraphics[width=\linewidth,height=0.3\textheight,keepaspectratio]%
+        {swe_calibration/homogeneous_calib_monthly_wise.png}}
+    \raggedright\footnotesize
+    \begin{itemize}\setlength\itemsep{0pt}
+      \item \emph{Autumn}: snow overestimated $\to$ ground heat not modelled
+      \item \emph{Spring}: melt-out too early $\to$ no cold content/refreezing
+    \end{itemize}
+  \end{column}
+  % ------------------------------------------------ elevation
+  \begin{column}{0.48\textwidth}
+    \centering
+    {\small\textbf{By elevation}}\\[2pt]
+    \parbox[c][0.3\textheight][c]{\linewidth}{\centering% fixed box: bullets stay aligned
+      \includegraphics[width=\linewidth,height=0.3\textheight,keepaspectratio]%
+        {swe_calibration/homogeneous_calib_elevation_wise.png}}
+    \raggedright\footnotesize
+    \begin{itemize}\setlength\itemsep{0pt}
+      \item \emph{Low/mid}: overestimation $\to$ ground heat flux $G$
+      \item \emph{Above \SI{2000}{\meter}}: underestimation $\to$ gauge undercatch
+    \end{itemize}
+  \end{column}
+\end{columns}
+ 
+\vfill
+\begin{alertblock}{Can other parameters do better?}
+  \footnotesize
+  Simulated annealing on $(\Ttau,\DDFave,\DDFamp)$: 7.3\% $\to$ 7.0\% misclassified
+  days (within uncertainty), more false positives\\
+  $\Rightarrow$ \textbf{homogeneous calibration retained} for the SWE maps
+\end{alertblock}
+\end{frame}
+ 
+\end{document}  

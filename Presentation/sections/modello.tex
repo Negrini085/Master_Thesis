@@ -130,3 +130,39 @@ P \, \dfrac{T_\tau - T_{\min}}{T_{\max} - T_{\min}} & T_{\min} < T_\tau < T_{\ma
 \end{columns}
 
 \end{frame}
+
+
+% FUSIONE NEVE
+\begin{frame}{Fusione: approccio alla Magnusson}
+
+  \vspace{-2pt}
+  \[
+  M = \mathrm{DDF}(t) \left\{ \left(T_{mean} - T_{melt}\right)
+  + m_m \ln\!\left[ 1 + \exp\!\left( -\frac{T_{mean} - T_{melt}}{m_m} \right) \right] \right\}
+  \]
+  \begin{columns}[T, onlytextwidth]
+    \begin{column}{0.48\textwidth}
+    \centering
+      \includegraphics[width=\linewidth, height=0.4\textheight, keepaspectratio]{images/calibration/ddf_osc.png}\\[2pt]
+      {\footnotesize{\usebeamercolor[fg]{structure}\textbf{$\boldsymbol{\mathrm{DDF}(t)}$ stagionale}}:
+       massimo al solstizio d'estate}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+    \centering
+      \includegraphics[width=\linewidth, height=0.4\textheight, keepaspectratio]{images/calibration/dd_smooth.png}\\[2pt]
+      {\footnotesize{\usebeamercolor[fg]{structure}\textbf{Smoothing}}:
+      transizione derivabile a $T_{melt}$}
+    \end{column}
+  \end{columns}
+
+  \begin{center}
+    \begin{minipage}{0.85\textwidth}
+      \begin{block}{Parametri da calibrare}
+        \centering
+        $T_\tau,\; T_{melt},\; \mathrm{DDF}_{ave},\; \mathrm{DDF}_{amp},\; m_m$
+        \;$\longrightarrow$\; calibrazione su serie di altezza neve
+      \end{block}
+    \end{minipage}
+  \end{center}
+
+\end{frame}
