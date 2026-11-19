@@ -41,40 +41,39 @@
 
 
 % MODELLI NUMERICI
-\begin{frame}{Metodi di stima}
+\begin{frame}[t]{Metodi numerici}
+  \definecolor{barragrigia}{RGB}{200,200,200}
+  \definecolor{notagrigia}{RGB}{100,100,100}
+  \definecolor{griglia}{RGB}{225,225,225}
 
-  \begin{columns}[T, onlytextwidth]
+  \centering
+  \vspace{3pt}
+  {\large\bfseries\boldmath
+   Misure in-situ + satellitari\\[2pt]
+   $\Rightarrow$ integrate in modelling chains\par}
 
-    \begin{column}{0.48\textwidth}
-      \centering
-      {\usebeamercolor[fg]{structure}\bfseries IT-SNOW\par}
-      \medskip
-      \begin{minipage}[t][0.25\textheight][t]{\linewidth}
-        \raggedright\small
-        \begin{itemize}[label=$\blacktriangleright$]
-          \item Network poco denso
-          \item SWE raramente misurato (focus su spessore nevoso)
-        \end{itemize}
-      \end{minipage}
+  \vspace{\stretch{1}}
 
-      \includegraphics[width=\linewidth, height=0.5\textheight, keepaspectratio]{images/introduzione/snow_pit.png}
-    \end{column}
+  \begin{tikzpicture}[x=0.0125\textwidth, y=9mm, font=\small]
+    \useasboundingbox (0,-1.3) rectangle (75,3.5);
 
-    \begin{column}{0.48\textwidth}
-      \centering
-      {\usebeamercolor[fg]{structure}\bfseries Po River District\par}
-      \medskip
-      \begin{minipage}[t][0.25\textheight][t]{\linewidth}
-        \raggedright\small
-        \begin{itemize}[label=$\blacktriangleright$]
-          \item Misure spazializzate
-          \item Trade-off risoluzione-copertura temporale
-        \end{itemize}
-      \end{minipage}
+    \foreach \a in {1950,1960,...,2020} {
+      \draw[griglia, line width=0.6pt] ({\a-1950},3.5) -- ({\a-1950},-0.75);
+      \node[text=notagrigia, anchor=north] at ({\a-1950},-0.8) {\a};
+    }
 
-      \includegraphics[width=\linewidth, height=0.42\textheight, keepaspectratio]{example-image-b}
-    \end{column}
+    \foreach \y/\ini/\fin/\nome in {
+        3/1992/2021/Po River District,
+        2/2001/2025/MODIS,
+        1/2011/2025/IT-SNOW} {
+      \fill[barragrigia, rounded corners=2pt]
+        ({\ini-1950},{\y-0.23}) rectangle ({\fin-1950},{\y+0.23});
+      \node at ({(\ini+\fin)/2-1950},\y) {\nome};
+    }
 
-  \end{columns}
+    \usebeamercolor{structure}
+    \fill[structure.fg, rounded corners=2pt] (1,-0.56) rectangle (73,-0.04);
+    \node[text=white, font=\small\bfseries] at (37,-0.30) {Questa tesi};
+  \end{tikzpicture}
 
 \end{frame}
