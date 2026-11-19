@@ -1,6 +1,7 @@
 \section{Risultati}
 
 
+% PEAK SWE
 \begin{frame}{Peak SWE trend}
 
   \begin{columns}[c, onlytextwidth]
@@ -54,6 +55,7 @@
 \end{frame}
 
 
+% VARIAZIONI STAGIONALI
 \begin{frame}{Variazioni stagionali}
 
   \begin{columns}[c, onlytextwidth]
@@ -91,28 +93,41 @@
 \end{frame}
 
 
-\begin{frame}{Snow cover duration}
+% SCD
+\begin{frame}[t]{Snow cover duration}
 
-  \begin{columns}[c, onlytextwidth]
-
-    
-
-    \begin{column}{0.6\textwidth}
-      {\usebeamercolor[fg]{structure}\large\bfseries SWE $\Rightarrow$ snow cover\par}
-      \footnotesize
-      \begin{itemize}
-        \item soglia 15 mm w.e.
-      \end{itemize}
+  {\centering
+  \begin{minipage}{0.45\textwidth}
+    \begin{block}{SWE $\Rightarrow$ copertura nevosa}
       \centering
-      \includegraphics[width=\linewidth, height=0.6\textheight, keepaspectratio]{images/results/clima_scd_map_1991_2020.png}\\
-      {\footnotesize Climatologia SCD 1991--2020}
+      \footnotesize
+      Pixel innevato $\Leftrightarrow$ $\text{SWE} \geq 15$~mm w.e.
+    \end{block}
+  \end{minipage}
+  \par}
+
+  \vspace{2em}
+
+  \begin{columns}[T, onlytextwidth]
+
+    % 2. Distribuzione
+    \begin{column}{0.48\textwidth}
+      \centering
+      {\usebeamercolor[fg]{structure}\bfseries Climatologia 1991--2020\par}
+      \vspace{4pt}
+      \includegraphics[width=\linewidth, height=0.48\textheight, keepaspectratio]{images/results/clima_scd_map_1991_2020.png}\par
+      \vspace{4pt}
+      {\scriptsize $\text{Quota} \nearrow \;\Rightarrow\; \text{SCD} \nearrow$\par}
     \end{column}
 
-    \begin{column}{0.4\textwidth}
-      \textbf{Perdite diffuse sull'intero arco}
-      \vfill
+    % 3. Declino
+    \begin{column}{0.48\textwidth}
       \centering
-      \includegraphics[width=\linewidth, height=0.8\textheight, keepaspectratio]{images/results/scd_trends.png}\\
+      {\usebeamercolor[fg]{structure}\bfseries Trend 1952--2023\par}
+      \vspace{4pt}
+      \includegraphics[width=\linewidth, height=0.48\textheight, keepaspectratio]{images/results/SCD_trends.png}\par
+      \vspace{4pt}
+      {\scriptsize Trend negativi significativi in ogni catena montuosa\par}
     \end{column}
 
   \end{columns}
