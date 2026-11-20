@@ -380,6 +380,42 @@
 \end{frame}
 
 
+% SLIDE CONFRONTO SA VS HOMO>GENEOUS CALIBRATION
+\begin{frame}{Confronto calibrazione $T_\tau-$SA}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Grid search $T_\tau$}
+        \centering
+        \footnotesize
+        Giorni non allineati: $\approx$ 7.3 \%\\
+        CSI $=0.821$ \\
+        F.Bias $=1.036$ 
+      \end{block}
+      \centering
+      \includegraphics[width=\linewidth,height=0.6\textheight,keepaspectratio]{images/backup/truth_mat_homo.png}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Simulated annealing}
+        \centering
+        \footnotesize
+        Giorni non allineati: $\approx$ 7.0 \%\\
+        CSI $=0.830$ \\
+        F.Bias $=1.049$
+
+      \end{block}
+      \centering
+      \includegraphics[width=\linewidth,height=0.6\textheight,keepaspectratio]{images/backup/truth_mat_SA.png}
+    \end{column}
+  \end{columns}
+
+  \vspace{5pt}
+  \centering
+  \footnotesize
+  Leggera crescita di CSI, Accuracy e Recall a discapito di un maggior bias verso i FP
+\end{frame}
+
+
 % SLIDE AREE GLACIALI
 \begin{frame}{Aree glaciali}
   \begin{columns}[c]
@@ -449,7 +485,7 @@
   \end{center}
 
   \begin{center}
-  {\usebeamercolor[fg]{structure}\large\bfseries\boldmath Val Venosta $-$ Cevedale\par}
+  {\usebeamercolor[fg]{structure}\large\bfseries\boldmath Val Venosta $-$ Adamello\par}
   \end{center}
   {\centering\footnotesize
    trend invernali positivi \quad$\longrightarrow$\quad negativi in primavera\par}
@@ -471,6 +507,26 @@
   \vspace{5pt}
   \centering
   \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{images/backup/scd_diff_threshold.png}\\
+
+  \vfill
+\end{frame}
+
+
+% SLIDE SNOW LINE RISE
+\begin{frame}{Risalita della snow line}
+
+  \begin{columns}[c, onlytextwidth]
+
+    \begin{column}{0.7\textwidth}
+      \centering
+      \includegraphics[width=\linewidth, height=\textheight, keepaspectratio]{images/backup/snow_cover_fraction_climatologies.png}
+    \end{column}
+
+    \begin{column}{0.3\textwidth}
+
+    \end{column}
+
+  \end{columns}
 
   \vfill
 \end{frame}
