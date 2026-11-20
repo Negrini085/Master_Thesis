@@ -214,6 +214,7 @@
           \item visualizzazione finale \\
         \end{itemize}
       \end{block}
+      \vspace{0.1cm}
     \end{column}
   \end{columns}
 \end{frame}
@@ -247,6 +248,73 @@
       \includegraphics[height=0.5\textheight]{images/backup/comparison_HS_MODIS_corrected.png}
     \end{column}
   \end{columns}
+\end{frame}
+
+
+% SLIDE LIMITI CALIBRAZIONE OMOGENEA
+\begin{frame}{Limitazioni calibrazione $T_\tau$}
+  \centering
+
+  \begin{columns}[t, onlytextwidth]
+
+    \begin{column}{0.49\textwidth}
+      {\usebeamercolor[fg]{structure}\bfseries Performance per mese: \par}
+      \smallskip
+      \begin{itemize}[label=$\blacktriangleright$, itemsep=3pt]
+        \item \textbf{Inizio stagione}: modello sovrastima
+          \\ {\footnotesize $\rightarrow$ flusso di calore dal suolo $G$}
+        \item \textbf{Fine stagione}: fusione anticipata
+          \\ {\footnotesize $\rightarrow$ DDF troppo alti? Non tracciati \emph{cold content} né rigelo}
+      \end{itemize}
+      \smallskip
+      \centering
+      \includegraphics[width=\linewidth,height=0.55\textheight,keepaspectratio]{images/backup/homogenous_calib_nov_apr.png}
+    \end{column}
+
+    \begin{column}{0.49\textwidth}
+      {\usebeamercolor[fg]{structure}\bfseries Performance per quota: \par}
+      \smallskip
+      \begin{itemize}[label=$\blacktriangleright$, itemsep=3pt]
+        \item \textbf{Sotto 2000 m}: modello sovrastima
+          \\ {\footnotesize $\rightarrow$ fenomeni rigelo del suolo}
+        \item \textbf{Sopra 2000 m}: modello sottostima
+          \\ {\footnotesize $\rightarrow$ \emph{undercatch} pluviometri. Non tracciati \emph{cold content} né rigelo}
+      \end{itemize}
+      \smallskip
+      \vspace{10pt}
+      \centering
+      \includegraphics[width=\linewidth,height=0.55\textheight,keepaspectratio]{images/backup/homogeneous_calib_elevation_wise.png}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+% SLIDE SPECIFICHE SIMULATED ANNEALING
+\begin{frame}{Simulated annealing schedule}
+  \centering
+
+  \begin{columns}[c, onlytextwidth]
+
+    \begin{column}{0.49\textwidth}
+      {\usebeamercolor[fg]{structure}\bfseries Performance per mese: \par}
+      \smallskip
+      \begin{itemize}[label=$\blacktriangleright$, itemsep=3pt]
+        \item 
+      \end{itemize}
+      \centering
+      \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{images/backup/homogenous_calib_nov_apr.png}
+    \end{column}
+
+    \begin{column}{0.49\textwidth}
+      {\usebeamercolor[fg]{structure}\bfseries Performance per quota: \par}
+      \smallskip
+      \begin{itemize}[label=$\blacktriangleright$, itemsep=3pt]
+        \item 
+      \end{itemize}
+      \centering
+      \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{images/backup/homogeneous_calib_elevation_wise.png}
+    \end{column}
+  \end{columns}  
 \end{frame}
 
 
