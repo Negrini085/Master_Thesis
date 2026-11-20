@@ -192,7 +192,34 @@
 \end{frame}
 
 
-% SLIDE CONTROLLO SPESSORE NEVOSO
+% SLIDE PIPELINE CORREZIONE SPESSORE NEVOSO
+\begin{frame}{Pipeline correzione spessore nevoso}
+  \begin{columns}[c, onlytextwidth]
+    \begin{column}{0.65\textwidth}
+      \centering
+      \includegraphics[height=\textheight]{images/backup/visual_check_example.png}
+    \end{column}
+
+    \begin{column}{0.35\textwidth}
+      \begin{block}{Step per correzione}
+        \footnotesize
+        \begin{itemize}[label=$\blacktriangleright$, itemsep = 3pt]
+          \item scarto serie non ricostruibili \\
+          \item azzeramento periodo estivo \\
+          \item ricerca spike e drop \\
+          \item gap filling lineare \\
+          \item visualizzazione serie \\
+          \item gap rimanenti a zero \\
+          \item zero sotto soglia* \\
+          \item visualizzazione finale \\
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+% SLIDE CONTROLLO SPESSORE NEVOSO CON MODIS
 \begin{frame}{Check spessore nevoso con MODIS}
 
   {\footnotesize
@@ -282,7 +309,6 @@
       \includegraphics[width=0.8\linewidth]{images/backup/covered_area_maps.png}
     \end{column}
     
-    % Seconda colonna (40%): testo
     \begin{column}{0.4\textwidth}
       \begin{itemize}[label=$\blacktriangleright$, itemsep=1em]
         \item Modello non simula ghiacciai: ad alte quote accumulo senza limite \\
@@ -311,7 +337,7 @@
       \smallskip
       \footnotesize
       \renewcommand{\arraystretch}{1.2}
-      \setlength{\tabcolsep}{5pt}   % spazio tra le colonne: riducilo se la tabella è troppo larga
+      \setlength{\tabcolsep}{5pt}
       \begin{tabular}{@{}cc@{}}
         \toprule
         Quota [m]   & Trend [\%/decade] \\
