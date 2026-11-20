@@ -62,8 +62,74 @@
 
 
 % SLIDE SU LOCALLY WEIGHTED LINEAR REGRESSION
-\begin{frame}{Local Weighted Linear Regression}
+\begin{frame}[t]{Local Weighted Linear Regression}
 
+  \vspace{-4pt}
+  \begin{center}
+    {\small Regressione locale precipitazione--quota
+      $\;\longrightarrow\;$ climatologie mensili 1991--2020}\\[4pt]
+    $P_{\text{clima}}(\mathbf{x}) \;=\; q(\mathbf{x}) \;+\; m(\mathbf{x})\, h(\mathbf{x})$
+  \end{center}
+
+  \vspace{4pt}
+  \begin{columns}[c, onlytextwidth]
+
+    \begin{column}{0.48\textwidth}
+       \begin{block}{Pesi delle stazioni}
+        \vspace{-4pt}
+        {\footnotesize
+        \[
+          w_i = \prod_{par} w_i^{par}, \qquad
+          w_i^{par} = \exp\left[-\frac{\left(\Delta_i^{par}\right)^2}{c^{par}}\right]
+        \]}
+        \vspace{-6pt}
+        \begin{itemize}[label=$\blacktriangleright$, itemsep=0.3em]
+          \raggedright
+          \item {\small 5 fattori: distanza, quota, pendenza, esposizione, distanza dal mare}
+          \item {\small $c^{par}$ ottimizzati localmente}
+        \end{itemize}
+      \end{block}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \centering
+      \begin{tikzpicture}[
+          baseline=(current bounding box.center),
+          font=\small, x=1cm, y=0.78cm,   % y=… invece di yscale: i cerchi restano cerchi
+          ax/.style={-{Stealth[length=5pt,width=4pt]}, line width=0.8pt, black!70},
+          lbl/.style={font=\footnotesize, text=black!75},
+        ]
+        \usebeamercolor{structure}\colorlet{acc}{structure.fg}
+        \draw[ax] (0,0) -- (5.4,0) node[lbl, below left] {Quota};
+        \draw[ax] (0,0) -- (0,3.6) node[lbl, above right] {$P_{\text{clima}}$};
+
+        \foreach \x/\y/\w in {0.5/0.80/0.20, 0.9/1.35/0.30, 1.4/1.20/0.50,
+                              1.8/1.70/0.70, 2.2/1.60/0.90, 2.5/1.95/1.00,
+                              2.9/1.90/0.95, 3.2/2.30/0.80, 3.5/2.05/0.60,
+                              3.9/2.60/0.40, 4.4/2.55/0.25, 4.8/3.00/0.15,
+                              1.2/2.20/0.15, 3.7/1.35/0.15}{
+          \pgfmathsetmacro{\op}{0.25+0.75*\w}
+          \fill[acc, fill opacity=\op] (\x,\y) circle ({1.2pt+3pt*\w});
+        }
+
+        \draw[acc, line width=1.2pt] (0,0.70) -- (5.0,2.95);
+
+        \draw[dashed, acc!70] (2.7,0) node[lbl, below] {$h(\mathbf{x})$} -- (2.7,1.915);
+        \draw[dashed, acc!70] (0,1.915) -- (2.7,1.915);
+        \fill[white] (2.7,1.915) circle (3.2pt);
+        \draw[acc, line width=1.2pt] (2.7,1.915) circle (3.2pt);
+
+        \path (current bounding box.north) ++(0,15pt);
+      \end{tikzpicture}
+    \end{column}
+
+  \end{columns}
+\end{frame}
+
+
+% SLIDE TREND TEMPERATURA MEDIA ANNUALE
+\begin{frame}{Limiti dell'approccio degree-day}
+  \[\frac{d\mathcal{H}}{dt}\,=\,R_N\,+\,H_S\,+\,H_L\,+\,H_P\,+\,G\]
 \end{frame}
 
 
@@ -82,12 +148,6 @@
     \centering
     \includegraphics[height=\textheight]{images/backup/annual_mean_trend.png}
   \end{figure}
-\end{frame}
-
-
-% SLIDE TREND TEMPERATURA MEDIA ANNUALE
-\begin{frame}{Limiti dell'approccio degree-day}
-  
 \end{frame}
 
 
