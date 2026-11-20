@@ -129,14 +129,14 @@
 \end{frame}
 
 
-% SLIDE CONFRONTO TREND
+% SLIDE TREND SWE POSITIVI
 \begin{frame}{Trend positivi SWE in inverno}
   \begin{center}
     \includegraphics[width=\textwidth,height=0.65\textheight,keepaspectratio]{images/backup/swe_trends_comparison.png}\\[0.5ex]
   \end{center}
 
   \begin{center}
-    {\usebeamercolor[fg]{structure}\large\bfseries\boldmath Val Venosta $-$ Cevedale\par}
+  {\usebeamercolor[fg]{structure}\large\bfseries\boldmath Val Venosta $-$ Cevedale\par}
   \end{center}
   {\centering\footnotesize
    trend invernali positivi \quad$\longrightarrow$\quad negativi in primavera\par}
@@ -145,17 +145,25 @@
 \end{frame}
 
 
-% SLIDE TEST NON PARAMETRICI
-\begin{frame}{Test statistici}
-  \begin{center}
-    \includegraphics[width=\textwidth,height=0.65\textheight,keepaspectratio]{images/backup/swe_trends_comparison.png}\\[0.5ex]
-  \end{center}
-
-  \begin{center}
-    {\usebeamercolor[fg]{structure}\large\bfseries\boldmath Val Venosta $-$ Cevedale\par}
-  \end{center}
-  {\centering\footnotesize
-   trend invernali positivi \quad$\longrightarrow$\quad negativi in primavera\par}
+% SLIDE SWE THRESHOLD
+\begin{frame}{Conversione SWE $\rightarrow$ snow cover}
+  \[
+    \text{SCF} = \min\left(1,\,\frac{\text{SWE}\ [\si{\kilo\gram\per\meter\squared}]}{0.1\,\rho_s}\right)
+    \quad
+    \xrightarrow{\ \text{SCF}_{\text{th}} \,=\, 0.5\ }
+    \quad
+    \text{SWE}_{th} = 5 \times 10^{-2}\,\rho_s
+  \]
+  
+  \vspace{5pt}
+  \centering
+  \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{images/backup/scd_diff_threshold.png}\\
 
   \vfill
+\end{frame}
+
+
+% SLIDE TEST NON PARAMETRICI
+\begin{frame}{Test statistici}
+
 \end{frame}
