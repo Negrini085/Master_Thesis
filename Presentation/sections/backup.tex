@@ -1,3 +1,72 @@
+% SLIDE METODO ANOMALIE
+\begin{frame}{Metodo delle anomalie}
+  \usebeamercolor{structure}\colorlet{acc}{structure.fg}
+  \centering
+  climatologia + anomalia $\longrightarrow$ segnale meteorologico\\
+  \vspace{5pt}
+  \begin{tikzpicture}[
+      font=\small,
+      blk/.style={draw=acc, line width=0.8pt, rounded corners=4pt, fill=acc!6,
+                  minimum width=3.0cm, minimum height=2.7cm,
+                  text width=2.9cm, align=center, inner sep=2pt},
+      res/.style={blk, fill=acc, text=white},
+      obs/.style={blk, minimum width=3.4cm, text width=3.2cm,
+                  minimum height=1.1cm, fill=white},
+      num/.style={circle, fill=acc, draw=white, line width=1pt, text=white,
+                  font=\scriptsize\bfseries, minimum size=15pt, inner sep=0pt},
+      arr/.style={-{Stealth[length=6pt,width=5pt]}, line width=1pt, acc},
+      per/.style={font=\large\bfseries, text=acc},
+      lbl/.style={font=\footnotesize, text=black!75},
+    ]
+
+    \node[blk] (B1) at (0,0)
+      {{\rule{0pt}{13pt}\bfseries\color{acc}Climatologie mensili}\\[6pt]
+       {\footnotesize 1991--2020\\[3pt] LWLR}};
+    \node[blk] (B2) at (3.55,0)
+      {{\rule{0pt}{13pt}\bfseries\color{acc}Anomalia \\ mensile}\\[6pt]
+       $A_{month}(\mathbf{x},y)$\\[3pt]
+       {\footnotesize moltiplicativa\\}};
+    \node[blk] (B3) at (7.1,0)
+      {{\rule{0pt}{13pt}\bfseries\color{acc}Frazione giornaliera}\\[6pt]
+       $F_{\text{day}}(\mathbf{x},d)$\\[3pt]
+       {\footnotesize mese $\rightarrow$ giorni}};
+
+       \node[res] (R) at (10.65,0)
+      {{\rule{0pt}{13pt}\large\bfseries Mappa \\ giornaliera}\\[6pt]
+       $P(\mathbf{x},d)$\\[3pt]
+       {\footnotesize griglia $30''$}};
+
+
+    % --- Operatori tra i blocchi -------------------------------------
+    \node[per] at ($(B1.east)!0.5!(B2.west)$) {$\times$};
+    \node[per] at ($(B2.east)!0.5!(B3.west)$) {$\times$};
+    \draw[arr] (B3) -- (R);
+
+    % --- Stazioni ----------------------------------------------------
+    \path let \p1 = (B1.west), \p2 = (B3.east) in
+      node[obs, anchor=north,
+           minimum width=\x2-\x1, text width=\x2-\x1-0.4cm,
+           minimum height=1.5cm, font=\normalsize]
+        (S) at ($(B2.south)+(0,-1.1)$)
+        {{\large\bfseries\color{acc}Serie di stazioni}\\[3pt]
+         {\small osservazioni giornaliere precipitazione}};
+
+    \draw[arr] (S.north -| B1.south) -- (B1.south)
+      node[lbl, midway, right] {30 staz.};
+    \draw[arr] (S.north -| B2.south) -- (B2.south)
+      node[lbl, midway, right] {10 staz.};
+    \draw[arr] (S.north -| B3.south) -- (B3.south)
+      node[lbl, midway, right] {10 staz.};
+  \end{tikzpicture}
+\end{frame}
+
+
+% SLIDE SU LOCALLY WEIGHTED LINEAR REGRESSION
+\begin{frame}{Local Weighted Linear Regression}
+
+\end{frame}
+
+
 % SLIDE TREND PRECIPITAZIONI INVERNALI
 \begin{frame}{Winter precipitation trends}
   \begin{figure}
@@ -13,6 +82,12 @@
     \centering
     \includegraphics[height=\textheight]{images/backup/annual_mean_trend.png}
   \end{figure}
+\end{frame}
+
+
+% SLIDE TREND TEMPERATURA MEDIA ANNUALE
+\begin{frame}{Limiti dell'approccio degree-day}
+  
 \end{frame}
 
 
