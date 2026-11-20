@@ -139,9 +139,38 @@
 \end{frame}
 
 
-% SLIDE TREND TEMPERATURA MEDIA ANNUALE
-\begin{frame}{Limiti dell'approccio degree-day}
-  \[\frac{d\mathcal{H}}{dt}\,=\,R_N\,+\,H_S\,+\,H_L\,+\,H_P\,+\,G\]
+\begin{frame}{Motivazioni e limiti dell'approccio degree-day}
+
+  \begin{columns}[c, onlytextwidth]
+
+    \begin{column}{0.56\textwidth}
+      \centering
+      \includegraphics[height=0.7\textheight]{images/backup/energy_balance.jpeg}
+
+      \vspace{-4pt}
+      \[\frac{d\mathcal{H}}{dt}\,=\,R_N\,+\,H_S\,+\,H_L\,+\,H_P\,+\,G\]
+    \end{column}
+
+    \begin{column}{0.42\textwidth}
+      \small
+      \begin{block}{Perché $T_\text{aria}$}
+        \begin{itemize}[label=$\blacktriangleright$, itemsep=3pt]
+          \item misurata di routine
+          \item proxy di $\text{LW}_\text{in} \propto \varepsilon\sigma T^4$
+          \item DDF variabile per $\text{SW}_\text{in}$
+        \end{itemize}
+      \end{block}
+
+      \vspace{4pt}
+      \begin{block}{Limiti}
+        \begin{itemize}[label=$\blacktriangleright$, itemsep=3pt]
+          \item $\text{SW}_\text{in}$ e albedo non espliciti
+          \item ignorati vento, umidità ed esposizione
+          \item affidabile su scala giornaliera o stagionale, meno su scala oraria
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 
