@@ -289,47 +289,45 @@
 \end{frame}
 
 
-% SLIDE SPECIFICHE SIMULATED ANNEALING
-\begin{frame}{Simulated annealing schedule}
-  \centering
+% SLIDE ASSUNZIONI SIMULATED ANNEALING
+\begin{frame}{Simulated annealing: assunzioni}
+  
+  {\usebeamercolor[fg]{structure}\large\bfseries Spazio di ricerca: \par}
+  \begin{itemize}[label=$\blacktriangleright$, itemsep=3pt]
+    \item Parametri:    $T_\tau$, $\text{DDF}_{ave}$, $\text{DDF}_{amp}$
+    \item Valori consentiti:    $T_\tau \in (-4,\,8)$, \; $\text{DDF}_{ave} \in (1,\,9)$, \; $\text{DDF}_{amp} \in (0.5,\,7.5)$
+    \item Proposta mossa:    $x'_i \sim \mathcal{U}(x_i - \delta_i,\, x_i + \delta_i)$, \quad $\delta_{T_\tau} = 2\,\delta_{\text{DDF}}$
+  \end{itemize}
 
-  \begin{columns}[c, onlytextwidth]
+  \bigskip
+  \medskip
+  {\usebeamercolor[fg]{structure}\large\bfseries Schema di raffreddamento: \par}
+    \begin{itemize}[label=$\blacktriangleright$, itemsep=3pt]
+    \item Temperatura:    $T_k = 0.95^k\, T_0$, \quad $T_0 = 5$
+    \item Cambio temperatura:    dopo 5 mosse accettate (max 500 tentativi)
+    \item Delta adattivo:    $\delta \leftarrow \delta\, e^{\,\mathrm{AR} - 0.4}$, \quad $\delta \in [10^{-5},\, 1]$
+    \item Arresto: $T_k < 5 \cdot 10^{-6}$ \; $\Rightarrow$ \; 270 livelli, 1350 mosse accettate
+  \end{itemize}
 
-    \begin{column}{0.49\textwidth}
-      {\usebeamercolor[fg]{structure}\bfseries Performance per mese: \par}
-      \smallskip
-      \begin{itemize}[label=$\blacktriangleright$, itemsep=3pt]
-        \item 
-      \end{itemize}
-      \centering
-      \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{images/backup/homogenous_calib_nov_apr.png}
-    \end{column}
-
-    \begin{column}{0.49\textwidth}
-      {\usebeamercolor[fg]{structure}\bfseries Performance per quota: \par}
-      \smallskip
-      \begin{itemize}[label=$\blacktriangleright$, itemsep=3pt]
-        \item 
-      \end{itemize}
-      \centering
-      \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{images/backup/homogeneous_calib_elevation_wise.png}
-    \end{column}
-  \end{columns}  
 \end{frame}
 
 
-% EVOLUZIONE LOSS IN SIMULATED ANNEALING
-\begin{frame}{Evoluzione loss SA}
+% SLIDE EVOLUZIONE LOSS IN SIMULATED ANNEALING
+\begin{frame}{Simulated annealing schedule}
   \begin{columns}[c]
-    \begin{column}{0.65\textwidth}
+    \begin{column}{0.6\textwidth}
       \centering
-      \includegraphics[width=\linewidth,height=0.8\textheight,keepaspectratio]{images/backup/loss_accrate_SA.png}
+      \includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{images/backup/loss_accrate_SA.png}
     \end{column}
 
-    \begin{column}{0.30\textwidth}
+    \begin{column}{0.4\textwidth}
       \begin{itemize}[label=$\blacktriangleright$, itemsep=1em]
-        \item AR $\approx$ 40\% a basse temperature
-        \item Schema adattivo per delta
+        \item \textbf{Ricerca casuale}\\
+              AR $\approx$ 100\%, loss elevata
+        \item \textbf{Raffreddamento}\\
+              mosse peggiorative scartate, AR in calo
+        \item \textbf{Raffinamento locale}\\
+              AR $\approx$ 40\% con $\delta \searrow$
       \end{itemize}
     \end{column}
   \end{columns}
@@ -339,17 +337,15 @@
 % EVOLUZIONE PARAMETRI IN SIMULATED ANNEALING
 \begin{frame}{Evoluzione parametri SA}
   \begin{columns}[c]
-    \begin{column}{0.6\textwidth}
+    \begin{column}{0.65\textwidth}
       \centering
-      \includegraphics[width=\linewidth,height=0.9\textheight,keepaspectratio]{images/backup/param_evo_SA.png}
-      {\par\footnotesize Evoluzione parametri durante SA.}
+      \includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{images/backup/param_evo_SA.png}
     \end{column}
 
-    \begin{column}{0.4\textwidth}
+    \begin{column}{0.35\textwidth}
       \centering
-      {\usebeamercolor[fg]{structure}\small\bfseries Parametri ottimizzati\par}
+      {\usebeamercolor[fg]{structure}\large\bfseries Parametri ottimizzati\par}
       \smallskip
-      \footnotesize
       \renewcommand{\arraystretch}{1.2}
       \setlength{\tabcolsep}{5pt}
       \resizebox{0.68\linewidth}{!}{%
