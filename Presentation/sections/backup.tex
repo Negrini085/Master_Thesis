@@ -10,6 +10,13 @@
 \end{frame}
 
 
+% SLIDE MODIS GAP FILLING ROUTINE
+\begin{frame}{MODIS gap filling routine}
+
+
+\end{frame}
+
+
 % SLIDE METODO ANOMALIE
 \begin{frame}{Metodo delle anomalie}
   \usebeamercolor{structure}\colorlet{acc}{structure.fg}
@@ -139,6 +146,25 @@
 \end{frame}
 
 
+% SLIDE TREND PRECIPITAZIONI INVERNALI
+\begin{frame}{Winter precipitation trends}
+  \begin{figure}
+    \centering
+    \includegraphics[height=\textheight]{images/backup/winter_prec_trends.png}
+  \end{figure}
+\end{frame}
+
+
+% SLIDE TREND TEMPERATURA MEDIA ANNUALE
+\begin{frame}{Trend temperatura media annuale}
+  \begin{figure}
+    \centering
+    \includegraphics[height=\textheight]{images/backup/annual_mean_trend.png}
+  \end{figure}
+\end{frame}
+
+
+% APPROCCIO DEGREE DAY
 \begin{frame}{Motivazioni e limiti dell'approccio degree-day}
 
   \begin{columns}[c, onlytextwidth]
@@ -171,24 +197,6 @@
       \end{block}
     \end{column}
   \end{columns}
-\end{frame}
-
-
-% SLIDE TREND PRECIPITAZIONI INVERNALI
-\begin{frame}{Winter precipitation trends}
-  \begin{figure}
-    \centering
-    \includegraphics[height=\textheight]{images/backup/winter_prec_trends.png}
-  \end{figure}
-\end{frame}
-
-
-% SLIDE TREND TEMPERATURA MEDIA ANNUALE
-\begin{frame}{Trend temperatura media annuale}
-  \begin{figure}
-    \centering
-    \includegraphics[height=\textheight]{images/backup/annual_mean_trend.png}
-  \end{figure}
 \end{frame}
 
 
@@ -542,6 +550,39 @@
   \end{columns}
 
   \vfill
+\end{frame}
+
+
+% SLIDE CONFRONTO CON MODIS
+\begin{frame}{Confronto SCD con MODIS}
+
+  \footnotesize
+  \begin{itemize}[label=$\blacktriangleright$, itemsep=3pt]
+    \item no bias evidente
+    \item soglia 15 \SI{}{\milli\meter} SWE troppo stringente
+    \item MODIS fatica sulle foreste
+  \end{itemize}
+
+  \centering
+  \includegraphics[width=\linewidth, height=0.75\textheight, keepaspectratio]{images/backup/scd_comparison_modis_model.png}
+
+  \vfill
+\end{frame}
+
+
+
+\begin{frame}{Confronto SCE con MODIS}
+
+  \footnotesize
+  \begin{itemize}[label=$\blacktriangleright$, itemsep=3pt]
+    \item forte dipendenza sulla soglia di SWE
+    \item compatibilità "fortuita"
+    \item maggior discrepanza in autunno
+  \end{itemize}
+
+  \centering
+  \includegraphics[width=\linewidth, height=0.75\textheight, keepaspectratio]{images/backup/area_covered_model_MODIS.png}
+
 \end{frame}
 
 
