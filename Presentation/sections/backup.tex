@@ -13,6 +13,74 @@
 % SLIDE MODIS GAP FILLING ROUTINE
 \begin{frame}{MODIS gap filling routine}
 
+  \begin{columns}[T, onlytextwidth]
+
+    \begin{column}{0.52\textwidth}
+      \centering
+      {\usebeamercolor[fg]{structure}\large\bfseries Valori dati grezzi\par}
+      \vspace{6pt}
+      \footnotesize
+      \renewcommand{\arraystretch}{1.15}
+      \begin{tabular}{@{}r@{\hspace{10pt}}l@{}}
+        \toprule
+        \textbf{Valore} & \textbf{Classe} \\
+        \midrule
+        0       & Snow free \\
+        1--100  & Snow covered (NDSI $\times$ 100) \\
+        200     & Missing data \\
+        201     & No decision \\
+        211     & Recorded at night \\
+        237     & Fresh water \\
+        239     & Sea water \\
+        250     & Cloud \\
+        254     & Detector saturated \\
+        255     & Fill value \\
+        \bottomrule
+      \end{tabular}
+    \end{column}
+
+    \begin{column}{0.44\textwidth}
+      \vspace{15pt}
+      {\usebeamercolor[fg]{structure}\large\bfseries Gap filling steps:\par}
+      \vspace{6pt}
+      \begin{itemize}[label=$\blacktriangleright$, itemsep=4pt]
+        \item Terra--Aqua combination
+        \item Short-range temporal filling
+        \item Elevation-based filling
+        \item Nearest-neighbour spatial filling
+        \item $3\times3$ neighbourhood filling
+        \item Long-range temporal filling
+      \end{itemize}
+    \end{column}
+
+  \end{columns}
+
+\end{frame}
+
+
+% SLIDE MODIS RISULTATI PRINCIPALI
+\begin{frame}{Risultati MODIS}
+
+  \begin{columns}[T, onlytextwidth]
+
+    \begin{column}{0.46\textwidth}
+      \vspace{20pt}
+      \centering
+      \includegraphics[height=0.8\textheight]{images/backup/ave_los_MODIS.png}
+    \end{column}
+
+    \begin{column}{0.52\textwidth}
+      {\usebeamercolor[fg]{structure}\large\bfseries Caratteristiche principali:\par}
+      {\footnotesize
+      \begin{itemize}[label=$\blacktriangleright$, itemsep=3pt]
+        \item Forte controllo della quota
+        \item Appennino orientale più nevoso di quello occidentale\\
+      \end{itemize}}
+
+      \centering
+      \includegraphics[height=0.75\textheight]{images/backup/trends_scd_MODIS.png}
+    \end{column}
+  \end{columns}
 
 \end{frame}
 
